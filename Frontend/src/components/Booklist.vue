@@ -1,4 +1,3 @@
-<!-- src/components/List.vue -->
 <template>
   <div class="list-container">
     <ul class="list-items">
@@ -12,9 +11,9 @@ export default {
   data() {
     return {
       items: [
-        { id: 1, name: 'Item 1' },
-        { id: 2, name: 'Item 2' },
-        { id: 3, name: 'Item 3' },
+        { id: 1, name: 'booklist 1' },
+        { id: 2, name: 'booklist 2' },
+        { id: 3, name: 'booklist 3' },
       ]
     };
   }
