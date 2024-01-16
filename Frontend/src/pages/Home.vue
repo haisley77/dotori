@@ -1,9 +1,11 @@
-<!-- src/views/Home.vue -->
 <template>
-  <h4>Home Page</h4>
+  <h4>list page</h4>
   <div class="home-container">
-    <div class="content-container">
+    <div >
       <Lside />
+    </div>
+
+    <div class="content-container">
       <List />
     </div>
   </div>
@@ -22,19 +24,22 @@ export default {
 </script>
 
 <style scoped>
+
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
 }
+
 .home-container {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  /* align-items: center; */
 }
 
 .content-container {
   display: flex;
+  flex-direction: row;
   width: 100%;
 }
 </style>

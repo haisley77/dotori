@@ -1,6 +1,7 @@
+<!-- src/components/List.vue -->
 <template>
-  <div>
-    <ul>
+  <div class="list-container">
+    <ul class="list-items">
       <li v-for="item in items" :key="item.id">{{ item.name }}</li>
     </ul>
   </div>
@@ -22,15 +23,18 @@ export default {
 
 <style scoped>
 .list-container {
-  flex: 1; /* 우측 컴포넌트가 좌측 컴포넌트보다 더 많은 공간을 차지하도록 함 */
+  flex: 1;
   background-color: lightblue;
   padding: 10px;
+  display: flex; /* 부모인 .list-container를 flex 컨테이너로 설정 */
 }
 
-ul {
+.list-items {
   list-style-type: none;
   padding: 0;
+  display: flex; /* 자식인 ul을 flex 컨테이너로 설정 */
 }
+
 li {
   margin: 5px;
   padding: 10px;
