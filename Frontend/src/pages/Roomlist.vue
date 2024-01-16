@@ -1,29 +1,40 @@
 <template>
-  <h4>list page</h4>
+  <header>
+    <h4> header입니다. </h4>
+  </header>
+
   <div class="home-container">
     <div >
       <Lside />
+      <RouterLink :to="{name : 'Booklist'}">방만들기</RouterLink>
     </div>
 
     <div class="content-container">
-      <List />
+      <Roomlist />
     </div>
+
+    <RouterView/>
   </div>
 </template>
 
 <script>
 import Lside from '../components/Lside.vue';
-import List from '../components/List.vue';
+import Roomlist from '../components/Roomlist.vue';
+
 
 export default {
   components: {
     Lside,
-    List,
+    Roomlist,
   },
 };
 </script>
 
 <style scoped>
+h4{
+  margin : 0px;
+}
+
 
 html, body {
   height: 100%;
