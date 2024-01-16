@@ -14,7 +14,7 @@
       "
       class="background-yellow q-pa-sm"
     >
-      <q-btn unelevated  label="시작하기" class="start-btn" />
+      <q-btn unelevated  label="🌟시작하기🌟" class="start-btn" />
     </div>
 
   </div>
@@ -27,8 +27,8 @@
     //color: white;
     font-family: NPSfontBold;
     font-size: 3.5em;
-    color: #a84d2f;
-    //background: #35daa0;
+    color: #cc765a;
+    background: white;
     height: 100%;
     border-radius: 20px 20px 20px 20px;
     border: dashed #cc765a 5px;
