@@ -4,14 +4,22 @@
     <div v-for="player in 2" key="player" class="col-6  q-pa-sm text-h3 ">
       <div class=" profile-background q-pa-sm">
         <div class = "dashed column items-center">
-        <img src="../assets/acorn_character_img.png" class="profile-pic q-mr-md q-mt-sm" alt="user-profile-img">
+        <img src="../../assets/acorn_character_img.png" class="profile-pic q-mr-md q-mt-sm" alt="user-profile-img">
         <h4 class="q-mr-md q-mt-md q-mb-sm player-name">도토리씨앗유저</h4>
         <div class="row q-mt-none q-mb-sm">
           <q-btn unelevated rounded color="my-brown q-mr-sm btn-font">
-            <div>역할</div>
+            <q-menu fit anchor="bottom start" self="top left">
+              <q-item clickable>
+                <q-item-section>토끼</q-item-section>
+              </q-item>
+              <q-item clickable>
+                <q-item-section>거북이</q-item-section>
+              </q-item>
+            </q-menu>
+            <div>역할 선택하기</div>
           </q-btn>
           <q-btn unelevated rounded color="my-green q-ml-sm btn-font">
-            <div>커스텀</div>
+            <div>커스텀 아바타</div>
           </q-btn>
         </div>
         </div>

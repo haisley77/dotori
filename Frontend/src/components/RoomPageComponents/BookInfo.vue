@@ -7,10 +7,14 @@
 
     <div style="height: 100%" class="background-yellow q-pa-sm ">
       <div class="column items-center">
-        <img src="../assets/rabbitandturtle.jpg" class="bookimg">
+        <img src="../../assets/rabbitandturtle.jpg" class="bookimg">
       </div>
       <div class="q-mt-sm column q-pa-sm background-white">
-
+        제목 : 토끼와 거북이<br/>
+        저자 : 도토리<br/>
+        필요 인원 : 4<br/>
+        줄거리 : 토끼와 거북이 이야기는 토끼와 거북이가 경주를 벌이는 이야기입니다.
+        이 이야기는 꾸준한 노력과 무모한 자만 사이의 교훈을 담고 있습니다.<br/>
       </div>
     </div>
 
@@ -31,12 +35,12 @@
   }
 
   .background-white {
-    background: floralwhite;
+    background: white;
     height: 10em;
 
     border-radius: 20px 20px 20px 20px;
     font-family: NPSfontBold;
-
+    //color : #a84d2f;
 
   }
 
