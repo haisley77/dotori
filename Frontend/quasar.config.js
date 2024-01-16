@@ -12,7 +12,7 @@
 const {configure} = require('quasar/wrappers');
 
 
-module.exports = configure(function(/* ctx */) {
+module.exports = configure(function (/* ctx */) {
   return {
 
 
@@ -31,9 +31,9 @@ module.exports = configure(function(/* ctx */) {
 
     // https://github.com/quasarframework/quasar/tree/dev/extras
     extras: [
-      // 'ionicons-v4',
-      // 'mdi-v5',
-      // 'fontawesome-v6',
+      'ionicons-v4',
+      'mdi-v7',
+      'fontawesome-v6',
       // 'eva-icons',
       // 'themify',
       // 'line-awesome',
@@ -118,7 +118,7 @@ module.exports = configure(function(/* ctx */) {
     // https://v2.quasar.dev/quasar-cli-vite/developing-ssr/configuring-ssr
     ssr: {
       // ssrPwaHtmlFilename: 'offline.html', // do NOT use index.html as name!
-      // will mess up SSR
+                                          // will mess up SSR
 
       // extendSSRWebserverConf (esbuildConf) {},
       // extendPackageJson (json) {},
