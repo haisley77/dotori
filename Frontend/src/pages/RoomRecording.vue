@@ -14,8 +14,21 @@
         <div class="scene-info-container">
 
         </div>
-        <div class="controller-container">
-
+        <div class="controller-container row">
+          <div class="left-button-container col-1">
+            <q-btn round color="black" icon="mdi-arrow-left-bold" size="lg"/>
+          </div>
+          <div class="center-button-container col-10">
+            <div class="play-button-container">
+              <q-btn round color="primary" icon="mdi-play" size="lg"/>
+            </div>
+            <div class="stop-button-container">
+              <q-btn outline round color="white" text-color="red" icon="mdi-stop" size="lg"/>
+            </div>
+          </div>
+          <div class="right-button-container col-1">
+            <q-btn round color="black" icon="mdi-arrow-right-bold" size="lg"/>
+          </div>
         </div>
       </div>
     </div>
@@ -52,6 +65,32 @@
 .controller-container{
   height: 10%;
   border: black solid 1px;
+}
+
+.left-button-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.center-button-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.right-button-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.play-button-container{
+  margin-right: 10px;
+}
+
+.stop-button-container{
+  margin-left: 10px;
 }
 
 </style>
