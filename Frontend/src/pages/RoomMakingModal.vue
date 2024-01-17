@@ -4,7 +4,7 @@
     <div class="book row col-12">
       <div class="col-2 q-ma-sm">
         <q-card dark bordered class="mycard book-story q-pa-sm q-mb-sm flex justify-center items-center" style="height:100%">
-          <img class="" height=100% src="https://cdn.quasar.dev/img/parallax1.jpg" alt="책">
+          <img height=100% :src="imageUrl" alt="책">
         </q-card>
       </div>
       <div class="book-info col-10 q-ma-sm">
@@ -12,14 +12,12 @@
           <div class="book-info-inner">
             <div class="card-inner">
               <q-card-section>
-                <h4 class="q-pa-none q-ma-none">토끼와 거북이</h4>
-                <div class="text-subtitle1">도토리 오리지널</div>
+                <h4 class="q-pa-none q-ma-none">{{ title }}</h4>
+                <div class="text-subtitle1">{{ writer }}</div>
               </q-card-section>
               <q-separator inset />
               <q-card-section>
-                옛날 옛적에, 토끼와 거북이가 살고 있었다.
-                어느날 토끼가 거북이를 느림보라고 놀려대자, 거북이는 자극을 받고 토끼에게 달리기 경주를 제안하였다.
-                경주를 시작한 토끼는 거북이가 한참 뒤쳐진 것을 보고 안심을 하고 중간에 낮잠을 잔다.
+                {{ content }}
               </q-card-section>
             </div>
           </div>
@@ -40,7 +38,9 @@
           </div>
         </q-card>
       </div>
+      </div>
 
+      <div>
       <div class="col-12 q-pa-sm">
         <q-card class = "mycard room-input q-pa-sm q-mb-sm col-12">
           <div class="room-info-inner">
@@ -50,15 +50,15 @@
             <q-separator inset />
             <div class="row q-mb-sm q-mt-sm">
               <div class="col-8 offset-1">
-                <q-input rounded outlined label="방 제목을 입력하세요!" />
+                <q-input rounded outlined label="방 제목을 입력하세요!" v-model="roomName"/>
               </div>
               <div class="col-3 flex justify-center">
-                <q-checkbox keep-color v-model="cyan" label="비밀로 할래요!" color="cyan" />
+                <q-checkbox keep-color v-model="open" label="비밀로 할래요!" color="cyan" />
               </div>
             </div>
-            <div class="row q-mb-sm" v-if="cyan">
+            <div class="row q-mb-sm" v-if="open">
               <div class="col-8 offset-1">
-                <q-input rounded outlined label="방 비밀번호를 입력하세요!" type="password" />
+                <q-input rounded outlined label="방 비밀번호를 입력하세요!" type="password" v-model="roomPassword" />
               </div>
             </div>
             <div class="row q-mb-sm">
@@ -84,11 +84,26 @@
   export default defineComponent({
     components: {Character},
     setup() {
-      const cyan = ref(false);
+      const open = ref(false);
+      const imageUrl = ref("https://cdn.quasar.dev/img/parallax1.jpg");
+      const title = ref("토끼와 거북이");
+      const content = ref("옛날 옛적에, 토끼와 거북이가 살고 있었다.\n" +
+        "                어느날 토끼가 거북이를 느림보라고 놀려대자, 거북이는 자극을 받고 토끼에게 달리기 경주를 제안하였다.\n" +
+        "                경주를 시작한 토끼는 거북이가 한참 뒤쳐진 것을 보고 안심을 하고 중간에 낮잠을 잔다.");
+      const writer = ref("도토리 오리지널");
+
+      const roomName = ref("");
+      const roomPassword = ref("");
 
       return {
-        cyan,
-      };
+        open,
+        title,
+        content,
+        writer,
+        imageUrl,
+        roomName,
+        roomPassword,
+      }
     },
   });
 </script>
@@ -102,7 +117,6 @@
   .book, .room-input {
     display: flex;
     flex-direction: row;
-    background-color: #35daa0;
     border-radius: 10px;
     font-family: 'NPSfontBold', sans-serif;
   }
