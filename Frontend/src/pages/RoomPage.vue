@@ -1,10 +1,11 @@
 <template>
-  <div class="row npsfont justify-between">
-    <h2 class = "q-ma-md">도토리🐿️</h2>
-    <h2 class = "q-ma-md">
-      로그인🐣
-    </h2>
-  </div>
+<!--  <div class="row npsfont justify-between">-->
+<!--    <h2 class = "q-ma-md">도토리🐿️</h2>-->
+<!--    <h2 class = "q-ma-md">-->
+<!--      로그인🐣-->
+<!--    </h2>-->
+<!--  </div>-->
+  <Header/>
   <div style="background:#d2fff7;height: 100vh">
     <div class="row">
       <RoomTitle></RoomTitle>
@@ -34,6 +35,7 @@ import BookInfo from 'components/RoomPageComponents/BookInfo.vue';
 import StartReady from 'components/RoomPageComponents/StartReady.vue';
 import RoomChat from 'components/RoomPageComponents/RoomChat.vue';
 import RoomTitle from "components/RoomPageComponents/RoomTitle.vue";
+import Header from 'layouts/Header.vue';
 </script>
 
 <style scoped>
