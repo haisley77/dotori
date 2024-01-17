@@ -1,7 +1,7 @@
 <template>
-  <div>
-    ListContent
-  </div>
+  <q-page-container>
+    <router-view/>
+  </q-page-container>
 </template>
 
 <script setup>

@@ -12,7 +12,7 @@
 import ListContent from './ListContent.vue';
 import ListDrawer from './ListDrawer.vue';
 import ListHeader from './ListHeader.vue';
-
+  
 
 </script>
 
