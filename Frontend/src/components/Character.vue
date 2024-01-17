@@ -1,8 +1,8 @@
 <template>
   <div class="q-pa-md row items-start q-gutter-md">
     <q-card class="my-card">
-      <img src="https://cdn.quasar.dev/img/mountains.jpg">
-      <div class="text-h6">거북이</div>
+      <img src="https://cdn.quasar.dev/img/parallax1.jpg">
+      <div class="">거북이</div>
     </q-card>
   </div>
 </template>
