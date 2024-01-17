@@ -36,6 +36,10 @@ const routes = [
   {
     path: '/room-recording-v2',
     component: () => import('pages/RoomRecordingV2.vue'),
+  },
+  {
+    path: '/room-recording-v3',
+    component: () => import('pages/RoomRecordingV3.vue'),
   }
 ];
 
