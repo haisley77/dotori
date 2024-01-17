@@ -11,33 +11,7 @@
         </q-toolbar-title>
 
         <q-space/>
-        <div class="search row items-center">
-        <q-input
-        class="col-grow"
-        outlined square dense placeholder="검색"
-        @focus="isSearchFocus = true"
-        @blur="isSearchFocus = false">
-
-          <template v-if="isSearchFocus" #prepend>
-            <q-icon name="search"/>
-          </template>
-          <template #append>
-            <q-icon name="keyboard"/>
-          </template>
-        </q-input>
-        <q-btn
-        class="search-btn"
-        icon="search"
-        unelevated color="grey-3"
-        text-color="black"
-        square
-        />
-        <q-btn class="q-ml-sm"
-        icon="mic"
-        round color="grey-2"
-        text-color="black"
-        unelevated/>
-        </div>
+        
         <q-space/>
 
         <q-btn flat round icon="more_vert" class="q-mr-sm"/>
