@@ -25,11 +25,12 @@
         style="height: 100%; max-width: 100%;"
       >
         <div v-for="n in 10" :key="n" class="q-px-sm">
-          <div class="scene-short-info-container q-my-xs ">
-            <div class="out-back q-pa-sm">
+          <div class="scene-short-info-container q-my-sm">
+            <!-- 추후 :class의 조건을 클릭된 상태인지 여부에 따라 변경 -->
+            <div class="out-back q-pa-sm" :class="{'scene-bordering': n === 2}">
               <div class="in-back">
                 <div class="scene-number-container text-center q-pa-sm">
-                  <h6 class="npsfont white-background q-my-none">장면 {{ n }}</h6>
+                  <h6 class="npsfont white-background q-my-none" @click="alert()">장면 {{ n }}</h6>
                 </div>
                 <div class="scene-thumbnail-container q-px-sm">
                   <img src="https://www.w3schools.com/howto/img_forest.jpg" alt="dja"
@@ -42,7 +43,7 @@
       </q-scroll-area>
     </div>
     <div class="right-container q-pa-sm col-10">
-      <div class="scene-info-container q-mb-xs ">
+      <div class="scene-info-container q-mb-sm ">
         <div class="q-pa-sm out-back" style="height: 100%">
           <div class="in-back q-pa-sm"  style="height: 100%">
             <div class="scene-background-container">
@@ -81,18 +82,18 @@
             <div class="in-back q-pa-sm" style="width: 100%; height: 100%">
               <div class="button-container row">
                 <div class="left-button-container col-3">
-                  <q-btn round color="black" icon="mdi-arrow-left-bold" size="lg" />
+                  <q-btn round color="grey-9" icon="mdi-arrow-left-bold" size="lg" />
                 </div>
                 <div class="center-button-container col-6">
                   <div class="play-button-container">
-                    <q-btn round color="primary" icon="mdi-play" size="lg" />
+                    <q-btn round color="blue-12" icon="mdi-play" size="lg" />
                   </div>
                   <div class="stop-button-container">
-                    <q-btn outline round color="white" text-color="red" icon="mdi-stop" size="lg" />
+                    <q-btn outline round color="white" text-color="red-5" icon="mdi-stop" size="lg" />
                   </div>
                 </div>
                 <div class="right-button-container col-3">
-                  <q-btn round color="black" icon="mdi-arrow-right-bold" size="lg" />
+                  <q-btn round color="grey-9" icon="mdi-arrow-right-bold" size="lg" />
                 </div>
               </div>
             </div>
@@ -228,5 +229,10 @@
     border-radius: 15px;
     height: 100%;
     border: #cc765a dashed 4px;
+  }
+
+  .scene-bordering{
+    border-radius: 15px;
+    border: red solid 4px
   }
 </style>
