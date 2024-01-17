@@ -1,11 +1,11 @@
 <template>
   <div class="book row col-12">
-    <div class="col-2 q-mr-sm">
+    <div class="col-2 q-ma-sm">
       <q-card dark bordered class="mycard book-story q-pa-sm q-mb-sm flex justify-center items-center" style="height:100%">
         <img class="" height=100% src="https://cdn.quasar.dev/img/parallax1.jpg" alt="책">
       </q-card>
     </div>
-    <div class="book-info col-10">
+    <div class="book-info col-10 q-ma-sm">
       <q-card dark bordered class="mycard book-story q-pa-sm q-mb-sm">
         <div class="book-info-inner">
           <div class="card-inner">
@@ -22,7 +22,7 @@
           </div>
         </div>
       </q-card>
-      <q-card dark bordered class="mycard q-mb-sm book-roles q-pa-sm">
+      <q-card dark bordered class="mycard book-roles q-pa-sm">
         <div class="book-info-inner">
           <div class="card-inner q-ma-none">
             <q-card-section>
@@ -39,34 +39,50 @@
       </q-card>
     </div>
 
-    <q-card class = "mycard room-input q-pa-sm q-mb-sm col-12">
-      <div class="room-info-inner">
-        <div class="row q-mb-sm">
-          <div class="col-8 offset-1">
-            <q-input rounded outlined label="방 제목" />
+    <div class="col-12 q-pa-sm">
+      <q-card class = "mycard room-input q-pa-sm q-mb-sm col-12">
+        <div class="room-info-inner">
+          <div class="row q-mb-sm q-mt-sm">
+            <div class="col-8 offset-1">
+              <q-input rounded outlined label="방 제목" />
+            </div>
+            <div class="col-3 flex justify-center">
+              <q-checkbox keep-color v-model="cyan" label="비밀로 할래요!" color="cyan" />
+            </div>
           </div>
+          <div class="row q-mb-sm" v-if="cyan">
+            <div class="col-8 offset-1">
+              <q-input rounded outlined label="비밀번호" type="password" />
+            </div>
+          </div>
+          <div class="row q-mb-sm">
+            <div class="col-9 flex">
+            </div>
+            <div class="col-3 flex justify-center">
+              <q-btn unelevated color="my-green" rounded label="방 만들기"></q-btn>
+            </div>
+          </div>
+
         </div>
-        <div class="row q-mb-sm">
-          <div class="col-8 offset-1">
-            <q-input rounded outlined label="비밀번호" type="password" />
-          </div>
-          <div class="col-3 flex justify-center">
-            <q-btn unelevated color="my-green" rounded label="방 만들기"></q-btn>
-          </div>
-        </div>
-      </div>
-    </q-card>
+      </q-card>
+    </div>
   </div>
 
 </template>
 
 <script>
   import Character from 'components/Character.vue';
-  import {defineComponent} from 'vue';
+  import {ref,defineComponent} from 'vue';
 
   export default defineComponent({
     components: {Character},
+    setup() {
+      const cyan = ref(false);
 
+      return {
+        cyan,
+      };
+    },
   });
 </script>
 
