@@ -11,15 +11,17 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title>Quasar CLI with Vite App</q-toolbar-title>
+        <q-toolbar-title>
+          <img alt="logo" src="../assets/logo-removebg-preview.png" style="width:100px; height:50px"/>
+        </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <div>로그인</div>
       </q-toolbar>
     </q-header>
 
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
       <q-list>
-        <q-item-label header>Essential Links</q-item-label>
+        <q-item-label header>메뉴바</q-item-label>
 
         <EssentialLink
           v-for="link in essentialLinks"
