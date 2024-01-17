@@ -12,7 +12,8 @@
         />
 
         <q-toolbar-title>
-          <img alt="logo" src="../assets/logo-removebg-preview.png" style="width:100px; height:50px"/>
+          도토리
+          <!-- <img alt="logo" src="../assets/logo-removebg-preview.png" style="width:100px; height:50px"/> -->
         </q-toolbar-title>
 
         <div>로그인</div>

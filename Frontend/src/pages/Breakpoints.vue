@@ -20,9 +20,11 @@
 
 // 일관성을 맞추기 위해 sass 변수 사용
 // maxwidth가 500px일때 배경색이 빨강이 되도록.
-@media(max-width:500px){
+@media (max-width: $breakpoint-xs-max){
   .target{
     background-color: red;
   }
 }
+
+
 </style>
