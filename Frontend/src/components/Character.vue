@@ -2,7 +2,7 @@
   <div class="q-pa-md row items-start q-gutter-md">
     <q-card class="my-card">
       <img src="https://cdn.quasar.dev/img/parallax1.jpg">
-      <div class="">거북이</div>
+      <div class="text-center">거북이</div>
     </q-card>
   </div>
 </template>
