@@ -1,10 +1,25 @@
 <template>
-  <q-page class="flex flex-center">
+  <q-page>
     <div class="row">
-      <div class="col">
+      <div v-for="n in 16" :key="n" class="col-12 col-sm-6 col-md-4 col-lg-3">
         <article>
-          <q-img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fkr.freepik.com%2Fpremium-photo%2Fthe-world-of-fantasy-is-a-fantasy-world_45912360.htm&psig=AOvVaw097RuodurcmkczHNjb2bnk&ust=1705565192724000&source=images&cd=vfe&opi=89978449&ved=0CBAQjRxqFwoTCMDaxtT744MDFQAAAAAdAAAAABAD"></q-img>
-          <div></div>
+          <q-img
+            :ratio="16/9"
+            src="https://cdn.quasar.dev/img/mountains.jpg"
+          />
+          <div class="row">
+            <div class="col-auto">
+              <q-avatar>
+                <q-img size="sm" src="https://cdn.quasar.dev/img/boy-avatar.png"/>
+              </q-avatar>
+            </div>
+            <div class="col">
+              <div class="text-subtitle1 text-weight-bold">
+                토끼와 거북이 연극방 들어와라
+              </div>
+              <div class="text-caption text-grey-9">책벌레</div>
+            </div>
+          </div>
         </article>
       </div>
     </div>
