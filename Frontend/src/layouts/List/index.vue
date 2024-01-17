@@ -1,17 +1,19 @@
 <template>
-        <q-layout view="hHh lpR lFf">
-            <ListHeader/>
+<q-layout view="hHh lpR lFf">
+  <ListHeader/>
 
-            <ListDrawer/>
+  <ListDrawer/>
 
-            <ListContent/>
-        </q-layout>
+  <ListContent/>
+</q-layout>
 </template>
 
 <script setup>
-import ListHeader from './ListHeader.vue'
-import ListDrawer from './ListDrawer.vue'
-import ListContent from './ListContent.vue'
+import ListContent from './ListContent.vue';
+import ListDrawer from './ListDrawer.vue';
+import ListHeader from './ListHeader.vue';
+
+
 </script>
 
 <style lang="scss" scoped>
