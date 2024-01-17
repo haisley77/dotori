@@ -6,6 +6,10 @@ const routes = [
     path: '/room',
     component: () => import('pages/RoomPage.vue'),
   },
+  {
+    path: '/end',
+    component: () => import('pages/EndPage.vue'),
+  },
 ];
 
 export default routes;

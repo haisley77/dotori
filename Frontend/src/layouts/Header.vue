@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <div class="row header-bg q-pt-sm q-pb-sm">
+  <div class="row header-bg q-pt-sm q-pb-sm" style="background: #ffffff">
     <div class="col-2 offset-0 flex justify-center items-center ">
       <img src="../assets/logowithborder-removebg.png" alt="logo" width="70%">
     </div>
