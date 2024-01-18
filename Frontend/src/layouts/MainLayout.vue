@@ -42,11 +42,17 @@ import { defineComponent, ref } from 'vue';
 import EssentialLink from 'components/EssentialLink.vue';
 
 const linksList = [
-  {
-    title: 'breakpoints',
-    caption: 'quasar.dev',
+{
+    title: '시작하기',
+    caption: '시작하기',
     icon: 'school',
-    to: '/breakpoints',
+    to: '/',
+  },
+  {
+    title: '우리의 서비스',
+    caption: '이해하기',
+    icon: 'school',
+    to: '/intro',
   },
 ];
 

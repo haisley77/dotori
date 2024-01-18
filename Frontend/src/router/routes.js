@@ -4,7 +4,7 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/IndexPage.vue')},
-      { path: 'breakpoints', component: () => import('pages/Breakpoints.vue')},
+      { path: 'intro', component: () => import('pages/Intro.vue')},
   ],
   },
   {
@@ -12,8 +12,11 @@ const routes = [
     component: () => import('layouts/List/Index.vue'),
     children: [
       { path: '', component: () => import('pages/List/IndexPage.vue')},
+
   ],
   },
+
+
 
 
   // Always leave this as last one,
