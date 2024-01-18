@@ -2,12 +2,12 @@
 
   <div class="body q-ma-sm q-pa-sm">
     <div class="book row col-12">
-      <div class="col-2 q-ma-sm">
+      <div class="col-4 q-ma-sm">
         <q-card dark bordered class="mycard book-story q-pa-sm q-mb-sm flex justify-center items-center" style="height:100%">
           <img height=100% :src="imageUrl" alt="책">
         </q-card>
       </div>
-      <div class="book-info col-10 q-ma-sm">
+      <div class="book-info col-8 q-ma-sm">
         <q-card dark bordered class="mycard book-story q-pa-sm q-mb-sm">
           <div class="book-info-inner">
             <div class="card-inner">
