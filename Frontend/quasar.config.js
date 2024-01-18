@@ -22,7 +22,10 @@ module.exports = configure(function(/* ctx */) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
-    boot: [],
+    boot: [
+
+
+    ],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
     css: [
@@ -31,9 +34,9 @@ module.exports = configure(function(/* ctx */) {
 
     // https://github.com/quasarframework/quasar/tree/dev/extras
     extras: [
-      // 'ionicons-v4',
-      // 'mdi-v5',
-      // 'fontawesome-v6',
+      'ionicons-v4',
+      'mdi-v7',
+      'fontawesome-v6',
       // 'eva-icons',
       // 'themify',
       // 'line-awesome',
@@ -83,7 +86,12 @@ module.exports = configure(function(/* ctx */) {
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
     framework: {
-      config: {},
+      cssAddon : true,
+      config: {
+        screen: {
+          bodyClasses: true, // <<< add this
+        }
+      },
 
       // iconSet: 'material-icons', // Quasar icon set
       // lang: 'en-US', // Quasar language pack
