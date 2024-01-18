@@ -53,12 +53,7 @@
 
               <q-btn push color="primary" size="" label="상세보기"/>
 
-              <!-- <div class="black-bg">
-                <div class="white-bg">
-                  <h4>상세페이지</h4>
-                  <p>상세페이지내용</p>
-                </div>
-              </div> -->
+
 
             </div>
           </div>
@@ -68,23 +63,10 @@
   </q-page>
 </template>
 
-<script setup></script>
+<script setup>
+
+</script>
 
 <style lang="scss" scoped>
-// body{
-//   margin :0
-// }
-// div{
-//   box-sizing:border-box;
-// }
-// .black-bg{
-//   width:100%; height:100%;
-//   background:rgba(0,0,0,0.5);
-//   position : fixed; padding:20px;
-// }
-// .white-bg{
-//   width:100%; background: white;
-//   border-radius: 8px;
-//   padding:20px;
-// }
+
 </style>
