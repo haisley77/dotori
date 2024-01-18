@@ -1,40 +1,9 @@
+<script setup>
+  import Header from 'layouts/Header.vue';
+</script>
+
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
-
-        <q-toolbar-title>
-          도토리
-          <!-- <img alt="logo" src="../assets/logo-removebg-preview.png" style="width:100px; height:50px"/> -->
-        </q-toolbar-title>
-
-        <div>로그인</div>
-      </q-toolbar>
-    </q-header>
-
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
-      <q-list>
-        <q-item-label header>메뉴바</q-item-label>
-        <EssentialLink
-          v-for="to in essentialLinks"
-          :key="to.title"
-          v-bind="to"
-        />
-      </q-list>
-    </q-drawer>
-
-    <q-page-container>
-      <router-view />
-    </q-page-container>
-  </q-layout>
+  <Header />
 </template>
 
 <script>
