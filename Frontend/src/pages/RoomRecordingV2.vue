@@ -1,4 +1,6 @@
 <script setup>
+  import Header from 'layouts/Header.vue';
+
   const thumbStyle = {
     right: '1.5px',
     borderRadius: '5px',
@@ -17,7 +19,7 @@
 
 
 <template>
-  <div></div>
+  <Header/>
   <div class="row flex justify-center q-px-none" style="background: #d2fff7;">
     <div class="col-11">
       <div class="entire-container row">
