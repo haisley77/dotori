@@ -12,9 +12,18 @@ const routes = [
     component: () => import('layouts/List/Index.vue'),
     children: [
       { path: '', component: () => import('pages/List/IndexPage.vue')},
-
   ],
   },
+  {
+    path: '/book',
+    component: () => import('layouts/List/Index.vue'),
+    children: [
+      { path: '', component: () => import('pages/List/BookIndexPage.vue')},
+  ],
+  },
+
+
+
 
 
 

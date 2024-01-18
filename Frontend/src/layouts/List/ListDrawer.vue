@@ -6,13 +6,24 @@
   :breakpoint="$q.screen.sizes.sm"
   >
     <q-scroll-area class="fit">
-         
+
           <q-avatar size="xl">
             <q-img src="https://cdn.quasar.dev/img/boy-avatar.png"/>
           </q-avatar>
 
+          <div>
+          <router-link to="List">
+            <q-btn color="secondary" size="" label="Main"/>
+          </router-link>
+          </div>
 
-          <q-list>
+          <div>
+          <router-link to="book">
+            <q-btn color="secondary" label="Make Room"/>
+          </router-link>
+         </div>
+
+          <!-- <q-list>
             <q-item-label header>나의 정보</q-item-label>
             <template v-for="(menuItem, index) in menuList1" :key="index">
               <q-item clickable :active="menuItem.label === 'Outbox'" v-ripple>
@@ -25,27 +36,31 @@
               </q-item>
               <q-separator :key="'sep' + index"  v-if="menuItem.separator" />
             </template>
-          </q-list>
+          </q-list> -->
+
+
         </q-scroll-area>
   </q-drawer>
 </template>
 
 <script setup>
 import {ref} from 'vue';
+
 const drawer = ref(true);
 const menuList1 = [
 {
-    icon: 'send',
+    icon: 'school',
     label: 'My Page',
     separator: false
   },
   {
-    icon: 'send',
+    icon: 'school',
     label: 'Make Room',
-    separator: false
+    separator: false,
+    to: '/book',
   },
- 
 ]
+
 
 </script>
 
