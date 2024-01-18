@@ -167,10 +167,11 @@
   }
 </style>
 
-<style>
+<style lang="scss">
   .mycard.q-card > div:last-child {
     border-bottom: dashed #cc765a 5px !important;
     border-top: dashed #cc765a 5px !important;
+    background-color: #ffffff;
   }
 
 </style>
