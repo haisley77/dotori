@@ -41,20 +41,25 @@
             src="https://cdn.quasar.dev/img/parallax2.jpg"
           />
           <div class="row q-col-gutter-x-sm q-mt-md">
-            <div class="col-auto">
-              <q-avatar size="md">
-                <q-img src="https://cdn.quasar.dev/img/boy-avatar.png"/>
-              </q-avatar>
-            </div>
             <div class="col">
               <div class="text-subtitle1 text-weight-bold"
               :style="{lineHeight:'1.1em'}"
               >
-               와와와와
+               흥부와 놀부
               </div>
               <div class="text-caption text-grey-9 q-mt-xs">
-                와와와
+                저자 : 김흥돌
               </div>
+
+              <q-btn push color="primary" size="" label="상세보기"/>
+
+              <!-- <div class="black-bg">
+                <div class="white-bg">
+                  <h4>상세페이지</h4>
+                  <p>상세페이지내용</p>
+                </div>
+              </div> -->
+
             </div>
           </div>
         </article>
@@ -66,4 +71,20 @@
 <script setup></script>
 
 <style lang="scss" scoped>
+// body{
+//   margin :0
+// }
+// div{
+//   box-sizing:border-box;
+// }
+// .black-bg{
+//   width:100%; height:100%;
+//   background:rgba(0,0,0,0.5);
+//   position : fixed; padding:20px;
+// }
+// .white-bg{
+//   width:100%; background: white;
+//   border-radius: 8px;
+//   padding:20px;
+// }
 </style>

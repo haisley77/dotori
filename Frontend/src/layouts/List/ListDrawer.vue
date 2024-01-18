@@ -6,22 +6,28 @@
   :breakpoint="$q.screen.sizes.sm"
   >
     <q-scroll-area class="fit">
-
-          <q-avatar size="xl">
+      <div class="q-pa-md example-column-equal-width">
+        <div>
+          <q-avatar size="150px" class="q-py-lg">
             <q-img src="https://cdn.quasar.dev/img/boy-avatar.png"/>
           </q-avatar>
+        </div>
 
-          <div>
+        <div class="column" style="height: 100px">
+          <div class="col">
           <router-link to="List">
             <q-btn color="secondary" size="" label="Main"/>
           </router-link>
           </div>
 
-          <div>
+          <div class="col">
           <router-link to="book">
             <q-btn color="secondary" label="Make Room"/>
           </router-link>
          </div>
+        </div>
+        </div>
+
 
           <!-- <q-list>
             <q-item-label header>나의 정보</q-item-label>
