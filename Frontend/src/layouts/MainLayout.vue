@@ -1,10 +1,9 @@
 <script setup>
-
-import RoomMakingModal from 'pages/RoomMakingModal.vue';
+  import Header from 'layouts/Header.vue';
 </script>
 
 <template>
-  <RoomMakingModal></RoomMakingModal>
+  <Header />
 </template>
 
 <style scoped>
