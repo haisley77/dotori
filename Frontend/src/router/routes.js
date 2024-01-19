@@ -7,6 +7,10 @@ const routes = [
         path: '/login',
         component: () => import('pages/LoginPage.vue'),
     },
+  {
+    path: '/modal',
+    component: () => import('pages/RoomMakingModal2.vue'),
+  },
     {
         path: '/signup',
         component: () => import('pages/SingupPage.vue'),
@@ -50,6 +54,10 @@ const routes = [
   {
     path: '/room',
     component: () => import('pages/RoomPage.vue'),
+  },
+  {
+    path: '/roomroom',
+    component: () => import('pages/RoomPage2.vue'),
   },
   {
     path: '/end',

@@ -49,7 +49,7 @@
         <div class='absolute-center bg-transparent column items-center'>
           <div class="profile-bg-white q-my-md">
             <q-avatar size='120px' class=' content-center'>
-              <img src='../assets/acorn_character_img.png'>
+              <img src='../assets/winter.png' style="object-fit: cover">
             </q-avatar>
           </div>
           <h6 class='npsfont q-ma-none'>{{ userInfo.username }}</h6>
@@ -58,8 +58,8 @@
     </q-drawer>
 
 
-    <q-page-container >
-      <router-view class="apple"/>
+    <q-page-container>
+      <router-view class="apple" />
     </q-page-container>
 
 
