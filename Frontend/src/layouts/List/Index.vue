@@ -1,8 +1,8 @@
 <template>
-<q-layout view="hHh lpR lFf">
-  <ListHeader/>
+  <Header/>
+  <q-layout view="hHh lpR lFf">
 
-  <ListDrawer/>
+<!--  <ListDrawer/>-->
 
   <ListContent/>
 </q-layout>
@@ -10,9 +10,8 @@
 
 <script setup>
 import ListContent from './ListContent.vue';
-import ListDrawer from './ListDrawer.vue';
-import ListHeader from './ListHeader.vue';
-  
+import Header from 'layouts/Header.vue';
+
 
 </script>
 

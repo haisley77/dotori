@@ -1,87 +1,112 @@
 <script setup>
+  import Header from 'layouts/Header.vue';
+
   const thumbStyle = {
-    right: '1px',
+    right: '1.5px',
     borderRadius: '5px',
-    backgroundColor: '#a84d2f',
+    backgroundColor: '#35daa0',
     width: '5px',
     opacity: 0.75,
   };
 
   const barStyle = {
     borderRadius: '9px',
-    backgroundColor: '#a84d2f',
+    backgroundColor: '#ffffff',
     width: '8px',
-    opacity: 0.3,
+    opacity: 0,
   };
 </script>
 
 
 <template>
-  <div class="entire-container row">
-    <div class="left-container col-2">
-      <q-scroll-area
-        :thumb-style="thumbStyle"
-        :bar-style="barStyle"
-        style="height: 100%; max-width: 100%;"
-      >
-        <div v-for="n in 10" :key="n" class="q-px-sm">
-          <div class="scene-short-info-container q-my-xs ">
-            <div class="out-back q-pa-sm">
-              <div class="in-back">
-                <div class="scene-number-container text-center q-pa-sm">
-                  <h6 class="npsfont white-background q-my-none">장면 {{ n }}</h6>
-                </div>
-                <div class="scene-thumbnail-container q-px-sm">
-                  <img src="https://www.w3schools.com/howto/img_forest.jpg" alt="dja" style="width: 100%; border-radius: 15px;">
+  <Header/>
+  <div class="row flex justify-center q-px-none" >
+    <div class="col-11">
+      <div class="entire-container row">
+
+        <div class="left-container col-2">
+          <div class="q-py-sm" style="height: 100%">
+          <q-scroll-area
+            :thumb-style="thumbStyle"
+            :bar-style="barStyle"
+            style="height: 100%; max-width: 100%;"
+          >
+            <div v-for="n in 10" :key="n" class="q-px-sm q-mr-sm">
+              <div class="scene-short-info-container q-mb-sm">
+                <!-- 추후 :class의 조건을 클릭된 상태인지 여부에 따라 변경 -->
+                <div class="out-back q-pa-sm" :class="{'scene-bordering': n === 2}">
+                  <div class="in-back">
+                    <div class="scene-number-container text-center q-pa-sm">
+                      <h6 class="npsfont white-background q-my-none" @click="alert()">장면 {{ n }}</h6>
+                    </div>
+                    <div class="scene-thumbnail-container q-px-sm">
+                      <img src="https://www.w3schools.com/howto/img_forest.jpg" alt="dja"
+                           style="width: 100%; border-radius: 15px;">
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
+          </q-scroll-area>
           </div>
         </div>
-      </q-scroll-area>
-    </div>
-    <div class="right-container q-pa-sm col-10">
-      <div class="scene-info-and-controller-container">
-        <div class="scene-info-container">
-          <!-- 추후 컴포넌트로 분리예정 -->
-          <div class="temp-container q-pa-xs out-back">
-            <div class="scene-background-container">
-              <q-img
-                src="~assets/recording/tmp_scene_thumbnail.jpg"
-                :ratio="16/9"
-                style="height: 100%; border-radius: 15px"
-              />
-            </div>
-            <div class="scene-script-container npsfont text-center">
-              <div class="role-script-container">
-                <p class="text-weight-bold q-ma-none">호랑이 : 어흥어흥 ~ 어흥어흥어흐얼어</p>
-              </div>
-              <div class="role-script-container">
-                <p class="text-weight-bold q-ma-none">돼지: 꿀굴굴굴꿀...</p>
-              </div>
-              <div class="role-script-container">
-                <p class="text-weight-bold q-ma-none">호랑이 : 어흥어흥 ~ 어흥어흥어흐얼어</p>
-              </div>
-              <div class="role-script-container">
-                <p class="text-weight-bold q-ma-none">돼지: 꿀굴굴굴꿀...</p>
+        <div class="right-container q-pa-sm col-10">
+          <div class="scene-info-container q-mb-sm ">
+            <div class="q-pa-sm out-back" style="height: 100%">
+              <div class="in-back q-pa-sm" style="height: 100%">
+                <div class="scene-background-container">
+                  <q-img
+                    src="~assets/recording/tmp_scene_thumbnail.jpg"
+                    :ratio="16/9"
+                    style="height: 100%; border-radius: 15px"
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="controller-container row">
-          <div class="left-button-container col-1">
-            <q-btn round color="black" icon="mdi-arrow-left-bold" size="lg" />
-          </div>
-          <div class="center-button-container col-10">
-            <div class="play-button-container">
-              <q-btn round color="primary" icon="mdi-play" size="lg" />
+          <div class="script-controller-container row">
+            <div class="scene-script-container npsfont text-center col-8 q-pr-xs ">
+              <div class="out-back q-pa-sm" style="height: 100%">
+                <div class="in-back q-pa-sm" style="height: 100%">
+                  <div class="script-background">
+                    <div class="role-script-container">
+                      <p class="text-weight-bold q-ma-none">호랑이 : 어흥어흥 ~ 어흥어흥어흐얼어</p>
+                    </div>
+                    <div class="role-script-container">
+                      <p class="text-weight-bold q-ma-none">돼지: 꿀굴굴굴꿀...</p>
+                    </div>
+                    <div class="role-script-container">
+                      <p class="text-weight-bold q-ma-none">호랑이 : 어흥어흥 ~ 어흥어흥어흐얼어</p>
+                    </div>
+                    <div class="role-script-container">
+                      <p class="text-weight-bold q-ma-none">돼지: 꿀굴굴굴꿀...</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="stop-button-container">
-              <q-btn outline round color="white" text-color="red" icon="mdi-stop" size="lg" />
+            <div class="controller-container col-4 q-pl-xs">
+              <div class="out-back q-pa-sm" style="height: 100%">
+                <div class="in-back q-pa-sm" style="width: 100%; height: 100%">
+                  <div class="button-container row">
+                    <div class="left-button-container col-3">
+                      <q-btn round color="grey-9" icon="mdi-arrow-left-bold" size="lg" />
+                    </div>
+                    <div class="center-button-container col-6">
+                      <div class="play-button-container">
+                        <q-btn round color="blue-12" icon="mdi-play" size="lg" />
+                      </div>
+                      <div class="stop-button-container">
+                        <q-btn outline round color="white" text-color="red-5" icon="mdi-stop" size="lg" />
+                      </div>
+                    </div>
+                    <div class="right-button-container col-3">
+                      <q-btn round color="grey-9" icon="mdi-arrow-right-bold" size="lg" />
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="right-button-container col-1">
-            <q-btn round color="black" icon="mdi-arrow-right-bold" size="lg" />
           </div>
         </div>
       </div>
@@ -104,7 +129,7 @@
   .entire-container {
     height: 100vh;
     //border: green solid 1px;
-    background: #d2fff7;
+    //background: #d2fff7;
   }
 
   .left-container {
@@ -116,7 +141,7 @@
     //border: black solid 1px;
   }
 
-  .scene-number-container{
+  .scene-number-container {
 
   }
 
@@ -125,22 +150,21 @@
     //border: blue solid 1px;
   }
 
-  .scene-info-and-controller-container {
-    height: 100%;
-    //border: aqua solid 1px;
-  }
-
   .scene-info-container {
-    height: 90%;
+    height: 70%;
     //border: black solid 1px;
   }
 
   .scene-background-container {
-    height: 80%;
+    height: 100%;
+  }
+
+  .script-controller-container {
+    height: 30%;
   }
 
   .scene-script-container {
-    height: 20%;
+    height: 100%;
     //border: dimgrey solid 1px;
     //display: flex;
     //justify-content: center;
@@ -153,7 +177,7 @@
 
 
   .controller-container {
-    height: 10%;
+    height: 100%;
     //border: black solid 1px;
   }
 
@@ -183,11 +207,6 @@
     margin-left: 10px;
   }
 
-  .temp-container {
-    height: 100%;
-    //border: blue solid 1px;
-  }
-
   .out-back {
     background: #35daa0;
     border-radius: 15px;
@@ -198,10 +217,32 @@
     border-radius: 15px;
   }
 
-  .white-background{
+  .white-background {
     background: white;
     border-radius: 15px;
     width: 100%;
     border: #cc765a dashed 4px
+  }
+
+  .script-background {
+    background: white;
+    border-radius: 15px;
+    height: 100%;
+    border: #cc765a dashed 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .button-container {
+    background: white;
+    border-radius: 15px;
+    height: 100%;
+    border: #cc765a dashed 4px;
+  }
+
+  .scene-bordering {
+    border-radius: 15px;
+    border: red solid 4px
   }
 </style>

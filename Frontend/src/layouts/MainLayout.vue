@@ -110,6 +110,17 @@
 </script>
 
 <!--<style lang="sass" scoped>-->
+<!--.custom-caption-->
+<!--  text-align: center-->
+<!--  padding: 400px-->
+<!--  color: text-black-->
+
+<!--.custom-button-->
+<!--      text-align: center-->
+<!--      padding: 70px-->
+
+<!--  .animate-bounce-->
+=======
 <!--    .custom-caption-->
 <!--      text-align: center-->
 <!--      padding: 400px-->
