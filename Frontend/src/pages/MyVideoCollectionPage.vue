@@ -1,12 +1,15 @@
 <template>
   <q-page>
-    <div class="text-h3">보관함</div>
-    <hr class="q-my-md">
-    <div class="container">
-      <div class="one-row row q-gutter-y-lg">
-        <div class="col-xs-12 col-sm-6 col-lg-4 flex justify-center items-center" v-for="dummy in dummyData"
-             key="dummy.id">
-          <Card :room-Info=dummy class="q-gutter-lg" />
+    <div class='text-h3 npsfont'>보관함</div>
+    <hr class='q-my-md'>
+    <div class='container'>
+      <div class='one-row row q-gutter-y-lg'>
+        <div class='col-xs-12 col-sm-6 col-lg-4 flex justify-center items-center q-pa-sm q-pa-md '
+             v-for='dummy in dummyData'
+             key='dummy.id'>
+
+          <Card :room-Info=dummy style='width: 90% '/>
+
         </div>
       </div>
     </div>
@@ -21,7 +24,7 @@
   const dummyData = [
     {
       id: 1,
-      profileImagePath: 'https://cdn.quasar.dev/img/avatar.png',
+      profileImagePath: '../assets/acorn_character_img.png',
       title: '토끼와 거북이를 읽어보자1',
       date: '2017-01-04',
       downloadLink: 'https://cdn.quasar.dev/img/avatar.png',
@@ -51,8 +54,21 @@
 
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
   .dotori-border {
     border-raius: $dotori-border-radius;
   }
+
+  .card-border-inner {
+    background-color: $dotori-light-green;
+    border-radius: $dotori-border-radius;
+    border: 5px dashed $dotori-light-brown;
+  }
+
+  .card-border-outer {
+    background-color: $dotori-green;
+    border-radius: $dotori-border-radius;
+
+  }
+
 </style>

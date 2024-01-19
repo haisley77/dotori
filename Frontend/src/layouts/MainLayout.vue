@@ -109,24 +109,24 @@
     // };
 </script>
 
-<style lang="sass" scoped>
-    .custom-caption
-      text-align: center
-      padding: 400px
-      color: text-black
+<!--<style lang="sass" scoped>-->
+<!--    .custom-caption-->
+<!--      text-align: center-->
+<!--      padding: 400px-->
+<!--      //color: text-black-->
 
-    .custom-button
-      text-align: center
-      padding: 70px
+<!--    .custom-button-->
+<!--      text-align: center-->
+<!--      padding: 70px-->
 
-    .animate-bounce
-      animation: q-bounce 2s infinite
+<!--    .animate-bounce-->
+<!--      animation: q-bounce 2s infinite-->
 
-    @keyframes q-bounce
-      0%, 20%, 50%, 80%, 100%
-        transform: translateY(0)
-      40%
-        transform: translateY(-30px)
-      60%
-        transform: translateY(-15px)
-</style>
+<!--    @keyframes q-bounce-->
+<!--      0%, 20%, 50%, 80%, 100%-->
+<!--        transform: translateY(0)-->
+<!--      40%-->
+<!--        transform: translateY(-30px)-->
+<!--      60%-->
+<!--        transform: translateY(-15px)-->
+<!--</style>-->
