@@ -1,15 +1,17 @@
 <template>
   <Header></Header>
-  <div style="background: #d2fff7" class = "q-pa-lg row">
-    <div style="border:dashed 5px #a84d2f;background: white; border-radius: 20px" class="q-ma-lg q-pa-lg col-8 offset-2">
+  <!--  <div style="background: #d2fff7" class = "q-pa-lg row">-->
+  <div class="q-pa-lg row">
+    <div
+         class="q-ma-lg q-pa-lg col-8 offset-2">
       <div class="row">
-<!--        <div class="col-2"></div>-->
+        <!--        <div class="col-2"></div>-->
         <div class="col-3 flex justify-center items-center q-pa-sm " v-for="item in 4" key=item>
           <div class="background-green flex items-center justify-center">
             <img class="q-ma-md" src="../assets/acorn_character_img.png" width="80%">
           </div>
         </div>
-<!--        <div class="col-2"></div>-->
+        <!--        <div class="col-2"></div>-->
       </div>
 
       <div class="row flex justify-center">
@@ -32,8 +34,14 @@
 </script>
 
 <style scoped>
+  .end-border {
+    border: dashed 5px #35daa0;
+    background: white;
+    border-radius: 20px
+  }
+
   img {
-    background: #ebf686;
+    background: white;
     border-radius: 20px;
   }
 
