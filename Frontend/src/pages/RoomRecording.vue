@@ -20,7 +20,7 @@
 
 <template>
   <Header/>
-  <div class="row flex justify-center q-px-none" style="background: #d2fff7;">
+  <div class="row flex justify-center q-px-none" >
     <div class="col-11">
       <div class="entire-container row">
 
@@ -129,7 +129,7 @@
   .entire-container {
     height: 100vh;
     //border: green solid 1px;
-    background: #d2fff7;
+    //background: #d2fff7;
   }
 
   .left-container {
