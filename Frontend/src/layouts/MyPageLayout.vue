@@ -1,9 +1,9 @@
 <template>
-  <Header/>
-  <q-layout style = "position: relative">
-<!--    <q-header>-->
-<!--      header-->
-<!--    </q-header>-->
+  <Header />
+  <q-layout style="position: relative">
+    <!--    <q-header>-->
+    <!--      header-->
+    <!--    </q-header>-->
 
     <q-drawer
       show-if-above
@@ -11,35 +11,35 @@
       :breakpoint='400'
       class='my-drawer'
     >
-<!--    <q-drawer-->
-<!--      show-if-above-->
-<!--      class = "col-3"-->
-<!--    >-->
+      <!--    <q-drawer-->
+      <!--      show-if-above-->
+      <!--      class = "col-3"-->
+      <!--    >-->
       <q-scroll-area class='scroll-placement light-green-bg'>
         <q-list padding>
-          <q-item clickable v-ripple to='/my-page/info' class = "side-bar-menu-bg-white q-mx-sm q-mb-sm">
+          <q-item clickable v-ripple to='/my-page/info' class="side-bar-menu-bg-white q-mx-sm q-mb-sm">
             <q-item-section avatar>
-              <q-icon name='person'/>
+              <q-icon name='person' />
             </q-item-section>
             <q-item-section>
-              <span class = "npsfont" >내정보</span>
+              <span class="npsfont">내정보</span>
             </q-item-section>
           </q-item>
-          <q-item clickable v-ripple to='/my-page/collection' class = "side-bar-menu-bg-white q-mx-sm q-mb-sm">
+          <q-item clickable v-ripple to='/my-page/collection' class="side-bar-menu-bg-white q-mx-sm q-mb-sm">
             <q-item-section avatar>
               <q-icon name='inbox' />
             </q-item-section>
 
             <q-item-section>
-              <span class = "npsfont" >보관함</span>
+              <span class="npsfont">보관함</span>
             </q-item-section>
           </q-item>
-          <q-item clickable v-ripple to='/my-page/avatar' class = "side-bar-menu-bg-white q-mx-sm q-mb-sm">
+          <q-item clickable v-ripple to='/my-page/avatar' class="side-bar-menu-bg-white q-mx-sm q-mb-sm">
             <q-item-section avatar>
               <q-icon name='cruelty_free' />
             </q-item-section>
             <q-item-section>
-              <span class = "npsfont">아바타</span>
+              <span class="npsfont">아바타</span>
             </q-item-section>
           </q-item>
         </q-list>
@@ -47,18 +47,22 @@
 
       <div class='absolute-top light-green-bg profile-placement'>
         <div class='absolute-center bg-transparent column items-center'>
-          <div class = "profile-bg-white q-mb-md">
-            <q-avatar size='120px' class='q-mb-sm content-center'>
+          <div class="profile-bg-white q-my-md">
+            <q-avatar size='120px' class=' content-center'>
               <img src='../assets/acorn_character_img.png'>
             </q-avatar>
           </div>
-          <div class='text-weight-bold npsfont'>{{ userInfo.username }}</div>
+          <h6 class='npsfont q-ma-none'>{{ userInfo.username }}</h6>
         </div>
       </div>
     </q-drawer>
-    <q-page-container>
-      <router-view class='q-pa-lg ' />
+
+
+    <q-page-container >
+      <router-view class="apple"/>
     </q-page-container>
+
+
   </q-layout>
 </template>
 
@@ -71,11 +75,14 @@
 </script>
 
 <style lang='scss' scoped>
-  $profile-height: 170px;
+  $profile-height: 250px;
 
+  .apple {
+    //background: red;
+    width: 100%;
+  }
 
-
-  .side-bar-menu-bg-white{
+  .side-bar-menu-bg-white {
     background-color: white;
     border-radius: 40px;
   }
@@ -87,9 +94,10 @@
     width: 120px;
   }
 
-  .page-background-skyblue{
+  .page-background-skyblue {
     background-color: red;
   }
+
   .base-bg {
     background-color: $dotori-mint;
   }
