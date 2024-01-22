@@ -29,6 +29,10 @@ const routes = [
       }
     ],
   },
+  {
+    path: '/room-recording',
+    component: () => import('pages/RoomRecording.vue'),
+  }
 ];
 
 export default routes
