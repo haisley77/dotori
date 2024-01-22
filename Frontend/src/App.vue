@@ -1,9 +1,11 @@
 <template>
-  <div id="app">
-    <router-view/>
-  </div>
+  <router-view />
 </template>
 
 <script>
-</script>
+import { defineComponent } from 'vue';
 
+export default defineComponent({
+  name: 'App',
+});
+</script>
