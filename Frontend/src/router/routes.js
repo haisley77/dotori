@@ -45,22 +45,7 @@ const routes = [
     component: () => import('layouts/List/Index.vue'),
     children: [
       { path: '', component: () => import('pages/List/BookIndexPage.vue')},
-  ],
-  },
-
-
-
-
-
-  // Always leave this as last one,
-  // but you can also remove it
-  {
-    path: '/room-recording-v2',
-    component: () => import('pages/RoomRecordingV2.vue'),
-  },
-  {
-    path: '/room-recording-v3',
-    component: () => import('pages/RoomRecordingV3.vue'),
+    ],
   },
   {
     path: '/room',
