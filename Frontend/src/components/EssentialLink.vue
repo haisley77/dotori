@@ -1,5 +1,5 @@
 <template>
-  <q-item clickable tag="a" target="_blank" :href="link">
+  <q-item clickable tag="div" @click="redirectToPage">
     <q-item-section v-if="icon" avatar>
       <q-icon :name="icon" />
     </q-item-section>
@@ -27,7 +27,7 @@ export default defineComponent({
       default: '',
     },
 
-    link: {
+    to: {
       type: String,
       default: '#',
     },
@@ -35,6 +35,12 @@ export default defineComponent({
     icon: {
       type: String,
       default: '',
+    },
+  },
+  methods: {
+    redirectToPage() {
+      // 여기에서 router.push를 사용하여 새로운 URL 페이지로 이동
+      this.$router.push(this.to);
     },
   },
 });
