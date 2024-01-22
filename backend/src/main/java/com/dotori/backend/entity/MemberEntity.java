@@ -1,7 +1,5 @@
 package com.dotori.backend.entity;
 
-
-// import com.dotori.backend.dto.MemberDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,15 +11,18 @@ import java.math.BigInteger;
 @Getter
 @Table(name = "Member")
 public class MemberEntity {
-    @Id // pk 지정
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
-    private BigInteger memberId;
+    @Id
+    @Column(name = "member_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long memberId;
 
-    @Column(unique = true) // unique 제약조건 추가 => 중복값을 허용하지 않도록 강제한다.
+    @Column(unique = true)
     private String nickname;
 
-    @Column
+    @Column(name = "profile_img")
     private String profileImg;
 
-    public MemberEntity(){}
+    public MemberEntity() {
+        // 기본 생성자
+    }
 }

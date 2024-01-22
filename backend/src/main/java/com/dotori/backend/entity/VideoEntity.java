@@ -3,21 +3,29 @@ package com.dotori.backend.entity;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
+import java.math.BigInteger;
+import java.sql.Timestamp;
 
 @Entity
 @Setter
 @Getter
 @Table(name = "Video")
 public class VideoEntity {
-    @Id // pk 지정
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
-    private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "video_id")
+    private Long videoId;
 
-    @ManyToOne
-    @JoinColumn(name = "room_id", nullable = false)
-    private RoomEntity roomId;
+    @Column(name = "path")
+    private String path;
 
-    @ManyToOne
-    @JoinColumn(name = "member_id", nullable = false)
-    private MemberEntity memberId;
+    @Column(name = "created_at")
+    private Timestamp createdAt;
+
+    @Column(name = "updated_at")
+    private Timestamp updatedAt;
+
+    public VideoEntity() {
+        // 기본 생성자
+    }
 }

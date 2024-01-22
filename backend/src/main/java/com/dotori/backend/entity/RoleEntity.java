@@ -4,22 +4,25 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigInteger;
 
 @Entity
 @Setter
 @Getter
 @Table(name = "Role")
 public class RoleEntity {
-    @Id // pk 지정
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
-    private Long memberId;
+    @Id
+    @Column(name = "role_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long roleId;
 
-    @Column(unique = true) // unique 제약조건 추가 => 중복값을 허용하지 않도록 강제한다.
-    private String memberNickName;
+    @ManyToOne
+    @JoinColumn(name = "book_id")
+    private BookEntity bookentity;
 
     @Column
-    private String memberPassword;
+    private String name;
 
-    @Column
-    private String memberName;
+    @Column(name = "mask_path")
+    private String maskPath;
 }

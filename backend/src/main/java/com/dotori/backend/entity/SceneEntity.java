@@ -1,24 +1,33 @@
 package com.dotori.backend.entity;
 
+import com.fasterxml.jackson.databind.node.BigIntegerNode;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigInteger;
 
 @Entity
 @Setter
 @Getter
 @Table(name = "Scene")
 public class SceneEntity {
-    @Id // pk 지정
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
-    private Long id;
+    @Id
+    @Column(name = "scene_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long sceneId;
+
+    @Column(name = "scene_order")
+    private int sceneOrder;
+
+    @Column(name = "background_image")
+    private String backgroundImage;
 
     @ManyToOne
-    @JoinColumn(name = "room_id", nullable = false)
-    private RoomEntity roomId;
+    @JoinColumn(name = "book_id", nullable = false)
+    private BookEntity bookEntity;
 
-    @ManyToOne
-    @JoinColumn(name = "member_id", nullable = false)
-    private MemberEntity memberId;
+    public SceneEntity() {
+        // 기본 생성자
+    }
 }

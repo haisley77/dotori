@@ -4,28 +4,54 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigInteger;
+import java.sql.Timestamp;
 
 @Entity
 @Setter
 @Getter
 @Table(name = "Room")
 public class RoomEntity {
-    @Id // pk 지정
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
+    @Id
+    @Column(name = "room_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long roomId;
 
-    @Column(unique = true) // unique 제약조건 추가 => 중복값을 허용하지 않도록 강제한다.
+    @ManyToOne
+    @JoinColumn(name = "book_id", nullable = false)
+    private BookEntity bookEntity;
+
+    @Column(name = "host_id")
+    private BigInteger hostId;
+
+    @Column(name = "title")
+    private String title;
+
+    @Column(name = "password")
     private String password;
 
-    @Column
-    private String state;
+    @Column(name = "is_recording")
+    private boolean isRecording;
 
-    @Column
-    private String joinmember;
+    @Column(name = "join_cnt")
+    private int joinCnt;
 
-    @Column
-    private String limitmember;
+    @Column(name = "limit_cnt")
+    private int limitCnt;
 
+    @Column(name = "is_public")
+    private boolean isPublic;
 
-    public RoomEntity(){}
+    @Column(name = "created_at")
+    private Timestamp createdAt;
+
+    @Column(name = "updated_at")
+    private Timestamp updatedAt;
+
+    @Column(name = "session_id")
+    private String sessionId;
+
+    public RoomEntity() {
+        // 기본 생성자
+    }
 }

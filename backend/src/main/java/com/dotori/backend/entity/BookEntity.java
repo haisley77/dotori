@@ -4,19 +4,27 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigInteger;
 
 @Entity
 @Setter
 @Getter
 @Table(name = "Book")
 public class BookEntity {
-    @Id // pk 지정
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
-    private Long roomId;
-
-    @Column(unique = true) // unique 제약조건 추가 => 중복값을 허용하지 않도록 강제한다.
-    private String password;
+    @Id
+    @Column(name = "book_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long bookId;
 
     @Column
-    private String state;
+    private String title;
+
+    @Column(name = "book_img")
+    private String bookImg;
+
+    @Column
+    private String author;
+
+    @Column(name = "role_cnt")
+    private int roleCnt;
 }

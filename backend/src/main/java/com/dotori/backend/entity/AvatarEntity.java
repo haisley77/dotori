@@ -10,17 +10,20 @@ import java.math.BigInteger;
 @Setter
 @Getter
 @Table(name = "Avatar")
-public class AvatorEntity {
-    @Id // pk 지정
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
-    private BigInteger avatarId;
+public class AvatarEntity {
+    @Id
+    @Column(name = "avatar_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long avatarId;
+
     @Column(unique = true)
     private String path;
+
     @Column
     private String name;
 
     @ManyToOne
     @JoinColumn(name = "member_id", nullable = false)
     private MemberEntity memberId;
-
 }
+
