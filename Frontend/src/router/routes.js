@@ -34,6 +34,17 @@ const routes = [
     component: () => import('pages/RoomRecording.vue'),
   },
   {
+    path: '/List',
+    component: () => import('layouts/List/Index.vue'),
+    children: [
+      { path: '', component: () => import('pages/List/IndexPage.vue')},
+  ],
+  },
+
+
+  // Always leave this as last one,
+  // but you can also remove it
+  {
     path: '/room-recording-v2',
     component: () => import('pages/RoomRecordingV2.vue'),
   },
