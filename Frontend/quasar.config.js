@@ -37,19 +37,25 @@ module.exports = configure(function (/* ctx */) {
             'material-icons', // optional, you are not bound to it
         ],
 
-    // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#build
-    build: {
-      target: {
-        browser: [ 'es2019', 'edge88', 'firefox78', 'chrome87', 'safari13.1' ],
-        node: 'node16'
-      },
+        // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#build
+        build: {
+            target: {
+                browser: [
+                    'es2019',
+                    'edge88',
+                    'firefox78',
+                    'chrome87',
+                    'safari13.1',
+                ],
+                node: 'node16',
+            },
 
-      vueRouterMode: 'hash', // available values: 'hash', 'history'
-      // vueRouterBase,
-      // vueDevtools,
-      // vueOptionsAPI: false,
+            vueRouterMode: 'hash', // available values: 'hash', 'history'
+            // vueRouterBase,
+            // vueDevtools,
+            // vueOptionsAPI: false,
 
-      // rebuildCache: true, // rebuilds Vite/linter/etc cache on startup
+            // rebuildCache: true, // rebuilds Vite/linter/etc cache on startup
 
             // publicPath: '/',
             // analyze: true,

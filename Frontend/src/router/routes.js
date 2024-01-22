@@ -61,13 +61,13 @@ const routes = [
         component: () => import('pages/RoomPage.vue'),
     },
     {
-      path: '/roomroom',
-      component: () => import('pages/RoomPage2.vue'),
+    path: '/roomroom',
+    component: () => import('pages/RoomPage2.vue'),
     },
     {
         path: '/end',
         component: () => import('pages/EndPage.vue'),
-    },
+    }
 ];
 
 export default routes;
