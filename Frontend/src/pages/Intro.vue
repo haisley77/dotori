@@ -1,7 +1,7 @@
 <template>
   <q-page class="q-pa-xl">
     <section class="q-mb-xl">
-      <div class="text-h4">Breakpoints</div>
+      <div class="text-h4">Intro</div>
       <q-separator class="q-my-md"/>
       <div class="target"></div>
     </section>
