@@ -61,8 +61,11 @@ const routes = [
   {
     path: '/room-recording-v3',
     component: () => import('pages/RoomRecordingV3.vue'),
-  }
+  },
+  {
+    path: '/room',
+    component: () => import('pages/RoomPage.vue'),
+  },
 ];
 
-export default routes
-
+export default routes;
