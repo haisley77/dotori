@@ -1,9 +1,12 @@
 package com.dotori.backend.entity;
 
 import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 @Entity
+@Setter
 @Getter
 @Table(name = "avatar")
 public class AvatarEntity {
