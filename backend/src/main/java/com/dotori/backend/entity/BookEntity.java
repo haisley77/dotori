@@ -7,9 +7,8 @@ import javax.persistence.*;
 import java.math.BigInteger;
 
 @Entity
-@Setter
 @Getter
-@Table(name = "Book")
+@Table(name = "book")
 public class BookEntity {
     @Id
     @Column(name = "book_id")

@@ -14,9 +14,8 @@ import java.math.BigInteger;
 import java.sql.Timestamp;
 
 @Entity
-@Setter
 @Getter
-@Table(name = "Room_Member")
+@Table(name = "room_Member")
 public class RoomMemberEntity {
     @Id
     @Column(name = "room_member_id")

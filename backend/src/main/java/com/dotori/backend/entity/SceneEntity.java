@@ -8,9 +8,8 @@ import javax.persistence.*;
 import java.math.BigInteger;
 
 @Entity
-@Setter
 @Getter
-@Table(name = "Scene")
+@Table(name = "scene")
 public class SceneEntity {
     @Id
     @Column(name = "scene_id")

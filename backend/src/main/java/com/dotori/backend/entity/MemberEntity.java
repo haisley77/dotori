@@ -2,14 +2,16 @@ package com.dotori.backend.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.math.BigInteger;
+import java.sql.Timestamp;
 
 @Entity
-@Setter
 @Getter
-@Table(name = "Member")
+@Table(name = "member")
 public class MemberEntity {
     @Id
     @Column(name = "member_id")
@@ -21,6 +23,16 @@ public class MemberEntity {
 
     @Column(name = "profile_img")
     private String profileImg;
+
+    // 생성일시
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private Timestamp createdAt;
+
+    // 수정일시
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private Timestamp updatedAt;
 
     public MemberEntity() {
         // 기본 생성자

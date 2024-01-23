@@ -7,9 +7,8 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Setter
 @Getter
-@Table(name = "Scene_Video")
+@Table(name = "scene_video")
 public class SceneVideoEntity {
     @Id
     @Column(name = "scene_video_id")

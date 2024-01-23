@@ -7,9 +7,8 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Setter
 @Getter
-@Table(name = "Script")
+@Table(name = "script")
 public class ScriptEntity {
     @Id
     @Column(name = "script_id")
@@ -21,20 +20,14 @@ public class ScriptEntity {
     private RoleEntity roleentity;
 
     @ManyToOne
-    @JoinColumn(name = "score_id", nullable = false)
-    private MemberEntity scoreId;
+    @JoinColumn(name = "scene_id", nullable = false)
+    private SceneEntity sceneId;
 
     @Column(name = "script_order")
     private int scriptOrder;
 
     @Column(name = "content")
     private String content;
-
-    @Column(name = "created_at")
-    private Timestamp createdAt;
-
-    @Column(name = "updated_at")
-    private Timestamp updatedAt;
 
     public ScriptEntity() {
         // 기본 생성자

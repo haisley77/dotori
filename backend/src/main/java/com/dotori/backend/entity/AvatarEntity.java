@@ -7,9 +7,8 @@ import javax.persistence.*;
 import java.math.BigInteger;
 
 @Entity
-@Setter
 @Getter
-@Table(name = "Avatar")
+@Table(name = "avatar")
 public class AvatarEntity {
     @Id
     @Column(name = "avatar_id")
@@ -25,5 +24,6 @@ public class AvatarEntity {
     @ManyToOne
     @JoinColumn(name = "member_id", nullable = false)
     private MemberEntity memberId;
+
 }
 

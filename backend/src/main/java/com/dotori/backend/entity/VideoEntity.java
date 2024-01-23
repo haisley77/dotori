@@ -7,9 +7,8 @@ import java.math.BigInteger;
 import java.sql.Timestamp;
 
 @Entity
-@Setter
 @Getter
-@Table(name = "Video")
+@Table(name = "video")
 public class VideoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

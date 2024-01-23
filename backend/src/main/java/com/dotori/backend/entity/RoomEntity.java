@@ -8,9 +8,8 @@ import java.math.BigInteger;
 import java.sql.Timestamp;
 
 @Entity
-@Setter
 @Getter
-@Table(name = "Room")
+@Table(name = "room")
 public class RoomEntity {
     @Id
     @Column(name = "room_id")

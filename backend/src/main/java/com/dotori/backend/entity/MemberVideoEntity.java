@@ -10,9 +10,8 @@ import java.math.BigInteger;
 import java.sql.Timestamp;
 
 @Entity
-@Setter
 @Getter
-@Table(name = "Member_Video")
+@Table(name = "member_video")
 public class MemberVideoEntity {
     @Id
     @Column(name = "member_video_id")

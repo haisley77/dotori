@@ -7,9 +7,8 @@ import javax.persistence.*;
 import java.math.BigInteger;
 
 @Entity
-@Setter
 @Getter
-@Table(name = "Role")
+@Table(name = "role")
 public class RoleEntity {
     @Id
     @Column(name = "role_id")
