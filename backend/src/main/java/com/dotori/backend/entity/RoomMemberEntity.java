@@ -8,7 +8,6 @@ import lombok.Getter;
 import javax.persistence.*;
 import java.math.BigInteger;
 import java.sql.Timestamp;
-
 @Entity
 @Getter
 @Table(name = "room_Member")
@@ -26,11 +25,11 @@ public class RoomMemberEntity {
 
     @OneToOne
     @JoinColumn(name = "member_id")
-    private MemberEntity memberId;
+    private MemberEntity member;
 
     @ManyToOne
     @JoinColumn(name = "room_id")
-    private RoomEntity roomId;
+    private RoomEntity room;
 
     @Column(name = "is_ready")
     private boolean isReady;

@@ -4,6 +4,8 @@ import lombok.Getter;
 import javax.persistence.*;
 import java.math.BigInteger;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -11,12 +13,15 @@ import java.sql.Timestamp;
 public class RoomEntity {
     @Id
     @Column(name = "room_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
     private Long roomId;
 
     @ManyToOne
     @JoinColumn(name = "book_id", nullable = false)
     private BookEntity bookEntity;
+
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
+    private List<RoomMemberEntity> roomMembers = new ArrayList<>();;
 
     @Column(name = "host_id")
     private BigInteger hostId;

@@ -22,6 +22,9 @@ public class MemberEntity {
     @Column(name = "profile_img")
     private String profileImg;
 
+    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
+    private RoomMemberEntity roomMember;
+
     // 생성일시
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
@@ -36,3 +39,4 @@ public class MemberEntity {
         // 기본 생성자
     }
 }
+
