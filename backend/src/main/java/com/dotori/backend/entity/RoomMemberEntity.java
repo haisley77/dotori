@@ -4,11 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
 import lombok.Getter;
-import lombok.Setter;
-import org.hibernate.type.descriptor.sql.TinyIntTypeDescriptor;
-
 import javax.persistence.*;
 import java.math.BigInteger;
 import java.sql.Timestamp;
