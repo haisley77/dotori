@@ -30,11 +30,11 @@ public class RoomMemberEntity {
 
     @OneToOne
     @JoinColumn(name = "member_id")
-    private MemberEntity memberEntity;
+    private MemberEntity memberId;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "room_id")
-    private RoomEntity roomEntity;
+    private RoomEntity roomId;
 
     @Column(name = "is_ready")
     private boolean isReady;
