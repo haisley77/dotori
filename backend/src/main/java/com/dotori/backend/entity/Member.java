@@ -21,6 +21,6 @@ public class Member extends BaseTimeEntity{
     private String profileImg;
 
     @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
-    private RoomMember roommember;
+    private RoomMember roomMember;
 }
 

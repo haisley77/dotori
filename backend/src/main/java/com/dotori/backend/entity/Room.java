@@ -21,7 +21,7 @@ public class Room extends BaseTimeEntity{
     private Book book;
 
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
-    private List<RoomMember> roommembers = new ArrayList<>();;
+    private List<RoomMember> roomMembers = new ArrayList<>();;
 
     @Column(name = "host_id")
     private Long hostId;

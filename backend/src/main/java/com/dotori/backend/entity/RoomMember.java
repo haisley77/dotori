@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(name = "room_Member")
+@Table(name = "room_member")
 public class RoomMember extends BaseTimeEntity{
     @Id
     @Column(name = "room_member_id")
