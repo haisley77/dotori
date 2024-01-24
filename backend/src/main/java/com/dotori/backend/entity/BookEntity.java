@@ -1,14 +1,12 @@
 package com.dotori.backend.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Setter
 @Getter
-@AllArgsConstructor
+@NoArgsConstructor // 아무런 매개변수가 없는 생성자
 // @AllArgsConstructor : 클래스에 대해 모든 필드를 파라미터로 받는 생성자를 자동으로 생성
 @Table(name = "book")
 public class BookEntity {
@@ -28,8 +26,4 @@ public class BookEntity {
 
     @Column(name = "role_cnt")
     private int roleCnt;
-
-    public BookEntity() {
-
-    }
 }

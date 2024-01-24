@@ -1,19 +1,14 @@
 package com.dotori.backend.entity;
 
 import lombok.Getter;
-import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
+import lombok.NoArgsConstructor;
 import javax.persistence.*;
-import java.math.BigInteger;
-import java.sql.Timestamp;
 
 @Entity
 @Getter
-@Setter
+@NoArgsConstructor
 @Table(name = "member_video")
-public class MemberVideoEntity {
+public class MemberVideoEntity extends BaseTimeEntity{
     @Id
     @Column(name = "member_video_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,22 +16,12 @@ public class MemberVideoEntity {
 
     @ManyToOne
     @JoinColumn(name = "member_id", nullable = false)
-    private MemberEntity memberId;
+    private MemberEntity member;
 
     @ManyToOne
     @JoinColumn(name = "video_id", nullable = false)
-    private VideoEntity videoId;
+    private VideoEntity video;
 
     @Column
-    private BigInteger bookId;
-
-    // 생성일시
-    @CreationTimestamp
-    @Column(name = "created_at", updatable = false)
-    private Timestamp createdAt;
-
-    // 수정일시
-    @UpdateTimestamp
-    @Column(name = "updated_at")
-    private Timestamp updatedAt;
+    private Long bookId;
 }

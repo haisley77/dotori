@@ -1,16 +1,14 @@
 package com.dotori.backend.entity;
 
 import lombok.Getter;
-import lombok.Setter;
-
+import lombok.NoArgsConstructor;
 import javax.persistence.*;
-import java.sql.Timestamp;
 
 @Entity
 @Getter
-@Setter
+@NoArgsConstructor
 @Table(name = "video")
-public class VideoEntity {
+public class VideoEntity extends BaseTimeEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "video_id")
@@ -18,14 +16,4 @@ public class VideoEntity {
 
     @Column(name = "path")
     private String path;
-
-    @Column(name = "created_at")
-    private Timestamp createdAt;
-
-    @Column(name = "updated_at")
-    private Timestamp updatedAt;
-
-    public VideoEntity() {
-        // 기본 생성자
-    }
 }

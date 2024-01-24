@@ -1,13 +1,12 @@
 package com.dotori.backend.entity;
 
 import lombok.Getter;
-import lombok.Setter;
-
+import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
 @Getter
-@Setter
+@NoArgsConstructor
 @Table(name = "role")
 public class RoleEntity {
     @Id
@@ -17,7 +16,7 @@ public class RoleEntity {
 
     @ManyToOne
     @JoinColumn(name = "book_id")
-    private BookEntity bookentity;
+    private BookEntity book;
 
     @Column
     private String name;

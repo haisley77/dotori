@@ -1,13 +1,12 @@
 package com.dotori.backend.entity;
 
 import lombok.Getter;
-import lombok.Setter;
-
+import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
 @Getter
-@Setter
+@NoArgsConstructor
 @Table(name = "script")
 public class ScriptEntity {
     @Id
@@ -17,19 +16,15 @@ public class ScriptEntity {
 
     @ManyToOne
     @JoinColumn(name = "role_id", nullable = false)
-    private RoleEntity roleentity;
+    private RoleEntity role;
 
     @ManyToOne
     @JoinColumn(name = "scene_id", nullable = false)
-    private SceneEntity sceneId;
+    private SceneEntity scene;
 
     @Column(name = "script_order")
     private int scriptOrder;
 
     @Column(name = "content")
     private String content;
-
-    public ScriptEntity() {
-        // 기본 생성자
-    }
 }

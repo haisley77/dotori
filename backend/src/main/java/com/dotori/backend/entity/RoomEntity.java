@@ -1,19 +1,16 @@
 package com.dotori.backend.entity;
 
 import lombok.Getter;
-import lombok.Setter;
-
+import lombok.NoArgsConstructor;
 import javax.persistence.*;
-import java.math.BigInteger;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
-@Setter
+@NoArgsConstructor
 @Table(name = "room")
-public class RoomEntity {
+public class RoomEntity extends BaseTimeEntity{
     @Id
     @Column(name = "room_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
@@ -21,13 +18,13 @@ public class RoomEntity {
 
     @ManyToOne
     @JoinColumn(name = "book_id", nullable = false)
-    private BookEntity bookEntity;
+    private BookEntity book;
 
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
-    private List<RoomMemberEntity> roomMembers = new ArrayList<>();;
+    private List<RoomMemberEntity> roommembers = new ArrayList<>();;
 
     @Column(name = "host_id")
-    private BigInteger hostId;
+    private Long hostId;
 
     @Column(name = "title")
     private String title;
@@ -47,16 +44,6 @@ public class RoomEntity {
     @Column(name = "is_public")
     private boolean isPublic;
 
-    @Column(name = "created_at")
-    private Timestamp createdAt;
-
-    @Column(name = "updated_at")
-    private Timestamp updatedAt;
-
     @Column(name = "session_id")
     private String sessionId;
-
-    public RoomEntity() {
-        // 기본 생성자
-    }
 }
