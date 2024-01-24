@@ -9,7 +9,7 @@ import javax.persistence.*;
 @NoArgsConstructor // 아무런 매개변수가 없는 생성자
 // @AllArgsConstructor : 클래스에 대해 모든 필드를 파라미터로 받는 생성자를 자동으로 생성
 @Table(name = "book")
-public class BookEntity {
+public class Book {
     @Id
     @Column(name = "book_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

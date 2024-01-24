@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Table(name = "member_video")
-public class MemberVideoEntity extends BaseTimeEntity{
+public class MemberVideo extends BaseTimeEntity{
     @Id
     @Column(name = "member_video_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,11 +16,11 @@ public class MemberVideoEntity extends BaseTimeEntity{
 
     @ManyToOne
     @JoinColumn(name = "member_id", nullable = false)
-    private MemberEntity member;
+    private Member member;
 
     @ManyToOne
     @JoinColumn(name = "video_id", nullable = false)
-    private VideoEntity video;
+    private Video video;
 
     @Column
     private Long bookId;

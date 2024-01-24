@@ -7,20 +7,22 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(name = "role")
-public class RoleEntity {
+@Table(name = "avatar")
+public class Avatar {
     @Id
-    @Column(name = "role_id")
+    @Column(name = "avatar_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long roleId;
+    private Long avatarId;
 
-    @ManyToOne
-    @JoinColumn(name = "book_id")
-    private BookEntity book;
+    @Column(unique = true)
+    private String path;
 
     @Column
     private String name;
 
-    @Column(name = "mask_path")
-    private String maskPath;
+    @ManyToOne
+    @JoinColumn(name = "member_id", nullable = false)
+    private Member member;
+
 }
+

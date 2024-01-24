@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Table(name = "video")
-public class VideoEntity extends BaseTimeEntity{
+public class Video extends BaseTimeEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "video_id")

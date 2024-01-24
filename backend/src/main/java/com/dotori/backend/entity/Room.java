@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @Table(name = "room")
-public class RoomEntity extends BaseTimeEntity{
+public class Room extends BaseTimeEntity{
     @Id
     @Column(name = "room_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
@@ -18,10 +18,10 @@ public class RoomEntity extends BaseTimeEntity{
 
     @ManyToOne
     @JoinColumn(name = "book_id", nullable = false)
-    private BookEntity book;
+    private Book book;
 
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
-    private List<RoomMemberEntity> roommembers = new ArrayList<>();;
+    private List<RoomMember> roommembers = new ArrayList<>();;
 
     @Column(name = "host_id")
     private Long hostId;

@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Table(name = "script")
-public class ScriptEntity {
+public class Script {
     @Id
     @Column(name = "script_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,11 +16,11 @@ public class ScriptEntity {
 
     @ManyToOne
     @JoinColumn(name = "role_id", nullable = false)
-    private RoleEntity role;
+    private Role role;
 
     @ManyToOne
     @JoinColumn(name = "scene_id", nullable = false)
-    private SceneEntity scene;
+    private Scene scene;
 
     @Column(name = "script_order")
     private int scriptOrder;

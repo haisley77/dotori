@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Table(name = "member")
-public class MemberEntity extends BaseTimeEntity{
+public class Member extends BaseTimeEntity{
     @Id
     @Column(name = "member_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +21,6 @@ public class MemberEntity extends BaseTimeEntity{
     private String profileImg;
 
     @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
-    private RoomMemberEntity roommember;
+    private RoomMember roommember;
 }
 

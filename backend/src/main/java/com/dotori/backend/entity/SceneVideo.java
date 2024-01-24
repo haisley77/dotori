@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Table(name = "scene_video")
-public class SceneVideoEntity extends BaseTimeEntity{
+public class SceneVideo extends BaseTimeEntity{
     @Id
     @Column(name = "scene_video_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,7 +16,7 @@ public class SceneVideoEntity extends BaseTimeEntity{
 
     @ManyToOne
     @JoinColumn(name = "room_id", nullable = false)
-    private RoomEntity room;
+    private Room room;
 
     @Column(name = "scene_order")
     private int sceneOrder;

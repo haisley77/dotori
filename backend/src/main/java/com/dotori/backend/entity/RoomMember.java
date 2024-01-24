@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Table(name = "room_Member")
-public class RoomMemberEntity extends BaseTimeEntity{
+public class RoomMember extends BaseTimeEntity{
     @Id
     @Column(name = "room_member_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,11 +26,11 @@ public class RoomMemberEntity extends BaseTimeEntity{
 
     @OneToOne
     @JoinColumn(name = "member_id")
-    private MemberEntity member;
+    private Member member;
 
     @ManyToOne
     @JoinColumn(name = "room_id")
-    private RoomEntity room;
+    private Room room;
 
     @Column(name = "is_ready")
     private boolean isReady;

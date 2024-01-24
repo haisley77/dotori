@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Table(name = "scene")
-public class SceneEntity {
+public class Scene {
     @Id
     @Column(name = "scene_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,5 +22,5 @@ public class SceneEntity {
 
     @ManyToOne
     @JoinColumn(name = "book_id", nullable = false)
-    private BookEntity book;
+    private Book book;
 }
