@@ -12,6 +12,7 @@ import javax.persistence.Table;
 
 import com.dotori.backend.domain.book.model.entity.Book;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -34,4 +35,11 @@ public class Scene {
 	@ManyToOne
 	@JoinColumn(name = "book_id", nullable = false)
 	private Book book;
+
+	@Builder
+	public Scene(int sceneOrder, String backgroundImage, Book book) {
+		this.sceneOrder = sceneOrder;
+		this.backgroundImage = backgroundImage;
+		this.book = book;
+	}
 }

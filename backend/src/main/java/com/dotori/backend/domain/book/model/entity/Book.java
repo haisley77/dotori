@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -33,4 +34,11 @@ public class Book {
 
 	@Column(name = "role_cnt")
 	private int roleCnt;
+
+	@Builder
+	public Book(String title, String bookImg, String author) {
+		this.title = title;
+		this.bookImg = bookImg;
+		this.author = author;
+	}
 }

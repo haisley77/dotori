@@ -18,6 +18,7 @@ import javax.persistence.Table;
 import com.dotori.backend.common.entity.BaseTimeEntity;
 import com.dotori.backend.domain.book.model.entity.Book;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -62,4 +63,18 @@ public class Room extends BaseTimeEntity {
 
 	@Column(name = "session_id")
 	private String sessionId;
+
+	@Builder
+	public Room(Book book, List<RoomMember> roomMembers, Long hostId, String title, String password,
+		boolean isRecording,
+		boolean isPublic, String sessionId) {
+		this.book = book;
+		this.roomMembers = roomMembers;
+		this.hostId = hostId;
+		this.title = title;
+		this.password = password;
+		this.isRecording = isRecording;
+		this.isPublic = isPublic;
+		this.sessionId = sessionId;
+	}
 }

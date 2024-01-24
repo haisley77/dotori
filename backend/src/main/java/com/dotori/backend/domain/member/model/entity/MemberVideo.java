@@ -14,6 +14,7 @@ import javax.persistence.Table;
 import com.dotori.backend.common.entity.BaseTimeEntity;
 import com.dotori.backend.domain.video.model.entity.Video;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -37,4 +38,11 @@ public class MemberVideo extends BaseTimeEntity {
 
 	@Column
 	private Long bookId;
+
+	@Builder
+	public MemberVideo(Member member, Video video, Long bookId) {
+		this.member = member;
+		this.video = video;
+		this.bookId = bookId;
+	}
 }

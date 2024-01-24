@@ -12,6 +12,7 @@ import javax.persistence.Table;
 
 import com.dotori.backend.domain.book.model.entity.Book;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -34,4 +35,11 @@ public class Role {
 
 	@Column(name = "mask_path")
 	private String maskPath;
+
+	@Builder
+	public Role(Book book, String name, String maskPath) {
+		this.book = book;
+		this.name = name;
+		this.maskPath = maskPath;
+	}
 }

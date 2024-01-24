@@ -10,6 +10,7 @@ import javax.persistence.Table;
 
 import com.dotori.backend.common.entity.BaseTimeEntity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -25,4 +26,9 @@ public class Video extends BaseTimeEntity {
 
 	@Column(name = "path")
 	private String path;
+
+	@Builder
+	public Video(String path) {
+		this.path = path;
+	}
 }

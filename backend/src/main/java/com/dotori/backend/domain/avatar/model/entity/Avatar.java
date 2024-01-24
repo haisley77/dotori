@@ -13,6 +13,7 @@ import javax.persistence.Table;
 
 import com.dotori.backend.domain.member.model.entity.Member;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -36,5 +37,11 @@ public class Avatar {
 	@JoinColumn(name = "member_id", nullable = false)
 	private Member member;
 
+	@Builder
+	public Avatar(String path, String name, Member member) {
+		this.path = path;
+		this.name = name;
+		this.member = member;
+	}
 }
 
