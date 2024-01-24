@@ -31,7 +31,7 @@ public class Member extends BaseTimeEntity {
 	@Column(unique = true)
 	private String nickname;
 
-	@Column(name = "profile_img")
+	@Column(length = 100, name = "profile_img")
 	private String profileImg;
 
 	@OneToOne(fetch = LAZY, mappedBy = "member", cascade = ALL)

@@ -35,7 +35,7 @@ public class SceneVideo extends BaseTimeEntity {
 	@Column(name = "scene_order")
 	private int sceneOrder;
 
-	@Column(name = "path")
+	@Column(length = 100, name = "path")
 	private String path;
 
 	@Builder

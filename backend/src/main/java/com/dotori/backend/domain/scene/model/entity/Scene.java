@@ -29,7 +29,7 @@ public class Scene {
 	@Column(name = "scene_order")
 	private int sceneOrder;
 
-	@Column(name = "background_image")
+	@Column(length = 100, name = "background_image")
 	private String backgroundImage;
 
 	@ManyToOne

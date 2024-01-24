@@ -38,15 +38,14 @@ public class Room extends BaseTimeEntity {
 
 	@OneToMany(mappedBy = "room", cascade = ALL)
 	private List<RoomMember> roomMembers = new ArrayList<>();
-	;
 
 	@Column(name = "host_id")
 	private Long hostId;
 
-	@Column(name = "title")
+	@Column(length = 20, name = "title")
 	private String title;
 
-	@Column(name = "password")
+	@Column(length = 50, name = "password")
 	private String password;
 
 	@Column(name = "is_recording")
@@ -61,7 +60,7 @@ public class Room extends BaseTimeEntity {
 	@Column(name = "is_public")
 	private boolean isPublic;
 
-	@Column(name = "session_id")
+	@Column(length = 50, name = "session_id")
 	private String sessionId;
 
 	@Builder
