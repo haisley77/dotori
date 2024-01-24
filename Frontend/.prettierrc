@@ -1,25 +1,24 @@
 {
 "editor.fomratOnSave": true,
-
     "arrowParens": "avoid",
-    "bracketSpacing": false, 
-    "endOfLine": "auto", 
-    "htmlWhitespaceSensitivity": "css", 
+    "bracketSpacing": false,
+    "endOfLine": "auto",
+    "htmlWhitespaceSensitivity": "css",
     "jsxBracketSameLine": false,
-    "jsxSingleQuote": false, 
-    "printWidth": 80, 
-    "proseWrap": "preserve", 
+    "jsxSingleQuote": false,
+    "printWidth": 80,
+    "proseWrap": "preserve",
     "quoteProps": "as-needed",
     "semi": true,
     "singleQuote": true,
     "tabWidth": 4,
     "trailingComma": "all",
-    "useTabs": false, 
+    "useTabs": false,
     "vueIndentScriptAndStyle": true,
     "rangeStart": 0,
-    "requirePragma": false, 
+    "requirePragma": false,
     "insertPragma": false,
-    "overrides": [ 
+    "overrides": [
       {
         "files": "*.json",
         "options": {
