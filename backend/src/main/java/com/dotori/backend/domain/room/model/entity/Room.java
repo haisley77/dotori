@@ -66,14 +66,12 @@ public class Room extends BaseTimeEntity {
 
 	@Builder
 	public Room(Book book, List<RoomMember> roomMembers, Long hostId, String title, String password,
-		boolean isRecording,
 		boolean isPublic, String sessionId) {
 		this.book = book;
 		this.roomMembers = roomMembers;
 		this.hostId = hostId;
 		this.title = title;
 		this.password = password;
-		this.isRecording = isRecording;
 		this.isPublic = isPublic;
 		this.sessionId = sessionId;
 	}
