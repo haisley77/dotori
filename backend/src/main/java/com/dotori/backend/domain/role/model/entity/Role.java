@@ -30,10 +30,10 @@ public class Role {
 	@JoinColumn(name = "book_id")
 	private Book book;
 
-	@Column
+	@Column(length = 10)
 	private String name;
 
-	@Column(name = "mask_path")
+	@Column(length = 100, name = "mask_path")
 	private String maskPath;
 
 	@Builder

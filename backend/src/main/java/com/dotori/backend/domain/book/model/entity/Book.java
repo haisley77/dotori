@@ -23,13 +23,13 @@ public class Book {
 	@GeneratedValue(strategy = IDENTITY)
 	private Long bookId;
 
-	@Column
+	@Column(length = 20)
 	private String title;
 
-	@Column(name = "book_img")
+	@Column(length = 100, name = "book_img")
 	private String bookImg;
 
-	@Column
+	@Column(length = 20)
 	private String author;
 
 	@Column(name = "role_cnt")

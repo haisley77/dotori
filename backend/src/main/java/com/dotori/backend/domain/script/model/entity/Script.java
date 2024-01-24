@@ -39,7 +39,7 @@ public class Script {
 	@Column(name = "script_order")
 	private int scriptOrder;
 
-	@Column(name = "content")
+	@Column(length = 100, name = "content")
 	private String content;
 
 	@Builder

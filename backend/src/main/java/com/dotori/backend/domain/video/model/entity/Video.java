@@ -24,7 +24,7 @@ public class Video extends BaseTimeEntity {
 	@Column(name = "video_id")
 	private Long videoId;
 
-	@Column(name = "path")
+	@Column(length = 100, name = "path")
 	private String path;
 
 	@Builder

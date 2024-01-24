@@ -27,10 +27,10 @@ public class Avatar {
 	@GeneratedValue(strategy = IDENTITY)
 	private Long avatarId;
 
-	@Column(unique = true)
+	@Column(length = 100, unique = true)
 	private String path;
 
-	@Column
+	@Column(length = 20)
 	private String name;
 
 	@ManyToOne(fetch = LAZY)
