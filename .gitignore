@@ -234,7 +234,7 @@ gradle-app.setting
 *.hprof
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,vim,visualstudiocode,intellij+all,gradle,maven
-/env/
+.backend/env/
 
 .thumbs.db
 node_modules
