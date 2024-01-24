@@ -15,6 +15,7 @@ import javax.persistence.Table;
 import com.dotori.backend.common.entity.BaseTimeEntity;
 import com.dotori.backend.domain.member.model.entity.Member;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -44,4 +45,10 @@ public class RoomMember extends BaseTimeEntity {
 
 	@Column(name = "is_ready")
 	private boolean isReady;
+
+	@Builder
+	public RoomMember(Member member, Room room) {
+		this.member = member;
+		this.room = room;
+	}
 }

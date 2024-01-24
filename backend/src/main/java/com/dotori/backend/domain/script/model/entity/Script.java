@@ -14,6 +14,7 @@ import javax.persistence.Table;
 import com.dotori.backend.domain.role.model.entity.Role;
 import com.dotori.backend.domain.scene.model.entity.Scene;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -40,4 +41,12 @@ public class Script {
 
 	@Column(name = "content")
 	private String content;
+
+	@Builder
+	public Script(Role role, Scene scene, int scriptOrder, String content) {
+		this.role = role;
+		this.scene = scene;
+		this.scriptOrder = scriptOrder;
+		this.content = content;
+	}
 }

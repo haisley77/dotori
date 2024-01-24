@@ -14,6 +14,7 @@ import javax.persistence.Table;
 import com.dotori.backend.common.entity.BaseTimeEntity;
 import com.dotori.backend.domain.room.model.entity.RoomMember;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -35,5 +36,11 @@ public class Member extends BaseTimeEntity {
 
 	@OneToOne(fetch = LAZY, mappedBy = "member", cascade = ALL)
 	private RoomMember roomMember;
+
+	@Builder
+	public Member(String nickname, String profileImg) {
+		this.nickname = nickname;
+		this.profileImg = profileImg;
+	}
 }
 
