@@ -1,4 +1,4 @@
-package com.dotori.backend.entity;
+package com.dotori.backend.role.model.entity;
 
 import static javax.persistence.GenerationType.*;
 
@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.dotori.backend.book.model.entity.Book;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

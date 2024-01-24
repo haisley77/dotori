@@ -1,4 +1,4 @@
-package com.dotori.backend.entity;
+package com.dotori.backend.video.model.entity;
 
 import static javax.persistence.FetchType.*;
 
@@ -10,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.dotori.backend.common.entity.BaseTimeEntity;
+import com.dotori.backend.room.model.entity.Room;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

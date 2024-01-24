@@ -1,4 +1,4 @@
-package com.dotori.backend.entity;
+package com.dotori.backend.book.model.entity;
 
 import static javax.persistence.GenerationType.*;
 

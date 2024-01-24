@@ -1,4 +1,4 @@
-package com.dotori.backend.entity;
+package com.dotori.backend.member.model.entity;
 
 import static javax.persistence.CascadeType.*;
 import static javax.persistence.FetchType.*;
@@ -10,6 +10,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.dotori.backend.common.entity.BaseTimeEntity;
+import com.dotori.backend.room.model.entity.RoomMember;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

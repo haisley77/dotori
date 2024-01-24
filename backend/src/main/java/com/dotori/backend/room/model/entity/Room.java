@@ -1,4 +1,4 @@
-package com.dotori.backend.entity;
+package com.dotori.backend.room.model.entity;
 
 import static javax.persistence.CascadeType.*;
 import static javax.persistence.GenerationType.*;
@@ -14,6 +14,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.dotori.backend.book.model.entity.Book;
+import com.dotori.backend.common.entity.BaseTimeEntity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

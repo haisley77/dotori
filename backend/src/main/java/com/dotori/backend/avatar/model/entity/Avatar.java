@@ -1,4 +1,4 @@
-package com.dotori.backend.entity;
+package com.dotori.backend.avatar.model.entity;
 
 import static javax.persistence.FetchType.*;
 import static javax.persistence.GenerationType.*;
@@ -11,30 +11,30 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.dotori.backend.member.model.entity.Member;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(name = "script")
-public class Script {
+@Table(name = "avatar")
+public class Avatar {
 	@Id
-	@Column(name = "script_id")
+	@Column(name = "avatar_id")
 	@GeneratedValue(strategy = IDENTITY)
-	private Long scriptId;
+	private Long avatarId;
+
+	@Column(unique = true)
+	private String path;
+
+	@Column
+	private String name;
 
 	@ManyToOne(fetch = LAZY)
-	@JoinColumn(name = "role_id", nullable = false)
-	private Role role;
+	@JoinColumn(name = "member_id", nullable = false)
+	private Member member;
 
-	@ManyToOne(fetch = LAZY)
-	@JoinColumn(name = "scene_id", nullable = false)
-	private Scene scene;
-
-	@Column(name = "script_order")
-	private int scriptOrder;
-
-	@Column(name = "content")
-	private String content;
 }
+

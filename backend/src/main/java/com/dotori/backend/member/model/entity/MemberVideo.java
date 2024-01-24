@@ -1,4 +1,4 @@
-package com.dotori.backend.entity;
+package com.dotori.backend.member.model.entity;
 
 import static javax.persistence.FetchType.*;
 import static javax.persistence.GenerationType.*;
@@ -11,28 +11,30 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.dotori.backend.common.entity.BaseTimeEntity;
+import com.dotori.backend.video.model.entity.Video;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(name = "avatar")
-public class Avatar {
+@Table(name = "member_video")
+public class MemberVideo extends BaseTimeEntity {
 	@Id
-	@Column(name = "avatar_id")
+	@Column(name = "member_video_id")
 	@GeneratedValue(strategy = IDENTITY)
-	private Long avatarId;
-
-	@Column(unique = true)
-	private String path;
-
-	@Column
-	private String name;
+	private Long memberVideoId;
 
 	@ManyToOne(fetch = LAZY)
 	@JoinColumn(name = "member_id", nullable = false)
 	private Member member;
 
-}
+	@ManyToOne(fetch = LAZY)
+	@JoinColumn(name = "video_id", nullable = false)
+	private Video video;
 
+	@Column
+	private Long bookId;
+}
