@@ -70,7 +70,7 @@ public class RoomController {
 		}
 		ConnectionProperties properties = ConnectionProperties.fromJson(params).build();
 		Connection connection = session.createConnection(properties);
-		System.out.println(connection.getConnectionId());
+		// System.out.println(connection.getConnectionId());
 		return new ResponseEntity<>(connection.getToken(), HttpStatus.OK);
 	}
 
