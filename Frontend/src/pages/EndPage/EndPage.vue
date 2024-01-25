@@ -8,7 +8,7 @@
         <!--        <div class="col-2"></div>-->
         <div class="col-3 flex justify-center items-center q-pa-sm " v-for="item in 4" key=item>
           <div class="background-green flex items-center justify-center">
-            <img class="q-ma-md" src="../assets/acorn_character_img.png" width="80%">
+            <img class="q-ma-md" src="../../assets/acorn_character_img.png" width="80%">
           </div>
         </div>
         <!--        <div class="col-2"></div>-->
@@ -30,7 +30,7 @@
   </div>
 </template>
 <script setup>
-  import Header from 'layouts/Header.vue';
+  import Header from 'components/CommonComponents/Header.vue';
 </script>
 
 <style scoped>

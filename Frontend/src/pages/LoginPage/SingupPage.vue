@@ -47,7 +47,7 @@
     }
     .bg-brown-3::after {
         content: '';
-        background-image: url('../assets/login/loginbackground.png'); /* 배경 이미지 경로 설정 */
+        background-image: url('../../assets/login/loginbackground.png'); /* 배경 이미지 경로 설정 */
         background-size: cover; /* 배경 이미지를 컨테이너에 맞게 조절 */
         background-position: center bottom; /* 배경 이미지를 가운데 정렬하고 아래에 위치하도록 설정 */
         position: absolute; /* 절대적인 위치 설정 */

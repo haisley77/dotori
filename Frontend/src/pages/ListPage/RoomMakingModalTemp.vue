@@ -78,7 +78,7 @@
 </template>
 
 <script>
-  import Character from 'components/Character.vue';
+  import Character from 'components/MyPageComponents/Character.vue';
   import {ref,defineComponent} from 'vue';
 
   export default defineComponent({

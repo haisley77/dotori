@@ -1,5 +1,5 @@
 <script setup>
-  import Header from 'layouts/Header.vue';
+  import Header from 'components/CommonComponents/Header.vue';
 
   const thumbStyle = {
     right: '1.5px',

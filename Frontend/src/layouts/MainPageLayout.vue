@@ -93,7 +93,7 @@
 </template>
 
 <script setup>
-    import Header from 'layouts/Header.vue';
+    import Header from 'components/CommonComponents/Header.vue';
     import {ref, onMounted, watchEffect} from 'vue';
 
     const slide = ref('first');
