@@ -23,7 +23,7 @@ import io.openvidu.java.client.OpenVidu;
 import io.openvidu.java.client.Session;
 
 @CrossOrigin(origins = "*")
-@RestController("/")
+@RestController("/api/rooms")
 @PropertySource("classpath:application-openvidu.yml")
 @ConfigurationProperties(prefix = "openvidu")
 public class RoomController {
@@ -36,7 +36,7 @@ public class RoomController {
 
 	private OpenVidu openvidu;
 
-	private RoomService roomService;
+	private final RoomService roomService;
 
 	@PostConstruct
 	public void init() {
@@ -47,13 +47,10 @@ public class RoomController {
 		this.roomService = roomService;
 	}
 
-	/**
-	 * @param params The Session properties
-	 * @return The Session ID
-	 */
-	@PostMapping("/api/sessions")
-	public ResponseEntity<String> initializeSession(@RequestBody(required = true) RoomInitializationDto params) {
+	@PostMapping("/sessions")
+	public ResponseEntity<String> initializeSession(@RequestBody(required = false) RoomInitializationDto params) {
 		Session session = null;
+		String errorMessage = null;
 		try {
 			// 세션을 만듭니다.
 			session = roomService.createSession(openvidu, params.getSessionProperties());
@@ -67,22 +64,17 @@ public class RoomController {
 			System.out.println(e.getMessage());
 			// e.printStackTrace();
 		}
-		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<>("세션 생성 실패", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-	/**
-	 * @param roomId The Session in which to create the Connection
-	 * @param params    The Connection properties
-	 * @return The Token associated to the Connection
-	 */
-	@PostMapping("/api/sessions/connections/{roomId}")
+	@PostMapping("/connections/{roomId}")
 	public ResponseEntity<String> createConnectionByHost(@PathVariable("roomId") String roomId,
 		@RequestBody(required = false) Map<String, Object> params) {
 		Connection connection = null;
 		try {
 			// 방 Id에 해당하는 방과 커넥션을 생성합니다.
 			connection = roomService.createConnectionByHost(openvidu, Long.parseLong(roomId), params);
-			// connection이 정상적으로 생성되었다면 connection의 token을 반환합니다.
+			// token을 반환합니다.
 			if (connection != null) {
 				return new ResponseEntity<>(connection.getToken(), HttpStatus.OK);
 			}
@@ -90,6 +82,6 @@ public class RoomController {
 			System.out.println(e.getMessage());
 			// e.printStackTrace();
 		}
-		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<>("커넥션 생성 실패", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }
