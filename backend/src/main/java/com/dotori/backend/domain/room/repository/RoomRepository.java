@@ -18,8 +18,8 @@ public class RoomRepository {
 
 	public Long saveRoomInfo(Room room) {
 		// System.out.println(room.getTitle());
-		// em.persist(room);
-		// em.flush();
+		em.persist(room);
+		em.flush();
 		return room.getRoomId();
 	}
 
