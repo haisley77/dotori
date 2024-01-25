@@ -62,7 +62,7 @@ public class RoomController {
 				// 방 정보를 DB에 등록합니다.
 				Long roomId = roomService.saveRoomInfo(params.getRoomInfo(), session.getSessionId());
 				// room id를 반환합니다.
-				return new ResponseEntity<>(roomId.toString(), HttpStatus.OK);
+				return new ResponseEntity<>(roomId.toString(), HttpStatus.CREATED);
 			}
 		} catch (Exception e) {
 			// e.printStackTrace();
@@ -80,7 +80,7 @@ public class RoomController {
 			connection = roomService.createConnectionByHost(openvidu, Long.parseLong(roomId), params);
 			// token을 반환합니다.
 			if (connection != null) {
-				return new ResponseEntity<>(connection.getToken(), HttpStatus.OK);
+				return new ResponseEntity<>(connection.getToken(), HttpStatus.CREATED);
 			}
 		} catch (Exception e) {
 			// e.printStackTrace();
