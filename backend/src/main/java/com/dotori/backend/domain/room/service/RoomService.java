@@ -12,8 +12,10 @@ public interface RoomService {
 
 	Long saveRoomInfo(Map<String, Object> roomInfo, String sessionId) throws Exception;
 
-	Session findBySessionId(String sessionId) throws Exception;
+	Session findSessionByRoomId(OpenVidu openvidu, Long roomId) throws Exception;
 
-	Connection createConnection(Map<String, Object> connectionProperties) throws Exception;
+	Connection createConnectionByRoomManager(OpenVidu openvidu, Long roomId,
+		Map<String, Object> connectionProperties) throws
+		Exception;
 
 }
