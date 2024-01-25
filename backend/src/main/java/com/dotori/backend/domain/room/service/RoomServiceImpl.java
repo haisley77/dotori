@@ -1,9 +1,14 @@
 package com.dotori.backend.domain.room.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.dotori.backend.domain.book.model.entity.Book;
+import com.dotori.backend.domain.room.model.entity.Room;
+import com.dotori.backend.domain.room.model.entity.RoomMember;
 import com.dotori.backend.domain.room.repository.RoomRepository;
 
 import io.openvidu.java.client.Connection;
@@ -29,8 +34,29 @@ public class RoomServiceImpl implements RoomService {
 	}
 
 	@Override
-	public String saveRoomInfo(Map<String, Object> roomInfo, String sessionId) {
-		return null;
+	public Long saveRoomInfo(Map<String, Object> roomInfo, String sessionId) {
+		List<RoomMember> roomMembers = new ArrayList<>();
+
+		// 책 정보 더미데이터
+		Book book = Book.builder()
+			.title("토끼와 거북이")
+			.bookImg("토끼와거북이주소")
+			.author("이하은")
+			.build();
+
+		// room 엔티티를 생성합니다.
+		Room room = Room.builder()
+			.book(book)
+			.hostId((Long)roomInfo.get("hostId"))
+			.roomMembers(roomMembers)
+			.title("토끼와 거북이 같이 연극해요!")
+			.password("1234")
+			.isPublic(false)
+			.sessionId(sessionId)
+			.build();
+
+		// DB에 저장하러 갑니다.
+		return roomRepository.saveRoomInfo(room);
 	}
 
 	@Override
