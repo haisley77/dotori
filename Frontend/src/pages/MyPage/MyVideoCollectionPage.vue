@@ -34,7 +34,7 @@
 </template>
 
 <script setup>
-  import Card from 'components/VideoCard.vue';
+  import Card from 'components/MyPageComponents/VideoCard.vue';
 
   const columns = [
     {

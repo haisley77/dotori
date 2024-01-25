@@ -71,7 +71,7 @@
     username: '빠른 거북이',
     description: '안녕하세요 ~',
   };
-  import Header from 'layouts/Header.vue';
+  import Header from 'components/CommonComponents/Header.vue';
 </script>
 
 <style lang='scss' scoped>

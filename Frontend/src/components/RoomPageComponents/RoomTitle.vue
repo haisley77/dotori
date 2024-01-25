@@ -24,7 +24,7 @@
 }
 
 .background-yellow {
-  background: #ebf686;
+  background: white;
   border-radius: 20px 20px 20px 20px;
 //border: dashed #cc765a 5px;
 }

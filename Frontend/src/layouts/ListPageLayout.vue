@@ -4,13 +4,15 @@
 
 <!--  <ListDrawer/>-->
 
-  <ListContent/>
+    <q-page-container>
+      <router-view/>
+    </q-page-container>
 </q-layout>
 </template>
 
 <script setup>
-import ListContent from './ListContent.vue';
-import Header from 'layouts/Header.vue';
+
+import Header from 'components/CommonComponents/Header.vue';
 
 
 </script>

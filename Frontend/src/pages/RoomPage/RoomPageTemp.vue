@@ -31,12 +31,12 @@
 
 </template>
 <script setup>
-import PlayerList from 'components/RoomPageComponents/PlayerList.vue';
-import BookInfo from 'components/RoomPageComponents/BookInfo.vue';
-import StartReady from 'components/RoomPageComponents/StartReady.vue';
-import RoomChat from 'components/RoomPageComponents/RoomChat.vue';
-import RoomTitle from "components/RoomPageComponents/RoomTitle.vue";
-import Header from 'layouts/Header.vue';
+import PlayerList from 'components/RoomPageComponentsTemp/PlayerList.vue';
+import BookInfo from 'components/RoomPageComponentsTemp/BookInfo.vue';
+import StartReady from 'components/RoomPageComponentsTemp/StartReady.vue';
+import RoomChat from 'components/RoomPageComponentsTemp/RoomChat.vue';
+import RoomTitle from "components/RoomPageComponentsTemp/RoomTitle.vue";
+import Header from 'components/CommonComponents/Header.vue';
 </script>
 
 <style scoped>
