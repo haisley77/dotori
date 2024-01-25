@@ -83,38 +83,25 @@
 
 
 </template>
-
-<script>
+<script setup>
   import Character from 'components/MyPageComponents/Character.vue';
-  import {ref, defineComponent} from 'vue';
+  import { ref } from 'vue';
 
-  export default defineComponent({
-    components: {Character},
-    setup() {
-      const open = ref(false);
-      const imageUrl = ref('../assets/rabbitandturtle.jpg');
-      const title = ref('토끼와 거북이');
-      const content = ref('옛날 옛적에, 토끼와 거북이가 살고 있었다.\n' +
-        '                어느날 토끼가 거북이를 느림보라고 놀려대자, 거북이는 자극을 받고 토끼에게 달리기 경주를 제안하였다.\n' +
-        '                경주를 시작한 토끼는 거북이가 한참 뒤쳐진 것을 보고 안심을 하고 중간에 낮잠을 잔다.' +
-        '                어느날 토끼가 거북이를 느림보라고 놀려대자, 거북이는 자극을 받고 토끼에게 달리기 경주를 제안하였다.\n' +
-        '                경주를 시작한 토끼는 거북이가 한참 뒤쳐진 것을 보고 안심을 하고 중간에 낮잠을 잔다.');
-      const writer = ref('도토리 오리지널');
+  const open = ref(false);
+  const imageUrl = ref('../assets/rabbitandturtle.jpg');
+  const title = ref('토끼와 거북이');
+  const content =
+    '옛날 옛적에, 토끼와 거북이가 살고 있었다.\n' +
+    '어느날 토끼가 거북이를 느림보라고 놀려대자, 거북이는 자극을 받고 토끼에게 달리기 경주를 제안하였다.\n' +
+    '경주를 시작한 토끼는 거북이가 한참 뒤쳐진 것을 보고 안심을 하고 중간에 낮잠을 잔다.' +
+    '어느날 토끼가 거북이를 느림보라고 놀려대자, 거북이는 자극을 받고 토끼에게 달리기 경주를 제안하였다.\n' +
+    '경주를 시작한 토끼는 거북이가 한참 뒤쳐진 것을 보고 안심을 하고 중간에 낮잠을 잔다.';
+  const writer = ref('도토리 오리지널');
 
-      const roomName = ref('');
-      const roomPassword = ref('');
+  const roomName = ref('');
+  const roomPassword = ref('');
 
-      return {
-        open,
-        title,
-        content,
-        writer,
-        imageUrl,
-        roomName,
-        roomPassword,
-      };
-    },
-  });
+  const components = { Character };
 </script>
 
 <style scoped>
