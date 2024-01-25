@@ -8,7 +8,7 @@
       <div class="in-back q-pa-sm" style="height: 100%">
         <div class="scene-background-container">
           <q-img
-            src="~assets/recording/tmp_scene_thumbnail.jpg"
+            src="~assets/RecordingPage/tmp_scene_thumbnail.jpg"
             :ratio="16/9"
             style="height: 100%; border-radius: 15px"
           />

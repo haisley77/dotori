@@ -6,7 +6,7 @@
         <div class="col-4 q-ma-sm">
           <q-card dark bordered class="mycard book-story q-pa-sm flex justify-center items-center"
                   style="height:500px">
-            <img height=100% src="../../assets/rabbitandturtle.jpg" alt="책" style="object-fit: fill;">
+            <img height=100% src="../../assets/BookImages/rabbitandturtle.jpg" alt="책" style="object-fit: fill;">
           </q-card>
         </div>
         <div class="book-info col-8 q-ma-sm" >

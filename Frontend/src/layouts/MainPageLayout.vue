@@ -29,7 +29,7 @@
             </q-carousel-slide>
             <q-carousel-slide
                 name="second"
-                img-src="../assets/mainpage/main2.png"
+                img-src="../assets/MainPageImages/main2.png"
             >
                 <div class="absolute-bottom custom-caption">
                     <div class="text-h2">Second stop</div>
@@ -66,7 +66,7 @@
     <div class="q-md">
         <q-parallax :height="900" :speed="0.3">
             <template v-slot:media>
-                <img src="../assets/login/loginbackground.png" />
+                <img src="../assets/LoginPageImages/loginbackground.png" />
             </template>
 
             <div

@@ -20,7 +20,7 @@
 
 <script setup>
     import {onBeforeMount} from 'vue';
-    import useSocialLogin from '@/composables/socialLogin';
+    import useSocialLogin from '@/composables/socialLogin.js';
 
     const {doSocialLogin, loginResult} = useSocialLogin();
 

@@ -29,7 +29,7 @@
             <div style="background: #ebf686; border-radius: 20px" class="q-pa-sm">
               <q-img
                 :ratio="16/9"
-                src="~assets/recording/tmp_scene_thumbnail.jpg"
+                src="~assets/RecordingPage/tmp_scene_thumbnail.jpg"
                 style="border-radius: 20px"
               />
               <div class="row q-mt-md q-pa-xs flex justify-center items-center"

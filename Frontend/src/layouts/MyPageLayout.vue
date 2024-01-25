@@ -49,7 +49,7 @@
         <div class='absolute-center bg-transparent column items-center'>
           <div class="profile-bg-white q-my-md">
             <q-avatar size='120px' class=' content-center'>
-              <img src='../assets/winter.png' style="object-fit: cover">
+              <img src='../assets/MyPageImages/winter.png' style="object-fit: cover">
             </q-avatar>
           </div>
           <h6 class='npsfont q-ma-none'>{{ userInfo.username }}</h6>

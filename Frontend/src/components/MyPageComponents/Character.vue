@@ -9,7 +9,7 @@
 
   <div style="width: 116px;height: 116px; border-radius: 50%; border: #35daa0 5px solid; padding: 3px;background: white;"
        class="q-ma-sm flex justify-center items-center relative-position">
-    <img src="../../assets/pikachu.jpg" width="100%" style="width:100px;height:100px;border-radius: 50%;object-fit: contain">
+    <img src="../../assets/MyPageImages/pikachu.jpg" width="100%" style="width:100px;height:100px;border-radius: 50%;object-fit: contain">
     <q-btn unelevated rounded :label="role" class="absolute-bottom my-avatar-btn"></q-btn>
   </div>
 </template>
