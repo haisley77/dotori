@@ -12,6 +12,7 @@ import com.dotori.backend.domain.room.model.entity.RoomMember;
 import com.dotori.backend.domain.room.repository.RoomRepository;
 
 import io.openvidu.java.client.Connection;
+import io.openvidu.java.client.ConnectionProperties;
 import io.openvidu.java.client.OpenVidu;
 import io.openvidu.java.client.Session;
 import io.openvidu.java.client.SessionProperties;
@@ -60,12 +61,23 @@ public class RoomServiceImpl implements RoomService {
 	}
 
 	@Override
-	public Session findBySessionId(String sessionId) {
-		return null;
+	public Session findSessionByRoomId(OpenVidu openvidu, Long roomId) {
+		String sessionId = roomRepository.findSessionByRoomId(roomId);
+		return openvidu.getActiveSession(sessionId);
 	}
 
 	@Override
-	public Connection createConnection(Map<String, Object> connectionProperties) {
-		return null;
+	public Connection createConnectionByRoomManager(OpenVidu openvidu, Long roomId,
+		Map<String, Object> connectionProperties) throws
+		Exception {
+		Session session = findSessionByRoomId(openvidu, roomId);
+		if (session == null) {
+			//return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			throw new Exception("방이 존재하지 않습니다.");
+		}
+		ConnectionProperties properties = ConnectionProperties.fromJson(connectionProperties).build();
+		// System.out.println(properties.toString());
+		return session.createConnection(properties);
+		// System.out.println(connection.getConnectionId());
 	}
 }

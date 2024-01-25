@@ -22,4 +22,9 @@ public class RoomRepository {
 		// em.flush();
 		return room.getRoomId();
 	}
+
+	public String findSessionByRoomId(Long roomId) {
+		Room room = em.find(Room.class, roomId);
+		return room.getSessionId();
+	}
 }

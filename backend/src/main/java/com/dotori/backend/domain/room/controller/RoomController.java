@@ -19,10 +19,7 @@ import com.dotori.backend.domain.room.model.dto.RoomInitializationDto;
 import com.dotori.backend.domain.room.service.RoomService;
 
 import io.openvidu.java.client.Connection;
-import io.openvidu.java.client.ConnectionProperties;
 import io.openvidu.java.client.OpenVidu;
-import io.openvidu.java.client.OpenViduHttpException;
-import io.openvidu.java.client.OpenViduJavaClientException;
 import io.openvidu.java.client.Session;
 
 @CrossOrigin(origins = "*")
@@ -55,17 +52,16 @@ public class RoomController {
 	 * @return The Session ID
 	 */
 	@PostMapping("/api/sessions")
-	public ResponseEntity<String> initializeSession(@RequestBody(required = true) RoomInitializationDto params)
-		throws OpenViduJavaClientException, OpenViduHttpException {
+	public ResponseEntity<String> initializeSession(@RequestBody(required = true) RoomInitializationDto params) {
 		Session session = null;
 		try {
 			// 세션을 만듭니다.
 			session = roomService.createSession(openvidu, params.getSessionProperties());
 			if (session != null) {
 				// 방 정보를 DB에 등록합니다.
-				roomService.saveRoomInfo(params.getRoomInfo(), session.getSessionId());
-				// 세션 id를 반환합니다.
-				return new ResponseEntity<>(session.getSessionId(), HttpStatus.OK);
+				Long roomId = roomService.saveRoomInfo(params.getRoomInfo(), session.getSessionId());
+				// room id를 반환합니다.
+				return new ResponseEntity<>(roomId.toString(), HttpStatus.OK);
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -75,22 +71,25 @@ public class RoomController {
 	}
 
 	/**
-	 * @param sessionId The Session in which to create the Connection
+	 * @param roomId The Session in which to create the Connection
 	 * @param params    The Connection properties
 	 * @return The Token associated to the Connection
 	 */
-	@PostMapping("/api/sessions/{sessionId}/connections")
-	public ResponseEntity<String> createConnection(@PathVariable("sessionId") String sessionId,
-		@RequestBody(required = false) Map<String, Object> params)
-		throws OpenViduJavaClientException, OpenViduHttpException {
-		Session session = openvidu.getActiveSession(sessionId);
-		if (session == null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	@PostMapping("/api/sessions/connections/{roomId}")
+	public ResponseEntity<String> createConnectionByRoomManager(@PathVariable("roomId") String roomId,
+		@RequestBody(required = false) Map<String, Object> params) {
+		Connection connection = null;
+		try {
+			// 방 Id에 해당하는 방과 커넥션을 생성합니다.
+			connection = roomService.createConnectionByRoomManager(openvidu, Long.parseLong(roomId), params);
+			// connection이 정상적으로 생성되었다면 connection의 token을 반환합니다.
+			if (connection != null) {
+				return new ResponseEntity<>(connection.getToken(), HttpStatus.OK);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			// e.printStackTrace();
 		}
-		ConnectionProperties properties = ConnectionProperties.fromJson(params).build();
-		Connection connection = session.createConnection(properties);
-		// System.out.println(connection.getConnectionId());
-		return new ResponseEntity<>(connection.getToken(), HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-
 }
