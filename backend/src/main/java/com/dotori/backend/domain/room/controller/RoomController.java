@@ -15,13 +15,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dotori.backend.domain.room.model.dto.RoomInitializationDto;
+import com.dotori.backend.domain.room.service.RoomService;
+
 import io.openvidu.java.client.Connection;
 import io.openvidu.java.client.ConnectionProperties;
 import io.openvidu.java.client.OpenVidu;
 import io.openvidu.java.client.OpenViduHttpException;
 import io.openvidu.java.client.OpenViduJavaClientException;
 import io.openvidu.java.client.Session;
-import io.openvidu.java.client.SessionProperties;
 
 @CrossOrigin(origins = "*")
 @RestController("/")
@@ -37,9 +39,15 @@ public class RoomController {
 
 	private OpenVidu openvidu;
 
+	private RoomService roomService;
+
 	@PostConstruct
 	public void init() {
 		this.openvidu = new OpenVidu(OPENVIDU_URL, OPENVIDU_SECRET);
+	}
+
+	public RoomController(RoomService roomService) {
+		this.roomService = roomService;
 	}
 
 	/**
@@ -47,12 +55,23 @@ public class RoomController {
 	 * @return The Session ID
 	 */
 	@PostMapping("/api/sessions")
-	public ResponseEntity<String> initializeSession(@RequestBody(required = false) Map<String, Object> params)
+	public ResponseEntity<String> initializeSession(@RequestBody(required = true) RoomInitializationDto params)
 		throws OpenViduJavaClientException, OpenViduHttpException {
-		SessionProperties properties = SessionProperties.fromJson(params).build();
-		System.out.println(properties.toString());
-		Session session = openvidu.createSession(properties);
-		return new ResponseEntity<>(session.getSessionId(), HttpStatus.OK);
+		Session session = null;
+		try {
+			// 세션을 만듭니다.
+			session = roomService.createSession(openvidu, params.getSessionProperties());
+			if (session != null) {
+				// 방 정보를 DB에 등록합니다.
+				roomService.saveRoomInfo(params.getRoomInfo(), session.getSessionId());
+				// 세션 id를 반환합니다.
+				return new ResponseEntity<>(session.getSessionId(), HttpStatus.OK);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			// e.printStackTrace();
+		}
+		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	/**
