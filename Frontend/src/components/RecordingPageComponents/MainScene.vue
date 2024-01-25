@@ -1,48 +1,23 @@
-<template>
-  <Header />
-  <div class="row flex justify-center q-px-none">
-    <div class="col-10">
-      <div class="entire-container row">
+<script setup>
 
-        <div class="left-container col-2">
-          <SideBar/>
-        </div>
-        <div class="right-container q-pa-sm col-10">
-          <SceneContainer/>
-          <div class="script-controller-container row">
-            <Script/>
-            <SceneController/>
-          </div>
+</script>
+
+<template>
+  <div class="scene-info-container q-mb-sm ">
+    <div class="q-pa-sm out-back" style="height: 100%">
+      <div class="in-back q-pa-sm" style="height: 100%">
+        <div class="scene-background-container">
+          <q-img
+            src="~assets/recording/tmp_scene_thumbnail.jpg"
+            :ratio="16/9"
+            style="height: 100%; border-radius: 15px"
+          />
         </div>
       </div>
     </div>
   </div>
 </template>
 
-
-
-<script setup>
-  import Header from 'components/CommonComponents/Header.vue';
-  import SideBar from 'components/RecordingPageComponents/SideBar.vue';
-  import SceneContainer from 'components/RecordingPageComponents/MainScene.vue';
-  import Script from 'components/RecordingPageComponents/Script.vue';
-  import SceneController from 'components/RecordingPageComponents/SceneController.vue';
-
-  const thumbStyle = {
-    right: '1.5px',
-    borderRadius: '5px',
-    backgroundColor: '#35daa0',
-    width: '5px',
-    opacity: 0.75,
-  };
-
-  const barStyle = {
-    borderRadius: '9px',
-    backgroundColor: '#ffffff',
-    width: '8px',
-    opacity: 0,
-  };
-</script>
 <style scoped>
   @font-face {
     font-family: 'NPSfontBold';

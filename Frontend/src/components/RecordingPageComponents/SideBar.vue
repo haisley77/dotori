@@ -1,33 +1,32 @@
-<template>
-  <Header />
-  <div class="row flex justify-center q-px-none">
-    <div class="col-10">
-      <div class="entire-container row">
 
-        <div class="left-container col-2">
-          <SideBar/>
-        </div>
-        <div class="right-container q-pa-sm col-10">
-          <SceneContainer/>
-          <div class="script-controller-container row">
-            <Script/>
-            <SceneController/>
+
+<template>
+  <div class="q-py-sm" style="height: 100%">
+    <q-scroll-area
+      :thumb-style="thumbStyle"
+      :bar-style="barStyle"
+      style="height: 100%; max-width: 100%;"
+    >
+      <div v-for="n in 10" :key="n" class="q-px-sm q-mr-sm">
+        <div class="scene-short-info-container q-mb-sm">
+          <!-- 추후 :class의 조건을 클릭된 상태인지 여부에 따라 변경 -->
+          <div class="out-back q-pa-sm" :class="{'scene-bordering': n === 2}">
+            <div class="in-back">
+              <div class="scene-number-container text-center q-pa-sm">
+                <h6 class="npsfont white-background q-my-none" @click="alert()">장면 {{ n }}</h6>
+              </div>
+              <div class="scene-thumbnail-container q-px-sm">
+                <img src="https://www.w3schools.com/howto/img_forest.jpg" alt="dja"
+                     style="width: 100%; border-radius: 15px;">
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </q-scroll-area>
   </div>
 </template>
-
-
-
 <script setup>
-  import Header from 'components/CommonComponents/Header.vue';
-  import SideBar from 'components/RecordingPageComponents/SideBar.vue';
-  import SceneContainer from 'components/RecordingPageComponents/MainScene.vue';
-  import Script from 'components/RecordingPageComponents/Script.vue';
-  import SceneController from 'components/RecordingPageComponents/SceneController.vue';
-
   const thumbStyle = {
     right: '1.5px',
     borderRadius: '5px',

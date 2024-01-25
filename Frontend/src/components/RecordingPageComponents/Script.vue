@@ -1,17 +1,30 @@
-<template>
-  <Header />
-  <div class="row flex justify-center q-px-none">
-    <div class="col-10">
-      <div class="entire-container row">
+<script setup>
 
-        <div class="left-container col-2">
-          <SideBar/>
-        </div>
-        <div class="right-container q-pa-sm col-10">
-          <SceneContainer/>
-          <div class="script-controller-container row">
-            <Script/>
-            <SceneController/>
+</script>
+
+<template>
+  <div class="scene-script-container npsfont text-center col-8 q-pr-xs ">
+    <div class="out-back q-pa-sm" style="height: 100%">
+      <div class="in-back q-pa-sm" style="height: 100%">
+        <div class="script-background">
+          <div class="role-script-container">
+            <p class="text-weight-bold q-ma-none">호랑이 : 어흥어흥 ~ 어흥어흥어흐얼어어흥어흥 ~ 어흥어흥어흐얼어어흥어흥 ~ 어흥어흥어흐얼어</p>
+          </div>
+          <div class="role-script-container">
+            <p class="text-weight-bold q-ma-none">호랑이 : 어흥어흥 ~ 어흥어흥어흐얼어</p>
+          </div>
+          <div class="role-script-container">
+            <p class="text-weight-bold q-ma-none">호랑이 : 어흥어흥 ~ 어흥어흥어흐얼어</p>
+          </div>
+
+          <div class="role-script-container">
+            <p class="text-weight-bold q-ma-none">돼지: 꿀굴굴굴꿀...</p>
+          </div>
+          <div class="role-script-container">
+            <p class="text-weight-bold q-ma-none">호랑이 : 어흥어흥 ~ 어흥어흥어흐얼어</p>
+          </div>
+          <div class="role-script-container">
+            <p class="text-weight-bold q-ma-none">돼지: 꿀굴굴굴꿀...</p>
           </div>
         </div>
       </div>
@@ -19,30 +32,6 @@
   </div>
 </template>
 
-
-
-<script setup>
-  import Header from 'components/CommonComponents/Header.vue';
-  import SideBar from 'components/RecordingPageComponents/SideBar.vue';
-  import SceneContainer from 'components/RecordingPageComponents/MainScene.vue';
-  import Script from 'components/RecordingPageComponents/Script.vue';
-  import SceneController from 'components/RecordingPageComponents/SceneController.vue';
-
-  const thumbStyle = {
-    right: '1.5px',
-    borderRadius: '5px',
-    backgroundColor: '#35daa0',
-    width: '5px',
-    opacity: 0.75,
-  };
-
-  const barStyle = {
-    borderRadius: '9px',
-    backgroundColor: '#ffffff',
-    width: '8px',
-    opacity: 0,
-  };
-</script>
 <style scoped>
   @font-face {
     font-family: 'NPSfontBold';
@@ -157,7 +146,7 @@
     background: white;
     border-radius: 15px;
     height: 100%;
-    border: #cc765a dashed 4px;
+    //border: #cc765a dashed 4px;
     display: flex;
     flex-direction: column;
     justify-content: center;
