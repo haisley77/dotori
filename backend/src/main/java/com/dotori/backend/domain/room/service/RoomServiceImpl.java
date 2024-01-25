@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dotori.backend.domain.book.model.entity.Book;
@@ -18,14 +19,17 @@ import io.openvidu.java.client.ConnectionProperties;
 import io.openvidu.java.client.OpenVidu;
 import io.openvidu.java.client.Session;
 import io.openvidu.java.client.SessionProperties;
-import lombok.RequiredArgsConstructor;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class RoomServiceImpl implements RoomService {
 
 	private final RoomRepository roomRepository;
+
+	@Autowired
+	public RoomServiceImpl(RoomRepository roomRepository) {
+		this.roomRepository = roomRepository;
+	}
 
 	/**
 	 * 세션을 생성하는 메서드
@@ -38,7 +42,6 @@ public class RoomServiceImpl implements RoomService {
 	public Session createSession(OpenVidu openvidu,
 		Map<String, Object> sessionProperties) throws Exception {
 		SessionProperties properties = SessionProperties.fromJson(sessionProperties).build();
-		// System.out.println(properties.toString());
 		return openvidu.createSession(properties);
 	}
 
@@ -58,8 +61,10 @@ public class RoomServiceImpl implements RoomService {
 			.bookImg("토끼와 거북이 책 이미지 주소")
 			.author("이하은")
 			.build();
+		// jpa entity cascade 오류로 추가한 코드입니다. 테스트가 필요할 시 주석을 풀고 테스트 하시면 됩니다.
+		// roomRepository.saveBook(book);
 
-		// room 엔티티를 생성합니다.
+		// 방 정보 더미데이터
 		Room room = Room.builder()
 			.book(book)
 			.hostId(1L)
