@@ -24,13 +24,13 @@
                 <q-card-actions class="flex items-center justify-center">
                     <div class="select_btn-group">
                         <q-btn flat @click="kakaologin()">
-                            <img src="../../assets/login/login_btn_kakao.svg" />
+                            <img src="../../assets/LoginPageImages/login_btn_kakao.svg" />
                         </q-btn>
                         <q-btn flat @click="naverlogin()">
-                            <img src="../../assets/login/login_btn_naver.svg" />
+                            <img src="../../assets/LoginPageImages/login_btn_naver.svg" />
                         </q-btn>
                         <q-btn flat @click="googlelogin()">
-                            <img src="../../assets/login/login_btn_google.svg" />
+                            <img src="../../assets/LoginPageImages/login_btn_google.svg" />
                         </q-btn>
                     </div>
                 </q-card-actions>
@@ -148,7 +148,7 @@
     /* PNG 이미지를 배경 맨 아래에 추가하는 가상 요소 설정 */
     .bg-brown-3::after {
         content: '';
-        background-image: url('../../assets/login/loginbackground.png'); /* 배경 이미지 경로 설정 */
+        background-image: url('../../assets/LoginPageImages/loginbackground.png'); /* 배경 이미지 경로 설정 */
         background-size: cover; /* 배경 이미지를 컨테이너에 맞게 조절 */
         background-position: center bottom; /* 배경 이미지를 가운데 정렬하고 아래에 위치하도록 설정 */
         position: absolute; /* 절대적인 위치 설정 */

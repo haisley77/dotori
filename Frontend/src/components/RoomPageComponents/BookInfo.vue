@@ -7,7 +7,7 @@
 
     <div style="height: 100%" class="background-yellow q-pa-sm ">
       <div class="column items-center">
-        <img src="../../assets/rabbitandturtle.jpg" class="bookimg">
+        <img src="../../assets/BookImages/rabbitandturtle.jpg" class="bookimg">
       </div>
       <div class="q-mt-sm column q-pa-sm background-white">
         제목 : 토끼와 거북이<br/>

@@ -1,17 +1,25 @@
-<template>
-  <Header />
-  <div class="row flex justify-center q-px-none">
-    <div class="col-10">
-      <div class="entire-container row">
+<script setup>
 
-        <div class="left-container col-2">
-          <SideBar/>
-        </div>
-        <div class="right-container q-pa-sm col-10">
-          <SceneContainer/>
-          <div class="script-controller-container row">
-            <Script/>
-            <SceneController/>
+</script>
+
+<template>
+  <div class="controller-container col-4 q-pl-xs">
+    <div class="out-back q-pa-sm" style="height: 100%">
+      <div class="in-back q-pa-sm" style="width: 100%; height: 100%">
+        <div class="button-container row">
+          <div class="left-button-container col-3">
+            <q-btn round color="grey-9" icon="mdi-arrow-left-bold" size="lg" />
+          </div>
+          <div class="center-button-container col-6">
+            <div class="play-button-container">
+              <q-btn round color="blue-12" icon="mdi-play" size="lg" />
+            </div>
+            <div class="stop-button-container">
+              <q-btn outline round color="white" text-color="red-5" icon="mdi-stop" size="lg" />
+            </div>
+          </div>
+          <div class="right-button-container col-3">
+            <q-btn round color="grey-9" icon="mdi-arrow-right-bold" size="lg" />
           </div>
         </div>
       </div>
@@ -19,30 +27,6 @@
   </div>
 </template>
 
-
-
-<script setup>
-  import Header from 'components/CommonComponents/Header.vue';
-  import SideBar from 'components/RecordingPageComponents/SideBar.vue';
-  import SceneContainer from 'components/RecordingPageComponents/MainScene.vue';
-  import Script from 'components/RecordingPageComponents/Script.vue';
-  import SceneController from 'components/RecordingPageComponents/SceneController.vue';
-
-  const thumbStyle = {
-    right: '1.5px',
-    borderRadius: '5px',
-    backgroundColor: '#35daa0',
-    width: '5px',
-    opacity: 0.75,
-  };
-
-  const barStyle = {
-    borderRadius: '9px',
-    backgroundColor: '#ffffff',
-    width: '8px',
-    opacity: 0,
-  };
-</script>
 <style scoped>
   @font-face {
     font-family: 'NPSfontBold';
@@ -167,7 +151,7 @@
     background: white;
     border-radius: 15px;
     height: 100%;
-    border: #cc765a dashed 4px;
+    //border: #cc765a dashed 4px;
   }
 
   .scene-bordering {
