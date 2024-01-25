@@ -95,13 +95,8 @@ public class RoomServiceImpl implements RoomService {
 	public Connection createConnectionByHost(OpenVidu openvidu, Long roomId,
 		Map<String, Object> connectionProperties) throws Exception {
 		Session session = findSessionByRoomId(openvidu, roomId);
-		if (session == null) {
-			//return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-			throw new Exception("방이 존재하지 않습니다.");
-		}
 		ConnectionProperties properties = ConnectionProperties.fromJson(connectionProperties).build();
 		// System.out.println(properties.toString());
 		return session.createConnection(properties);
-		// System.out.println(connection.getConnectionId());
 	}
 }
