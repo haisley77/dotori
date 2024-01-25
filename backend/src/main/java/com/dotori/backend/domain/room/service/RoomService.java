@@ -10,7 +10,7 @@ public interface RoomService {
 
 	Session createSession(OpenVidu openvidu, Map<String, Object> sessionProperties) throws Exception;
 
-	String saveRoomInfo(Map<String, Object> roomInfo, String sessionId) throws Exception;
+	Long saveRoomInfo(Map<String, Object> roomInfo, String sessionId) throws Exception;
 
 	Session findBySessionId(String sessionId) throws Exception;
 
