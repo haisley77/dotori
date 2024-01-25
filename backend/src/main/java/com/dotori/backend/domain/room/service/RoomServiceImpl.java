@@ -67,7 +67,7 @@ public class RoomServiceImpl implements RoomService {
 	}
 
 	@Override
-	public Connection createConnectionByRoomManager(OpenVidu openvidu, Long roomId,
+	public Connection createConnectionByHost(OpenVidu openvidu, Long roomId,
 		Map<String, Object> connectionProperties) throws
 		Exception {
 		Session session = findSessionByRoomId(openvidu, roomId);

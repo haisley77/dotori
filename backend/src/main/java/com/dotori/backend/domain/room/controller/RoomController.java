@@ -76,12 +76,12 @@ public class RoomController {
 	 * @return The Token associated to the Connection
 	 */
 	@PostMapping("/api/sessions/connections/{roomId}")
-	public ResponseEntity<String> createConnectionByRoomManager(@PathVariable("roomId") String roomId,
+	public ResponseEntity<String> createConnectionByHost(@PathVariable("roomId") String roomId,
 		@RequestBody(required = false) Map<String, Object> params) {
 		Connection connection = null;
 		try {
 			// 방 Id에 해당하는 방과 커넥션을 생성합니다.
-			connection = roomService.createConnectionByRoomManager(openvidu, Long.parseLong(roomId), params);
+			connection = roomService.createConnectionByHost(openvidu, Long.parseLong(roomId), params);
 			// connection이 정상적으로 생성되었다면 connection의 token을 반환합니다.
 			if (connection != null) {
 				return new ResponseEntity<>(connection.getToken(), HttpStatus.OK);

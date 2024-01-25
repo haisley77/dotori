@@ -14,7 +14,7 @@ public interface RoomService {
 
 	Session findSessionByRoomId(OpenVidu openvidu, Long roomId) throws Exception;
 
-	Connection createConnectionByRoomManager(OpenVidu openvidu, Long roomId,
+	Connection createConnectionByHost(OpenVidu openvidu, Long roomId,
 		Map<String, Object> connectionProperties) throws
 		Exception;
 
