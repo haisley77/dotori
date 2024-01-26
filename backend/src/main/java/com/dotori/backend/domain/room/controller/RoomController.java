@@ -1,5 +1,6 @@
 package com.dotori.backend.domain.room.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -14,7 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,7 +33,7 @@ import io.openvidu.java.client.Session;
 import io.openvidu.java.client.SessionProperties;
 
 @CrossOrigin(origins = "*")
-@RestController("/")
+@RestController
 @PropertySource("classpath:application-openvidu.yml")
 @ConfigurationProperties(prefix = "openvidu")
 public class RoomController {
@@ -67,11 +67,11 @@ public class RoomController {
 		return new ResponseEntity<>(session.getSessionId(), HttpStatus.OK);
 	}
 
-	/**
-	 * @param sessionId The Session in which to create the Connection
-	 * @param params    The Connection properties
-	 * @return The Token associated to the Connection
-	 */
+	// /**
+	//  * @param sessionId The Session in which to create the Connection
+	//  * @param params    The Connection properties
+	//  * @return The Token associated to the Connection
+	//  */
 	// @PostMapping("/api/sessions/{sessionId}/connections")
 	// public ResponseEntity<String> createConnection(@PathVariable("sessionId") String sessionId,
 	// 	@RequestBody(required = false) Map<String, Object> params)
@@ -86,23 +86,7 @@ public class RoomController {
 	// 	return new ResponseEntity<>(connection.getToken(), HttpStatus.OK);
 	// }
 
-	// 방 참여 유저
-	@GetMapping("/api/sessions/{sessionId}/connections")
-	public ResponseEntity<String> creatConnectionByMember(@PathVariable("sessionId") String sessionId,
-		// 이부분(@pathvariable부터) 우리는 디비에서 가져온다.
-		@RequestBody(required = false) Map<String, Object> params)
-		throws OpenViduJavaClientException, OpenViduHttpException {
-		Session session = openvidu.getActiveSession(sessionId);
-		if (session == null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		ConnectionProperties properties = ConnectionProperties.fromJson(params).build();
-		Connection connection = session.createConnection(properties);
-		// System.out.println(connection.getConnectionId());
-		return new ResponseEntity<>(connection.getToken(), HttpStatus.OK);
-	}
-
-	// 모든 방 정보를 가져오는 API 엔드포인트
+	// 모든 방 정보를 가져오는 API
 	@GetMapping("/api/rooms")
 	public ResponseEntity<List<RoomDTO>> getAllRooms() {
 		List<Room> rooms = rs.getAllRooms();
@@ -111,17 +95,24 @@ public class RoomController {
 	}
 
 	@PostMapping("/api/room")
-	public ResponseEntity<String> connectionByRoomId(@RequestParam("roomId") Long roomId) {
-
+	public ResponseEntity<String> connectionByRoomId(@RequestParam("roomId") Long roomId) throws
+		OpenViduJavaClientException,
+		OpenViduHttpException {
 		// 클라이언트가 보낸 roomId를 사용하여 세션 ID 조회
-		String sessionId = String.valueOf(rs.findByRoomId(roomId).getSessionId());
-		if (sessionId != null) {
-			// 세션 ID가 존재하면 성공 응답과 세션 ID 반환
-			System.out.println(sessionId);
-			return ResponseEntity.ok(sessionId);
-		} else {
-			// 세션 ID가 존재하지 않으면 실패 응답
-			return ResponseEntity.status(404).body("Room not found");
+		String sessionId = rs.findByRoomId(roomId).getSessionId();
+		openvidu.fetch();
+		Session session = openvidu.getActiveSession(sessionId);
+
+		if (session == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
+
+		Map<String, Object> params = new HashMap<>();
+		params.put("sessionId", sessionId);
+
+		ConnectionProperties properties = ConnectionProperties.fromJson(params).build();
+		Connection connection = session.createConnection(properties);
+		System.out.println(connection.getToken());
+		return new ResponseEntity<>(connection.getToken(), HttpStatus.OK);
 	}
 }
