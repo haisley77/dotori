@@ -1,91 +1,101 @@
 <template>
-<div class ="row">
-  <div class ="col-10 offset-1">
-    <div class="body q-ma-sm q-pa-sm">
-      <div class="book row ">
-        <div class="col-4 q-ma-sm">
-          <q-card dark bordered class="mycard book-story q-pa-sm flex justify-center items-center"
-                  style="height:500px">
-            <img height=100% src="../../assets/BookImages/rabbitandturtle.jpg" alt="책" style="object-fit: fill;">
-          </q-card>
-        </div>
-        <div class="book-info col-8 q-ma-sm" >
-          <q-card dark bordered class="mycard book-story q-pa-sm q-mb-sm" style="height: 50%">
-            <div class="book-info-inner">
-              <div class="card-inner">
-                <q-card-section>
-                  <h4 class="q-pa-none q-ma-none">{{ title }}</h4>
-                  <div class="text-subtitle1">{{ writer }}</div>
-                </q-card-section>
-                <q-separator inset />
-                <q-card-section>
-                  {{ content }}
-                </q-card-section>
+  <div class="row">
+    <div class="col-10 offset-1">
+      <div class="body q-ma-sm q-pa-sm">
+        <div class="book row ">
+          <div class="col-4 q-ma-sm">
+            <q-card dark bordered class="mycard book-story q-pa-sm flex justify-center items-center"
+                    style="height:500px">
+              <img height=100% src="../../assets/BookImages/rabbitandturtle.jpg" alt="책" style="object-fit: fill;">
+            </q-card>
+          </div>
+          <div class="book-info col-8 q-ma-sm">
+            <q-card dark bordered class="mycard book-story q-pa-sm q-mb-sm" style="height: 50%">
+              <div class="book-info-inner">
+                <div class="card-inner">
+                  <q-card-section>
+                    <h4 class="q-pa-none q-ma-none">{{ title }}</h4>
+                    <div class="text-subtitle1">{{ writer }}</div>
+                  </q-card-section>
+                  <q-separator inset />
+                  <q-card-section>
+                    {{ content }}
+                  </q-card-section>
+                </div>
               </div>
-            </div>
-          </q-card>
-          <q-card dark bordered class="mycard book-roles q-pa-sm" style="height: 50%">
-            <div class="book-info-inner">
-              <div class="card-inner q-ma-none">
+            </q-card>
+            <q-card dark bordered class="mycard book-roles q-pa-sm" style="height: 50%">
+              <div class="book-info-inner">
+                <div class="card-inner q-ma-none">
+                  <q-card-section>
+                    <h4 class="q-pa-none q-ma-none">역할 소개</h4>
+                  </q-card-section>
+                  <q-separator inset />
+                  <q-card-section>
+                    <div class="role-info">
+                      <Character v-for="index in 5" :key="index" />
+                    </div>
+                  </q-card-section>
+                </div>
+              </div>
+            </q-card>
+          </div>
+        </div>
+
+        <div>
+          <div class="col-12 q-pa-sm">
+            <q-card class="mycard room-input q-pa-sm q-mb-sm col-12">
+              <div class="room-info-inner">
                 <q-card-section>
-                  <h4 class="q-pa-none q-ma-none">역할 소개</h4>
+                  <h4 class="q-pa-none q-ma-none">방을 직접 만들 수 있어요!</h4>
                 </q-card-section>
                 <q-separator inset />
-                <q-card-section>
-                  <div class="role-info">
-                    <Character v-for="index in 5" :key="index" />
+                <div class="row q-mb-sm q-mt-sm">
+                  <div class="col-8 offset-1">
+                    <q-input rounded outlined label="방 제목을 입력하세요!" v-model="roomName" />
                   </div>
-                </q-card-section>
+                  <div class="col-3 flex justify-center">
+                    <q-checkbox keep-color v-model="open" label="비밀로 할래요!" color="cyan" />
+                  </div>
+                </div>
+                <div class="row q-mb-sm" v-if="open">
+                  <div class="col-8 offset-1">
+                    <q-input rounded outlined label="방 비밀번호를 입력하세요!" type="password" v-model="roomPassword" />
+                  </div>
+                </div>
+                <div class="row q-mb-sm">
+                  <div class="col-9 flex">
+                  </div>
+                  <div class="col-3 flex justify-center">
+                    <q-btn unelevated color="my-green" rounded label="방 만들기" @click="joinRoom"></q-btn>
+                  </div>
+                </div>
+
               </div>
-            </div>
-          </q-card>
+            </q-card>
+          </div>
         </div>
       </div>
 
-      <div>
-        <div class="col-12 q-pa-sm">
-          <q-card class="mycard room-input q-pa-sm q-mb-sm col-12">
-            <div class="room-info-inner">
-              <q-card-section>
-                <h4 class="q-pa-none q-ma-none">방을 직접 만들 수 있어요!</h4>
-              </q-card-section>
-              <q-separator inset />
-              <div class="row q-mb-sm q-mt-sm">
-                <div class="col-8 offset-1">
-                  <q-input rounded outlined label="방 제목을 입력하세요!" v-model="roomName" />
-                </div>
-                <div class="col-3 flex justify-center">
-                  <q-checkbox keep-color v-model="open" label="비밀로 할래요!" color="cyan" />
-                </div>
-              </div>
-              <div class="row q-mb-sm" v-if="open">
-                <div class="col-8 offset-1">
-                  <q-input rounded outlined label="방 비밀번호를 입력하세요!" type="password" v-model="roomPassword" />
-                </div>
-              </div>
-              <div class="row q-mb-sm">
-                <div class="col-9 flex">
-                </div>
-                <div class="col-3 flex justify-center">
-                  <q-btn unelevated color="my-green" rounded label="방 만들기"></q-btn>
-                </div>
-              </div>
-
-            </div>
-          </q-card>
-        </div>
-      </div>
     </div>
 
   </div>
-
-</div>
 
 
 </template>
 <script setup>
   import Character from 'components/MyPageComponents/Character.vue';
-  import { ref } from 'vue';
+  import {ref} from 'vue';
+
+  import {storeToRefs} from "pinia";
+
+  import {useRouter} from 'vue-router';
+  const router = useRouter();
+
+  import {useOpenViduStore} from 'stores/openvidu';
+  // console.log(useOpenViduStore());
+  const openViduStore = useOpenViduStore();
+  // const {connectToOpenVidu} = openViduStore;
 
   const open = ref(false);
   const imageUrl = ref('../assets/rabbitandturtle.jpg');
@@ -101,7 +111,12 @@
   const roomName = ref('');
   const roomPassword = ref('');
 
-  const components = { Character };
+  const components = {Character};
+  const joinRoom = () => {
+    alert('방만들기 버튼 클릭!');
+    openViduStore.connectToOpenVidu();
+    // connectToOpenVidu();
+  };
 </script>
 
 <style scoped>
