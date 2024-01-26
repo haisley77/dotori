@@ -3,6 +3,8 @@ package com.dotori.backend.domain.room.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
@@ -67,25 +69,6 @@ public class RoomController {
 		return new ResponseEntity<>(session.getSessionId(), HttpStatus.OK);
 	}
 
-	// /**
-	//  * @param sessionId The Session in which to create the Connection
-	//  * @param params    The Connection properties
-	//  * @return The Token associated to the Connection
-	//  */
-	// @PostMapping("/api/sessions/{sessionId}/connections")
-	// public ResponseEntity<String> createConnection(@PathVariable("sessionId") String sessionId,
-	// 	@RequestBody(required = false) Map<String, Object> params)
-	// 	throws OpenViduJavaClientException, OpenViduHttpException {
-	// 	Session session = openvidu.getActiveSession(sessionId);
-	// 	if (session == null) {
-	// 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	// 	}
-	// 	ConnectionProperties properties = ConnectionProperties.fromJson(params).build();
-	// 	Connection connection = session.createConnection(properties);
-	// 	// System.out.println(connection.getConnectionId());
-	// 	return new ResponseEntity<>(connection.getToken(), HttpStatus.OK);
-	// }
-
 	// 모든 방 정보를 가져오는 API
 	@GetMapping("/api/rooms")
 	public ResponseEntity<List<RoomDTO>> getAllRooms() {
@@ -99,20 +82,37 @@ public class RoomController {
 		OpenViduJavaClientException,
 		OpenViduHttpException {
 		// 클라이언트가 보낸 roomId를 사용하여 세션 ID 조회
-		String sessionId = rs.findByRoomId(roomId).getSessionId();
 		openvidu.fetch();
+		String sessionId = rs.findByRoomId(roomId).getSessionId();
 		Session session = openvidu.getActiveSession(sessionId);
 
-		if (session == null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
+		if (session == null)
+			return null;
 
 		Map<String, Object> params = new HashMap<>();
 		params.put("sessionId", sessionId);
 
 		ConnectionProperties properties = ConnectionProperties.fromJson(params).build();
 		Connection connection = session.createConnection(properties);
-		System.out.println(connection.getToken());
-		return new ResponseEntity<>(connection.getToken(), HttpStatus.OK);
+
+		// connection.getToken()에서 token 값 추출
+		String token = extractTokenFromUrl(connection.getToken());
+		System.out.println(token);
+
+		return ResponseEntity.ok(token);
 	}
+
+	// 정규표현식을 사용하여 token 값을 추출하는 메서드
+	private String extractTokenFromUrl(String url) {
+		String regex = "token=([^&]+)";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(url);
+
+		if (matcher.find()) {
+			return matcher.group(1);
+		} else {
+			return null;
+		}
+	}
+
 }

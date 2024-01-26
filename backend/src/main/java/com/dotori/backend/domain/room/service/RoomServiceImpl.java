@@ -19,13 +19,6 @@ public class RoomServiceImpl {
 	// 모든 방 정보를 가져오는 메서드
 	public List<Room> getAllRooms() {
 		List<Room> rooms = roomRepository.findAll();
-
-		// 터미널에 방 정보 출력
-		for (Room room : rooms) {
-			System.out.println("Room ID: " + room.getRoomId());
-			System.out.println("Title: " + room.getTitle());
-		}
-
 		return rooms;
 	}
 
