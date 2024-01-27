@@ -2,6 +2,7 @@ package com.dotori.backend.domain.room.model.entity;
 
 import static javax.persistence.CascadeType.*;
 import static javax.persistence.GenerationType.*;
+import static lombok.AccessLevel.PROTECTED;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,13 +19,14 @@ import javax.persistence.Table;
 import com.dotori.backend.common.entity.BaseTimeEntity;
 import com.dotori.backend.domain.book.model.entity.Book;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = PROTECTED)
 @Table(name = "room")
 public class Room extends BaseTimeEntity {
 	@Id
