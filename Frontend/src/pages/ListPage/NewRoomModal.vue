@@ -40,7 +40,7 @@
                 <q-separator inset />
                 <div class='row q-mb-sm q-mt-sm'>
                   <div class='col-8 offset-1'>
-                    <q-input rounded outlined label='방 제목을 입력하세요!' v-model='roomName' />
+                    <q-input rounded outlined label='방 제목을 입력하세요!' v-model='room_name' />
                   </div>
                   <div class='col-3 flex justify-center'>
                     <q-checkbox keep-color v-model='open' label='비밀로 할래요!' color='cyan' />
@@ -48,7 +48,7 @@
                 </div>
                 <div class='row q-mb-sm' v-if='open'>
                   <div class='col-8 offset-1'>
-                    <q-input rounded outlined label='방 비밀번호를 입력하세요!' type='password' v-model='roomPassword' />
+                    <q-input rounded outlined label='방 비밀번호를 입력하세요!' type='password' v-model='room_password' />
                   </div>
                 </div>
                 <div class='row q-mb-sm'>
@@ -84,6 +84,9 @@
   import {useOpenViduStore} from 'stores/openvidu';
   // console.log(useOpenViduStore());
   const openViduStore = useOpenViduStore();
+  const {room_name,room_password,room_id} = storeToRefs(openViduStore);
+  const {createRoomSession, getConnectionToken, connectToOpenVidu} = openViduStore;
+
   // const {connectToOpenVidu} = openViduStore;
 
   const open = ref(false);
@@ -94,14 +97,12 @@
     '어느날 토끼가 거북이를 느림보라고 놀려대자, 거북이는 자극을 받고 토끼에게 달리기 경주를 제안하였다.\n';
   const writer = ref('도토리 오리지널');
 
-  const roomName = ref('');
-  const roomPassword = ref('');
-
   const components = {Character};
   const joinRoom = () => {
     alert('방만들기 버튼 클릭!');
-    openViduStore.connectToOpenVidu();
-    // connectToOpenVidu();
+    createRoomSession();  // 세션 정보 생성
+    getConnectionToken(); // 세션과 connection 생성 후 토큰 받아오기(방장)
+    connectToOpenVidu();  // 토큰을 이용해 openvidu 서버에 연결 (웹 소켓)
   };
 </script>
 
