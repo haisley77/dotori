@@ -1,6 +1,7 @@
 package com.dotori.backend.domain.scene.model.entity;
 
 import static javax.persistence.GenerationType.*;
+import static lombok.AccessLevel.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,7 +19,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = PROTECTED)
 @Table(name = "scene")
 public class Scene {
 	@Id
