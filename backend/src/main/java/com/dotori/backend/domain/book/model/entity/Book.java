@@ -1,6 +1,7 @@
 package com.dotori.backend.domain.book.model.entity;
 
 import static javax.persistence.GenerationType.*;
+import static lombok.AccessLevel.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,8 +15,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@NoArgsConstructor // 아무런 매개변수가 없는 생성자
-// @AllArgsConstructor : 클래스에 대해 모든 필드를 파라미터로 받는 생성자를 자동으로 생성
+@NoArgsConstructor(access = PROTECTED)
 @Table(name = "book")
 public class Book {
 	@Id
