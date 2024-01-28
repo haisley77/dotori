@@ -112,7 +112,7 @@
   }
 
   .out-back {
-    background: #35daa0;
+    background: #C7A96E;
     border-radius: 15px;
   }
 

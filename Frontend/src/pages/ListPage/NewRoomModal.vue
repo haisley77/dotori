@@ -147,7 +147,7 @@
     width: 100%;
     color: black;
     border-radius: 20px;
-    background-color: #35daa0;
+    background-color: #C7A96E;
   }
 
   .role-info {
@@ -158,7 +158,7 @@
     width: 100%;
     display: flex;
     border-radius: 20px;
-    background-color: #35daa0;
+    background-color: #C7A96E;
     flex-direction: column;
   }
 
@@ -167,7 +167,7 @@
   }
 
   .bg-my-green {
-    background: #35daa0 !important;
+    background: #C7A96E !important;
   }
 
   @font-face {

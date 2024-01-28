@@ -36,7 +36,7 @@
 <style scoped>
 
   .bg-my-green {
-    background: #35daa0 !important;
+    background: #C7A96E !important;
   }
 
   .bg-my-brown {
@@ -44,7 +44,7 @@
   }
 
   .player {
-    background: #35daa0;
+    background: #C7A96E;
     border-radius: 20px 20px 20px 20px;
   }
 
@@ -60,7 +60,7 @@
     border-radius: 20px 20px 20px 20px;
   }
   .dashed{
-    border: dashed #cc765a 5px;
+    border: dashed #6E4E1F 5px;
     border-radius: 20px 20px 20px 20px;
     width: 100%;
   }
@@ -78,7 +78,7 @@
 
 
   .player-name {
-    color: #a84d2f;
+    color: #6E4E1F;
     font-family: NPSfontBold;
   }
 </style>

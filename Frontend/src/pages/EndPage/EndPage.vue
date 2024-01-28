@@ -1,5 +1,5 @@
 <template>
-  <Header></Header>
+<!--  <Header></Header>-->
   <!--  <div style="background: #d2fff7" class = "q-pa-lg row">-->
   <div class="q-pa-lg row">
     <div
@@ -35,7 +35,7 @@
 
 <style scoped>
   .end-border {
-    border: dashed 5px #35daa0;
+    border: dashed 5px #C7A96E;
     background: white;
     border-radius: 20px
   }
@@ -46,7 +46,7 @@
   }
 
   .background-green {
-    background: #35daa0;
+    background: #C7A96E;
     border-radius: 20px;
 
   }
@@ -63,7 +63,7 @@
   }
 
   .bg-my-green {
-    background: #35daa0 !important;
+    background: #C7A96E !important;
   }
 
 </style>

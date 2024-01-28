@@ -1,5 +1,5 @@
 <template>
-  <Header />
+<!--  <Header />-->
   <div class="row flex justify-center q-px-none">
     <div class="col-10">
       <div class="entire-container row">
@@ -31,7 +31,7 @@
   const thumbStyle = {
     right: '1.5px',
     borderRadius: '5px',
-    backgroundColor: '#35daa0',
+    backgroundColor: '#C7A96E',
     width: '5px',
     opacity: 0.75,
   };
@@ -137,7 +137,7 @@
   }
 
   .out-back {
-    background: #35daa0;
+    background: #C7A96E;
     border-radius: 15px;
   }
 

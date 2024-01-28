@@ -1,5 +1,5 @@
 <template>
-    <Header />
+<!--    <Header />-->
     <div class="q-md">
         <q-carousel
             arrows

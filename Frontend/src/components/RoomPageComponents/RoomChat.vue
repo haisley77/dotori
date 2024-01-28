@@ -11,7 +11,7 @@
         </div>
         <div class="row ">
 
-          <q-input color="green" bg-color="green-1" v-model="text" :dense="dense" class="col-11"/>
+          <q-input color="green" bg-color="brown-1" v-model="text" :dense="dense" class="col-11"/>
           <q-btn color="my-green" bg-color="white" class="col-1 q-pa-none npsfont chat">전송</q-btn>
         </div>
       </div>
@@ -28,7 +28,7 @@ const text = ref('')
 <style scoped>
 
 .bg-my-green {
-  background: #35daa0 !important;
+  background: #C7A96E !important;
 }
 
 .input-background {
@@ -42,7 +42,7 @@ const text = ref('')
 }
 
 .background-green {
-  background: #35daa0;
+  background: #C7A96E;
   border-radius: 20px 20px 20px 20px;
 
 }

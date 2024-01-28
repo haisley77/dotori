@@ -30,7 +30,7 @@
   const thumbStyle = {
     right: '1.5px',
     borderRadius: '5px',
-    backgroundColor: '#35daa0',
+    backgroundColor: '#C7A96E',
     width: '5px',
     opacity: 0.75,
   };
@@ -136,7 +136,7 @@
   }
 
   .out-back {
-    background: #35daa0;
+    background: #C7A96E;
     border-radius: 15px;
   }
 
@@ -149,14 +149,14 @@
     background: white;
     border-radius: 15px;
     width: 100%;
-    border: #cc765a dashed 4px
+    border: #6E4E1F dashed 4px
   }
 
   .script-background {
     background: white;
     border-radius: 15px;
     height: 100%;
-    border: #cc765a dashed 4px;
+    border: #6E4E1F dashed 4px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -166,7 +166,7 @@
     background: white;
     border-radius: 15px;
     height: 100%;
-    border: #cc765a dashed 4px;
+    border: #6E4E1F dashed 4px;
   }
 
   .scene-bordering {

@@ -31,7 +31,7 @@ export const useOpenViduStore
   const connectToOpenVidu = () => {
     // session.
     // spring 서버에서 받아둔 토큰을 sessionStorage에 저장해야 함
-    session.connect('wss://dotori.online:8443?sessionId=ses_TjFHYfB26j&token=tok_JM6mGDG3n09Aoy46')
+    session.connect("wss://dotori.online:8443?sessionId=ses_Kf1uTdDIrS&token=tok_PbRa2BKbddHcrhsu")
       .then(() => {
         console.log('ov와 연결 성공!');
       })

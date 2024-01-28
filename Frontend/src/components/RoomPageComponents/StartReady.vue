@@ -37,16 +37,16 @@
     //color: white;
     font-family: NPSfontBold;
     font-size: 3.5em;
-    color: #cc765a;
+    color: #6E4E1F;
     background: white;
     height: 100%;
     border-radius: 20px 20px 20px 20px;
-    border: dashed #cc765a 5px;
+    border: dashed #6E4E1F 5px;
 
   }
 
   .background-green {
-    background: #35daa0;
+    background: #C7A96E;
     border-radius: 20px 20px 20px 20px;
 
   }

@@ -30,7 +30,7 @@ dependencies {
     runtimeOnly 'com.mysql:mysql-connector-j'
 
     // OpenVidu Java 클라이언트 라이브러리
-    implementation 'io.openvidu:openvidu-java-client:2.18.0' // 사용 가능한 최신 버전 사용
+    implementation 'io.openvidu:openvidu-java-client:2.29.0' // 사용 가능한 최신 버전 사용
 }
 
 tasks.named('test') {

@@ -5,7 +5,7 @@
   <!--      로그인🐣-->
   <!--    </h2>-->
   <!--  </div>-->
-  <Header />
+<!--  <Header />-->
   <!--  <div style="background:#d2fff7;height: 100vh">-->
   <div class="row">
     <div class="col-10 offset-1" >
