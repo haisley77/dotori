@@ -100,7 +100,12 @@
   const components = {Character};
   const joinRoom = () => {
     alert('방만들기 버튼 클릭!');
-    openViduStore.connectToOpenVidu();
+    openViduStore.connectToOpenVidu()
+      .then(() => {
+        router.push('/room');
+      }).catch((error) => {
+      console.log(error);
+    });
     // connectToOpenVidu();
   };
 </script>

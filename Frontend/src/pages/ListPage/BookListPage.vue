@@ -24,7 +24,7 @@
     </div>
 
     <div class='row q-col-gutter-x-md q-col-gutter-y-md'>
-      <div v-for='n in 16' :key='n' class='col-12 col-sm-6 col-md-4 col-lg-3'>
+      <div v-for='n in 16' :key='n' class='col-12 col-sm-6 col-md-4 col-lg-3 q-pa-md'>
         <Book />
       </div>
     </div>

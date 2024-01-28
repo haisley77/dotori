@@ -19,31 +19,29 @@
              style='background: white; '>
           <div class='col-9'>
             <div class=' npsfont text-h6 ellipsis'>
-              책 제목이 여기 들어갑니다
+              방 제목이 여기 들어갑니다
             </div>
-            <div class=' npsfont'>
-              도토리
+            <div class='npsfont'>
+              책 제목 : 토끼와 거북이
             </div>
+            <div class='flex justify-between'>
+              <div class='npsfont'>
+                방장 : 도토리03
+              </div>
+              <div class='npsfont'>
+                인원 : 3/4
+              </div>
+
+
+            </div>
+
             <!-- Dialog -->
           </div>
           <div class='col-3'>
             <div class='q-pa-sm flex justify-end items-center'>
               <q-btn flat @click='dialog = true' style='color: #C7A96E'
-                     class='npsfont q-ma-none q-pa-none text-h6 '>시작
+                     class='npsfont q-ma-none q-pa-none text-h6 '>입장
               </q-btn>
-              <q-dialog v-model='dialog'>
-                <q-card-actions align='right' class='bg-white text-teal'>
-                  <q-btn flat label='OK' v-close-popup />
-                </q-card-actions>
-                <q-card style='width: 700vw; max-width: 80vw;'>
-                  <q-card-actions align='right' class='bg-white text-teal'>
-                    <q-btn flat icon='close' color='black' v-close-popup />
-                  </q-card-actions>
-                  <q-card-section>
-                    <NewRoomModal />
-                  </q-card-section>
-                </q-card>
-              </q-dialog>
             </div>
           </div>
         </div>
