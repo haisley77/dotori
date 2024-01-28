@@ -11,7 +11,7 @@
         </div>
         <div class="row ">
 
-          <q-input color="green" bg-color="brown-1" v-model="text" :dense="dense" class="col-11"/>
+          <q-input color="brown" bg-color="brown-1" v-model="text" :dense="dense" class="col-11"/>
           <q-btn color="my-green" bg-color="white" class="col-1 q-pa-none npsfont chat">전송</q-btn>
         </div>
       </div>
