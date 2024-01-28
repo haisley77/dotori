@@ -43,7 +43,7 @@ export const useOpenViduStore
   // };
   const connectToOpenVidu = () => {
     return new Promise((resolve, reject) => {
-      session.connect('wss://dotori.online:8443?sessionId=ses_TugNL1aNJJ&token=tok_P9CNKhR7NWYZo9gp')
+      session.connect('wss://dotori.online:8443?sessionId=ses_A1LueWMUaR&token=tok_L2uIG3dvtBZlzMQQ')
         .then(() => {
           console.log('ov와 연결 성공!');
           resolve(); // Resolve the promise if connection successful
@@ -54,8 +54,17 @@ export const useOpenViduStore
         });
     });
   };
+  const sendText = (myText) => {
 
+    session.signal({data: myText, to: []}).then(() => {
+      console.log('text has been sent!');
+    }).catch((error) => {
+      console.log(error);
+    });
+
+
+  };
   return {
-    connectToOpenVidu,
+    connectToOpenVidu, sendText,
   };
 }, {persist: {storage: sessionStorage}});

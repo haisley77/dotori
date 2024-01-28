@@ -1,6 +1,7 @@
 <template>
 <!--  <Header />-->
   <div class="row flex justify-center q-px-none">
+<!--    <q-btn @click='sendMessage' label='testBtn'/>-->
     <div class="col-10">
       <div class="entire-container row">
 
@@ -27,7 +28,14 @@
   import SceneContainer from 'components/RecordingPageComponents/MainScene.vue';
   import Script from 'components/RecordingPageComponents/Script.vue';
   import SceneController from 'components/RecordingPageComponents/SceneController.vue';
-
+  // import {useOpenViduStore} from 'stores/openvidu';
+  //
+  // const openViduStore = useOpenViduStore();
+  // // const text = ref('');
+  // const sendMessage = () => {
+  //   console.log("btnclick")
+  //   openViduStore.sendText('hello!!!');
+  // };
   const thumbStyle = {
     right: '1.5px',
     borderRadius: '5px',
