@@ -5,9 +5,9 @@
         <div v-if='player <= playerList.length'>
           <div class=' profile-background q-pa-sm'>
             <div class='dashed column items-center'>
-              <img src='../../assets/DotoriImages/acorn_character_img.png' class='profile-pic q-mr-md q-mt-sm'
-                   alt='user-profile-img'>
-              <h4 class='q-mr-md q-mt-md q-mb-sm player-name'>{{playerList[player-1]}}</h4>
+              <img :src=playerList[player-1].profileImg class='profile-pic q-mr-md q-mt-sm'
+                   alt='user-profile-img' style='object-fit: cover'>
+              <h4 class='q-mr-md q-mt-md q-mb-sm player-name'>{{ playerList[player - 1].name }}</h4>
               <div class='row q-mt-none q-mb-sm'>
                 <q-btn unelevated rounded color='my-brown q-mr-sm btn-font'>
                   <q-menu fit anchor='bottom start' self='top left'>
@@ -61,7 +61,31 @@
 <script setup>
   import {ref} from 'vue';
 
-  const playerList = ref(['도토리유저 1', '도토리유저2', '도토리유저3']);
+  const playerList = ref([
+    {
+      name: '조석현',
+      profileImg: 'src/assets/MyPageImages/cho.jpg',
+
+    },
+    {
+      name: 'Winter',
+      profileImg: 'src/assets/MyPageImages/winter.png',
+
+    },
+    {
+      name: '카리나',
+      profileImg: 'src/assets/MyPageImages/karina.jpg',
+
+    },
+    {
+      name: '아이유',
+      profileImg: 'src/assets/MyPageImages/iupic.jpg',
+
+    },
+
+
+  ]);
+
 </script>
 
 <style scoped>
@@ -83,6 +107,7 @@
     background: white;
     border-radius: 50%;
     height: 1.5em;
+    width: 1.5em;
 
   }
 
