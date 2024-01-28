@@ -2,12 +2,12 @@
   <div class='player'>
     <div class='row'>
       <div v-for='player in 4' key='player' class='col-6  q-pa-sm text-h3 '>
-        <div v-if='player <= playerList.length'>
+        <div v-if='player <= props.playerList.length'>
           <div class=' profile-background q-pa-sm'>
             <div class='dashed column items-center'>
-              <img :src=playerList[player-1].profileImg class='profile-pic q-mr-md q-mt-sm'
+              <img :src=props.playerList[player-1].profileImg class='profile-pic q-mr-md q-mt-sm'
                    alt='user-profile-img' style='object-fit: cover'>
-              <h4 class='q-mr-md q-mt-md q-mb-sm player-name'>{{ playerList[player - 1].name }}</h4>
+              <h4 class='q-mr-md q-mt-md q-mb-sm player-name'>{{ props.playerList[player - 1].name }}</h4>
               <div class='row q-mt-none q-mb-sm'>
                 <q-btn unelevated rounded color='my-brown q-mr-sm btn-font'>
                   <q-menu fit anchor='bottom start' self='top left'>
@@ -61,30 +61,8 @@
 <script setup>
   import {ref} from 'vue';
 
-  const playerList = ref([
-    {
-      name: '조석현',
-      profileImg: 'src/assets/MyPageImages/cho.jpg',
+  const props = defineProps({playerList: Object});
 
-    },
-    {
-      name: 'Winter',
-      profileImg: 'src/assets/MyPageImages/winter.png',
-
-    },
-    {
-      name: '카리나',
-      profileImg: 'src/assets/MyPageImages/karina.jpg',
-
-    },
-    {
-      name: '아이유',
-      profileImg: 'src/assets/MyPageImages/iupic.jpg',
-
-    },
-
-
-  ]);
 
 </script>
 

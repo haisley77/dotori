@@ -6,7 +6,7 @@
       </div>
       <div class='row'>
         <div class='col-8 q-pa-sm'>
-          <PlayerList></PlayerList>
+          <PlayerList :playerList='playerList'></PlayerList>
         </div>
         <div class='col-4 q-pa-sm'>
           <BookInfo :bookInfo='bookInfo'></BookInfo>
@@ -48,6 +48,32 @@
     joinCnt: '3',
     summary: '토끼와 거북이 이야기는 토끼와 거북이가 경주를 벌이는 이야기입니다.'
   });
+
+  const playerList = ref([
+    {
+      name: '조석현',
+      profileImg: 'src/assets/MyPageImages/cho.jpg',
+
+    },
+    {
+      name: 'Winter',
+      profileImg: 'src/assets/MyPageImages/winter.png',
+
+    },
+    {
+      name: '카리나',
+      profileImg: 'src/assets/MyPageImages/karina.jpg',
+
+    },
+    {
+      name: '아이유',
+      profileImg: 'src/assets/MyPageImages/iupic.jpg',
+
+    },
+
+
+  ]);
+
 
 </script>
 
