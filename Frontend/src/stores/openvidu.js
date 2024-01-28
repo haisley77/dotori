@@ -43,7 +43,7 @@ export const useOpenViduStore
   // };
   const connectToOpenVidu = () => {
     return new Promise((resolve, reject) => {
-      session.connect('wss://dotori.online:8443?sessionId=ses_MauTkcyqed&token=tok_PdafMNDH87acByjL')
+      session.connect('wss://dotori.online:8443?sessionId=ses_TugNL1aNJJ&token=tok_P9CNKhR7NWYZo9gp')
         .then(() => {
           console.log('ov와 연결 성공!');
           resolve(); // Resolve the promise if connection successful

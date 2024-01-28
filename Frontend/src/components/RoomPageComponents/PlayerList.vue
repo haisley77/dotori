@@ -1,36 +1,67 @@
 <template>
-<div class = "player">
-  <div v-for="item in 2" key="item" class="row">
-    <div v-for="player in 2" key="player" class="col-6  q-pa-sm text-h3 ">
-      <div class=" profile-background q-pa-sm">
-        <div class = "dashed column items-center">
-        <img src="../../assets/DotoriImages/acorn_character_img.png" class="profile-pic q-mr-md q-mt-sm" alt="user-profile-img">
-        <h4 class="q-mr-md q-mt-md q-mb-sm player-name">도토리씨앗유저</h4>
-        <div class="row q-mt-none q-mb-sm">
-          <q-btn unelevated rounded color="my-brown q-mr-sm btn-font">
-            <q-menu fit anchor="bottom start" self="top left">
-              <q-item clickable>
-                <q-item-section>토끼</q-item-section>
-              </q-item>
-              <q-item clickable>
-                <q-item-section>거북이</q-item-section>
-              </q-item>
-            </q-menu>
-            <div>역할 선택하기</div>
-          </q-btn>
-          <q-btn unelevated rounded color="my-green q-ml-sm btn-font">
-            <div>커스텀 아바타</div>
-          </q-btn>
+  <div class='player'>
+    <div class='row'>
+      <div v-for='player in 4' key='player' class='col-6  q-pa-sm text-h3 '>
+        <div v-if='player <= playerList.length'>
+          <div class=' profile-background q-pa-sm'>
+            <div class='dashed column items-center'>
+              <img src='../../assets/DotoriImages/acorn_character_img.png' class='profile-pic q-mr-md q-mt-sm'
+                   alt='user-profile-img'>
+              <h4 class='q-mr-md q-mt-md q-mb-sm player-name'>{{playerList[player-1]}}</h4>
+              <div class='row q-mt-none q-mb-sm'>
+                <q-btn unelevated rounded color='my-brown q-mr-sm btn-font'>
+                  <q-menu fit anchor='bottom start' self='top left'>
+                    <q-item clickable>
+                      <q-item-section>토끼</q-item-section>
+                    </q-item>
+                    <q-item clickable>
+                      <q-item-section>거북이</q-item-section>
+                    </q-item>
+                  </q-menu>
+                  <div>역할 선택하기</div>
+                </q-btn>
+                <q-btn unelevated rounded color='my-green q-ml-sm btn-font'>
+                  <div>커스텀 아바타</div>
+                </q-btn>
+              </div>
+            </div>
+          </div>
         </div>
+        <!--        플레이어가 없는 경우-->
+        <div v-else>
+          <div class=' profile-background q-pa-sm'>
+            <div class='dashed column items-center'>
+              <img src='../../assets/DotoriImages/acorn_character_img.png' class='profile-pic q-mr-md q-mt-sm'
+                   alt='user-profile-img'>
+              <h4 class='q-mr-md q-mt-md q-mb-sm player-name'>사용자 없음</h4>
+              <div class='row q-mt-none q-mb-sm' style='visibility: hidden'>
+                <q-btn unelevated rounded color='my-brown q-mr-sm btn-font'>
+                  <q-menu fit anchor='bottom start' self='top left'>
+                    <q-item clickable>
+                      <q-item-section>토끼</q-item-section>
+                    </q-item>
+                    <q-item clickable>
+                      <q-item-section>거북이</q-item-section>
+                    </q-item>
+                  </q-menu>
+                  <div>역할 선택하기</div>
+                </q-btn>
+                <q-btn unelevated rounded color='my-green q-ml-sm btn-font'>
+                  <div>커스텀 아바타</div>
+                </q-btn>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
 </template>
 <script setup>
+  import {ref} from 'vue';
 
+  const playerList = ref(['도토리유저 1', '도토리유저2', '도토리유저3']);
 </script>
 
 <style scoped>
@@ -49,7 +80,7 @@
   }
 
   .profile-pic {
-    background: ghostwhite;
+    background: white;
     border-radius: 50%;
     height: 1.5em;
 
@@ -59,7 +90,8 @@
     background: white;
     border-radius: 20px 20px 20px 20px;
   }
-  .dashed{
+
+  .dashed {
     border: dashed #6E4E1F 5px;
     border-radius: 20px 20px 20px 20px;
     width: 100%;
@@ -73,8 +105,6 @@
     color: #a84d2f;
     font-family: NPSfontBold;
   }
-
-
 
 
   .player-name {
