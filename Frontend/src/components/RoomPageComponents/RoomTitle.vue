@@ -1,38 +1,39 @@
 <script setup>
+  const props = defineProps({roomInfo: Object});
 
 </script>
 
 <template>
-  <div class="row col  background-green q-pa-sm q-mb-none q-ml-sm q-mr-sm q-mt-sm">
-    <div class="row col npsfont background-yellow q-pa-sm q-ma-none justify-between">
-      <h5 class="q-ma-none q-pl-md">
-        14번 방
+  <div class='row col  background-green q-pa-sm q-mb-none q-ml-sm q-mr-sm q-mt-sm'>
+    <div class='row col npsfont background-yellow q-pa-sm q-ma-none justify-between'>
+      <h5 class='q-ma-none q-pl-md'>
+        {{ props.roomInfo.roomNumber }}번 방
       </h5>
-      <h5 class="q-ma-none">
-        토끼와 거북이 연극하실분 어서오세요~
+      <h5 class='q-ma-none'>
+        {{ props.roomInfo.title }}
       </h5>
-      <h5 class="q-ma-none q-pr-md">
-
-        공개방🔒🔓
+      <h5 class='q-ma-none q-pr-md'>
+        <span v-if='props.roomInfo.public'>공개방🔓</span>
+        <span v-else>비공개방🔒</span>
       </h5></div>
   </div>
 </template>
 
 <style scoped>
-.npsfont {
-  font-family: 'NPSfontBold';
-}
+  .npsfont {
+    font-family: 'NPSfontBold';
+  }
 
-.background-yellow {
-  background: white;
-  border-radius: 20px 20px 20px 20px;
-//border: dashed #cc765a 5px;
-}
+  .background-yellow {
+    background: white;
+    border-radius: 20px 20px 20px 20px;
+  //border: dashed #cc765a 5px;
+  }
 
-.background-green {
-  background: #C7A96E;
-  border-radius: 20px 20px 20px 20px;
+  .background-green {
+    background: #C7A96E;
+    border-radius: 20px 20px 20px 20px;
 
-}
+  }
 
 </style>

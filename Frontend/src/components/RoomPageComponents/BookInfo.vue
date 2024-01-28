@@ -1,4 +1,5 @@
 <script setup>
+  const props = defineProps({bookInfo: Object});
 
 </script>
 
@@ -11,11 +12,11 @@
       </div>
       <hr class='q-ma-none' />
       <div class=' column q-pa-sm background-white'>
-        제목 : 토끼와 거북이<br />
-        저자 : 도토리<br />
-        필요 인원 : 4<br />
-        줄거리 : 토끼와 거북이 이야기는 토끼와 거북이가 경주를 벌이는 이야기입니다.
-       <br />
+        제목 : {{props.bookInfo.title}}<br />
+        저자 :  {{props.bookInfo.author}}<br />
+        필요 인원 : {{props.bookInfo.limitCnt}}<br />
+        줄거리 : {{props.bookInfo.summary}}
+        <br />
       </div>
     </div>
 
