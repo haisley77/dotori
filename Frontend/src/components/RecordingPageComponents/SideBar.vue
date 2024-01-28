@@ -7,7 +7,7 @@
       :bar-style="barStyle"
       style="height: 100%; max-width: 100%;"
     >
-      <div v-for="n in 10" :key="n" class="q-px-sm q-mr-sm">
+      <div v-for="n in 10" :key="n" class=" q-mr-sm">
         <div class="scene-short-info-container q-mb-sm">
           <!-- 추후 :class의 조건을 클릭된 상태인지 여부에 따라 변경 -->
           <div class="out-back q-pa-sm" :class="{'scene-bordering': n === 2}">
@@ -16,12 +16,15 @@
                 <h6 class="npsfont white-background q-my-none" @click="alert()">장면 {{ n }}</h6>
               </div>
               <div class="scene-thumbnail-container q-px-sm">
-                <img src="https://www.w3schools.com/howto/img_forest.jpg" alt="dja"
-                     style="width: 100%; border-radius: 15px;">
+<!--                <img src="~assets/RecordingPage/rtpage01.png" alt="dja"-->
+<!--                     style="width: 100%;height: 100px; border-radius: 15px;object-fit: contain ">-->
+                <img src="~assets/MyPageImages/karina.jpg" alt="dja"
+                     style="width: 100%;height: 100px; border-radius: 15px;object-fit: contain ">
               </div>
             </div>
           </div>
         </div>
+        <hr/>
       </div>
     </q-scroll-area>
   </div>
@@ -149,7 +152,7 @@
     background: white;
     border-radius: 15px;
     width: 100%;
-    border: #6E4E1F dashed 4px
+    border: #6E4E1F dashed 2px
   }
 
   .script-background {
@@ -171,6 +174,6 @@
 
   .scene-bordering {
     border-radius: 15px;
-    border: red solid 4px
+    border: #6E4E1F solid 3px
   }
 </style>
