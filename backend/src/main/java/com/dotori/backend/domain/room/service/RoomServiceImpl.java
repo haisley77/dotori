@@ -61,7 +61,6 @@ public class RoomServiceImpl {
 		Map<String, Object> connectionProperties) throws Exception {
 		Session session = findSessionByRoomId(openvidu, roomId);
 		ConnectionProperties properties = ConnectionProperties.fromJson(connectionProperties).build();
-		// System.out.println(properties.toString());
 		return session.createConnection(properties);
 	}
 }
