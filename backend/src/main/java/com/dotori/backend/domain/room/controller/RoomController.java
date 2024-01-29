@@ -126,6 +126,7 @@ public class RoomController {
 		@RequestParam("memberId") Long memberId) {
 		Map<String, String> resultData = new HashMap<>();
 		try {
+			openvidu.fetch();
 			roomService.addMemberToRoom(roomId, memberId);
 			resultData.put("memberId", String.valueOf(memberId));
 			return new ResponseEntity<>(resultData, HttpStatus.OK);
