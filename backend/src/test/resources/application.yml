@@ -2,6 +2,7 @@ spring:
   config:
     import:
       - optional:file:env/test-db.env[.properties]
+      - optional:file:env/video.env[.properties]
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${MYSQL_TEST_URL}
@@ -18,3 +19,8 @@ spring:
       show-sql: true
     hibernate:
       ddl-auto: create
+
+videos:
+  path:
+    scene: ${SCENE_DIRECTORY_PATH}
+    chunk: ${CHUNK_DIRECTORY_PATH}
