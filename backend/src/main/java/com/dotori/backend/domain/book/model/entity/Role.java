@@ -1,6 +1,5 @@
-package com.dotori.backend.domain.avatar.model.entity;
+package com.dotori.backend.domain.book.model.entity;
 
-import static javax.persistence.FetchType.*;
 import static javax.persistence.GenerationType.*;
 import static lombok.AccessLevel.*;
 
@@ -12,8 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.dotori.backend.domain.member.model.entity.Member;
-
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,28 +18,27 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = PROTECTED)
-@Table(name = "avatar")
-public class Avatar {
+@Table(name = "role")
+public class Role {
 	@Id
-	@Column(name = "avatar_id")
+	@Column(name = "role_id")
 	@GeneratedValue(strategy = IDENTITY)
-	private Long avatarId;
+	private Long roleId;
 
-	@Column(length = 100, unique = true)
-	private String path;
+	@ManyToOne
+	@JoinColumn(name = "book_id")
+	private Book book;
 
-	@Column(length = 20)
+	@Column(length = 10)
 	private String name;
 
-	@ManyToOne(fetch = LAZY)
-	@JoinColumn(name = "member_id", nullable = false)
-	private Member member;
+	@Column(length = 100, name = "mask_path")
+	private String maskPath;
 
 	@Builder
-	public Avatar(String path, String name, Member member) {
-		this.path = path;
+	public Role(Book book, String name, String maskPath) {
+		this.book = book;
 		this.name = name;
-		this.member = member;
+		this.maskPath = maskPath;
 	}
 }
-

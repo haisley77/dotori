@@ -8,194 +8,199 @@
 // Configuration for your app
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js
 
-const {configure} = require('quasar/wrappers');
+
+const { configure } = require('quasar/wrappers');
+
 
 module.exports = configure(function (/* ctx */) {
-    return {
-        // https://v2.quasar.dev/quasar-cli-vite/prefetch-feature
-        // preFetch: true,
+  return {
 
-        // app boot file (/src/boot)
-        // --> boot files are part of "main.js"
-        // https://v2.quasar.dev/quasar-cli-vite/boot-files
-        boot: [],
 
-        // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
-        css: ['app.css'],
+    // https://v2.quasar.dev/quasar-cli-vite/prefetch-feature
+    // preFetch: true,
 
-        // https://github.com/quasarframework/quasar/tree/dev/extras
-        extras: [
-            'ionicons-v4',
-            'mdi-v7',
-            'fontawesome-v6',
-            // 'eva-icons',
-            // 'themify',
-            // 'line-awesome',
-            // 'roboto-font-latin-ext', // this or either 'roboto-font', NEVER both!
+    // app boot file (/src/boot)
+    // --> boot files are part of "main.js"
+    // https://v2.quasar.dev/quasar-cli-vite/boot-files
+    boot: [
 
-            'roboto-font', // optional, you are not bound to it
-            'material-icons', // optional, you are not bound to it
-        ],
 
-        // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#build
-        build: {
-            target: {
-                browser: [
-                    'es2019',
-                    'edge88',
-                    'firefox78',
-                    'chrome87',
-                    'safari13.1',
-                ],
-                node: 'node16',
-            },
+    ],
 
-            vueRouterMode: 'hash', // available values: 'hash', 'history'
-            // vueRouterBase,
-            // vueDevtools,
-            // vueOptionsAPI: false,
+    // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
+    css: [
+      'app.css'
+    ],
 
-            // rebuildCache: true, // rebuilds Vite/linter/etc cache on startup
+    // https://github.com/quasarframework/quasar/tree/dev/extras
+    extras: [
+      'ionicons-v4',
+      'mdi-v7',
+      'fontawesome-v6',
+      // 'eva-icons',
+      // 'themify',
+      // 'line-awesome',
+      // 'roboto-font-latin-ext', // this or either 'roboto-font', NEVER both!
 
-            // publicPath: '/',
-            // analyze: true,
-            env: {
-                VUE_APP_KAKAO_JS_KEY: 'f64a3357b4de741f1921dde6a43cfbc0',
-                VUE_APP_KAKAO_REDIRECT_URL: 'http://localhost:9000/kakaologin',
-            },
-            // rawDefine: {}
-            // ignorePublicFolder: true,
-            // minify: false,
-            // polyfillModulePreload: true,
-            // distDir
+      'roboto-font', // optional, you are not bound to it
+      'material-icons', // optional, you are not bound to it
+    ],
 
-            // extendViteConf (viteConf) {},
-            // viteVuePluginOptions: {},
+    // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#build
+    build: {
+      target: {
+        browser: [ 'es2019', 'edge88', 'firefox78', 'chrome87', 'safari13.1' ],
+        node: 'node16'
+      },
 
-            // vitePlugins: [
-            //   [ 'package-name', { ..options.. } ]
-            // ]
-        },
+      vueRouterMode: 'hash', // available values: 'hash', 'history'
+      // vueRouterBase,
+      // vueDevtools,
+      // vueOptionsAPI: false,
 
-        // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
-        devServer: {
-            // https: true
-            open: true, // opens browser window automatically
-        },
+      // rebuildCache: true, // rebuilds Vite/linter/etc cache on startup
 
-        // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
-        framework: {
-            config: {},
+      // publicPath: '/',
+      // analyze: true,
+      // env: {},
+      // rawDefine: {}
+      // ignorePublicFolder: true,
+      // minify: false,
+      // polyfillModulePreload: true,
+      // distDir
 
-            // iconSet: 'material-icons', // Quasar icon set
-            // lang: 'en-US', // Quasar language pack
+      // extendViteConf (viteConf) {},
+      // viteVuePluginOptions: {},
 
-            // For special cases outside of where the auto-import strategy can have an impact
-            // (like functional components as one of the examples),
-            // you can manually specify Quasar components/directives to be available everywhere:
-            //
-            // components: [],
-            // directives: [],
 
-            // Quasar plugins
-            plugins: ['Loading'],
-        },
+      // vitePlugins: [
+      //   [ 'package-name', { ..options.. } ]
+      // ]
+    },
 
-        // animations: 'all', // --- includes all animations
-        // https://v2.quasar.dev/options/animations
-        animations: [],
+    // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
+    devServer: {
+      // https: true
+      open: true // opens browser window automatically
+    },
 
-        // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#property-sourcefiles
-        // sourceFiles: {
-        //   rootComponent: 'src/App.vue',
-        //   router: 'src/router/index',
-        //   store: 'src/store/index',
-        //   registerServiceWorker: 'src-pwa/register-service-worker',
-        //   serviceWorker: 'src-pwa/custom-service-worker',
-        //   pwaManifestFile: 'src-pwa/manifest.json',
-        //   electronMain: 'src-electron/electron-main',
-        //   electronPreload: 'src-electron/electron-preload'
-        // },
+    // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
+    framework: {
+      config: {},
 
-        // https://v2.quasar.dev/quasar-cli-vite/developing-ssr/configuring-ssr
-        ssr: {
-            // ssrPwaHtmlFilename: 'offline.html', // do NOT use index.html as name!
-            // will mess up SSR
+      // iconSet: 'material-icons', // Quasar icon set
+      // lang: 'en-US', // Quasar language pack
 
-            // extendSSRWebserverConf (esbuildConf) {},
-            // extendPackageJson (json) {},
+      // For special cases outside of where the auto-import strategy can have an impact
+      // (like functional components as one of the examples),
+      // you can manually specify Quasar components/directives to be available everywhere:
+      //
+      // components: [],
+      // directives: [],
 
-            pwa: false,
+      // Quasar plugins
+      plugins: ['Loading'],
+    },
 
-            // manualStoreHydration: true,
-            // manualPostHydrationTrigger: true,
+    // animations: 'all', // --- includes all animations
+    // https://v2.quasar.dev/options/animations
+    animations: [],
 
-            prodPort: 3000, // The default port that the production server should use
-            // (gets superseded if process.env.PORT is specified at runtime)
+    // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#property-sourcefiles
+    // sourceFiles: {
+    //   rootComponent: 'src/App.vue',
+    //   router: 'src/router/index',
+    //   store: 'src/store/index',
+    //   registerServiceWorker: 'src-pwa/register-service-worker',
+    //   serviceWorker: 'src-pwa/custom-service-worker',
+    //   pwaManifestFile: 'src-pwa/manifest.json',
+    //   electronMain: 'src-electron/electron-main',
+    //   electronPreload: 'src-electron/electron-preload'
+    // },
 
-            middlewares: [
-                'render', // keep this as last one
-            ],
-        },
+    // https://v2.quasar.dev/quasar-cli-vite/developing-ssr/configuring-ssr
+    ssr: {
+      // ssrPwaHtmlFilename: 'offline.html', // do NOT use index.html as name!
+      // will mess up SSR
 
-        // https://v2.quasar.dev/quasar-cli-vite/developing-pwa/configuring-pwa
-        pwa: {
-            workboxMode: 'generateSW', // or 'injectManifest'
-            injectPwaMetaTags: true,
-            swFilename: 'sw.js',
-            manifestFilename: 'manifest.json',
-            useCredentialsForManifestTag: false,
-            // useFilenameHashes: true,
-            // extendGenerateSWOptions (cfg) {}
-            // extendInjectManifestOptions (cfg) {},
-            // extendManifestJson (json) {}
-            // extendPWACustomSWConf (esbuildConf) {}
-        },
+      // extendSSRWebserverConf (esbuildConf) {},
+      // extendPackageJson (json) {},
 
-        // Full list of options: https://v2.quasar.dev/quasar-cli-vite/developing-cordova-apps/configuring-cordova
-        cordova: {
-            // noIosLegacyBuildFlag: true, // uncomment only if you know what you are doing
-        },
+      pwa: false,
 
-        // Full list of options: https://v2.quasar.dev/quasar-cli-vite/developing-capacitor-apps/configuring-capacitor
-        capacitor: {
-            hideSplashscreen: true,
-        },
+      // manualStoreHydration: true,
+      // manualPostHydrationTrigger: true,
 
-        // Full list of options: https://v2.quasar.dev/quasar-cli-vite/developing-electron-apps/configuring-electron
-        electron: {
-            // extendElectronMainConf (esbuildConf)
-            // extendElectronPreloadConf (esbuildConf)
+      prodPort: 3000, // The default port that the production server should use
+                      // (gets superseded if process.env.PORT is specified at runtime)
 
-            // specify the debugging port to use for the Electron app when running in development mode
-            inspectPort: 5858,
+      middlewares: [
+        'render' // keep this as last one
+      ]
+    },
 
-            bundler: 'packager', // 'packager' or 'builder'
+    // https://v2.quasar.dev/quasar-cli-vite/developing-pwa/configuring-pwa
+    pwa: {
+      workboxMode: 'generateSW', // or 'injectManifest'
+      injectPwaMetaTags: true,
+      swFilename: 'sw.js',
+      manifestFilename: 'manifest.json',
+      useCredentialsForManifestTag: false,
+      // useFilenameHashes: true,
+      // extendGenerateSWOptions (cfg) {}
+      // extendInjectManifestOptions (cfg) {},
+      // extendManifestJson (json) {}
+      // extendPWACustomSWConf (esbuildConf) {}
+    },
 
-            packager: {
-                // https://github.com/electron-userland/electron-packager/blob/master/docs/api.md#options
-                // OS X / Mac App Store
-                // appBundleId: '',
-                // appCategoryType: '',
-                // osxSign: '',
-                // protocol: 'myapp://path',
-                // Windows only
-                // win32metadata: { ... }
-            },
+    // Full list of options: https://v2.quasar.dev/quasar-cli-vite/developing-cordova-apps/configuring-cordova
+    cordova: {
+      // noIosLegacyBuildFlag: true, // uncomment only if you know what you are doing
+    },
 
-            builder: {
-                // https://www.electron.build/configuration/configuration
+    // Full list of options: https://v2.quasar.dev/quasar-cli-vite/developing-capacitor-apps/configuring-capacitor
+    capacitor: {
+      hideSplashscreen: true
+    },
 
-                appId: 'frontend',
-            },
-        },
+    // Full list of options: https://v2.quasar.dev/quasar-cli-vite/developing-electron-apps/configuring-electron
+    electron: {
+      // extendElectronMainConf (esbuildConf)
+      // extendElectronPreloadConf (esbuildConf)
 
-        // Full list of options: https://v2.quasar.dev/quasar-cli-vite/developing-browser-extensions/configuring-bex
-        bex: {
-            contentScripts: ['my-content-script'],
+      // specify the debugging port to use for the Electron app when running in development mode
+      inspectPort: 5858,
 
-            // extendBexScriptsConf (esbuildConf) {}
-            // extendBexManifestJson (json) {}
-        },
-    };
+      bundler: 'packager', // 'packager' or 'builder'
+
+      packager: {
+        // https://github.com/electron-userland/electron-packager/blob/master/docs/api.md#options
+
+        // OS X / Mac App Store
+        // appBundleId: '',
+        // appCategoryType: '',
+        // osxSign: '',
+        // protocol: 'myapp://path',
+
+        // Windows only
+        // win32metadata: { ... }
+      },
+
+      builder: {
+        // https://www.electron.build/configuration/configuration
+
+        appId: 'frontend'
+      }
+    },
+
+    // Full list of options: https://v2.quasar.dev/quasar-cli-vite/developing-browser-extensions/configuring-bex
+    bex: {
+      contentScripts: [
+        'my-content-script'
+      ],
+
+      // extendBexScriptsConf (esbuildConf) {}
+      // extendBexManifestJson (json) {}
+    }
+  }
 });
