@@ -2,19 +2,19 @@ import {onMounted, ref} from 'vue';
 import {defineStore} from 'pinia';
 import {OpenVidu} from 'openvidu-browser';
 
-
+import {localAxios} from '../axios/http-commons';
 import {useRouter} from 'vue-router';
 
-import {useAxios} from 'vue-axios';
 
 const router = useRouter();
+const axios = localAxios();
 export const useOpenViduStore
     = defineStore('openViduStore', () => {
 
     const OV = new OpenVidu();
     const session = OV.initSession();
     const ovToken = ref(null);
-    const {axios} = useAxios();
+
     const apiRootPath = '/api/rooms';
 
     const room_id = ref(null);
