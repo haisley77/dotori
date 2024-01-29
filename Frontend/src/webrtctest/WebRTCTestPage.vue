@@ -58,7 +58,8 @@
     //세션 설정을 하자
     // 세션에 스트림이 생기면 subscriber를 추가한다(구독자)
     session.on('streamCreated', ({stream}) => {
-      const subscriber = session.subscribe(stream, stream.stream.streamId);
+      const subscriber = session.subscribe(stream, stream.streamId);
+      console.log("subscriber added!!!");
       subscribers.value.push(subscriber);
     });
 
@@ -87,7 +88,7 @@
       // Set the main video in the page to display our webcam and store our Publisher
       mainStreamManager.value = publisherA;
       publisher.value = publisherA;
-
+      session.publish(publisher);
 
     }).catch((error) => {
       console.log(error);
