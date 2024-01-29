@@ -117,7 +117,7 @@ public class RoomController {
 		return ResponseEntity.ok(roomDTOs);
 	}
 
-	@PostMapping("/api/room")
+	@PostMapping("/room")
 	public ResponseEntity<String> connectionByRoomId(@RequestParam("roomId") Long roomId) throws
 		OpenViduJavaClientException,
 		OpenViduHttpException {
