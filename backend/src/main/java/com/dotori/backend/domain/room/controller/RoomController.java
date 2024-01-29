@@ -3,8 +3,6 @@ package com.dotori.backend.domain.room.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
@@ -20,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,10 +33,10 @@ import io.openvidu.java.client.OpenVidu;
 import io.openvidu.java.client.OpenViduHttpException;
 import io.openvidu.java.client.OpenViduJavaClientException;
 import io.openvidu.java.client.Session;
-import io.openvidu.java.client.SessionProperties;
 
 @CrossOrigin(origins = "*")
 @RestController
+@RequestMapping("/api/rooms")
 @PropertySource("classpath:application-openvidu.yml")
 @ConfigurationProperties(prefix = "openvidu")
 public class RoomController {
@@ -62,20 +61,7 @@ public class RoomController {
 		this.roomService = roomService;
 	}
 
-	/**
-	 * @param params The Session properties
-	 * @return The Session ID
-	 */
-	@PostMapping("/api/sessions")
-	public ResponseEntity<String> initializeSession(@RequestBody(required = false) Map<String, Object> params)
-		throws OpenViduJavaClientException, OpenViduHttpException {
-		SessionProperties properties = SessionProperties.fromJson(params).build();
-		System.out.println(properties.toString());
-		Session session = openvidu.createSession(properties);
-		return new ResponseEntity<>(session.getSessionId(), HttpStatus.OK);
-	}
-
-	@PostMapping("/sessions")
+	@PostMapping("/session")
 	public ResponseEntity<String> initializeSession(@RequestBody(required = true) RoomInitializationDto params) {
 
 		try {
@@ -95,6 +81,7 @@ public class RoomController {
 		return new ResponseEntity<>("세션 생성 실패", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
+	@PostMapping("/connection/{roomId}")
 	public ResponseEntity<String> createConnectionByHost(@PathVariable("roomId") Long roomId,
 		@RequestBody(required = false) Map<String, Object> params) {
 		try {
@@ -123,9 +110,9 @@ public class RoomController {
 	}
 
 	// 모든 방 정보를 가져오는 API
-	@GetMapping("/api/rooms")
+	@GetMapping("")
 	public ResponseEntity<List<RoomDTO>> getAllRooms() {
-		List<Room> rooms = rs.getAllRooms();
+		List<Room> rooms = roomService.getAllRooms();
 		List<RoomDTO> roomDTOs = rooms.stream().map(RoomDTO::new).collect(Collectors.toList());
 		return ResponseEntity.ok(roomDTOs);
 	}
@@ -136,7 +123,7 @@ public class RoomController {
 		OpenViduHttpException {
 		// 클라이언트가 보낸 roomId를 사용하여 세션 ID 조회
 		openvidu.fetch();
-		String sessionId = rs.findByRoomId(roomId).getSessionId();
+		String sessionId = roomService.findByRoomId(roomId).getSessionId();
 		Session session = openvidu.getActiveSession(sessionId);
 
 		if (session == null)
@@ -148,24 +135,7 @@ public class RoomController {
 		ConnectionProperties properties = ConnectionProperties.fromJson(params).build();
 		Connection connection = session.createConnection(properties);
 
-		// connection.getToken()에서 token 값 추출
-		String token = extractTokenFromUrl(connection.getToken());
-		System.out.println(token);
-
-		return ResponseEntity.ok(token);
-	}
-
-	// 정규표현식을 사용하여 token 값을 추출하는 메서드
-	private String extractTokenFromUrl(String url) {
-		String regex = "token=([^&]+)";
-		Pattern pattern = Pattern.compile(regex);
-		Matcher matcher = pattern.matcher(url);
-
-		if (matcher.find()) {
-			return matcher.group(1);
-		} else {
-			return null;
-		}
+		return ResponseEntity.ok(connection.getToken());
 	}
 
 }

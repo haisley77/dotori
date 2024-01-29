@@ -14,4 +14,5 @@ import lombok.Setter;
 public class RoomInitializationDto {
 	private Map<String, Object> sessionProperties;
 	private Map<String, Object> roomInfo;
+	// private Map<String, Object> connectionProperties;
 }

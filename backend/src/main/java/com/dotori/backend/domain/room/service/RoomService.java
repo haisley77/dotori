@@ -1,6 +1,9 @@
 package com.dotori.backend.domain.room.service;
 
+import java.util.List;
 import java.util.Map;
+
+import com.dotori.backend.domain.room.model.entity.Room;
 
 import io.openvidu.java.client.Connection;
 import io.openvidu.java.client.OpenVidu;
@@ -19,4 +22,8 @@ public interface RoomService {
 		Exception;
 
 	void destroyRoom(Long roomId) throws Exception;
+
+	Room findByRoomId(Long roomId);
+
+	List<Room> getAllRooms();
 }

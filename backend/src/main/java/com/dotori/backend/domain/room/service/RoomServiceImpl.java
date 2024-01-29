@@ -1,5 +1,13 @@
 package com.dotori.backend.domain.room.service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dotori.backend.domain.book.model.entity.Book;
@@ -12,21 +20,7 @@ import io.openvidu.java.client.ConnectionProperties;
 import io.openvidu.java.client.OpenVidu;
 import io.openvidu.java.client.Session;
 import io.openvidu.java.client.SessionProperties;
-
-import java.util.List;
-import java.util.Optional;
-
-import javax.transaction.Transactional;
-
-import org.springframework.stereotype.Service;
-
-import com.dotori.backend.domain.room.model.entity.Room;
-import com.dotori.backend.domain.room.repository.RoomRepository2;
-
 import lombok.AllArgsConstructor;
-
-
-
 
 @Service
 @AllArgsConstructor
@@ -121,8 +115,6 @@ public class RoomServiceImpl implements RoomService {
 		roomRepository.removeRoom(roomId);
 		roomRepository.removeRoomMember(roomId);
 	}
-
-	private RoomRepository roomRepository;
 
 	// 모든 방 정보를 가져오는 메서드
 	public List<Room> getAllRooms() {
