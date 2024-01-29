@@ -1,4 +1,4 @@
-package com.dotori.backend.domain.book.model.entity;
+package com.dotori.backend.domain.role.model.entity;
 
 import static javax.persistence.GenerationType.*;
 import static lombok.AccessLevel.*;
@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.dotori.backend.domain.book.model.entity.Book;
 
 import lombok.Builder;
 import lombok.Getter;
