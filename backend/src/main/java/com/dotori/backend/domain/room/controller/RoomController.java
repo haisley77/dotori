@@ -94,17 +94,26 @@ public class RoomController {
 		return ResponseEntity.ok(roomDTOs);
 	}
 
-	@PostMapping("/room")
-	public ResponseEntity<String> connectionByRoomId(@RequestParam("roomId") Long roomId) throws
-		OpenViduJavaClientException,
-		OpenViduHttpException {
-		// 클라이언트가 보낸 roomId를 사용하여 세션 ID 조회
-		openvidu.fetch();
-		String sessionId = roomService.findByRoomId(roomId).getSessionId();
-		Session session = openvidu.getActiveSession(sessionId);
-
-		if (session == null)
-			return null;
+	@GetMapping("/connection")
+	public ResponseEntity<Map<String, String>> connectionByRoomId(@RequestParam("roomId") Long roomId,
+		@RequestBody(required = false) Map<String, Object> connectionProperties) {
+		Map<String, String> resultData = new HashMap<>();
+		try {
+			openvidu.fetch();
+			Session session = roomService.findSessionByRoomId(openvidu, roomId);
+			// 방 인원 검증 후, 제한 인원 미만 시에만 토큰을 발급하도록 합니다.
+			if (roomService.checkJoinPossible(openvidu, roomId)) {
+				String token = roomService.createConnection(openvidu, session, connectionProperties);
+				resultData.put("roomId", String.valueOf(roomId));
+				resultData.put("token", token);
+				return new ResponseEntity<>(resultData, HttpStatus.OK);
+			} else {
+				resultData.put("message", "인원 초과로 방에 참여할 수 없음");
+				return new ResponseEntity<>(resultData, HttpStatus.ACCEPTED);
+			}
+		} catch (Exception e) {
+			resultData.put("message", e.getMessage());
+			return new ResponseEntity<>(resultData, HttpStatus.INTERNAL_SERVER_ERROR);
 
 		Map<String, Object> params = new HashMap<>();
 		params.put("sessionId", sessionId);
