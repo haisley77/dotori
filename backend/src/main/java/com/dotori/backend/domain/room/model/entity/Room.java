@@ -54,6 +54,7 @@ public class Room extends BaseTimeEntity {
 	@Column(name = "is_recording")
 	private boolean isRecording;
 
+	@Setter
 	@Column(name = "join_cnt")
 	private int joinCnt;
 
@@ -68,13 +69,15 @@ public class Room extends BaseTimeEntity {
 
 	@Builder
 	public Room(Book book, List<RoomMember> roomMembers, Long hostId, String title, String password,
-		boolean isPublic, String sessionId) {
+		Integer limitCnt, boolean isPublic, String sessionId) {
 		this.book = book;
 		this.roomMembers = roomMembers;
 		this.hostId = hostId;
 		this.title = title;
 		this.password = password;
+		this.limitCnt = limitCnt;
 		this.isPublic = isPublic;
 		this.sessionId = sessionId;
 	}
+
 }
