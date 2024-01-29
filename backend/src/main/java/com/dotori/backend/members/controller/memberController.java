@@ -17,6 +17,7 @@ public class memberController {
 	public String jwtTest() {
 		return "jwtTest 요청 성공";
 	}
+
 	// private final MemberService memberService;
 	//
 	// @PostMapping("/social-login")

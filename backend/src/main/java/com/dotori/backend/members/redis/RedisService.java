@@ -39,12 +39,13 @@ public class RedisService {
 		log.info("RefreshToken removed from Redis for email: {}", email);
 	}
 
+	//트래킹부분
 	public void saveTrackingUserSession(String email, String token) {
-		if (email.equals("ssafyezpz@gmail.com"))
+		if (email.equals("ssafy@gmail.com"))
 			return; //관리자 권한은 중복 허용
 
 		// 토큰 비교해서 같은 이용자는 유효시간 갱신
-		// 토큰 날아가면 갱신 불가!
+		// 토큰 날아가면 갱신 불가
 		if (!checkDuplicateLogins(email) || token.equals(
 			redisTemplate.opsForValue().get(REFRESH_TOKEN_KEY_PREFIX + email)))
 			redisTemplate.opsForValue()

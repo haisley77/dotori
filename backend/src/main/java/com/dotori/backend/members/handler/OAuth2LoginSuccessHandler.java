@@ -35,7 +35,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 		try {
 			CustomOAuth2User oAuth2User = (CustomOAuth2User)authentication.getPrincipal();
 
-			// User의 Role이 GUEST일 경우 처음 요청한 회원이므로 회원가입 페이지로 리다이렉트인데 우리는 모두 USER
+			// User의 Role이 GUEST일 경우 처음 요청한 회원이므로 회원가입 페이지로 리다이렉트인데 우리는 모두 USER라서 필요없는부분
 			if (oAuth2User.getRole() == Role.GUEST) {
 				// String accessToken = jwtService.createAccessToken(oAuth2User.getEmail());
 				// response.addHeader(jwtService.getAccessHeader(), "Bearer " + accessToken);
@@ -52,16 +52,16 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 	}
 
 	private void loginSuccess(HttpServletResponse response, CustomOAuth2User oAuth2User) throws IOException {
+		//토큰2개생성
 		String accessToken = jwtService.createAccessToken(oAuth2User.getEmail());
 		String refreshToken = jwtService.createAndStoreRefreshToken(oAuth2User.getEmail());
 
+		//로그인성공하고 쿠키생성부분
 		Cookie cookie = new Cookie("accessToken", accessToken);
 		cookie.setHttpOnly(true); //HttpOnly 플래그 JavaScript를 포함한 클라이언트 측 스크립트로부터 접근x
 		cookie.setSecure(true); // Secure 플래그 HTTPS에서만 쿠키 전송
 		cookie.setPath("/"); // 쿠키 경로 설정
 		response.addCookie(cookie);
-
-		response.addHeader(jwtService.getAccessHeader(), "Bearer " + accessToken);
 
 		// jwtService.sendAccessToken(response, accessToken);
 		jwtService.updateRefreshToken(oAuth2User.getEmail(), refreshToken);
