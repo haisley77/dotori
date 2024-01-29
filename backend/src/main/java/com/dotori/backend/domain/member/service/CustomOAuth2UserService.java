@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import com.dotori.backend.domain.member.CustomOAuth2User;
 import com.dotori.backend.domain.member.OAuthAttributes;
 import com.dotori.backend.domain.member.Repository.MemberRepository;
-import com.dotori.backend.domain.member.model.Member;
+import com.dotori.backend.domain.member.model.MemberTemp;
 import com.dotori.backend.domain.member.type.SocialType;
 
 import lombok.RequiredArgsConstructor;
@@ -57,7 +57,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 		// socialType에 따라 유저 정보를 통해 OAuthAttributes 객체 생성
 		OAuthAttributes extractAttributes = OAuthAttributes.of(socialType, userNameAttributeName, attributes);
 
-		Member createdUser = getUser(extractAttributes, socialType); // getUser() 메소드로 User 객체 생성 후 반환
+		MemberTemp createdUser = getUser(extractAttributes, socialType); // getUser() 메소드로 User 객체 생성 후 반환
 
 		// DefaultOAuth2User를 구현한 CustomOAuth2User 객체를 생성해서 반환
 		return new CustomOAuth2User(
@@ -83,8 +83,8 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 	 * SocialType과 attributes에 들어있는 소셜 로그인의 식별값 id를 통해 회원을 찾아 반환하는 메소드
 	 * 만약 찾은 회원이 있다면, 그대로 반환하고 없다면 saveUser()를 호출하여 회원을 저장한다.
 	 */
-	private Member getUser(OAuthAttributes attributes, SocialType socialType) {
-		Member findUser = memberRepository.findBySocialTypeAndSocialId(socialType,
+	private MemberTemp getUser(OAuthAttributes attributes, SocialType socialType) {
+		MemberTemp findUser = memberRepository.findBySocialTypeAndSocialId(socialType,
 			attributes.getOauth2UserInfo().getId()).orElse(null);
 
 		if (findUser == null) {
@@ -97,8 +97,8 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 	 * OAuthAttributes의 toEntity() 메소드를 통해 빌더로 User 객체 생성 후 반환
 	 * 생성된 User 객체를 DB에 저장 : socialType, socialId, email, role 값만 있는 상태
 	 */
-	private Member saveUser(OAuthAttributes attributes, SocialType socialType) {
-		Member createdUser = attributes.toEntity(socialType, attributes.getOauth2UserInfo());
+	private MemberTemp saveUser(OAuthAttributes attributes, SocialType socialType) {
+		MemberTemp createdUser = attributes.toEntity(socialType, attributes.getOauth2UserInfo());
 		return memberRepository.save(createdUser);
 	}
 }

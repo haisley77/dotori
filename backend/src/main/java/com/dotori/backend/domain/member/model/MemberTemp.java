@@ -22,9 +22,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Builder
-@Table(name = "Member")
+@Table(name = "Member_temp")
 @AllArgsConstructor
-public class Member {
+public class MemberTemp {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
