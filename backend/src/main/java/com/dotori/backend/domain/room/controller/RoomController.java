@@ -87,8 +87,7 @@ public class RoomController {
 
 	}
 
-	// 모든 방 정보를 가져오는 API
-	@GetMapping("")
+	@GetMapping
 	public ResponseEntity<List<RoomDTO>> getAllRooms() {
 		List<Room> rooms = roomService.getAllRooms();
 		List<RoomDTO> roomDTOs = rooms.stream().map(RoomDTO::new).collect(Collectors.toList());
