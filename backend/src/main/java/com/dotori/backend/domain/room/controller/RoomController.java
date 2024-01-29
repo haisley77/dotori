@@ -14,8 +14,8 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,11 +27,7 @@ import com.dotori.backend.domain.room.model.dto.RoomInitializationDto;
 import com.dotori.backend.domain.room.model.entity.Room;
 import com.dotori.backend.domain.room.service.RoomService;
 
-import io.openvidu.java.client.Connection;
-import io.openvidu.java.client.ConnectionProperties;
 import io.openvidu.java.client.OpenVidu;
-import io.openvidu.java.client.OpenViduHttpException;
-import io.openvidu.java.client.OpenViduJavaClientException;
 import io.openvidu.java.client.Session;
 
 @CrossOrigin(origins = "*")
@@ -62,23 +58,17 @@ public class RoomController {
 	}
 
 	@PostMapping("/session")
-	public ResponseEntity<String> initializeSession(@RequestBody(required = true) RoomInitializationDto params) {
-
+	public ResponseEntity<Map<String, String>> createRoom(
+		@RequestBody(required = true) RoomInitializationDto params) {
+		Map<String, String> resultData = new HashMap<>();
 		try {
 			openvidu.fetch();
-			// 세션을 만듭니다.
-			Session session = roomService.createSession(openvidu, params.getSessionProperties());
-			if (session != null) {
-				// 방 정보를 DB에 등록합니다.
-				Long roomId = roomService.saveRoomInfo(params.getRoomInfo(), session.getSessionId());
-				// room id를 반환합니다.
-				return new ResponseEntity<>(roomId.toString(), HttpStatus.CREATED);
-			}
+			resultData = roomService.createRoom(openvidu, params);
+			return new ResponseEntity<>(resultData, HttpStatus.CREATED);
 		} catch (Exception e) {
-			// e.printStackTrace();
-
+			resultData.put("message", "방 생성 중 문제가 발생했습니다");
+			return new ResponseEntity<>(resultData, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<>("세션 생성 실패", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	@PostMapping("/connection/{roomId}")
