@@ -10,12 +10,12 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.dotori.backend.domain.member.Repository.MemberRepository;
+import com.dotori.backend.domain.member.handler.OAuth2LoginFailureHandler;
 import com.dotori.backend.domain.member.handler.OAuth2LoginSuccessHandler;
 import com.dotori.backend.domain.member.jwt.filter.JwtAuthenticationProcessingFilter;
 import com.dotori.backend.domain.member.jwt.service.JwtService;
-import com.dotori.backend.domain.member.service.LoginService;
-import com.dotori.backend.domain.member.handler.OAuth2LoginFailureHandler;
 import com.dotori.backend.domain.member.service.CustomOAuth2UserService;
+import com.dotori.backend.domain.member.service.LoginService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -67,8 +67,8 @@ public class SecurityConfig {
 			.antMatchers("/*")
 			.permitAll() // 회원가입 접근 가능
 
-			.anyRequest()
-			.authenticated() // 위의 경로 이외에는 모두 인증된 사용자만 접근 가능
+			// .anyRequest()
+			// .authenticated() // 위의 경로 이외에는 모두 인증된 사용자만 접근 가능
 
 			.and()
 			//== 소셜 로그인 설정 ==//
