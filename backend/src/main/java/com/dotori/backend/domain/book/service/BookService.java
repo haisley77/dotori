@@ -4,21 +4,30 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import com.dotori.backend.domain.book.model.dto.BookDto;
 import com.dotori.backend.domain.book.model.dto.BookMapper;
+import com.dotori.backend.domain.book.model.dto.RoleDto;
+import com.dotori.backend.domain.book.model.dto.response.GetBookResponse;
 import com.dotori.backend.domain.book.model.dto.response.GetBooksResponse;
 import com.dotori.backend.domain.book.model.entity.Book;
+import com.dotori.backend.domain.book.model.entity.Role;
 import com.dotori.backend.domain.book.repository.BookRepository;
+import com.dotori.backend.domain.book.repository.RoleRepository;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class BookService {
 
 	private final BookRepository bookRepository;
+
+	private final RoleRepository roleRepository;
 
 	public GetBooksResponse getBooks() {
 
@@ -32,14 +41,22 @@ public class BookService {
 		return GetBooksResponse.builder().books(books).build();
 	}
 
-	public Book getBook(Long bookId) {
-		Optional<Book> book = bookRepository.findById(bookId);
+	public GetBookResponse getBook(Long bookId) {
+		Optional<Book> findBook = bookRepository.findById(bookId);
 
-		//FIXME 해당 책 정보가 없는 경우 처리 필요
-		if (book.isEmpty()) {
+		if (findBook.isEmpty()) {
 			return null;
 		}
 
-		return book.get();
+		BookDto bookDto = BookMapper.toBookDto(findBook.get());
+
+		List<Role> roleList = roleRepository.findByBook_BookId(bookId);
+		List<RoleDto> roles = new LinkedList<>();
+
+		for (Role role : roleList) {
+			roles.add(BookMapper.toRoleDto(role));
+		}
+
+		return GetBookResponse.builder().book(bookDto).roles(roles).build();
 	}
 }
