@@ -58,7 +58,7 @@
     //세션 설정을 하자
     // 세션에 스트림이 생기면 subscriber를 추가한다(구독자)
     session.on('streamCreated', ({stream}) => {
-      const subscriber = session.subscribe(stream.stream);
+      const subscriber = session.subscribe(stream, stream.stream.streamId);
       subscribers.value.push(subscriber);
     });
 
@@ -106,22 +106,24 @@
   <h1>WELCOME TO TEST PAGE</h1>
   sessionId : {{ sessionId }}<br />
   token : {{ token }}<br />
-  <div class="row">
-    <h6 class="col-2 flex items-center q-ma-none">세션 아이디 :</h6>
-    <q-input v-model="sessionId" class="col"></q-input>
+  <div class='row'>
+    <h6 class='col-2 flex items-center q-ma-none'>세션 아이디 :</h6>
+    <q-input v-model='sessionId' class='col'></q-input>
   </div>
-  <q-btn label='create Session' @click="createSession" />
-  <q-btn label='create Connection' @click="createConnection" />
-  <q-btn label='joinRoom' @click="joinRoom" />
+  <q-btn label='create Session' @click='createSession' />
+  <q-btn label='create Connection' @click='createConnection' />
+  <q-btn label='joinRoom' @click='joinRoom' />
 
 
-  <div v-if="mainStreamManager">
-    <ov-video :stream-manager="mainStreamManager" />
+  <div v-if='mainStreamManager'>
+    <ov-video :stream-manager='mainStreamManager' />
   </div>
   <hr />
   <h1>{{ subscribers.length }}</h1>
-  <ov-video v-for="sub in subscribers" :key="sub.stream.connection.connectionId" :stream-manager="sub"
-            @click.native="updateMainVideoStreamManager(sub)" />
+  <ov-video v-for='sub in subscribers' :key='sub.stream.connection.connectionId' :stream-manager='sub'
+            @click.native='updateMainVideoStreamManager(sub)'
+            :id='sub.stream.streamId' />
+
 
 </template>
 
