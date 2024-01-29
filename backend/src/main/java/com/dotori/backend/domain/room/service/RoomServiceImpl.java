@@ -49,38 +49,68 @@ public class RoomServiceImpl implements RoomService {
 		this.objectMapper = new ObjectMapper();
 	}
 
-	/**
-	 * 방 정보와 세션 아이디를 저장하는 메서드
-	 * @param roomInfo 방 정보
-	 * @param sessionId 세션 아이디
-	 * @return DB에 저장한 방 pk
-	 */
 	@Override
-	public Long saveRoomInfo(Map<String, Object> roomInfo, String sessionId) {
+	public Map<String, String> createRoom(OpenVidu openvidu, RoomInitializationDto params) throws Exception {
+		Session session = openvidu.createSession(
+			SessionProperties.fromJson(params.getSessionProperties()).build());
+
+		if (session == null)
+			throw new RuntimeException("세션 생성 중 문제 발생");
+
 		List<RoomMember> roomMembers = new ArrayList<>();
 
-		// 책 정보 더미데이터
 		Book book = Book.builder()
-			.title("토끼와 거북이")
-			.bookImg("토끼와 거북이 책 이미지 주소")
-			.author("이하은")
+			.title("Example Title")
+			.bookImg("exampleProfileImgUrl1")
+			.author("Example Author")
 			.build();
-		// jpa entity cascade 오류로 추가한 코드입니다. 테스트가 필요할 시 주석을 풀고 테스트 하시면 됩니다.
-		// roomRepository.saveBook(book);
+		em.persist(book);
 
-		// 방 정보 더미데이터
+		Member host = Member.builder()
+			.nickname("exampleNickname1")
+			.profileImg("exampleProfileImgUrl1")
+			.build();
+		em.persist(host);
+
 		Room room = Room.builder()
 			.book(book)
 			.hostId(1L)
 			.roomMembers(roomMembers)
 			.title("토끼와 거북이 같이 연극해요!")
 			.password("1234")
+			.limitCnt(4)
 			.isPublic(false)
-			.sessionId(sessionId)
+			.sessionId(session.getSessionId())
 			.build();
+		em.persist(room);
+		em.flush();
 
-		// DB에 저장하고 방 pk를 반환합니다.
-		return roomRepository.saveRoomInfo(room);
+		// Map<String, Object> roomInfo = objectMapper.readValue((JsonParser)params.getRoomInfo().get("roomInfo"),
+		// 	Map.class);
+
+		// Book book = bookRepository.findById(bookId);
+		// Member host = memberRepository.findById(roomInfo.get("hostId"));
+
+		// Room room = Room.builder()
+		// 	.book(book)
+		// 	.hostId(host.getMemberId())
+		// 	.roomMembers(roomMembers)
+		// 	.title((String)roomInfo.get("title"))
+		// 	.password((String)roomInfo.get("password"))
+		// 	.isPublic((Boolean)roomInfo.get("isPublic"))
+		// 	.sessionId(session.getSessionId())
+		// 	.build();
+
+		Connection connection = session.createConnection(
+			ConnectionProperties.fromJson(params.getConnectionProperties()).build());
+		if (connection == null)
+			throw new RuntimeException("토큰 생성 중 문제 발생");
+
+		Map<String, String> resultData = new HashMap<>();
+		resultData.put("roomId", String.valueOf(roomRepository.save(room).getRoomId()));
+		resultData.put("token", connection.getToken());
+
+		return resultData;
 	}
 
 	/**
