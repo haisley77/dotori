@@ -66,7 +66,7 @@ public class RoomController {
 			resultData = roomService.createRoom(openvidu, params);
 			return new ResponseEntity<>(resultData, HttpStatus.CREATED);
 		} catch (Exception e) {
-			resultData.put("message", "방 생성 중 문제가 발생했습니다");
+			resultData.put("message", "방 생성 중 문제 발생");
 			return new ResponseEntity<>(resultData, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -127,9 +127,14 @@ public class RoomController {
 		Map<String, String> resultData = new HashMap<>();
 		try {
 			openvidu.fetch();
-			roomService.addMemberToRoom(roomId, memberId);
-			resultData.put("memberId", String.valueOf(memberId));
-			return new ResponseEntity<>(resultData, HttpStatus.OK);
+			if (roomService.checkJoinPossible(openvidu, roomId)) {
+				roomService.addMemberToRoom(roomId, memberId);
+				resultData.put("memberId", String.valueOf(memberId));
+				return new ResponseEntity<>(resultData, HttpStatus.OK);
+			} else {
+				resultData.put("message", "인원 초과로 방에 참여할 수 없음");
+				return new ResponseEntity<>(resultData, HttpStatus.ACCEPTED);
+			}
 		} catch (Exception e) {
 			resultData.put("message", e.getMessage());
 			return new ResponseEntity<>(resultData, HttpStatus.INTERNAL_SERVER_ERROR);
