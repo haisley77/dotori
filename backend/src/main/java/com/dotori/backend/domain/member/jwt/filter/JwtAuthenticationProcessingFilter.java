@@ -15,7 +15,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.dotori.backend.domain.member.Repository.MemberRepository;
 import com.dotori.backend.domain.member.jwt.service.JwtService;
-import com.dotori.backend.domain.member.model.Member;
+import com.dotori.backend.domain.member.model.MemberTemp;
 import com.dotori.backend.domain.member.redis.RedisService;
 
 import lombok.RequiredArgsConstructor;
@@ -105,9 +105,9 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 	 * jwtService.createRefreshToken()으로 리프레시 토큰 재발급 후
 	 * Redis에 재발급한 리프레시 토큰 업데이트
 	 */
-	private String reIssueRefreshToken(Member member) {
+	private String reIssueRefreshToken(MemberTemp memberTemp) {
 		String reIssuedRefreshToken = jwtService.createRefreshToken();
-		redisService.saveRefreshToken(member.getEmail(), reIssuedRefreshToken,
+		redisService.saveRefreshToken(memberTemp.getEmail(), reIssuedRefreshToken,
 			jwtService.getRefreshTokenExpirationPeriod(), TimeUnit.MILLISECONDS);
 		return reIssuedRefreshToken;
 	}
