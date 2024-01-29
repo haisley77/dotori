@@ -3,27 +3,30 @@ package com.dotori.backend.domain.room.service;
 import java.util.List;
 import java.util.Map;
 
+import com.dotori.backend.domain.room.model.dto.RoomInitializationDto;
 import com.dotori.backend.domain.room.model.entity.Room;
 
-import io.openvidu.java.client.Connection;
 import io.openvidu.java.client.OpenVidu;
+import io.openvidu.java.client.OpenViduHttpException;
+import io.openvidu.java.client.OpenViduJavaClientException;
 import io.openvidu.java.client.Session;
 
 public interface RoomService {
 
-	Session createSession(OpenVidu openvidu, Map<String, Object> sessionProperties) throws Exception;
-
-	Long saveRoomInfo(Map<String, Object> roomInfo, String sessionId) throws Exception;
+	Map<String, String> createRoom(OpenVidu openvidu, RoomInitializationDto params) throws Exception;
 
 	Session findSessionByRoomId(OpenVidu openvidu, Long roomId) throws Exception;
 
-	Connection createConnectionByHost(OpenVidu openvidu, Long roomId,
-		Map<String, Object> connectionProperties) throws
-		Exception;
-
-	void destroyRoom(Long roomId) throws Exception;
-
-	Room findByRoomId(Long roomId);
-
 	List<Room> getAllRooms();
+
+	String createConnection(OpenVidu openvidu, Session session,
+		Map<String, Object> connectionProperties) throws
+		OpenViduJavaClientException,
+		OpenViduHttpException;
+
+	boolean checkJoinPossible(OpenVidu openvidu, Long roomId) throws Exception;
+
+	void addMemberToRoom(Long roomId, Long memberId);
+
+	void removeMemberFromRoom(OpenVidu openvidu, Long roomId, Long memberId);
 }
