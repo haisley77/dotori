@@ -71,32 +71,20 @@ public class RoomController {
 		}
 	}
 
-	@PostMapping("/connection/{roomId}")
-	public ResponseEntity<String> createConnectionByHost(@PathVariable("roomId") Long roomId,
-		@RequestBody(required = false) Map<String, Object> params) {
+	@DeleteMapping("/remove")
+	public ResponseEntity<Map<String, String>> removeRoomMember(
+		@RequestParam("roomId") Long roomId,
+		@RequestParam("memberId") Long memberId) {
+		Map<String, String> resultData = new HashMap<>();
 		try {
-			openvidu.fetch();
-			// 방 Id에 해당하는 방과 커넥션을 생성합니다.
-			Connection connection = roomService.createConnectionByHost(openvidu, roomId, params);
-			// token을 반환합니다.
-			if (connection != null) {
-				return new ResponseEntity<>(connection.getToken(), HttpStatus.CREATED);
-			}
+			roomService.removeMemberFromRoom(openvidu, roomId, memberId);
+			resultData.put("memberId", String.valueOf(memberId));
+			return new ResponseEntity<>(resultData, HttpStatus.OK);
 		} catch (Exception e) {
-			// e.printStackTrace();
+			resultData.put("message", e.getMessage());
+			return new ResponseEntity<>(resultData, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<>("커넥션 생성 실패", HttpStatus.INTERNAL_SERVER_ERROR);
-	}
 
-	@PostMapping("/remove/{roomId}")
-	public ResponseEntity<String> removeRoomAndRoomMember(@PathVariable("roomId") Long roomId) {
-		try {
-			roomService.destroyRoom(roomId);
-			return new ResponseEntity<>(String.valueOf(roomId), HttpStatus.OK);
-		} catch (Exception e) {
-			// e.printStackTrace();
-		}
-		return new ResponseEntity<>("방 제거 중 문제가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	// 모든 방 정보를 가져오는 API
