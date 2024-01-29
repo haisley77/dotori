@@ -17,6 +17,7 @@ import com.dotori.backend.domain.member.model.entity.Member;
 import com.dotori.backend.domain.room.model.dto.RoomInitializationDto;
 import com.dotori.backend.domain.room.model.entity.Room;
 import com.dotori.backend.domain.room.model.entity.RoomMember;
+import com.dotori.backend.domain.room.repository.RoomMemberRepository;
 import com.dotori.backend.domain.room.repository.RoomRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -33,6 +34,7 @@ import io.openvidu.java.client.SessionProperties;
 public class RoomServiceImpl implements RoomService {
 
 	private final RoomRepository roomRepository;
+	private final RoomMemberRepository roomMemberRepository;
 	// private final BookRepository bookRepository;
 
 	@Autowired
@@ -41,10 +43,12 @@ public class RoomServiceImpl implements RoomService {
 	private ObjectMapper objectMapper;
 
 	@Autowired
-	public RoomServiceImpl(RoomRepository roomRepository
+	public RoomServiceImpl(RoomRepository roomRepository,
+		RoomMemberRepository roomMemberRepository
 		//, BookRepository bookRepository
 	) {
 		this.roomRepository = roomRepository;
+		this.roomMemberRepository = roomMemberRepository;
 		// this.bookRepository = bookRepository;
 		this.objectMapper = new ObjectMapper();
 	}
@@ -174,7 +178,7 @@ public class RoomServiceImpl implements RoomService {
 			.member(member)
 			.room(room)
 			.build();
-		roomRepository.save(roomMember);
+		roomMemberRepository.save(roomMember);
 
 		// 방 참여 인원을 갱신합니다.
 		room.setJoinCnt(room.getJoinCnt() + 1);
@@ -184,7 +188,11 @@ public class RoomServiceImpl implements RoomService {
 	@Override
 	public void removeMemberFromRoom(OpenVidu openvidu, Long roomId, Long memberId) {
 		// 방 참여 멤버를 DB에서 지웁니다.
-		roomRepository.deleteByRoomMemberId(memberId);
+		// 이거 어케해요
+		// Long roomMemberId = roomMemberRepository.deleteByMemberId(memberId);
+		// if (roomMemberId == null)
+		// 	throw new RuntimeException("유저 조회 불가");
+		// roomMemberRepository.deleteById(roomMemberId);
 
 		// 방 id 에 해당하는 방을 가져옵니다.
 		Optional<Room> optionalRoom = roomRepository.findById(roomId);
