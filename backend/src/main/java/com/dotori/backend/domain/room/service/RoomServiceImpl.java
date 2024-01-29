@@ -127,9 +127,13 @@ public class RoomServiceImpl implements RoomService {
 	}
 
 	@Override
-	public void destroyRoom(Long roomId) throws Exception {
-		roomRepository.removeRoom(roomId);
-		roomRepository.removeRoomMember(roomId);
+	public String createConnection(OpenVidu openvidu, Session session,
+		Map<String, Object> connectionProperties) throws OpenViduJavaClientException, OpenViduHttpException {
+		Connection connection = session.createConnection(
+			ConnectionProperties.fromJson(connectionProperties).build());
+		if (connection == null)
+			throw new RuntimeException("토큰 생성 중 문제 발생");
+		return connection.getToken();
 	}
 
 	// 모든 방 정보를 가져오는 메서드
