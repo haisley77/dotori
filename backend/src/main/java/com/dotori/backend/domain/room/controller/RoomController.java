@@ -115,13 +115,8 @@ public class RoomController {
 			resultData.put("message", e.getMessage());
 			return new ResponseEntity<>(resultData, HttpStatus.INTERNAL_SERVER_ERROR);
 
-		Map<String, Object> params = new HashMap<>();
-		params.put("sessionId", sessionId);
+		}
 
-		ConnectionProperties properties = ConnectionProperties.fromJson(params).build();
-		Connection connection = session.createConnection(properties);
-
-		return ResponseEntity.ok(connection.getToken());
 	}
 
 }
