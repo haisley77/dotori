@@ -119,4 +119,20 @@ public class RoomController {
 
 	}
 
+	@PostMapping("/add")
+	public ResponseEntity<Map<String, String>> addRoomMember(
+		@RequestParam("roomId") Long roomId,
+		@RequestParam("memberId") Long memberId) {
+		Map<String, String> resultData = new HashMap<>();
+		try {
+			roomService.addMemberToRoom(roomId, memberId);
+			resultData.put("memberId", String.valueOf(memberId));
+			return new ResponseEntity<>(resultData, HttpStatus.OK);
+		} catch (Exception e) {
+			resultData.put("message", e.getMessage());
+			return new ResponseEntity<>(resultData, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
+
 }
