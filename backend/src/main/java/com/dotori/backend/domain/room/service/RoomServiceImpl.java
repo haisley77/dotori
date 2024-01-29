@@ -136,15 +136,48 @@ public class RoomServiceImpl implements RoomService {
 		return connection.getToken();
 	}
 
-	// 모든 방 정보를 가져오는 메서드
-	public List<Room> getAllRooms() {
-		List<Room> rooms = roomRepository.findAll();
-		return rooms;
+	@Override
+	public boolean checkJoinPossible(OpenVidu openvidu, Long roomId) {
+		// 방 id에 해당하는 방을 가져옵니다.
+		Optional<Room> optionalRoom = roomRepository.findById(roomId);
+		if (optionalRoom.isEmpty()) {
+			throw new RuntimeException("방 조회 불가");
+		}
+		Room room = optionalRoom.get();
+		// 방에 연결된 유효한 connection 리스트를 openvidu 서버에서 불러옵니다.
+		List<Connection> activeConnections = openvidu.getActiveSession(room.getSessionId()).getActiveConnections();
+		// 유효한 connection 수가 방 제한 인원 수보다 적다면, true를 반환합니다.
+		// 사실... connection 된 후 바로 창 나가버리는 경우 생기면 예외 처리해야하는데, 일단은 해피케이스 생각하겠습니다.
+		return activeConnections.size() < room.getLimitCnt();
 	}
 
-	// 특정 roomId에 대한 방 정보를 가져오는 메서드
-	public Room findByRoomId(Long roomId) {
-		Optional<Room> optionalRoom = roomRepository.findByRoomId(roomId);
-		return optionalRoom.orElse(null);
+	@Override
+	public void addMemberToRoom(Long roomId, Long memberId) {
+		// 방 id에 해당하는 방을 가져옵니다.
+		Optional<Room> optionalRoom = roomRepository.findById(roomId);
+		if (optionalRoom.isEmpty()) {
+			throw new RuntimeException("방 조회 불가");
+		}
+		Room room = optionalRoom.get();
+
+		// Member member = memberRepository.findById(memberId);
+		Member member = Member.builder()
+			.nickname("도토리유저1")
+			.profileImg("프로필이미지")
+			.build();
+
+		em.persist(member);
+		em.flush();
+
+		// member id에 해당하는 멤버를 방 참여 멤버로 등록합니다.
+		RoomMember roomMember = RoomMember.builder()
+			.member(member)
+			.room(room)
+			.build();
+		roomRepository.save(roomMember);
+
+		// 방 참여 인원을 갱신합니다.
+		room.setJoinCnt(room.getJoinCnt() + 1);
+		roomRepository.save(room);
 	}
 }
