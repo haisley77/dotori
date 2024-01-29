@@ -1,4 +1,4 @@
-package com.dotori.backend.domain.script.model.entity;
+package com.dotori.backend.domain.book.model.entity;
 
 import static javax.persistence.FetchType.*;
 import static javax.persistence.GenerationType.*;
@@ -11,9 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import com.dotori.backend.domain.role.model.entity.Role;
-import com.dotori.backend.domain.scene.model.entity.Scene;
 
 import lombok.Builder;
 import lombok.Getter;
