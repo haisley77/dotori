@@ -180,4 +180,25 @@ public class RoomServiceImpl implements RoomService {
 		room.setJoinCnt(room.getJoinCnt() + 1);
 		roomRepository.save(room);
 	}
+
+	@Override
+	public void removeMemberFromRoom(OpenVidu openvidu, Long roomId, Long memberId) {
+		// 방 참여 멤버를 DB에서 지웁니다.
+		roomRepository.deleteByRoomMemberId(memberId);
+
+		// 방 id 에 해당하는 방을 가져옵니다.
+		Optional<Room> optionalRoom = roomRepository.findById(roomId);
+		if (optionalRoom.isEmpty()) {
+			throw new RuntimeException("방 조회 불가");
+		}
+		Room room = optionalRoom.get();
+		// 방 참여 인원을 갱신합니다.
+		room.setJoinCnt(room.getJoinCnt() - 1);
+
+		// 방에 더이상 남아있는 인원이 없다면 방을 삭제합니다.
+		if (room.getJoinCnt() == 0) {
+			roomRepository.deleteById(roomId);
+		}
+	}
+
 }
