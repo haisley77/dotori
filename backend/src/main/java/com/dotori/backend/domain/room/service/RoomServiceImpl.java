@@ -1,23 +1,30 @@
 package com.dotori.backend.domain.room.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dotori.backend.domain.book.model.entity.Book;
+import com.dotori.backend.domain.member.model.entity.Member;
+import com.dotori.backend.domain.room.model.dto.RoomInitializationDto;
 import com.dotori.backend.domain.room.model.entity.Room;
 import com.dotori.backend.domain.room.model.entity.RoomMember;
 import com.dotori.backend.domain.room.repository.RoomRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.openvidu.java.client.Connection;
 import io.openvidu.java.client.ConnectionProperties;
 import io.openvidu.java.client.OpenVidu;
+import io.openvidu.java.client.OpenViduHttpException;
+import io.openvidu.java.client.OpenViduJavaClientException;
 import io.openvidu.java.client.Session;
 import io.openvidu.java.client.SessionProperties;
 
@@ -26,24 +33,20 @@ import io.openvidu.java.client.SessionProperties;
 public class RoomServiceImpl implements RoomService {
 
 	private final RoomRepository roomRepository;
+	// private final BookRepository bookRepository;
 
 	@Autowired
-	public RoomServiceImpl(RoomRepository roomRepository) {
-		this.roomRepository = roomRepository;
-	}
+	private EntityManager em;
 
-	/**
-	 * 세션을 생성하는 메서드
-	 * @param openvidu openvidu 객체
-	 * @param sessionProperties session 설정 정보를 담은 객체
-	 * @return session 객체
-	 * @throws Exception session 생성 시 발생하는 예외 객체
-	 */
-	@Override
-	public Session createSession(OpenVidu openvidu,
-		Map<String, Object> sessionProperties) throws Exception {
-		SessionProperties properties = SessionProperties.fromJson(sessionProperties).build();
-		return openvidu.createSession(properties);
+	private ObjectMapper objectMapper;
+
+	@Autowired
+	public RoomServiceImpl(RoomRepository roomRepository
+		//, BookRepository bookRepository
+	) {
+		this.roomRepository = roomRepository;
+		// this.bookRepository = bookRepository;
+		this.objectMapper = new ObjectMapper();
 	}
 
 	/**
