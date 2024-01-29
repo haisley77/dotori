@@ -95,6 +95,11 @@
   };
 
 
+  const updateMainVideoStreamManager = (stream) => {
+    if (mainStreamManager.value === stream) return;
+    mainStreamManager.value = stream;
+  };
+
 </script>
 <!-- -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
 <template>
@@ -110,10 +115,13 @@
   <q-btn label='joinRoom' @click="joinRoom" />
 
 
-
   <div v-if="mainStreamManager">
     <ov-video :stream-manager="mainStreamManager" />
   </div>
+
+
+  <ov-video v-for="sub in subscribers" :key="sub.stream.connection.connectionId" :stream-manager="sub"
+            @click.native="updateMainVideoStreamManager(sub)" />
 
 </template>
 
