@@ -49,11 +49,11 @@ const routes = [
     children: [
       {
         path: 'books',
-        component: () => import('pages/ListPage/BookListPage.vue')
+        component: () => import('pages/ListPage/BookListPage.vue'),
       },
       {
         path: 'rooms',
-        component: () => import('pages/ListPage/RoomListPage.vue')
+        component: () => import('pages/ListPage/RoomListPage.vue'),
       },
     ],
   },
@@ -71,6 +71,14 @@ const routes = [
   {
     path: '/end',
     component: () => import('pages/EndPage/EndPage.vue'),
+  },
+  {
+    path: '/test',
+    component: () => import('../webrtctest/WebRTCTestPage.vue'),
+  },
+  {
+    path: '/test2',
+    component: () => import('../webrtctest/RTCTest.vue'),
   },
 ];
 
