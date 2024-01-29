@@ -2,6 +2,7 @@ package com.dotori.backend.domain.member.model.entity;
 
 import static javax.persistence.FetchType.*;
 import static javax.persistence.GenerationType.*;
+import static lombok.AccessLevel.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,7 +21,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = PROTECTED)
 @Table(name = "member_video")
 public class MemberVideo extends BaseTimeEntity {
 	@Id
