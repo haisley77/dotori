@@ -1,8 +1,9 @@
 <script setup>
-  import {ref} from 'vue';
+  import {ref, onMounted} from 'vue';
   import axios from 'axios';
   import {OpenVidu} from 'openvidu-browser';
   import OvVideo from 'src/webrtctest/OvVideo.vue';
+
   // import UserVideo from 'src/webrtctest/UserVideo.vue';
   const OV = new OpenVidu();
   const session = OV.initSession();
@@ -57,7 +58,7 @@
     //세션 설정을 하자
     // 세션에 스트림이 생기면 subscriber를 추가한다(구독자)
     session.on('streamCreated', ({stream}) => {
-      const subscriber = session.subscribe(stream);
+      const subscriber = session.subscribe(stream.stream);
       subscribers.value.push(subscriber);
     });
 
@@ -99,7 +100,6 @@
     if (mainStreamManager.value === stream) return;
     mainStreamManager.value = stream;
   };
-
 </script>
 <!-- -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
 <template>
@@ -118,8 +118,8 @@
   <div v-if="mainStreamManager">
     <ov-video :stream-manager="mainStreamManager" />
   </div>
-
-
+  <hr />
+  <h1>{{ subscribers.length }}</h1>
   <ov-video v-for="sub in subscribers" :key="sub.stream.connection.connectionId" :stream-manager="sub"
             @click.native="updateMainVideoStreamManager(sub)" />
 
