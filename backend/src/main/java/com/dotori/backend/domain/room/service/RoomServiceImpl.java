@@ -20,10 +20,8 @@ import io.openvidu.java.client.ConnectionProperties;
 import io.openvidu.java.client.OpenVidu;
 import io.openvidu.java.client.Session;
 import io.openvidu.java.client.SessionProperties;
-import lombok.AllArgsConstructor;
 
 @Service
-@AllArgsConstructor
 @Transactional
 public class RoomServiceImpl implements RoomService {
 
