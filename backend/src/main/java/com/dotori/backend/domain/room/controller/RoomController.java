@@ -95,7 +95,7 @@ public class RoomController {
 		return ResponseEntity.ok(roomDTOs);
 	}
 
-	@GetMapping("/connection")
+	@PostMapping("/connection")
 	public ResponseEntity<Map<String, String>> connectionByRoomId(@RequestParam("roomId") Long roomId,
 		@RequestBody(required = false) Map<String, Object> connectionProperties) {
 		Map<String, String> resultData = new HashMap<>();
