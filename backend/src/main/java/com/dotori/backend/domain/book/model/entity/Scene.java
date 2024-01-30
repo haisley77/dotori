@@ -50,4 +50,12 @@ public class Scene {
 		this.backgroundImage = backgroundImage;
 		this.book = book;
 	}
+
+	public void addScript(Script script) {
+		this.scripts.add(script);
+	}
+
+	public void addScripts(List<Script> scripts) {
+		this.scripts.addAll(scripts);
+	}
 }
