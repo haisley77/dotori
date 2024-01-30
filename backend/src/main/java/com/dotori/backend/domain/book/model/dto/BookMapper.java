@@ -2,6 +2,7 @@ package com.dotori.backend.domain.book.model.dto;
 
 import com.dotori.backend.domain.book.model.entity.Book;
 import com.dotori.backend.domain.book.model.entity.Role;
+import com.dotori.backend.domain.book.model.entity.Scene;
 
 public class BookMapper {
 	public static BookDto toBookDto(Book book) {
@@ -21,5 +22,14 @@ public class BookMapper {
 			.name(role.getName())
 			.maskPath(role.getMaskPath())
 			.build();
+	}
+
+	public static SceneDto toSceneDto(Scene scene) {
+		return new SceneDto(
+			scene.getSceneId(),
+			scene.getSceneOrder(),
+			scene.getBackgroundImage(),
+			toBookDto(scene.getBook())
+		);
 	}
 }
