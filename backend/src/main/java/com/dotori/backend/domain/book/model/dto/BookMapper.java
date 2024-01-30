@@ -1,8 +1,11 @@
 package com.dotori.backend.domain.book.model.dto;
 
+import static java.util.stream.Collectors.*;
+
 import com.dotori.backend.domain.book.model.entity.Book;
 import com.dotori.backend.domain.book.model.entity.Role;
 import com.dotori.backend.domain.book.model.entity.Scene;
+import com.dotori.backend.domain.book.model.entity.Script;
 
 public class BookMapper {
 	public static BookDto toBookDto(Book book) {
@@ -30,6 +33,26 @@ public class BookMapper {
 			scene.getSceneOrder(),
 			scene.getBackgroundImage(),
 			toBookDto(scene.getBook())
+		);
+	}
+
+	public static SceneDetailDto toSceneDetailDto(Scene scene) {
+		return new SceneDetailDto(
+			scene.getSceneId(),
+			scene.getSceneOrder(),
+			scene.getBackgroundImage(),
+			scene.getScripts()
+				.stream().map(BookMapper::toScriptDto)
+				.collect(toList())
+		);
+	}
+
+	private static ScriptDto toScriptDto(Script script) {
+		return new ScriptDto(
+			script.getScriptId(),
+			toRoleDto(script.getRole()),
+			script.getScriptOrder(),
+			script.getContent()
 		);
 	}
 }
