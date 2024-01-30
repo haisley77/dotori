@@ -1,8 +1,9 @@
 <template>
-  <video autoplay/>
+  <video autoplay id = "mytestID"/>
 </template>
 
 <script>
+
   export default {
     name: 'OvVideo',
 

@@ -78,7 +78,7 @@ const routes = [
   },
   {
     path: '/test2',
-    component: () => import('../webrtctest/RTCTest.vue'),
+    component: () => import('../webrtctest/testvideo.vue'),
   },
 ];
 

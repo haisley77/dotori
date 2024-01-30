@@ -1,43 +1,43 @@
-<script setup>
+<!--<script setup>-->
 
-</script>
+<!--</script>-->
 
-<template>
-  <div v-if="streamManager">
-    <ov-video :stream-manager="streamManager"/>
-    <div><p>{{ clientData }}</p></div>
-  </div>
-</template>
+<!--<template>-->
+<!--  <div v-if="streamManager">-->
+<!--    <ov-video :stream-manager="streamManager"/>-->
+<!--    <div><p>{{ clientData }}</p></div>-->
+<!--  </div>-->
+<!--</template>-->
 
-<script>
-  import OvVideo from 'src/webrtctest/OvVideo.vue';
+<!--<script>-->
+<!--  import OvVideo from 'src/webrtctest/OvVideo.vue';-->
 
-  export default {
-    name: 'UserVideo',
+<!--  export default {-->
+<!--    name: 'UserVideo',-->
 
-    components: {
-      OvVideo,
-    },
+<!--    components: {-->
+<!--      OvVideo,-->
+<!--    },-->
 
-    props: {
-      streamManager: Object,
-    },
+<!--    props: {-->
+<!--      streamManager: Object,-->
+<!--    },-->
 
-    computed: {
-      clientData () {
-        const { clientData } = this.getConnectionData();
-        return clientData;
-      },
-    },
+<!--    computed: {-->
+<!--      clientData () {-->
+<!--        const { clientData } = this.getConnectionData();-->
+<!--        return clientData;-->
+<!--      },-->
+<!--    },-->
 
-    methods: {
-      getConnectionData () {
-        const { connection } = this.streamManager.stream;
-        return JSON.parse(connection.data);
-      },
-    },
-  };
-</script>
-<style scoped>
+<!--    methods: {-->
+<!--      getConnectionData () {-->
+<!--        const { connection } = this.streamManager.stream;-->
+<!--        return JSON.parse(connection.data);-->
+<!--      },-->
+<!--    },-->
+<!--  };-->
+<!--</script>-->
+<!--<style scoped>-->
 
-</style>
+<!--</style>-->
