@@ -1,5 +1,6 @@
 package com.dotori.backend.domain.book.model.entity;
 
+import static javax.persistence.FetchType.*;
 import static javax.persistence.GenerationType.*;
 import static lombok.AccessLevel.*;
 
@@ -25,7 +26,7 @@ public class Role {
 	@GeneratedValue(strategy = IDENTITY)
 	private Long roleId;
 
-	@ManyToOne
+	@ManyToOne(fetch = LAZY)
 	@JoinColumn(name = "book_id")
 	private Book book;
 

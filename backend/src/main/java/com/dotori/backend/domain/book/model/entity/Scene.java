@@ -1,6 +1,7 @@
 package com.dotori.backend.domain.book.model.entity;
 
 import static javax.persistence.CascadeType.*;
+import static javax.persistence.FetchType.*;
 import static javax.persistence.GenerationType.*;
 import static lombok.AccessLevel.*;
 
@@ -36,7 +37,7 @@ public class Scene {
 	@Column(length = 100, name = "background_image")
 	private String backgroundImage;
 
-	@ManyToOne
+	@ManyToOne(fetch = LAZY)
 	@JoinColumn(name = "book_id", nullable = false)
 	private Book book;
 
