@@ -12,5 +12,6 @@ import lombok.NoArgsConstructor;
 public class RoomInitializationDto {
 	private Map<String, Object> sessionProperties;
 	private Map<String, Object> connectionProperties;
-	private Map<String, Object> roomInfo;
+	private RoomDTO roomInfo;
+	//	private BookDTo bookInfo;
 }
