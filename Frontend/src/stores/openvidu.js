@@ -21,6 +21,8 @@ export const useOpenViduStore
     const room_name = ref(null);
     const room_password = ref(null);
 
+    const member_id = ref(null);
+
 
     // onMounted(() => {
     //
@@ -42,9 +44,10 @@ export const useOpenViduStore
 
 
     // 방 세션 설정 정보
-    const session_properties = ref({
-        // 일단은 작성하지 않겠습니다 ~ default 값 사용
-    });
+    const session_properties = ref({});
+
+    // 커넥션 설정 정보
+    const connection_properties = ref({});
 
     // 방 생성 정보
     const room_info = ref({
@@ -57,8 +60,9 @@ export const useOpenViduStore
 
     // 방 생성 요청 시 전달할 파라미터
     const roomInitializationParam = ref({
-        sessionProperties: session_properties.value,
-        roomInfo: room_info.value,
+        'sessionProperties': session_properties.value,
+        'connectionProperties': connection_properties.value,
+        'roomInfo': room_info.value,
     });
 
 
