@@ -24,6 +24,7 @@ public class BookMapper {
 			.roleId(role.getRoleId())
 			.name(role.getName())
 			.maskPath(role.getMaskPath())
+			.maskThumbnailPath(role.getMaskThumbnailPath())
 			.build();
 	}
 

@@ -36,10 +36,14 @@ public class Role {
 	@Column(length = 100, name = "mask_path")
 	private String maskPath;
 
+	@Column(length = 100, name = "mask_thumbnail_path")
+	private String maskThumbnailPath;
+
 	@Builder
-	public Role(Book book, String name, String maskPath) {
+	public Role(Book book, String name, String maskPath, String maskThumbnailPath) {
 		this.book = book;
 		this.name = name;
 		this.maskPath = maskPath;
+		this.maskThumbnailPath = maskThumbnailPath;
 	}
 }
