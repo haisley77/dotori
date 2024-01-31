@@ -93,9 +93,9 @@ public class RoomServiceImpl implements RoomService {
 		// Map<String, Object> roomInfo = objectMapper.readValue((JsonParser)params.getRoomInfo().get("roomInfo"),
 		// 	Map.class);
 
-		// Book book = bookRepository.findById(bookId);
+		// Book book = bookRepository.findById(roomInfo.get("bookId"));
 		// Member host = memberRepository.findById(roomInfo.get("hostId"));
-		
+
 		// Room room = Room.builder()
 		// 	.book(book)
 		// 	.roomMembers(roomMembers)
