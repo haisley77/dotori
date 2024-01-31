@@ -92,19 +92,69 @@ export const useOpenViduStore
         }
     };
 
-    // 방 connection 생성 요청 시 전달할 파라미터
-    const connectionInitializationParams = ref({
-        // 일단은 작성하지 않겠습니다 ~ default 값 사용
-    });
-
     const getConnectionToken = async () => {
-        const apiPath = apiRootPath + '/connections/' + room_id.value;
-        // connection 설정 정보 setting
+        const apiPath = apiRootPath + '/connection';
         try {
-            const response = await axios.post(apiPath); // connection 설정 정보 입력할 거면 같이 보내도록 수정하겠습니다 ~
-            ovToken.value = response.data;
+            const response = await axios.post(apiPath, connection_properties.value, {
+                params: {
+                    roomId: room_id.value,
+                },
+            });
+            if (response.status === 200) {
+                room_id.value = response.data.get('roomId');
+                ovToken.value = response.data.get('ovToken');
+            }
+            if (response.status === 202) {
+                console.log(response.data.get('message'));
+            }
         } catch (error) {
-            console.error('토큰 받기 실패 : ', error);
+            console.error(error.response.data.get('message'));
+            console.error('커넥션 생성 실패' + error);
+        }
+    };
+
+    const addRoomMember = async () => {
+        const apiPath = apiRootPath + '/add';
+        // 유저 token을 이용해 member pk 정보 가져와서 넣는 로직 추가 필요
+        // member_id = await axios.getMemberId(path정보, token);
+        try {
+            const response = await axios.delete(apiPath, {
+                params: {
+                    roomId: room_id.value,
+                    memberId: 10,
+                    // memberId: member_id.value,
+                },
+            });
+            if (response.status === 200) {
+                console.log('방 참여 정보 갱신 성공 !!');
+            }
+            if (response.status === 201) {
+                console.log('인원 초과로 방 참여 처리 불가');
+            }
+        } catch (error) {
+            console.error(error.response.data.get('message'));
+            console.error('방 참여 정보 갱신 처리 중 오류 발생');
+        }
+    }
+
+    const removeRoomMember = async () => {
+        const apiPath = apiRootPath + '/remove';
+        // 유저 token을 이용해 member pk 정보 가져와서 넣는 로직 추가 필요
+        // member_id = await axios.getMemberId(path정보, token);
+        try {
+            const response = await axios.delete(apiPath, {
+                params: {
+                    roomId: room_id.value,
+                    memberId: 10,
+                    // memberId: member_id.value,
+                },
+            });
+            if (response.status === 200) {
+                console.log('방 나가기 정보 갱신 성공 !!');
+            }
+        } catch (error) {
+            console.error(error.response.data.get('message'));
+            console.error('방 나가기 정보 갱신 처리 중 오류 발생');
         }
     };
 
@@ -127,6 +177,7 @@ export const useOpenViduStore
         createRoom,
         getConnectionToken,
         connectToOpenVidu,
-
+        addRoomMember,
+        removeRoomMember,
     };
 }, {persist: {storage: sessionStorage}});
