@@ -1,174 +1,173 @@
 <template>
-  <div class='row'>
-    <div class='col-10 offset-1'>
-      <div class='body q-ma-sm q-pa-sm'>
-        <!-- 책과 책 정보 row-->
-        <div class='book row q-gutter-x-sm'>
-          <!-- 왼쪽 칼럼   책 이미지 -->
-          <div class='col-4 flex justify-center items-center q-pa-sm'
-               style='border: 5px solid #C7A96E; border-radius: 20px;height: 100%'>
-            <img src='../../assets/BookImages/rabbitandturtle.jpg' alt='책'
-                 style='object-fit: fill;border-radius: 20px;'>
-          </div>
-          <!-- 오른쪽 칼럼-->
-          <div class='book-info col-8 q-gutter-y-sm'>
-            <!--            책 제목과 줄거리-->
-            <div style='border: 5px solid #C7A96E; border-radius: 20px;height: 50%' class='q-pa-sm'>
-              <div class='text-h5'>제목 : 토끼와 거북이</div>
-              <div>저자 : 도토리</div>
-              <hr />
-              {{ content }}
-            </div>
-            <!--            등장 인물-->
-            <div style='border: 5px solid #C7A96E; border-radius: 20px;height: 50%' class='q-pa-sm'>
-              <div class='text-h5'>역할 소개</div>
-              <hr />
-              <div class='flex'>
-                <Character v-for='item in 4' />
-              </div>
-            </div>
-          </div>
-        </div>
-        <!--방 새로 만들기-->
-        <div class='row'>
-          <div class='col q-mt-sm'>
-            <q-card flat class='mycard room-input col-12' style='border-radius: 20px;border: 5px solid #C7A96E'>
-              <div class='room-info-inner'>
-                <q-card-section>
-                  <div class='q-pa-none q-ma-none text-h5'>방을 직접 만들 수 있어요!</div>
-                </q-card-section>
-                <q-separator inset />
-                <div class='row q-mb-sm q-mt-sm'>
-                  <div class='col-8 offset-1'>
-                    <q-input rounded outlined label='방 제목을 입력하세요!' v-model='room_name' />
-                  </div>
-                  <div class='col-3 flex justify-center'>
-                    <q-checkbox keep-color v-model='open' label='비밀로 할래요!' color='cyan' />
-                  </div>
+    <div class='row'>
+        <div class='col-10 offset-1'>
+            <div class='body q-ma-sm q-pa-sm'>
+                <!-- 책과 책 정보 row-->
+                <div class='book row q-gutter-x-sm'>
+                    <!-- 왼쪽 칼럼   책 이미지 -->
+                    <div class='col-4 flex justify-center items-center q-pa-sm'
+                         style='border: 5px solid #C7A96E; border-radius: 20px;height: 100%'>
+                        <img src='../../assets/BookImages/rabbitandturtle.jpg' alt='책'
+                             style='object-fit: fill;border-radius: 20px;'>
+                    </div>
+                    <!-- 오른쪽 칼럼-->
+                    <div class='book-info col-8 q-gutter-y-sm'>
+                        <!--            책 제목과 줄거리-->
+                        <div style='border: 5px solid #C7A96E; border-radius: 20px;height: 50%' class='q-pa-sm'>
+                            <div class='text-h5'>제목 : 토끼와 거북이</div>
+                            <div>저자 : 도토리</div>
+                            <hr />
+                            {{ content }}
+                        </div>
+                        <!--            등장 인물-->
+                        <div style='border: 5px solid #C7A96E; border-radius: 20px;height: 50%' class='q-pa-sm'>
+                            <div class='text-h5'>역할 소개</div>
+                            <hr />
+                            <div class='flex'>
+                                <Character v-for='item in 4' />
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class='row q-mb-sm' v-if='open'>
-                  <div class='col-8 offset-1'>
-                    <q-input rounded outlined label='방 비밀번호를 입력하세요!' type='password' v-model='room_password' />
-                  </div>
-                </div>
-                <div class='row q-mb-sm'>
-                  <div class='col-9 flex'>
-                  </div>
-                  <div class='col-3 flex justify-center'>
-                    <q-btn unelevated color='my-green' rounded label='방 만들기' @click='joinRoom'></q-btn>
-                  </div>
-                </div>
+                <!--방 새로 만들기-->
+                <div class='row'>
+                    <div class='col q-mt-sm'>
+                        <q-card flat class='mycard room-input col-12' style='border-radius: 20px;border: 5px solid #C7A96E'>
+                            <div class='room-info-inner'>
+                                <q-card-section>
+                                    <div class='q-pa-none q-ma-none text-h5'>방을 직접 만들 수 있어요!</div>
+                                </q-card-section>
+                                <q-separator inset />
+                                <div class='row q-mb-sm q-mt-sm'>
+                                    <div class='col-8 offset-1'>
+                                        <q-input rounded outlined label='방 제목을 입력하세요!' v-model='room_name' />
+                                    </div>
+                                    <div class='col-3 flex justify-center'>
+                                        <q-checkbox keep-color v-model='open' label='비밀로 할래요!' color='cyan' />
+                                    </div>
+                                </div>
+                                <div class='row q-mb-sm' v-if='open'>
+                                    <div class='col-8 offset-1'>
+                                        <q-input rounded outlined label='방 비밀번호를 입력하세요!' type='password' v-model='room_password' />
+                                    </div>
+                                </div>
+                                <div class='row q-mb-sm'>
+                                    <div class='col-9 flex'>
+                                    </div>
+                                    <div class='col-3 flex justify-center'>
+                                        <q-btn unelevated color='my-green' rounded label='방 만들기' @click='joinRoom'></q-btn>
+                                    </div>
+                                </div>
 
-              </div>
-            </q-card>
-          </div>
+                            </div>
+                        </q-card>
+                    </div>
+                </div>
+            </div>
+
         </div>
-      </div>
 
     </div>
-
-  </div>
 
 
 </template>
 <script setup>
-  import Character from 'components/MyPageComponents/Character.vue';
-  import {ref} from 'vue';
+    import Character from 'components/MyPageComponents/Character.vue';
+    import {ref} from 'vue';
 
-  import {storeToRefs} from 'pinia';
+    import {storeToRefs} from 'pinia';
 
-  import {useRouter} from 'vue-router';
+    import {useRouter} from 'vue-router';
 
-  const router = useRouter();
+    const router = useRouter();
 
-  import {useOpenViduStore} from 'stores/openvidu';
-  // console.log(useOpenViduStore());
-  const openViduStore = useOpenViduStore();
-  const {room_name,room_password,room_id} = storeToRefs(openViduStore);
-  const {createRoomSession, getConnectionToken, connectToOpenVidu} = openViduStore;
+    import {useOpenViduStore} from 'stores/openvidu';
+    // console.log(useOpenViduStore());
+    const openViduStore = useOpenViduStore();
+    const {room_name,room_password,room_id} = storeToRefs(openViduStore);
+    const {createRoom, getConnectionToken, addRoomMember, removeRoomMember, connectToOpenVidu} = openViduStore;
 
-  // const {connectToOpenVidu} = openViduStore;
+    // const {connectToOpenVidu} = openViduStore;
 
-  const open = ref(false);
-  const imageUrl = ref('../assets/rabbitandturtle.jpg');
-  const title = ref('토끼와 거북이');
-  const content =
-    '옛날 옛적에, 토끼와 거북이가 살고 있었다.\n' +
-    '어느날 토끼가 거북이를 느림보라고 놀려대자, 거북이는 자극을 받고 토끼에게 달리기 경주를 제안하였다.\n';
-  const writer = ref('도토리 오리지널');
+    const open = ref(false);
+    const imageUrl = ref('../assets/rabbitandturtle.jpg');
+    const title = ref('토끼와 거북이');
+    const content =
+        '옛날 옛적에, 토끼와 거북이가 살고 있었다.\n' +
+        '어느날 토끼가 거북이를 느림보라고 놀려대자, 거북이는 자극을 받고 토끼에게 달리기 경주를 제안하였다.\n';
+    const writer = ref('도토리 오리지널');
 
-  const components = {Character};
-  const joinRoom = () => {
-    createRoomSession();  // 세션 정보 생성
-    getConnectionToken(); // 세션과 connection 생성 후 토큰 받아오기(방장)
-    connectToOpenVidu();  // 토큰을 이용해 openvidu 서버에 연결 (웹 소켓)
-  };
+    const components = {Character};
+    const joinRoom = () => {
+        createRoom();
+        connectToOpenVidu();
+    };
 </script>
 
 <style scoped>
 
-  .body {
-    background-color: white;
-  }
+    .body {
+        background-color: white;
+    }
 
-  .book, .room-input {
-    display: flex;
-    flex-direction: row;
-    border-radius: 10px;
-    font-family: 'NPSfontBold', sans-serif;
-  }
+    .book, .room-input {
+        display: flex;
+        flex-direction: row;
+        border-radius: 10px;
+        font-family: 'NPSfontBold', sans-serif;
+    }
 
-  .book-info-inner, .room-info-inner {
-  //border: dashed #cc765a 5px; border-radius: 20px;
-  }
+    .book-info-inner, .room-info-inner {
+        //border: dashed #cc765a 5px; border-radius: 20px;
+    }
 
-  .book-info {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-  }
+    .book-info {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+    }
 
-  .book-story, .book-roles {
-    width: 100%;
-    color: black;
-    border-radius: 20px;
-    background-color: #C7A96E;
-  }
+    .book-story, .book-roles {
+        width: 100%;
+        color: black;
+        border-radius: 20px;
+        background-color: #C7A96E;
+    }
 
-  .role-info {
-    display: flex;
-  }
+    .role-info {
+        display: flex;
+    }
 
-  .room-input {
-    width: 100%;
-    display: flex;
-    border-radius: 20px;
-    background-color: #C7A96E;
-    flex-direction: column;
-  }
+    .room-input {
+        width: 100%;
+        display: flex;
+        border-radius: 20px;
+        background-color: #C7A96E;
+        flex-direction: column;
+    }
 
-  .room-input > div > q-input {
-    margin: 100px;
-  }
+    .room-input > div > q-input {
+        margin: 100px;
+    }
 
-  .bg-my-green {
-    background: #C7A96E !important;
-  }
+    .bg-my-green {
+        background: #C7A96E !important;
+    }
 
-  @font-face {
-    font-family: 'NPSfontBold';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2') format('woff2');
-    font-weight: 700;
-    font-style: normal;
-  }
+    @font-face {
+        font-family: 'NPSfontBold';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2') format('woff2');
+        font-weight: 700;
+        font-style: normal;
+    }
 </style>
 
 <style lang='scss'>
-  .mycard.q-card > div:last-child {
-    //border-bottom: dashed #cc765a 5px !important;
-    //border-top: dashed #cc765a 5px !important;
-    background-color: #ffffff;
-    height: 100%;
-  }
+    .mycard.q-card > div:last-child {
+        //border-bottom: dashed #cc765a 5px !important;
+        //border-top: dashed #cc765a 5px !important;
+        background-color: #ffffff;
+        height: 100%;
+    }
 
 </style>

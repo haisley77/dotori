@@ -62,8 +62,8 @@ export const useOpenViduStore
     });
 
 
-    const createRoomSession = async () => {
-        const apiPath = apiRootPath + '/sessions';
+    const createRoom = async () => {
+        const apiPath = apiRootPath + '/session';
 
         // 방 정보 setting
         room_info.value.hostId = 1; // 근데 host id 가 왜 Long 으로 입력되어야 하나요??
@@ -75,11 +75,15 @@ export const useOpenViduStore
         if (room_password.value === undefined) {
             room_info.value.isPublic = false;
         }
-
         try {
             const response = await axios.post(apiPath, roomInitializationParam.value);
-            room_id.value = response.data;
+            if (response.data.status === 201) {
+                room_id.value = response.data.get('roomId');
+                ovToken.value = response.data.get('token');
+                console.log('방 생성 성공 !!');
+            }
         } catch (error) {
+            console.error(error.response.data.get('message'));
             console.error('방 생성 실패: ', error);
         }
     };
@@ -116,7 +120,7 @@ export const useOpenViduStore
     return {
         room_id,
         ovToken,
-        createRoomSession,
+        createRoom,
         getConnectionToken,
         connectToOpenVidu,
 
