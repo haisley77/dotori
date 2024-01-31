@@ -43,10 +43,10 @@
                                         <q-input rounded outlined label='방 제목을 입력하세요!' v-model='room_name' />
                                     </div>
                                     <div class='col-3 flex justify-center'>
-                                        <q-checkbox keep-color v-model='open' label='비밀로 할래요!' color='cyan' />
+                                        <q-checkbox keep-color v-model='is_public' label='비밀로 할래요!' color='cyan' />
                                     </div>
                                 </div>
-                                <div class='row q-mb-sm' v-if='open'>
+                                <div class='row q-mb-sm' v-if='is_public'>
                                     <div class='col-8 offset-1'>
                                         <q-input rounded outlined label='방 비밀번호를 입력하세요!' type='password' v-model='room_password' />
                                     </div>
@@ -82,14 +82,10 @@
     const router = useRouter();
 
     import {useOpenViduStore} from 'stores/openvidu';
-    // console.log(useOpenViduStore());
     const openViduStore = useOpenViduStore();
-    const {room_name,room_password,room_id} = storeToRefs(openViduStore);
-    const {createRoom, getConnectionToken, addRoomMember, removeRoomMember, connectToOpenVidu} = openViduStore;
+    const {room_name,room_password,is_public} = storeToRefs(openViduStore);
+    const {createRoom, connectToOpenVidu} = openViduStore;
 
-    // const {connectToOpenVidu} = openViduStore;
-
-    const open = ref(false);
     const imageUrl = ref('../assets/rabbitandturtle.jpg');
     const title = ref('토끼와 거북이');
     const content =
@@ -98,9 +94,9 @@
     const writer = ref('도토리 오리지널');
 
     const components = {Character};
-    const joinRoom = () => {
-        createRoom();
-        connectToOpenVidu();
+    const joinRoom = async () => {
+        await createRoom();
+        await connectToOpenVidu();
     };
 </script>
 
