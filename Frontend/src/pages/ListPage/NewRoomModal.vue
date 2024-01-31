@@ -86,10 +86,13 @@
     const {book_info,room_name,room_password,is_public} = storeToRefs(openViduStore);
     const {createRoom, connectToOpenVidu} = openViduStore;
 
+<<<<<<< Updated upstream
     onMounted(() => {
       book_info.value = props.bookdetail;
     })
 
+=======
+>>>>>>> Stashed changes
 
     const components = {Character};
     const joinRoom = async () => {
