@@ -90,22 +90,18 @@ public class RoomServiceImpl implements RoomService {
 		em.persist(room);
 		em.flush();
 
-		// Map<String, Object> roomInfo = objectMapper.readValue((JsonParser)params.getRoomInfo().get("roomInfo"),
-		// 	Map.class);
-
-		// Book book = bookRepository.findById(roomInfo.get("bookId"));
-		// Member host = memberRepository.findById(roomInfo.get("hostId"));
-
+		// BookDto bookInfo = params.getBookInfo();
+		// RoomDTO roomInfo = params.getRoomInfo();
 		// Room room = Room.builder()
 		// 	.book(book)
 		// 	.roomMembers(roomMembers)
-		// 	.hostId(host.getMemberId())
-		// 	.title((String)roomInfo.get("title"))
-		// 	.password((String)roomInfo.get("password"))
-		// 	.isRecording((Boolean)roomInfo.get("isRecording"))
-		// 	.joinCnt((Integer)roomInfo.get("joinCnt"))
-		// 	.limitCnt((Integer)roomInfo.get("limitCnt"))
-		// 	.isPublic((Boolean)roomInfo.get("isPublic"))
+		// 	.hostId(roomInfo.getHostId())
+		// 	.title(roomInfo.getTitle())
+		// 	.password(roomInfo.getPassword())
+		// 	.isRecording(roomInfo.isRecording())
+		// 	.joinCnt(roomInfo.getJoinCnt())
+		// 	.limitCnt(roomInfo.getLimitCnt())
+		// 	.isPublic(roomInfo.isPublic())
 		// 	.sessionId(session.getSessionId())
 		// 	.build();
 
