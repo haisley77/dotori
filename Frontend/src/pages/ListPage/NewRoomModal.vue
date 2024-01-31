@@ -93,7 +93,7 @@
 
 <script>
   export default{
-    props:['bookmodal'],
+    props:['bookdetail'],
   }
 </script>
 
