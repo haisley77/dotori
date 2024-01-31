@@ -24,21 +24,49 @@
     </div>
 
     <div class='row q-col-gutter-x-md q-col-gutter-y-md'>
-      <div v-for='n in 16' :key='n' class='col-12 col-sm-6 col-md-4 col-lg-3 q-pa-md'>
-        <Book />
+      <div v-for='book in books' :key='book.bookId' class='col-12 col-sm-6 col-md-4 col-lg-3 q-pa-md'>
+        <Book/>
       </div>
     </div>
   </q-page>
 </template>
 
 <script>
-  import {ref} from 'vue';
+  import {ref, onMounted} from 'vue';
   import Book from 'components/ListPageComponents/Book.vue';
+  import axios from 'axios';
 
   export default {
     components: {Book},
     setup() {
-      return {
+      const books = ref([]);
+
+      onMounted(() => {
+      fetchBooks();
+    });
+
+      const enterBook = async (book) => {
+      await fetchBookDetails(book.bookId);
+      dialog.value = true;
+    };
+
+      const fetchBooks = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/api/books');
+        console.log('API Response:', response);
+        if (response.status === 200) {
+          books.value = response.data.books;
+        } else {
+          console.error('Failed');
+        }
+      } catch (error) {
+        console.error('Error fetching books:', error);
+      }
+    };
+
+    return {
+        books,
+        enterBook,
         dialog: ref(false),
         maximizedToggle: ref(true),
       };
