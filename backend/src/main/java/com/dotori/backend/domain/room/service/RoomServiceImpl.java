@@ -95,13 +95,16 @@ public class RoomServiceImpl implements RoomService {
 
 		// Book book = bookRepository.findById(bookId);
 		// Member host = memberRepository.findById(roomInfo.get("hostId"));
-
+		
 		// Room room = Room.builder()
 		// 	.book(book)
-		// 	.hostId(host.getMemberId())
 		// 	.roomMembers(roomMembers)
+		// 	.hostId(host.getMemberId())
 		// 	.title((String)roomInfo.get("title"))
 		// 	.password((String)roomInfo.get("password"))
+		// 	.isRecording((Boolean)roomInfo.get("isRecording"))
+		// 	.joinCnt((Integer)roomInfo.get("joinCnt"))
+		// 	.limitCnt((Integer)roomInfo.get("limitCnt"))
 		// 	.isPublic((Boolean)roomInfo.get("isPublic"))
 		// 	.sessionId(session.getSessionId())
 		// 	.build();
