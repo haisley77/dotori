@@ -1,6 +1,7 @@
 package com.dotori.backend.domain.room.model.entity;
 
 import static javax.persistence.CascadeType.*;
+import static javax.persistence.FetchType.*;
 import static javax.persistence.GenerationType.*;
 import static lombok.AccessLevel.*;
 
@@ -33,7 +34,7 @@ public class Room extends BaseTimeEntity {
 	@GeneratedValue(strategy = IDENTITY) // auto_increment
 	private Long roomId;
 
-	@ManyToOne
+	@ManyToOne(fetch = LAZY)
 	@JoinColumn(name = "book_id", nullable = false)
 	private Book book;
 
