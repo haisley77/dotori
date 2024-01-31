@@ -94,9 +94,12 @@
     const writer = ref('도토리 오리지널');
 
     const components = {Character};
-    const joinRoom = async () => {
-        await createRoom();
-        await connectToOpenVidu();
+    const joinRoom = () => {
+        createRoom()
+            .then(() => {
+                connectToOpenVidu().then(()=>console.log('소켓 연결 성공'))
+            })
+            .catch((error)=>console.error(error));
     };
 </script>
 
