@@ -7,17 +7,17 @@
           <!-- 왼쪽 칼럼   책 이미지 -->
           <div class='col-4 flex justify-center items-center q-pa-sm'
                style='border: 5px solid #C7A96E; border-radius: 20px;height: 100%'>
-            <img :src="bookmodal.bookImg" alt='책'
+            <img :src="bookdetail.bookImg" alt='책'
                  style='object-fit: fill;border-radius: 20px;'>
           </div>
           <!-- 오른쪽 칼럼-->
           <div class='book-info col-8 q-gutter-y-sm'>
             <!--            책 제목과 줄거리-->
             <div style='border: 5px solid #C7A96E; border-radius: 20px;height: 50%' class='q-pa-sm'>
-              <div class='text-h5'>제목 : {{bookmodal.title}}</div>
-              <div>저자 : {{ bookmodal.author }}</div>
+              <div class='text-h5'>제목 : {{bookdetail.title}}</div>
+              <div>저자 : {{ bookdetail.author }}</div>
               <hr />
-              {{ bookmodal.summary }}
+              {{ bookdetail.summary }}
             </div>
             <!--            등장 인물-->
             <div style='border: 5px solid #C7A96E; border-radius: 20px;height: 50%' class='q-pa-sm'>
