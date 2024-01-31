@@ -43,10 +43,10 @@
                     <q-input rounded outlined label='방 제목을 입력하세요!' v-model='room_name' />
                   </div>
                   <div class='col-3 flex justify-center'>
-                    <q-checkbox keep-color v-model='open' label='비밀로 할래요!' color='cyan' />
+                    <q-checkbox keep-color v-model='is_public' label='비밀로 할래요!' color='cyan' />
                   </div>
                 </div>
-                <div class='row q-mb-sm' v-if='open'>
+                <div class='row q-mb-sm' v-if='is_public'>
                   <div class='col-8 offset-1'>
                     <q-input rounded outlined label='방 비밀번호를 입력하세요!' type='password' v-model='room_password' />
                   </div>
