@@ -80,6 +80,10 @@ const routes = [
     path: '/test2',
     component: () => import('../webrtctest/testvideo.vue'),
   },
+  {
+    path: '/test3',
+    component: () => import('../webrtctest/WebRTCTestPage2.vue'),
+  },
 ];
 
 export default routes;
