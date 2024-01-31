@@ -22,6 +22,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.dotori.backend.domain.book.model.entity.Book;
 import com.dotori.backend.domain.book.model.entity.Role;
 import com.dotori.backend.domain.book.model.entity.Scene;
+import com.dotori.backend.domain.book.model.entity.Script;
 import com.dotori.backend.domain.book.repository.BookRepository;
 import com.dotori.backend.domain.book.repository.RoleRepository;
 import com.dotori.backend.domain.book.repository.SceneRepository;
@@ -151,6 +152,80 @@ class BookControllerTest {
 			.andExpect(jsonPath("$.scenes[2].sceneId").value(scene3.getSceneId()))
 			.andExpect(jsonPath("$.scenes[2].sceneOrder").value(scene3.getSceneOrder()))
 			.andExpect(jsonPath("$.scenes[2].backgroundImage").value(scene3.getBackgroundImage()))
+			.andDo(print());
+	}
+
+	@Test
+	@DisplayName("장면 세부 정보 가져오기 - 성공")
+	void getSceneTest() throws Exception {
+		Book book = Book.builder()
+			.title("title1")
+			.author("author1")
+			.roleCnt(1)
+			.bookImg("bookImg1")
+			.summary("summary1")
+			.build();
+		bookRepository.save(book);
+
+		Scene scene = Scene.builder()
+			.backgroundImage("bgImg1")
+			.sceneOrder(1)
+			.book(book)
+			.build();
+
+		Role role1 = Role.builder()
+			.book(book)
+			.name("name1")
+			.maskPath("maskPath1")
+			.build();
+
+		Role role2 = Role.builder()
+			.book(book)
+			.name("name2")
+			.maskPath("maskPath2")
+			.build();
+
+		roleRepository.save(role1);
+		roleRepository.save(role2);
+
+		Script script1 = Script.builder()
+			.scene(scene)
+			.role(role1)
+			.content("content1")
+			.scriptOrder(1)
+			.build();
+
+		Script script2 = Script.builder()
+			.scene(scene)
+			.role(role2)
+			.content("content2")
+			.scriptOrder(2)
+			.build();
+		scene.addScript(script1);
+		scene.addScript(script2);
+		sceneRepository.save(scene);
+
+		mockMvc.perform(get("/api/books/{bookId}/scenes/{sceneId}", book.getBookId(), scene.getSceneId()))
+			.andExpect(status().isOk())
+			.andExpect(content().contentType(APPLICATION_JSON))
+			.andExpect(jsonPath("$.sceneDetailDto").isNotEmpty())
+			.andExpect(jsonPath("$.sceneDetailDto.sceneId").value(scene.getSceneId()))
+			.andExpect(jsonPath("$.sceneDetailDto.backgroundImage").value(scene.getBackgroundImage()))
+			.andExpect(jsonPath("$.sceneDetailDto.scriptDto").isArray())
+			.andExpect(jsonPath("$.sceneDetailDto.scriptDto[0].scriptId").value(script1.getScriptId()))
+			.andExpect(jsonPath("$.sceneDetailDto.scriptDto[0].scriptOrder").value(script1.getScriptOrder()))
+			.andExpect(jsonPath("$.sceneDetailDto.scriptDto[0].content").value(script1.getContent()))
+			.andExpect(jsonPath("$.sceneDetailDto.scriptDto[0].roleDto").isNotEmpty())
+			.andExpect(jsonPath("$.sceneDetailDto.scriptDto[0].roleDto.roleId").value(script1.getRole().getRoleId()))
+			.andExpect(jsonPath("$.sceneDetailDto.scriptDto[0].roleDto.name").value(script1.getRole().getName()))
+			.andExpect(jsonPath("$.sceneDetailDto.scriptDto[0].roleDto.maskPath").value(script1.getRole().getMaskPath()))
+			.andExpect(jsonPath("$.sceneDetailDto.scriptDto[1].scriptId").value(script2.getScriptId()))
+			.andExpect(jsonPath("$.sceneDetailDto.scriptDto[1].scriptOrder").value(script2.getScriptOrder()))
+			.andExpect(jsonPath("$.sceneDetailDto.scriptDto[1].content").value(script2.getContent()))
+			.andExpect(jsonPath("$.sceneDetailDto.scriptDto[1].roleDto").isNotEmpty())
+			.andExpect(jsonPath("$.sceneDetailDto.scriptDto[1].roleDto.roleId").value(script2.getRole().getRoleId()))
+			.andExpect(jsonPath("$.sceneDetailDto.scriptDto[1].roleDto.name").value(script2.getRole().getName()))
+			.andExpect(jsonPath("$.sceneDetailDto.scriptDto[1].roleDto.maskPath").value(script2.getRole().getMaskPath()))
 			.andDo(print());
 	}
 }
