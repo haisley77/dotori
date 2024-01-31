@@ -83,11 +83,11 @@
 
       //연결을 성공했으면 publish할 준비를 한다
       let myPublisher = OV.initPublisher(undefined, {
-        audioSource: videoPlayer.value.stream, // The source of audio. If undefined default microphone
+        audioSource: canvasStream.getAudioTracks()[0], // The source of audio. If undefined default microphone
         videoSource: canvasStream.getVideoTracks()[0], // The source of video. If undefined default webcam
         // videoSource: canvasStream, // The source of video. If undefined default webcam
         // videoSource: undefined, // The source of video. If undefined default webcam
-        publishAudio: false, // Whether you want to start publishing with your audio unmuted or not
+        publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
         publishVideo: true, // Whether you want to start publishing with your video enabled or not
         resolution: '640x480', // The resolution of your video
         frameRate: 30, // The frame rate of your video
@@ -324,7 +324,7 @@
 
     let faceLandmarker;
     const scene = new BasicScene();
-    const avatar = new Avatar('src/assets/tiger.glb', scene.scene);
+    const avatar = new Avatar('src/assets/raccoon_head.glb', scene.scene);
 
     function detectFaceLandmarks(time) {
       if (!faceLandmarker) {
