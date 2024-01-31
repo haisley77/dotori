@@ -27,7 +27,7 @@ export const useOpenViduStore
 
 
   // onMounted(() => {
-  //   member_id = await axios.getMemberId(path정보, token);
+  //   member_id = await axios.getMemberId(path정보, accesstoken);
   //   sessionStorage.setItem('ovToken', ovToken.value);
   //   const storedOVToken = sessionStorage.getItem('ovToken');
   //   if (storedOVToken) {
@@ -77,14 +77,9 @@ export const useOpenViduStore
     const apiPath = apiRootPath + '/session';
 
     // 방 정보 setting
-    room_info.value.hostId = member_id.value;
-    room_info.value.title = room_name.value;
-    if (room_password.value !== null) {
-      room_info.value.password = room_password.value;
-      room_info.value.isPublic = false;
-    }
-    if (room_password.value === undefined) {
-      room_info.value.isPublic = false;
+    if (room_password.value === null && is_public === false) {
+      console.log('방은 비공개인데 비밀번호가 설정되지 않았음');
+      return;
     }
     try {
       const response = await axios.post(apiPath, roomInitializationParam.value);
@@ -180,6 +175,7 @@ export const useOpenViduStore
 
   return {
     is_public,
+    book_info,
     ovToken,
     createRoom,
     getConnectionToken,
