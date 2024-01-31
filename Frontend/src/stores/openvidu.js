@@ -21,8 +21,9 @@ export const useOpenViduStore
   const room_name = ref(null);
   const room_password = ref(null);
   const is_public = ref(false);
-
-  const member_id = ref(10);
+  const is_recording=ref(false);
+  const role_cnt= ref(1);
+  const member_id = ref(47);
 
 
   // onMounted(() => {
@@ -52,21 +53,23 @@ export const useOpenViduStore
 
   // 방 생성 정보
   const room_info = ref({
-    hostId: member_id.value,
-    title: null,
-    password: null,
-    isRecording: false,
+    hostId: ref(member_id.value),
+    title: ref(room_name.value),
+    password: ref(room_password.value),
+    isRecording: ref(is_recording.value),
     joinCnt: 0,
-    // limitCnt: 책 정보 조회 시 조회한 역할 수
-    limitCnt: 4,
-    isPublic: is_public.value,
+    limitCnt: ref(role_cnt.value),
+    isPublic: ref(is_public.value),
   });
+
+  const book_info = ref(null);
 
   // 방 생성 요청 시 전달할 파라미터
   const roomInitializationParam = ref({
     sessionProperties: session_properties.value,
     connectionProperties: connection_properties.value,
-    roomInfo: room_info.value,
+    roomInfo: ref(room_info.value),
+    bookInfo: ref(book_info.value),
   });
 
 

@@ -73,7 +73,6 @@
 </template>
 <script setup>
     import Character from 'components/MyPageComponents/Character.vue';
-    import {ref} from 'vue';
 
     import {storeToRefs} from 'pinia';
 
@@ -82,9 +81,14 @@
     const router = useRouter();
 
     import {useOpenViduStore} from 'stores/openvidu';
+    import {onMounted} from 'vue';
     const openViduStore = useOpenViduStore();
-    const {room_name,room_password,is_public} = storeToRefs(openViduStore);
+    const {book_info,room_name,room_password,is_public} = storeToRefs(openViduStore);
     const {createRoom, connectToOpenVidu} = openViduStore;
+
+    onMounted(() => {
+      book_info.value = props.bookdetail;
+    })
 
 
     const components = {Character};
