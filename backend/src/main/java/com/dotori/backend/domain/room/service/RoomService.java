@@ -18,4 +18,5 @@ public interface RoomService {
 		Map<String, Object> connectionProperties) throws
 		Exception;
 
+	void destroyRoom(Long roomId) throws Exception;
 }

@@ -90,4 +90,16 @@ public class RoomController {
 		}
 		return new ResponseEntity<>("커넥션 생성 실패", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+
+	@PostMapping("/remove/{roomId}")
+	public ResponseEntity<String> removeRoomAndRoomMember(@PathVariable("roomId") Long roomId) {
+		try {
+			roomService.destroyRoom(roomId);
+			return new ResponseEntity<>(String.valueOf(roomId), HttpStatus.OK);
+		} catch (Exception e) {
+			// e.printStackTrace();
+		}
+		return new ResponseEntity<>("방 제거 중 문제가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
 }
