@@ -1,63 +1,63 @@
 <template>
-    <div class='row'>
-        <div class='col-10 offset-1'>
-            <div class='body q-ma-sm q-pa-sm'>
-                <!-- 책과 책 정보 row-->
-                <div class='book row q-gutter-x-sm'>
-                    <!-- 왼쪽 칼럼   책 이미지 -->
-                    <div class='col-4 flex justify-center items-center q-pa-sm'
-                         style='border: 5px solid #C7A96E; border-radius: 20px;height: 100%'>
-                        <img src='../../assets/BookImages/rabbitandturtle.jpg' alt='책'
-                             style='object-fit: fill;border-radius: 20px;'>
-                    </div>
-                    <!-- 오른쪽 칼럼-->
-                    <div class='book-info col-8 q-gutter-y-sm'>
-                        <!--            책 제목과 줄거리-->
-                        <div style='border: 5px solid #C7A96E; border-radius: 20px;height: 50%' class='q-pa-sm'>
-                            <div class='text-h5'>제목 : {{bookmodal.title}}</div>
-                            <div>저자 : {{ bookmodal.author }}</div>
-                            <hr />
-                          {{ bookmodal.summary }}
-                        </div>
-                        <!--            등장 인물-->
-                        <div style='border: 5px solid #C7A96E; border-radius: 20px;height: 50%' class='q-pa-sm'>
-                            <div class='text-h5'>역할 소개</div>
-                            <hr />
-                            <div class='flex'>
-                                <Character v-for='item in 4' />
-                            </div>
-                        </div>
-                    </div>
+  <div class='row'>
+    <div class='col-10 offset-1'>
+      <div class='body q-ma-sm q-pa-sm'>
+        <!-- 책과 책 정보 row-->
+        <div class='book row q-gutter-x-sm'>
+          <!-- 왼쪽 칼럼   책 이미지 -->
+          <div class='col-4 flex justify-center items-center q-pa-sm'
+               style='border: 5px solid #C7A96E; border-radius: 20px;height: 100%'>
+            <img :src="bookmodal.bookImg" alt='책'
+                 style='object-fit: fill;border-radius: 20px;'>
+          </div>
+          <!-- 오른쪽 칼럼-->
+          <div class='book-info col-8 q-gutter-y-sm'>
+            <!--            책 제목과 줄거리-->
+            <div style='border: 5px solid #C7A96E; border-radius: 20px;height: 50%' class='q-pa-sm'>
+              <div class='text-h5'>제목 : {{bookmodal.title}}</div>
+              <div>저자 : {{ bookmodal.author }}</div>
+              <hr />
+              {{ bookmodal.summary }}
+            </div>
+            <!--            등장 인물-->
+            <div style='border: 5px solid #C7A96E; border-radius: 20px;height: 50%' class='q-pa-sm'>
+              <div class='text-h5'>역할 소개</div>
+              <hr />
+              <div class='flex'>
+                <Character v-for='item in 4' />
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--방 새로 만들기-->
+        <div class='row'>
+          <div class='col q-mt-sm'>
+            <q-card flat class='mycard room-input col-12' style='border-radius: 20px;border: 5px solid #C7A96E'>
+              <div class='room-info-inner'>
+                <q-card-section>
+                  <div class='q-pa-none q-ma-none text-h5'>방을 직접 만들 수 있어요!</div>
+                </q-card-section>
+                <q-separator inset />
+                <div class='row q-mb-sm q-mt-sm'>
+                  <div class='col-8 offset-1'>
+                    <q-input rounded outlined label='방 제목을 입력하세요!' v-model='room_name' />
+                  </div>
+                  <div class='col-3 flex justify-center'>
+                    <q-checkbox keep-color v-model='open' label='비밀로 할래요!' color='cyan' />
+                  </div>
                 </div>
-                <!--방 새로 만들기-->
-                <div class='row'>
-                    <div class='col q-mt-sm'>
-                        <q-card flat class='mycard room-input col-12' style='border-radius: 20px;border: 5px solid #C7A96E'>
-                            <div class='room-info-inner'>
-                                <q-card-section>
-                                    <div class='q-pa-none q-ma-none text-h5'>방을 직접 만들 수 있어요!</div>
-                                </q-card-section>
-                                <q-separator inset />
-                                <div class='row q-mb-sm q-mt-sm'>
-                                    <div class='col-8 offset-1'>
-                                        <q-input rounded outlined label='방 제목을 입력하세요!' v-model='room_name' />
-                                    </div>
-                                    <div class='col-3 flex justify-center'>
-                                        <q-checkbox keep-color v-model='is_public' label='비밀로 할래요!' color='cyan' />
-                                    </div>
-                                </div>
-                                <div class='row q-mb-sm' v-if='is_public'>
-                                    <div class='col-8 offset-1'>
-                                        <q-input rounded outlined label='방 비밀번호를 입력하세요!' type='password' v-model='room_password' />
-                                    </div>
-                                </div>
-                                <div class='row q-mb-sm'>
-                                    <div class='col-9 flex'>
-                                    </div>
-                                    <div class='col-3 flex justify-center'>
-                                        <q-btn unelevated color='my-green' rounded label='방 만들기' @click='joinRoom'></q-btn>
-                                    </div>
-                                </div>
+                <div class='row q-mb-sm' v-if='open'>
+                  <div class='col-8 offset-1'>
+                    <q-input rounded outlined label='방 비밀번호를 입력하세요!' type='password' v-model='room_password' />
+                  </div>
+                </div>
+                <div class='row q-mb-sm'>
+                  <div class='col-9 flex'>
+                  </div>
+                  <div class='col-3 flex justify-center'>
+                    <q-btn unelevated color='my-green' rounded label='방 만들기' @click='joinRoom'></q-btn>
+                  </div>
+                </div>
 
                             </div>
                         </q-card>

@@ -9,7 +9,7 @@
 <script>
   export default{
     props:['bookdetail'],
-  }
+}
 </script>
 
 
@@ -20,7 +20,7 @@
       <div style='background: white; border-radius: 0px' class='q-pa-xs'>
         <q-img
           :ratio='9/9'
-          src='~assets/BookImages/rabbitandturtle.jpg'
+          :src="bookdetail.bookImg"
           style='border-radius: 0px'
         />
         <hr style='border: #C7A96E 1px solid' />
