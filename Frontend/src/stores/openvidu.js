@@ -52,14 +52,14 @@ export const useOpenViduStore
   const connection_properties = ref({});
 
   // 방 생성 정보
-  const room_info= reactive({
+  const room_info= ref({
     hostId: member_id.value,
-    title: room_name.value,
-    password: room_password.value,
+    title: null,
+    password: null,
     isRecording: is_recording.value,
     joinCnt: 0,
     limitCnt: role_cnt.value,
-    isPublic: is_public.value,
+    isPublic: null,
   });
 
 
@@ -79,7 +79,10 @@ export const useOpenViduStore
     // console.log("ovjs : " + bookmodal)
     roomInitializationParam.value.bookInfo = bookmodal;
 
-
+    console.log(room_name.value);
+    room_info.value.title = room_name.value;
+    room_info.value.password = room_password.value;
+    room_info.value.isPublic = is_public.value;
     roomInitializationParam.value.roomInfo = room_info;
     console.log("title! : " +roomInitializationParam.value.bookInfo.title);
     // 방 정보 setting
