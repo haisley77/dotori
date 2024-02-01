@@ -10,8 +10,6 @@ import com.dotori.backend.domain.member.type.SocialType;
 public interface MemberRepository extends JpaRepository<MemberTemp, Long> {
 	Optional<MemberTemp> findByEmail(String Email);
 
-	Optional<MemberTemp> findByRefreshToken(String refreshToken);
-
 	/**
 	 * 소셜 타입과 소셜의 식별값으로 회원 찾는 메소드
 	 * 정보 제공을 동의한 순간 DB에 저장해야하지만, 아직 추가 정보(사는 도시, 나이 등)를 입력받지 않았으므로

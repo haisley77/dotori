@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -48,27 +49,29 @@ public class SecurityConfig {
 			.disable() // httpBasic 사용 X
 			.csrf()
 			.disable() // csrf 보안 사용 X
-			.headers()
-			.frameOptions()
-			.disable()
-			.and()
-
-			// 세션 사용하지 않으므로 STATELESS로 설정
-			// .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-			//
+			// .headers()
+			// .frameOptions()
+			// .disable()
 			// .and()
+
+			//
+			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+
+			.and()
 
 			//== URL별 권한 관리 옵션 ==//
 			.authorizeRequests()
 			// 기본 페이지, css, image, js 하위 폴더에 있는 자료들은 모두 접근 가능
-			.antMatchers("/", "/css/**", "/images/**", "/js/**", "/favicon.ico", "/resources/**", "/static/**")
+			.antMatchers("/",
+				"/css/**", "/images/**", "/js/**",
+				"/favicon.ico", "/resources/**", "/static/**")
 			.permitAll()
 
-			.antMatchers("/*")
+			.antMatchers("/**")
 			.permitAll() // 회원가입 접근 가능
 
-			// .anyRequest()
-			// .authenticated() // 위의 경로 이외에는 모두 인증된 사용자만 접근 가능
+			.anyRequest()
+			.authenticated() // 위의 경로 이외에는 모두 인증된 사용자만 접근 가능
 
 			.and()
 			//== 소셜 로그인 설정 ==//
@@ -79,10 +82,7 @@ public class SecurityConfig {
 			.userService(customOAuth2UserService); // customUserService 설정
 
 		// 원래 스프링 시큐리티 필터 순서가 LogoutFilter 이후에 로그인 필터 동작
-		// 따라서, LogoutFilter 이후에 우리가 만든 필터 동작하도록 설정
 		// 순서 : LogoutFilter -> JwtAuthenticationProcessingFilter -> CustomJsonUsernamePasswordAuthenticationFilter
-		// http.addFilterAfter(customJsonUsernamePasswordAuthenticationFilter(), LogoutFilter.class);
-		// http.addFilterBefore(jwtAuthenticationProcessingFilter(), CustomJsonUsernamePasswordAuthenticationFilter.class);
 
 		return http.build();
 	}

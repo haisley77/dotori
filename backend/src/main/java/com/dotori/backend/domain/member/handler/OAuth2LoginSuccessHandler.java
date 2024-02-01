@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 import com.dotori.backend.domain.member.CustomOAuth2User;
 import com.dotori.backend.domain.member.jwt.service.JwtService;
 import com.dotori.backend.domain.member.redis.RedisService;
-import com.dotori.backend.domain.member.type.Role;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,17 +33,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 		log.info("OAuth2 Login 성공!");
 		try {
 			CustomOAuth2User oAuth2User = (CustomOAuth2User)authentication.getPrincipal();
-
-			// User의 Role이 GUEST일 경우 처음 요청한 회원이므로 회원가입 페이지로 리다이렉트인데 우리는 모두 USER라서 필요없는부분
-			if (oAuth2User.getRole() == Role.GUEST) {
-				// String accessToken = jwtService.createAccessToken(oAuth2User.getEmail());
-				// response.addHeader(jwtService.getAccessHeader(), "Bearer " + accessToken);
-				// response.sendRedirect("oauth2/sign-up"); // 프론트의 회원가입 추가 정보 입력 폼으로 리다이렉트
-
-				// jwtService.sendAccessToken(response, accessToken);
-			} else {
-				loginSuccess(response, oAuth2User); // 로그인에 성공한 경우 access, refresh 토큰 생성
-			}
+			loginSuccess(response, oAuth2User); // 로그인에 성공한 경우 access, refresh 토큰 생성
 		} catch (Exception e) {
 			throw e;
 		}
@@ -65,5 +54,6 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 
 		// jwtService.sendAccessToken(response, accessToken);
 		jwtService.updateRefreshToken(oAuth2User.getEmail(), refreshToken);
+		response.sendRedirect("http://localhost:9000");
 	}
 }

@@ -73,7 +73,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 		// RefreshToken까지 보낸 것이므로 리프레시 토큰이 DB의 리프레시 토큰과 일치하는지 판단 후,
 		// 일치한다면 AccessToken을 재발급해준다.
 		if (refreshToken != null) {
-			checkRefreshTokenAndReIssueAccessToken(response, refreshToken);
+			checkRefreshTokenAndReIssueAccessToken(response, request);
 			return; // RefreshToken을 보낸 경우에는 AccessToken을 재발급 하고 인증 처리는 하지 않게 하기위해 바로 return으로 필터 진행 막기
 		}
 
@@ -87,17 +87,42 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 
 	/**
 	 *  [리프레시 토큰으로 유저 정보 찾기 & 액세스 토큰/리프레시 토큰 재발급 메소드]
-	 *  파라미터로 들어온 헤더에서 추출한 리프레시 토큰으로 DB에서 유저를 찾고, 해당 유저가 있다면
+	 *  jwt에서 추출한 이메일로 redis에서 토큰을 찾고, 만료되지않았다면
 	 *  JwtService.createAccessToken()으로 AccessToken 생성,
-	 *  reIssueRefreshToken()로 리프레시 토큰 재발급 & DB에 리프레시 토큰 업데이트 메소드 호출
-	 *  그 후 JwtService.sendAccessTokenAndRefreshToken()으로 응답 헤더에 보내기
+	 *  그 후 쿠키에 AccessToken 재설정
 	 */
-	public void checkRefreshTokenAndReIssueAccessToken(HttpServletResponse response, String refreshToken) {
-		memberRepository.findByRefreshToken(refreshToken)
-			.ifPresent(user -> {
-				String reIssuedRefreshToken = reIssueRefreshToken(user);
-				jwtService.sendAccessToken(response, jwtService.createAccessToken(user.getEmail()));
+	public void checkRefreshTokenAndReIssueAccessToken(HttpServletResponse response, HttpServletRequest request) {
+		// JWT에서 이메일 추출
+		Optional<String> emailOpt = jwtService.extractEmailFromAccessToken(request);
+
+		emailOpt.ifPresent(email -> {
+			// Redis에서 이메일로 리프레시 토큰을 조회
+			Optional<String> refreshTokenOpt = redisService.getRefreshToken(email);
+
+			refreshTokenOpt.ifPresent(refreshToken -> {
+				// 리프레시 토큰이 존재하고 유효한 경우
+				if (jwtService.isTokenValid(refreshToken)) {
+					// 새로운 액세스 토큰 발급
+					String newAccessToken = jwtService.createAccessToken(email);
+
+					// 새로운 액세스 토큰을 쿠키에 설정
+					jwtService.sendAccessToken(response, newAccessToken);
+				} else {
+					// 리프레시 토큰이 유효하지 않은 경우, 에러 처리
+					// 예: 로그아웃 처리, 에러 응답 전송 등
+				}
 			});
+
+			// 리프레시 토큰이 Redis에서 찾을 수 없는 경우의 에러 처리
+			if (!refreshTokenOpt.isPresent()) {
+				// 에러 처리 로직
+			}
+		});
+
+		// JWT에서 이메일을 추출할 수 없는 경우의 에러 처리
+		if (!emailOpt.isPresent()) {
+			// 에러 처리 로직
+		}
 	}
 
 	/**
