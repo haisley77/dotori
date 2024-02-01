@@ -35,7 +35,7 @@ import io.openvidu.java.client.Session;
 @RequestMapping("/api/rooms")
 @PropertySource("classpath:application-openvidu.yml")
 @ConfigurationProperties(prefix = "openvidu")
-public class RoomController {
+public class RoomController2 {
 
 	@Value("${url}")
 	private String OPENVIDU_URL;
