@@ -6,7 +6,7 @@ import com.dotori.backend.domain.room.model.entity.Room;
 import lombok.Getter;
 
 @Getter
-public class RoomDTO {
+public class RoomDto {
 	private final Long roomId;
 	private final Book book;
 	private final Long hostId;
@@ -18,7 +18,7 @@ public class RoomDTO {
 	private final boolean isPublic;
 	private final String sessionId;
 
-	public RoomDTO(Room room) {
+	public RoomDto(Room room) {
 		this.roomId = room.getRoomId();
 		this.book = room.getBook();
 		this.hostId = room.getHostId();

@@ -2,6 +2,8 @@ package com.dotori.backend.domain.room.model.dto;
 
 import java.util.Map;
 
+import com.dotori.backend.domain.book.model.dto.BookDto;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +14,6 @@ import lombok.NoArgsConstructor;
 public class RoomInitializationDto {
 	private Map<String, Object> sessionProperties;
 	private Map<String, Object> connectionProperties;
-	private RoomDTO roomInfo;
-	//	private BookDTo bookInfo;
+	private RoomDto roomInfo;
+	private BookDto bookInfo;
 }

@@ -11,6 +11,10 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dotori.backend.domain.book.model.dto.BookDto;
+import com.dotori.backend.domain.book.model.entity.Book;
+import com.dotori.backend.domain.book.repository.BookRepository;
+import com.dotori.backend.domain.room.model.dto.RoomDto;
 import com.dotori.backend.domain.room.model.dto.RoomInitializationDto;
 import com.dotori.backend.domain.room.model.entity.Room;
 import com.dotori.backend.domain.room.model.entity.RoomMember;
@@ -31,16 +35,16 @@ public class RoomServiceImpl implements RoomService {
 
 	private final RoomRepository roomRepository;
 	private final RoomMemberRepository roomMemberRepository;
-	// private final BookRepository bookRepository;
+	private final BookRepository bookRepository;
 
 	@Autowired
 	public RoomServiceImpl(RoomRepository roomRepository,
-		RoomMemberRepository roomMemberRepository
-		//, BookRepository bookRepository
+		RoomMemberRepository roomMemberRepository,
+		BookRepository bookRepository
 	) {
 		this.roomRepository = roomRepository;
 		this.roomMemberRepository = roomMemberRepository;
-		// this.bookRepository = bookRepository;
+		this.bookRepository = bookRepository;
 	}
 
 	@Override
@@ -54,20 +58,25 @@ public class RoomServiceImpl implements RoomService {
 
 		List<RoomMember> roomMembers = new ArrayList<>();
 
-		// BookDTO bookInfo = params.getBookInfo();
-		// RoomDTO roomInfo = params.getRoomInfo();
-		// Room room = Room.builder()
-		// 	.book(book)
-		// 	.roomMembers(roomMembers)
-		// 	.hostId(roomInfo.getHostId())
-		// 	.title(roomInfo.getTitle())
-		// 	.password(roomInfo.getPassword())
-		// 	.isRecording(roomInfo.isRecording())
-		// 	.joinCnt(roomInfo.getJoinCnt())
-		// 	.limitCnt(roomInfo.getLimitCnt())
-		// 	.isPublic(roomInfo.isPublic())
-		// 	.sessionId(session.getSessionId())
-		// 	.build();
+		BookDto bookInfo = params.getBookInfo();
+		Optional<Book> optionalBook = bookRepository.findById(bookInfo.getBookId());
+		if (optionalBook.isEmpty()) {
+			throw new RuntimeException("책 정보 반영 중 문제 발생");
+		}
+		Book book = optionalBook.get();
+		RoomDto roomInfo = params.getRoomInfo();
+		Room room = Room.builder()
+			.book(book)
+			.roomMembers(roomMembers)
+			.hostId(roomInfo.getHostId())
+			.title(roomInfo.getTitle())
+			.password(roomInfo.getPassword())
+			.isRecording(roomInfo.isRecording())
+			.joinCnt(roomInfo.getJoinCnt())
+			.limitCnt(roomInfo.getLimitCnt())
+			.isPublic(roomInfo.isPublic())
+			.sessionId(session.getSessionId())
+			.build();
 
 		// 세션과 커넥션을 생성합니다.
 		Connection connection = session.createConnection(

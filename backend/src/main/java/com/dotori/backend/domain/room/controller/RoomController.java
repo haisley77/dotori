@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dotori.backend.domain.room.model.dto.RoomDTO;
+import com.dotori.backend.domain.room.model.dto.RoomDto;
 import com.dotori.backend.domain.room.model.dto.RoomInitializationDto;
 import com.dotori.backend.domain.room.model.entity.Room;
 import com.dotori.backend.domain.room.service.RoomService;
@@ -89,10 +89,10 @@ public class RoomController {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<RoomDTO>> getAllRooms() {
+	public ResponseEntity<List<RoomDto>> getAllRooms() {
 		List<Room> rooms = roomService.getAllRooms();
-		List<RoomDTO> roomDTOs = rooms.stream().map(RoomDTO::new).collect(Collectors.toList());
-		return ResponseEntity.ok(roomDTOs);
+		List<RoomDto> roomDtos = rooms.stream().map(RoomDto::new).collect(Collectors.toList());
+		return ResponseEntity.ok(roomDtos);
 	}
 
 	@PostMapping("/connection")
