@@ -87,7 +87,8 @@ public class KakaoLoginServiceImpl implements SocialLoginService {
                 .getNickname();
 
         return SocialMemberResponse.builder()
-                .id(kaKaoLoginResponse.getId())
+                .id(kakaoLoginResponse.getId())
+                .phoneNum(kakaoLoginData.getPhoneNum())
                 .nickname(Nickname)
                 .email(kakaoLoginData.getEmail())
                 .build();
