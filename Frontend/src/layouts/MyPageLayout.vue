@@ -1,5 +1,5 @@
 <template>
-  <Header />
+<!--  <Header />-->
   <q-layout style="position: relative">
     <!--    <q-header>-->
     <!--      header-->
@@ -17,7 +17,7 @@
       <!--    >-->
       <q-scroll-area class='scroll-placement light-green-bg'>
         <q-list padding>
-          <q-item clickable v-ripple to='/my-page/info' class="side-bar-menu-bg-white q-mx-sm q-mb-sm">
+          <q-item clickable v-ripple to='/my-page/info' class="side-bar-menu-bg-white q-mx-sm q-mb-sm" active-class="text-brand">
             <q-item-section avatar>
               <q-icon name='person' />
             </q-item-section>
@@ -25,7 +25,7 @@
               <span class="npsfont">내정보</span>
             </q-item-section>
           </q-item>
-          <q-item clickable v-ripple to='/my-page/collection' class="side-bar-menu-bg-white q-mx-sm q-mb-sm">
+          <q-item clickable v-ripple to='/my-page/collection' class="side-bar-menu-bg-white q-mx-sm q-mb-sm" active-class="text-brand">
             <q-item-section avatar>
               <q-icon name='inbox' />
             </q-item-section>
@@ -34,7 +34,7 @@
               <span class="npsfont">보관함</span>
             </q-item-section>
           </q-item>
-          <q-item clickable v-ripple to='/my-page/avatar' class="side-bar-menu-bg-white q-mx-sm q-mb-sm">
+          <q-item clickable v-ripple to='/my-page/avatar' class="side-bar-menu-bg-white q-mx-sm q-mb-sm" active-class="text-brand">
             <q-item-section avatar>
               <q-icon name='cruelty_free' />
             </q-item-section>
@@ -59,7 +59,7 @@
 
 
     <q-page-container>
-      <router-view class="apple" />
+      <router-view class='mypagebg' />
     </q-page-container>
 
 
@@ -77,7 +77,7 @@
 <style lang='scss' scoped>
   $profile-height: 250px;
 
-  .apple {
+  .mypagebg {
     //background: red;
     width: 100%;
   }
@@ -103,7 +103,7 @@
   }
 
   .light-green-bg {
-    background-color: $dotori-green;
+    background-color: #C7A96E;
   }
 
   .profile-placement {

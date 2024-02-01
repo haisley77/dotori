@@ -8,7 +8,7 @@
       <div class="in-back q-pa-sm" style="height: 100%">
         <div class="scene-background-container">
           <q-img
-            src="~assets/RecordingPage/tmp_scene_thumbnail.jpg"
+            src="~assets/MyPageImages/karina.jpg"
             :ratio="16/9"
             style="height: 100%; border-radius: 15px"
           />
@@ -112,7 +112,7 @@
   }
 
   .out-back {
-    background: #35daa0;
+    background: #C7A96E;
     border-radius: 15px;
   }
 

@@ -1,30 +1,22 @@
 <template>
-  <!--  <div class="row npsfont justify-between">-->
-  <!--    <h2 class = "q-ma-md">도토리🐿️</h2>-->
-  <!--    <h2 class = "q-ma-md">-->
-  <!--      로그인🐣-->
-  <!--    </h2>-->
-  <!--  </div>-->
-  <Header />
-  <!--  <div style="background:#d2fff7;height: 100vh">-->
-  <div class="row">
-    <div class="col-10 offset-1" >
-      <div class="row">
-        <RoomTitle></RoomTitle>
+  <div class='row'>
+    <div class='col-10 offset-1'>
+      <div class='row'>
+        <RoomTitle :roomInfo='roomInfo'></RoomTitle>
       </div>
-      <div class="row">
-        <div class="col-8 q-pa-sm">
-          <PlayerList></PlayerList>
+      <div class='row'>
+        <div class='col-8 q-pa-sm'>
+          <PlayerList :playerList='playerList'></PlayerList>
         </div>
-        <div class="col-4 q-pa-sm">
-          <BookInfo></BookInfo>
+        <div class='col-4 q-pa-sm'>
+          <BookInfo :bookInfo='bookInfo'></BookInfo>
         </div>
       </div>
-      <div class="row">
-        <div class="col-8 q-pa-sm" style="height: 210px">
+      <div class='row'>
+        <div class='col-8 q-pa-sm' style='height: 210px'>
           <RoomChat></RoomChat>
         </div>
-        <div class="col-4 q-pa-sm">
+        <div class='col-4 q-pa-sm'>
           <StartReady></StartReady>
         </div>
       </div>
@@ -41,6 +33,48 @@
   import RoomChat from 'components/RoomPageComponents/RoomChat.vue';
   import RoomTitle from 'components/RoomPageComponents/RoomTitle.vue';
   import Header from 'components/CommonComponents/Header.vue';
+  import {ref} from 'vue';
+
+  const roomInfo = ref({
+    title: '토끼와 거북이 오실분~',
+    roomNumber: '14',
+    public: true,
+  });
+
+  const bookInfo = ref({
+    title: '토끼와 거북이',
+    author: '도토리',
+    limitCnt: '4',
+    joinCnt: '3',
+    summary: '토끼와 거북이 이야기는 토끼와 거북이가 경주를 벌이는 이야기입니다.'
+  });
+
+  const playerList = ref([
+    {
+      name: '조석현',
+      profileImg: 'src/assets/MyPageImages/cho.jpg',
+
+    },
+    {
+      name: 'Winter',
+      profileImg: 'src/assets/MyPageImages/winter.png',
+
+    },
+    {
+      name: '카리나',
+      profileImg: 'src/assets/MyPageImages/karina.jpg',
+
+    },
+    {
+      name: '아이유',
+      profileImg: 'src/assets/MyPageImages/iupic.jpg',
+
+    },
+
+
+  ]);
+
+
 </script>
 
 <style scoped>

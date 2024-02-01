@@ -1,20 +1,22 @@
 <script setup>
+  const props = defineProps({bookInfo: Object});
 
 </script>
 
 <template>
-  <div style="height: 100%" class="background-green q-pa-sm">
+  <div style='height: 100%' class='background-green q-pa-sm'>
 
-    <div style="height: 100%" class="background-yellow q-pa-sm ">
-      <div class="column items-center">
-        <img src="../../assets/BookImages/rabbitandturtle.jpg" class="bookimg">
+    <div style='height: 100%' class='background-yellow q-pa-sm '>
+      <div class='column items-center'>
+        <img src='../../assets/BookImages/rabbitandturtle.jpg' class='bookimg q-pb-sm'>
       </div>
-      <div class="q-mt-sm column q-pa-sm background-white">
-        제목 : 토끼와 거북이<br/>
-        저자 : 도토리<br/>
-        필요 인원 : 4<br/>
-        줄거리 : 토끼와 거북이 이야기는 토끼와 거북이가 경주를 벌이는 이야기입니다.
-        이 이야기는 꾸준한 노력과 무모한 자만 사이의 교훈을 담고 있습니다.<br/>
+      <hr class='q-ma-none' />
+      <div class=' column q-pa-sm background-white'>
+        제목 : {{props.bookInfo.title}}<br />
+        저자 :  {{props.bookInfo.author}}<br />
+        필요 인원 : {{props.bookInfo.limitCnt}}<br />
+        줄거리 : {{props.bookInfo.summary}}
+        <br />
       </div>
     </div>
 
@@ -23,7 +25,7 @@
 
 <style scoped>
   .background-green {
-    background: #35daa0;
+    background: #C7A96E;
     border-radius: 20px 20px 20px 20px;
 
   }
@@ -31,7 +33,7 @@
   .background-yellow {
     background: white;
     border-radius: 20px 20px 20px 20px;
-    //border: dashed #cc765a 5px;
+  //border: dashed #cc765a 5px;
   }
 
   .background-white {
@@ -40,13 +42,12 @@
 
     border-radius: 20px 20px 20px 20px;
     font-family: NPSfontBold;
-    //color : #a84d2f;
+  //color : #a84d2f;
 
   }
 
   .bookimg {
     border-radius: 20px 20px 20px 20px;
-    //border: solid #cc765a 2px;
-    height: 20em;
+  //border: solid #cc765a 2px; height: 20em;
   }
 </style>

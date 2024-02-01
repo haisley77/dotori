@@ -2,7 +2,7 @@
 
   <q-page style="
       position: absolute;
-      top:50%;
+      top:55%;
       left:50%;
       transform :translate(-50%,-50%);
   ">
@@ -11,27 +11,27 @@
     </div>
     <hr class="q-my-md" style='border: white 1px solid'>
     <div class="profile-container  column items-center">
-      <div style="width: 210px;height: 210px; border-radius: 50%; border: #35daa0 5px solid"
+      <div style="width: 210px;height: 210px; border-radius: 50%; border: #C7A96E 5px solid; "
            class="q-mb-lg flex justify-center items-center relative-position">
         <img src="../../assets/MyPageImages/winter.png" style="width:200px;height:200px;border-radius: 50%;object-fit: cover">
         <q-btn unelevated rounded label="편집" class="absolute-bottom-right my-info-btn"></q-btn>
       </div>
       <q-space></q-space>
 
-      <div class="input-box q-py-sm " style='border: 5px solid #35daa0'>
+      <div class="input-box q-py-sm " style='border: 5px solid #C7A96E'>
         <div class="profile-info ">
           <div class=" q-my-sm row">
-            <q-input dense label="프로필 이름" :model-value="dummyUser.profileName" class="col-7 offset-1" />
+            <q-input dense label="프로필 이름" :model-value="dummyUser.profileName" class="col-7 offset-1" color='brand' />
             <q-btn unelevated rounded class="my-info-btn col-2 offset-1">변경</q-btn>
           </div>
-          <div class=" q-my-sm row">
-            <q-input dense label="프로필 이름" :model-value="dummyUser.name" class="col-7 offset-1" />
-            <q-btn unelevated rounded class="my-info-btn col-2 offset-1">변경</q-btn>
-          </div>
-          <div class=" q-my-sm row">
-            <q-input dense label="프로필 이름" :model-value="dummyUser.profileDescription" class="col-7 offset-1" />
-            <q-btn unelevated rounded class="my-info-btn col-2 offset-1">변경</q-btn>
-          </div>
+<!--          <div class=" q-my-sm row">-->
+<!--            <q-input dense label="프로필 이름" :model-value="dummyUser.name" class="col-7 offset-1" />-->
+<!--            <q-btn unelevated rounded class="my-info-btn col-2 offset-1">변경</q-btn>-->
+<!--          </div>-->
+<!--          <div class=" q-my-sm row">-->
+<!--            <q-input dense label="프로필 이름" :model-value="dummyUser.profileDescription" class="col-7 offset-1" />-->
+<!--            <q-btn unelevated rounded class="my-info-btn col-2 offset-1">변경</q-btn>-->
+<!--          </div>-->
         </div>
       </div>
     </div>
@@ -40,7 +40,7 @@
 
 <script setup>
   const dummyUser = {
-    profileName: '호호홓',
+    profileName: '도토리유저0101',
     name: '이름이름',
     profileDescription: '안녕하세요~',
   };
@@ -53,7 +53,7 @@
 
 <style lang="scss" scoped>
   .my-info-btn {
-    background-color: #35daa0;
+    background-color: #C7A96E;
     font-family: "NPSfontBold";
     color: white;
 
@@ -64,7 +64,7 @@
     border-radius: 50%;
     height: 200px;
     width: 200px;
-    border: 5px solid #35daa0;
+    border: 5px solid #C7A96E;
 
   }
 
