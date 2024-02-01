@@ -16,11 +16,11 @@ export const useOpenViduStore
 
   const apiRootPath = '/api/rooms';
 
-  const room_id = ref(null);
+  const room_id = ref(0);
   const room_name = ref(null);
   const room_password = ref(null);
   const is_private = ref(false);
-  const member_id = ref(47);
+  const member_id = ref(50);
 
 
   // 방 세션 설정 정보
@@ -58,7 +58,6 @@ export const useOpenViduStore
       room_info.value.password = room_password.value;
       room_info.value.isPublic = !is_private;
       room_info.value.limitCnt = bookmodal.roleCnt;
-      console.log('역할 수 : ' + bookmodal.roleCnt);
 
       roomInitializationParam.bookInfo = bookmodal;
       roomInitializationParam.roomInfo = room_info.value;
@@ -74,10 +73,9 @@ export const useOpenViduStore
         .then((response) => {
           console.log(response.status);
           if (response.status === 201) {
-            console.log(response.data.roomId + '방 생성');
             room_id.value = response.data.roomId;
             ovToken.value = response.data.token;
-            console.log('방 생성 성공 !!');
+
             resolve(response.data); // Resolve the promise with the response data
           }
         })
@@ -90,37 +88,37 @@ export const useOpenViduStore
   };
 
   const getConnectionToken = () => {
-    const apiPath = apiRootPath + '/connection';
+    return new Promise((resolve, reject) => {
+      const apiPath = apiRootPath + `/connection/${room_id.value}`;
 
-    axios.post(apiPath, connection_properties.value, {
-      params: {
-        roomId: room_id.value,
-      },
-    }).then((response) => {
-      if (response.status === 200) {
-        room_id.value = response.data.roomId;
-        ovToken.value = response.data.token;
-      }
-      if (response.status === 202) {
-        console.log(response.data.message);
-      }
-    }).catch((error) => {
-      console.error(error.response);
-      console.error('커넥션 생성 실패');
+      axios.post(apiPath, connection_properties.value)
+        .then((response) => {
+          if (response.status === 200) {
+            room_id.value = response.data.roomId;
+            ovToken.value = response.data.token;
+            resolve(response.data); // Resolve with the response data
+          }
+          if (response.status === 202) {
+            console.log(response.data.message);
+            reject(new Error(response.data.message)); // Reject with an error containing the message
+          }
+        })
+        .catch((error) => {
+          console.error(error.response);
+          console.error('커넥션 생성 실패');
+          reject(error); // Reject with the axios error
+        });
     });
   };
 
   const addRoomMember = () => {
     return new Promise((resolve, reject) => {
-      const apiPath = apiRootPath + '/add';
+      const apiPath = apiRootPath + `/add/${room_id.value}/${member_id.value}`;
 
-      axios.post(apiPath, {
-        roomId: parseInt(room_id.value),
-        memberId: member_id.value,
-      })
+      axios.post(apiPath)
         .then((response) => {
           if (response.status === 200) {
-            console.log('방 참여 정보 갱신 성공 !!');
+
             resolve(response.data); // Resolve the promise with the response data
           } else if (response.status === 201) {
             console.log('인원 초과로 방 참여 처리 불가');
@@ -136,16 +134,13 @@ export const useOpenViduStore
   };
 
   const removeRoomMember = () => {
-    const apiPath = apiRootPath + '/remove';
+    const apiPath = apiRootPath + `/remove/${room_id.value}/${member_id.value}`;
 
-    axios.delete(apiPath, {
-      params: {
-        roomId: parseInt(room_id.value),
-        memberId: member_id.value,
-      },
-    }).then((response) => {
+    axios.delete(apiPath)
+      .then((response) => {
       if (response.status === 200) {
         console.log('방 나가기 정보 갱신 성공 !!');
+        // 페이지 이동
       }
     }).catch((error) => {
       console.error(error.response);
@@ -153,17 +148,6 @@ export const useOpenViduStore
     });
 
   };
-
-
-  // const connectToOpenVidu = () => {
-  //   session.connect(ovToken.value)
-  //     .then(() => {
-  //       console.log('ov와 연결 성공!');
-  //     })
-  //     .catch((error) => {
-  //       console.error('ov와 연결 실패:', error);
-  //     });
-  // };
 
   const connectToOpenVidu = () => {
     return new Promise((resolve, reject) => {

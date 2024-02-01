@@ -102,7 +102,7 @@
           .then(() => {
             addRoomMember()
               .then(() => {
-                console.log('드디어 도착');
+                // console.log('드디어 도착');
                 moveWaitingRoom();
               })
               .catch((error) => {
