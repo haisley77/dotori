@@ -107,6 +107,7 @@
     const joinRoom = async () => {
       // console.log(props.bookmodal.title);
         try {
+            console.log(room_name.value);
             await createRoom(props.bookmodal);
             await connectToOpenVidu();
             console.log('소켓 연결 성공');

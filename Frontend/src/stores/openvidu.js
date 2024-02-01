@@ -1,4 +1,4 @@
-import {onMounted, ref} from 'vue';
+import {onMounted, reactive, ref} from 'vue';
 import {defineStore} from 'pinia';
 import {OpenVidu} from 'openvidu-browser';
 
@@ -52,14 +52,14 @@ export const useOpenViduStore
   const connection_properties = ref({});
 
   // 방 생성 정보
-  const room_info = ref({
-    hostId: ref(member_id.value),
-    title: ref(room_name.value),
-    password: ref(room_password.value),
-    isRecording: ref(is_recording.value),
+  const room_info= reactive({
+    hostId: member_id.value,
+    title: room_name.value,
+    password: room_password.value,
+    isRecording: is_recording.value,
     joinCnt: 0,
-    limitCnt: ref(role_cnt.value),
-    isPublic: ref(is_public.value),
+    limitCnt: role_cnt.value,
+    isPublic: is_public.value,
   });
 
 
@@ -78,7 +78,9 @@ export const useOpenViduStore
     const apiPath = apiRootPath + '/session';
     // console.log("ovjs : " + bookmodal)
     roomInitializationParam.value.bookInfo = bookmodal;
-    roomInitializationParam.value.roomInfo = room_info.value;
+
+
+    roomInitializationParam.value.roomInfo = room_info;
     console.log("title! : " +roomInitializationParam.value.bookInfo.title);
     // 방 정보 setting
     if (room_password.value === null && is_public === false) {
