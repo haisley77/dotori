@@ -43,7 +43,7 @@ public class RoomServiceImpl {
 	 * @return session 객체
 	 */
 	@Override
-	public Session findSessionByRoomId(OpenVidu openvidu, Long roomId) {
+	public Session findSessionByRoomId(OpenVidu openvidu, Long roomId) throws Exception {
 		String sessionId = roomRepository.findSessionByRoomId(roomId);
 		return openvidu.getActiveSession(sessionId);
 	}
