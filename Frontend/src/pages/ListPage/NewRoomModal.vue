@@ -7,8 +7,8 @@
           <!-- 왼쪽 칼럼   책 이미지 -->
           <div class='col-4 flex justify-center items-center q-pa-sm'
                style='border: 5px solid #C7A96E; border-radius: 20px;height: 100%'>
-            <!-- <img :src="bookmodal.bookImg" alt='책' -->
-            style='object-fit: fill;border-radius: 20px;'>
+            <img :src="bookmodal.bookImg" alt='책'
+                 style='object-fit: fill;border-radius: 20px;'>
           </div>
           <!-- 오른쪽 칼럼-->
           <div class='book-info col-8 q-gutter-y-sm'>
@@ -24,7 +24,7 @@
               <div class='text-h5'>역할 소개</div>
               <hr />
               <div class='flex'>
-                <Character v-for='item in 4' />
+                <Character v-for='item in bookmodal.roleCnt' />
               </div>
             </div>
           </div>
@@ -32,8 +32,7 @@
         <!--방 새로 만들기-->
         <div class='row'>
           <div class='col q-mt-sm'>
-            <q-card flat class='mycard room-input col-12'
-                    style='border-radius: 20px;border: 5px solid #C7A96E'>
+            <q-card flat class='mycard room-input col-12' style='border-radius: 20px;border: 5px solid #C7A96E'>
               <div class='room-info-inner'>
                 <q-card-section>
                   <div class='q-pa-none q-ma-none text-h5'>방을 직접 만들 수 있어요!</div>
@@ -41,24 +40,22 @@
                 <q-separator inset />
                 <div class='row q-mb-sm q-mt-sm'>
                   <div class='col-8 offset-1'>
-                    <q-input rounded outlined label='방 제목을 입력하세요!' v-model='room_name' @input="handleInput" />
+                    <q-input rounded outlined label='방 제목을 입력하세요!' v-model='room_name' />
                   </div>
                   <div class='col-3 flex justify-center'>
-                    <q-checkbox keep-color v-model='is_public' label='비밀로 할래요!' color='cyan' />
+                    <q-checkbox keep-color v-model='is_private' label='비밀로 할래요!' color='cyan' />
                   </div>
                 </div>
-                <div class='row q-mb-sm' v-if='is_public'>
+                <div class='row q-mb-sm' v-if='is_private'>
                   <div class='col-8 offset-1'>
-                    <q-input rounded outlined label='방 비밀번호를 입력하세요!' type='password'
-                             v-model='room_password' />
+                    <q-input rounded outlined label='방 비밀번호를 입력하세요!' type='password' v-model='room_password' />
                   </div>
                 </div>
                 <div class='row q-mb-sm'>
                   <div class='col-9 flex'>
                   </div>
                   <div class='col-3 flex justify-center'>
-                    <q-btn unelevated color='my-green' rounded label='방 만들기'
-                           @click='joinRoom'></q-btn>
+                    <q-btn unelevated color='my-green' rounded label='방 만들기' @click='joinRoom'></q-btn>
                   </div>
                 </div>
 
@@ -69,22 +66,17 @@
       </div>
 
     </div>
-
   </div>
 
-
 </template>
+
+
 <script setup>
   import Character from 'components/MyPageComponents/Character.vue';
   import {storeToRefs} from 'pinia';
   import {useRouter} from 'vue-router';
   import {useOpenViduStore} from 'stores/openvidu';
   import {onMounted} from 'vue';
-
-  const handleInput = () => {
-    console.log('input 감지');
-    console.log(room_name.value);
-  };
 
 
   const router = useRouter();
@@ -95,31 +87,33 @@
   };
 
   const openViduStore = useOpenViduStore();
-  const {room_name, room_password, is_public} = storeToRefs(openViduStore);
-  const {createRoom, connectToOpenVidu} = openViduStore;
+  const {room_name, room_password, is_private} = storeToRefs(openViduStore);
+  const {createRoom, connectToOpenVidu, addRoomMember} = openViduStore;
 
   onMounted(() => {
     // member_id = await axios.get(path정보, accesstoken);
   });
 
   const components = {Character};
-  const joinRoom = async () => {
-    try {
-
-      await createRoom(props.bookmodal);
-      await connectToOpenVidu();
-      console.log('소켓 연결 성공');
-      moveWaitingRoom();
-    } catch (error) {
-      console.error(error);
-    }
+  const joinRoom = () => {
+    createRoom(props.bookmodal)
+      .then(() => {
+        connectToOpenVidu()
+          .then(() => {
+            addRoomMember()
+              .then(() => {
+                console.log('드디어 도착');
+                moveWaitingRoom();
+              })
+              .catch((error) => {
+                console.log('참여 인원 갱신 중 에러 발생')
+              })
+          })
+          .catch((error) => {
+            console.log('ov에 연결 중 에러 발생');
+          })
+      })
   };
-</script>
-
-<script>
-  // export default {
-  //     props: ['bookmodal'],
-  // };
 </script>
 
 <style scoped>
@@ -135,12 +129,8 @@
     font-family: 'NPSfontBold', sans-serif;
   }
 
-    .book-info-inner, .room-info-inner {
-        //border: dashed #cc765a 5px; border-radius: 20px;
-    }
   .book-info-inner, .room-info-inner {
-    border: dashed #cc765a 5px;
-    border-radius: 20px;
+    //border: dashed #cc765a 5px; border-radius: 20px;
   }
 
   .book-info {

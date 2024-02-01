@@ -7,12 +7,6 @@
   const props = defineProps({bookdetail : Object});
 </script>
 
-<script>
-//   export default{
-//     props:['bookdetail'],
-// }
-</script>
-
 
 
 <template>
