@@ -54,12 +54,10 @@ public class RoomController {
 	@PostMapping("/sessions")
 	public ResponseEntity<String> initializeSession(@RequestBody(required = true) RoomInitializationDto params) {
 
-		Session session = null;
-		String errorMessage = null;
 		try {
 			openvidu.fetch();
 			// 세션을 만듭니다.
-			session = roomService.createSession(openvidu, params.getSessionProperties());
+			Session session = roomService.createSession(openvidu, params.getSessionProperties());
 			if (session != null) {
 				// 방 정보를 DB에 등록합니다.
 				Long roomId = roomService.saveRoomInfo(params.getRoomInfo(), session.getSessionId());
@@ -74,13 +72,12 @@ public class RoomController {
 	}
 
 	@PostMapping("/connections/{roomId}")
-	public ResponseEntity<String> createConnectionByHost(@PathVariable("roomId") String roomId,
+	public ResponseEntity<String> createConnectionByHost(@PathVariable("roomId") Long roomId,
 		@RequestBody(required = false) Map<String, Object> params) {
-		Connection connection = null;
 		try {
 			openvidu.fetch();
 			// 방 Id에 해당하는 방과 커넥션을 생성합니다.
-			connection = roomService.createConnectionByHost(openvidu, Long.parseLong(roomId), params);
+			Connection connection = roomService.createConnectionByHost(openvidu, roomId, params);
 			// token을 반환합니다.
 			if (connection != null) {
 				return new ResponseEntity<>(connection.getToken(), HttpStatus.CREATED);
