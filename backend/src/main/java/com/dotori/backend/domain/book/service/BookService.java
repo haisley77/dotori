@@ -2,8 +2,9 @@ package com.dotori.backend.domain.book.service;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
@@ -30,13 +31,11 @@ public class BookService {
 	private final RoleRepository roleRepository;
 
 	public GetBooksResponse getBooks() {
+		List<BookDto> books = bookRepository.findAll()
+			.stream()
+			.map(BookMapper::toBookDto)
+			.collect(Collectors.toList());
 
-		List<Book> bookList = bookRepository.findAll();
-		List<BookDto> books = new LinkedList<>();
-
-		for (Book book : bookList) {
-			books.add(BookMapper.toBookDto(book));
-		}
 		return GetBooksResponse.builder().books(books).build();
 	}
 
