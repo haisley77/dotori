@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Builder
-@Table(name = "Member")
+@Table(name = "member_temp")
 @AllArgsConstructor
 public class MemberTemp {
 
