@@ -73,7 +73,7 @@ public class RoomServiceImpl implements RoomService {
 			.password(roomInfo.getPassword())
 			.isRecording(roomInfo.isRecording())
 			.joinCnt(roomInfo.getJoinCnt())
-			.limitCnt(roomInfo.getLimitCnt())
+			.limitCnt(book.getRoleCnt())
 			.isPublic(roomInfo.isPublic())
 			.sessionId(session.getSessionId())
 			.build();

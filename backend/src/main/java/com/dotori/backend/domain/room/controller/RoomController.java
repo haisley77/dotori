@@ -59,13 +59,14 @@ public class RoomController {
 
 	@PostMapping("/session")
 	public ResponseEntity<Map<String, String>> createRoom(
-		@RequestBody(required = true) RoomInitializationDto params) {
+		@RequestBody(required = false) RoomInitializationDto params) {
 		Map<String, String> resultData = new HashMap<>();
 		try {
 			openvidu.fetch();
 			resultData = roomService.createRoom(openvidu, params);
 			return new ResponseEntity<>(resultData, HttpStatus.CREATED);
 		} catch (Exception e) {
+			e.printStackTrace();
 			resultData.put("message", "방 생성 중 문제 발생");
 			return new ResponseEntity<>(resultData, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
