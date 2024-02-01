@@ -1,33 +1,17 @@
 package com.dotori.backend.domain.room.repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Optional;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.dotori.backend.domain.room.model.entity.Room;
 
 @Repository
-@Transactional
-public class RoomRepository {
+public interface RoomRepository extends JpaRepository<Room, Long> {
+	// 모든 방 정보를 불러오는 메서드.
+	List<Room> findAll();
 
-	@PersistenceContext
-	private EntityManager em;
-
-	// 방 생성 테스트 용 메서드입니다. BookController 구현 이전까지는 주석을 풀고 테스트 하시면 됩니다.
-	// public void saveBook(Book book) {
-	// 	em.persist(book);
-	// }
-
-	public Long saveRoomInfo(Room room) {
-		em.persist(room);
-		em.flush();
-		return room.getRoomId();
-	}
-
-	public String findSessionByRoomId(Long roomId) {
-		Room room = em.find(Room.class, roomId);
-		return room.getSessionId();
-	}
+	Optional<Room> findByRoomId(Long roomId);
 }
