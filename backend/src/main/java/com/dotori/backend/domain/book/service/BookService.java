@@ -41,12 +41,11 @@ public class BookService {
 	}
 
 	public GetBookResponse getBook(Long bookId) {
-		Optional<Book> findBook = bookRepository.findById(bookId);
+		Book book = bookRepository.findById(bookId).orElseThrow(
+			() -> new EntityNotFoundException("해당하는 책이 존재하지 않습니다.")
+		);
 
-		if (findBook.isEmpty()) {
-			return null;
-		}
-		BookDto bookDto = BookMapper.toBookDto(findBook.get());
+		BookDto bookDto = BookMapper.toBookDto(book);
 
 		List<Role> roleList = roleRepository.findByBook_BookId(bookId);
 		List<RoleDto> roles = new LinkedList<>();
