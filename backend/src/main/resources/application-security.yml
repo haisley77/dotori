@@ -40,6 +40,8 @@ spring:
   redis:
     host: ${REDIS_HOST}
     port: ${REDIS_PORT}
+  session:
+    store-type: redis
 
 jwt:
   secretKey: ${SECRET_KEY}
@@ -54,7 +56,9 @@ logging:
   level:
     org:
       springframework:
-        security: DEBUG
-        web: DEBUG
+        security: trace
+        web: trace
         oauth2:
-          client: debug
+          client: trace
+        data:
+          redis: trace
