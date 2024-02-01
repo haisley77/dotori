@@ -56,7 +56,7 @@
   }
 
   .profile-background {
-    background: white;
+    background: #ebf686;
     border-radius: 20px 20px 20px 20px;
   }
   .dashed{

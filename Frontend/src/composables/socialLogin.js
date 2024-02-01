@@ -15,7 +15,7 @@ export default function useSocialLogin() {
     });
 
     const doSocialLogin = async socialType => {
-        const apiPath = '/user/social-login'; //api만들면 변경
+        const apiPath = '/user/social-LoginPageImages'; //api만들면 변경
         const bodyData = {
             code: route.query.code,
             userType: socialType,
