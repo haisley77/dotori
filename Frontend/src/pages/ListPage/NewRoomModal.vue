@@ -72,23 +72,31 @@
 
 </template>
 <script setup>
-  import Character from 'components/MyPageComponents/Character.vue';
-  import {ref} from 'vue';
-  import {storeToRefs} from 'pinia';
-  import {useRouter} from 'vue-router';
-  const router = useRouter();
-  import {useOpenViduStore} from 'stores/openvidu';
-  const openViduStore = useOpenViduStore();
-  const {room_name,room_password,room_id} = storeToRefs(openViduStore);
-  const {createRoomSession, getConnectionToken, connectToOpenVidu} = openViduStore;
-  const open = ref(false);
-  const imageUrl = ref('../assets/rabbitandturtle.jpg');
-  const components = {Character};
-  const joinRoom = () => {
-    createRoomSession();  // 세션 정보 생성
-    getConnectionToken(); // 세션과 connection 생성 후 토큰 받아오기(방장)
-    connectToOpenVidu();  // 토큰을 이용해 openvidu 서버에 연결 (웹 소켓)
-  };
+    import Character from 'components/MyPageComponents/Character.vue';
+    import {ref} from 'vue';
+
+    import {storeToRefs} from 'pinia';
+
+    import {useRouter} from 'vue-router';
+
+    const router = useRouter();
+
+    import {useOpenViduStore} from 'stores/openvidu';
+    const openViduStore = useOpenViduStore();
+    const {room_name,room_password,is_public} = storeToRefs(openViduStore);
+    const {createRoom, connectToOpenVidu} = openViduStore;
+
+
+    const components = {Character};
+    const joinRoom = async () => {
+      try {
+        await createRoom();
+        await connectToOpenVidu();
+        console.log('소켓 연결 성공');
+      } catch (error) {
+        console.error(error);
+      }
+    };
 </script>
 
 <script>
