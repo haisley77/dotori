@@ -22,27 +22,32 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Builder
-@Table(name = "Member_temp")
+@Table(name = "Member")
 @AllArgsConstructor
 public class MemberTemp {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "member_id")
-	private Long id;
+	private Long Id;
 
+	@Column(name = "member_email")
 	private String email; // 이메일
+
+	@Column(name = "member_nickname")
 	private String nickname; // 닉네임
 
 	@Enumerated(EnumType.STRING)
 	private Role role;
 
 	@Enumerated(EnumType.STRING)
+	@Column(name = "social_type")
 	private SocialType socialType; // KAKAO, NAVER, GOOGLE
 
-	private String socialId; // 로그인한 소셜 타입의 식별자 값 (일반 로그인인 경우 null)
+	@Column(name = "social_id")
+	private String socialId;
 
-	private String refreshToken; // 리프레시 토큰
+	@Column(name = "profile_img")
+	private String profileImg; //프사경로
 
 	// 유저 권한 설정 메소드
 	public void authorizeUser() {
@@ -54,7 +59,4 @@ public class MemberTemp {
 		this.nickname = updateNickname;
 	}
 
-	public void updateRefreshToken(String updateRefreshToken) {
-		this.refreshToken = updateRefreshToken;
-	}
 }

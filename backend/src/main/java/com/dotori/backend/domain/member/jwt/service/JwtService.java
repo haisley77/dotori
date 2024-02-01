@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.dotori.backend.InvalidRefreshTokenException;
 import com.dotori.backend.domain.member.Repository.MemberRepository;
 import com.dotori.backend.domain.member.redis.RedisService;
 
@@ -53,7 +52,7 @@ public class JwtService {
 	private static final String BEARER = "Bearer ";
 
 	private final MemberRepository memberRepository;
-	private RedisService redisService;
+	private final RedisService redisService;
 
 	/**
 	 * AccessToken 생성 메소드
@@ -145,25 +144,6 @@ public class JwtService {
 
 		return refreshToken;
 	}
-
-	public void checkRefreshTokenAndReIssueAccessToken(HttpServletResponse response, String refreshToken) {
-		memberRepository.findByRefreshToken(refreshToken)
-			.ifPresentOrElse(user -> {
-				// 리프레시 토큰이 유효한 경우 새로운 액세스 토큰 생성
-				String newAccessToken = this.createAccessToken(user.getEmail());
-				sendAccessToken(response, newAccessToken); // 새로운 토큰을 쿠키에 설정
-			}, () -> {
-				// 리프레시 토큰이 유효하지 않은 경우 오류 처리
-				throw new InvalidRefreshTokenException();
-			});
-	}
-
-	// /**
-	//  * AccessToken 헤더 설정
-	//  */
-	// public void setAccessTokenHeader(HttpServletResponse response, String accessToken) {
-	// 	response.setHeader(accessHeader, accessToken);
-	// }
 
 	/**
 	 * RefreshToken을 Redis에 저장(업데이트)
