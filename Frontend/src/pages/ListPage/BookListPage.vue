@@ -25,7 +25,7 @@
 
     <div class='row q-col-gutter-x-md q-col-gutter-y-md'>
       <div v-for='book in books' :key='book.bookId' class='col-12 col-sm-6 col-md-4 col-lg-3 q-pa-md'>
-        <Book/>
+        <Book :bookdetail="book"></Book>
       </div>
     </div>
   </q-page>

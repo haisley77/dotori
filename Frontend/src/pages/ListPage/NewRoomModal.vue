@@ -14,10 +14,10 @@
                     <div class='book-info col-8 q-gutter-y-sm'>
                         <!--            책 제목과 줄거리-->
                         <div style='border: 5px solid #C7A96E; border-radius: 20px;height: 50%' class='q-pa-sm'>
-                            <div class='text-h5'>제목 : 토끼와 거북이</div>
-                            <div>저자 : 도토리</div>
+                            <div class='text-h5'>제목 : {{bookmodal.title}}</div>
+                            <div>저자 : {{ bookmodal.author }}</div>
                             <hr />
-                            {{ content }}
+                          {{ bookmodal.summary }}
                         </div>
                         <!--            등장 인물-->
                         <div style='border: 5px solid #C7A96E; border-radius: 20px;height: 50%' class='q-pa-sm'>
@@ -72,35 +72,29 @@
 
 </template>
 <script setup>
-    import Character from 'components/MyPageComponents/Character.vue';
-    import {ref} from 'vue';
+  import Character from 'components/MyPageComponents/Character.vue';
+  import {ref} from 'vue';
+  import {storeToRefs} from 'pinia';
+  import {useRouter} from 'vue-router';
+  const router = useRouter();
+  import {useOpenViduStore} from 'stores/openvidu';
+  const openViduStore = useOpenViduStore();
+  const {room_name,room_password,room_id} = storeToRefs(openViduStore);
+  const {createRoomSession, getConnectionToken, connectToOpenVidu} = openViduStore;
+  const open = ref(false);
+  const imageUrl = ref('../assets/rabbitandturtle.jpg');
+  const components = {Character};
+  const joinRoom = () => {
+    createRoomSession();  // 세션 정보 생성
+    getConnectionToken(); // 세션과 connection 생성 후 토큰 받아오기(방장)
+    connectToOpenVidu();  // 토큰을 이용해 openvidu 서버에 연결 (웹 소켓)
+  };
+</script>
 
-    import {storeToRefs} from 'pinia';
-
-    import {useRouter} from 'vue-router';
-
-    const router = useRouter();
-
-    import {useOpenViduStore} from 'stores/openvidu';
-    const openViduStore = useOpenViduStore();
-    const {room_name,room_password,is_public} = storeToRefs(openViduStore);
-    const {createRoom, connectToOpenVidu} = openViduStore;
-
-    const imageUrl = ref('../assets/rabbitandturtle.jpg');
-    const title = ref('토끼와 거북이');
-    const content =
-        '옛날 옛적에, 토끼와 거북이가 살고 있었다.\n' +
-        '어느날 토끼가 거북이를 느림보라고 놀려대자, 거북이는 자극을 받고 토끼에게 달리기 경주를 제안하였다.\n';
-    const writer = ref('도토리 오리지널');
-
-    const components = {Character};
-    const joinRoom = () => {
-        createRoom()
-            .then(() => {
-                connectToOpenVidu().then(()=>console.log('소켓 연결 성공'))
-            })
-            .catch((error)=>console.error(error));
-    };
+<script>
+  export default{
+    props:['bookmodal'],
+  }
 </script>
 
 <style scoped>

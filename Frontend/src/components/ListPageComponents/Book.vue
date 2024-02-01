@@ -3,7 +3,16 @@
   import NewRoomModal from 'pages/ListPage/NewRoomModal.vue';
 
   const dialog = ref('true');
+  components: {NewRoomModal};
 </script>
+
+<script>
+  export default{
+    props:['bookdetail'],
+  }
+</script>
+
+
 
 <template>
   <article>
@@ -19,10 +28,10 @@
              style='background: white; '>
           <div class='col-9'>
             <div class=' npsfont text-h6 ellipsis'>
-              책 제목이 여기 들어갑니다
+              {{bookdetail.title}}
             </div>
             <div class=' npsfont'>
-              도토리
+              {{ bookdetail.author }}
             </div>
             <!-- Dialog -->
           </div>
@@ -40,7 +49,7 @@
                     <q-btn flat icon='close' color='black' v-close-popup />
                   </q-card-actions>
                   <q-card-section>
-                    <NewRoomModal />
+                    <NewRoomModal :bookmodal="bookdetail"></NewRoomModal>
                   </q-card-section>
                 </q-card>
               </q-dialog>
