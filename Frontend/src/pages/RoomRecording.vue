@@ -21,7 +21,7 @@
 <template>
   <Header/>
   <div class="row flex justify-center q-px-none" >
-    <div class="col-11">
+    <div class="col-10">
       <div class="entire-container row">
 
         <div class="left-container col-2">
@@ -127,7 +127,7 @@
   }
 
   .entire-container {
-    height: 100vh;
+    height: 85vh;
     //border: green solid 1px;
     //background: #d2fff7;
   }
@@ -213,7 +213,7 @@
   }
 
   .in-back {
-    background: #ebf686;
+    background: white;
     border-radius: 15px;
   }
 

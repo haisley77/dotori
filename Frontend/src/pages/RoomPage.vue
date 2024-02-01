@@ -6,7 +6,8 @@
 <!--    </h2>-->
 <!--  </div>-->
   <Header/>
-  <div style="background:#d2fff7;height: 100vh">
+<!--  <div style="background:#d2fff7;height: 100vh">-->
+  <div style="">
     <div class="row">
       <RoomTitle></RoomTitle>
     </div>

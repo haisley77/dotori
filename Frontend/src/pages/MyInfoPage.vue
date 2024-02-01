@@ -11,10 +11,10 @@
     </div>
     <hr class="q-my-md" style='border: white 1px solid'>
     <div class="profile-container  column items-center">
-      <div style="width: 200px; border-radius: 50%; border: #35daa0 5px solid"
-           class = "q-mb-lg flex justify-center items-center relative-position">
-        <img src="../assets/acorn_character_img.png" width="100%">
-        <q-btn unelevated rounded label="편집" class = "absolute-bottom-right my-info-btn"></q-btn>
+      <div style="width: 210px;height: 210px; border-radius: 50%; border: #35daa0 5px solid"
+           class="q-mb-lg flex justify-center items-center relative-position">
+        <img src="../assets/winter.png" style="width:200px;height:200px;border-radius: 50%;object-fit: cover">
+        <q-btn unelevated rounded label="편집" class="absolute-bottom-right my-info-btn"></q-btn>
       </div>
       <q-space></q-space>
 
