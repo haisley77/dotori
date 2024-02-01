@@ -46,8 +46,8 @@ export const useOpenViduStore
 
   // 방 생성 요청 시 전달할 파라미터
   const roomInitializationParam = ref({
-    sessionProperties: {},
-    connectionProperties: {},
+    sessionProperties: session_properties.value,
+    connectionProperties: connection_properties.value,
     roomInfo : null,
     bookInfo : null,
   });
@@ -79,9 +79,9 @@ export const useOpenViduStore
       .then((response) => {
         if (response.data.status === 201) {
           console.log('방 생성 성공 !!');
-          console.log(response);
-          room_id.value = response.data.get('roomId');
-          ovToken.value = response.data.get('token');
+          console.log(response.data.roomId);
+          room_id.value = response.data.roomId;
+          ovToken.value = response.data.token;
 
 
           // sessionStorage.setItem('ovToken', ovToken.value);
@@ -104,8 +104,8 @@ export const useOpenViduStore
       },
     }).then((response) => {
       if (response.status === 200) {
-        room_id.value = response.data.get('roomId');
-        ovToken.value = response.data.get('token');
+        room_id.value = response.data.roomId;
+        ovToken.value = response.data.token;
       }
       if (response.status === 202) {
         console.log(response.data.get('message'));
