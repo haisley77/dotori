@@ -1,7 +1,10 @@
 package com.dotori.backend.members.dto;
 
-import lombok.*;
-
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Builder
 @AllArgsConstructor
@@ -12,4 +15,5 @@ public class SocialMemberResponse {
     private Long id;
     private String email;
     private String nickname;
+	private String phoneNum;
 }

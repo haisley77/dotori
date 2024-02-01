@@ -1,13 +1,16 @@
 package com.dotori.backend.members.dto;
 
+import com.dotori.backend.members.type.MemberType;
 import com.sun.istack.NotNull;
+
 import lombok.Getter;
-import org.hibernate.usertype.UserType;
+import lombok.ToString;
 
 @Getter
+@ToString
 public class SocialLoginRequest {
-    @NotNull
-    private UserType userType;
-    @NotNull
-    private String code;
+	@NotNull
+	private MemberType memberType;
+	@NotNull
+	private String code;
 }
