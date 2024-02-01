@@ -6,20 +6,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.dotori.backend.domain.book.model.entity.Book;
-import com.dotori.backend.domain.member.model.entity.Member;
 import com.dotori.backend.domain.room.model.dto.RoomInitializationDto;
 import com.dotori.backend.domain.room.model.entity.Room;
 import com.dotori.backend.domain.room.model.entity.RoomMember;
 import com.dotori.backend.domain.room.repository.RoomMemberRepository;
 import com.dotori.backend.domain.room.repository.RoomRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.openvidu.java.client.Connection;
 import io.openvidu.java.client.ConnectionProperties;
@@ -36,11 +32,6 @@ public class RoomServiceImpl implements RoomService {
 	private final RoomRepository roomRepository;
 	private final RoomMemberRepository roomMemberRepository;
 	// private final BookRepository bookRepository;
-
-	@Autowired
-	private EntityManager em;
-
-	private final ObjectMapper objectMapper = new ObjectMapper();
 
 	@Autowired
 	public RoomServiceImpl(RoomRepository roomRepository,
@@ -63,34 +54,7 @@ public class RoomServiceImpl implements RoomService {
 
 		List<RoomMember> roomMembers = new ArrayList<>();
 
-		Book book = Book.builder()
-			.title("Example Title")
-			.bookImg("exampleProfileImgUrl1")
-			.author("Example Author")
-			.build();
-		em.persist(book);
-
-		Member host = Member.builder()
-			.nickname("exampleNickname1")
-			.profileImg("exampleProfileImgUrl1")
-			.build();
-		em.persist(host);
-
-		Room room = Room.builder()
-			.book(book)
-			.hostId(1L)
-			.roomMembers(roomMembers)
-			.title("토끼와 거북이 같이 연극해요!")
-			.password("1234")
-			.limitCnt(2)
-			.joinCnt(0)
-			.isPublic(false)
-			.sessionId(session.getSessionId())
-			.build();
-		em.persist(room);
-		em.flush();
-
-		// BookDto bookInfo = params.getBookInfo();
+		// BookDTO bookInfo = params.getBookInfo();
 		// RoomDTO roomInfo = params.getRoomInfo();
 		// Room room = Room.builder()
 		// 	.book(book)
@@ -154,11 +118,10 @@ public class RoomServiceImpl implements RoomService {
 		Room room = optionalRoom.get();
 
 		// // 방에 연결된 유효한 connection 리스트를 openvidu 서버에서 불러옵니다.
-
 		// List<Connection> activeConnections = openvidu.getActiveSession(room.getSessionId()).getActiveConnections();
 		// return activeConnections.size() < room.getLimitCnt();
 
-		// db와 openvidu 서버 둘 다 확인하는 게 맞지만, 일단은 해피케이스 생각하겠습니다.
+		// db와 openvidu 서버 둘 다 확인하는 게 맞지만, 일단 해피케이스
 		return room.getJoinCnt() < room.getLimitCnt();
 	}
 
@@ -171,22 +134,13 @@ public class RoomServiceImpl implements RoomService {
 		}
 		Room room = optionalRoom.get();
 
-		// Member member = memberRepository.findById(memberId);
-		Member member = Member.builder()
-			//.nickname("도토리유저2")
-			.nickname(String.valueOf(memberId))
-			.profileImg("프로필이미지")
-			.build();
-
-		em.persist(member);
-		em.flush();
-
 		// member id에 해당하는 멤버를 방 참여 멤버로 등록합니다.
-		RoomMember roomMember = RoomMember.builder()
-			.member(member)
-			.room(room)
-			.build();
-		roomMemberRepository.save(roomMember);
+		// Member member = memberRepository.findById(memberId);
+		// RoomMember roomMember = RoomMember.builder()
+		// 	.member(member)
+		// 	.room(room)
+		// // 	.build();
+		// roomMemberRepository.save(roomMember);
 
 		// 방 참여 인원을 갱신합니다.
 		room.setJoinCnt(room.getJoinCnt() + 1);
