@@ -7,17 +7,17 @@
                     <!-- 왼쪽 칼럼   책 이미지 -->
                     <div class='col-4 flex justify-center items-center q-pa-sm'
                          style='border: 5px solid #C7A96E; border-radius: 20px;height: 100%'>
-                        <img :src="bookdetail.bookImg" alt='책'
+                        <!-- <img :src="bookmodal.bookImg" alt='책' -->
                              style='object-fit: fill;border-radius: 20px;'>
                     </div>
                     <!-- 오른쪽 칼럼-->
                     <div class='book-info col-8 q-gutter-y-sm'>
                         <!--            책 제목과 줄거리-->
                         <div style='border: 5px solid #C7A96E; border-radius: 20px;height: 50%' class='q-pa-sm'>
-                            <div class='text-h5'>제목 : {{ bookdetail.title }}</div>
-                            <div>저자 : {{ bookdetail.author }}</div>
+                            <div class='text-h5'>제목 : {{ bookmodal.title }}</div>
+                            <div>저자 : {{ bookmodal.author }}</div>
                             <hr />
-                            {{ bookdetail.summary }}
+                            {{ bookmodal.summary }}
                         </div>
                         <!--            등장 인물-->
                         <div style='border: 5px solid #C7A96E; border-radius: 20px;height: 50%' class='q-pa-sm'>
@@ -41,7 +41,7 @@
                                 <q-separator inset />
                                 <div class='row q-mb-sm q-mt-sm'>
                                     <div class='col-8 offset-1'>
-                                        <q-input rounded outlined label='방 제목을 입력하세요!' v-model='room_name' />
+                                      <q-input rounded outlined label='방 제목을 입력하세요!' v-model='room_name' @input="handleInput"/>
                                     </div>
                                     <div class='col-3 flex justify-center'>
                                         <q-checkbox keep-color v-model='is_public' label='비밀로 할래요!' color='cyan' />
@@ -76,33 +76,38 @@
 </template>
 <script setup>
     import Character from 'components/MyPageComponents/Character.vue';
-
     import {storeToRefs} from 'pinia';
-
     import {useRouter} from 'vue-router';
+    import {useOpenViduStore} from 'stores/openvidu';
+    import {onMounted} from 'vue';
+
+    const handleInput = ()=>
+    {
+      console.log("input 감지")
+      console.log(room_name.value);
+    }
+
 
     const router = useRouter();
-
+    const props = defineProps({bookmodal:Object});
     const moveWaitingRoom = () => {
         router.push('/room');
 
     };
 
-    import {useOpenViduStore} from 'stores/openvidu';
-    import {onMounted} from 'vue';
-
     const openViduStore = useOpenViduStore();
-    const {book_info, room_name, room_password, is_public} = storeToRefs(openViduStore);
+    const {room_name, room_password, is_public} = storeToRefs(openViduStore);
     const {createRoom, connectToOpenVidu} = openViduStore;
 
     onMounted(() => {
-        book_info.value = props.bookdetail;
+        // member_id = await axios.get(path정보, accesstoken);
     });
 
     const components = {Character};
     const joinRoom = async () => {
+      // console.log(props.bookmodal.title);
         try {
-            await createRoom();
+            await createRoom(props.bookmodal);
             await connectToOpenVidu();
             console.log('소켓 연결 성공');
             moveWaitingRoom();
@@ -113,9 +118,9 @@
 </script>
 
 <script>
-    export default {
-        props: ['bookdetail'],
-    };
+    // export default {
+    //     props: ['bookmodal'],
+    // };
 </script>
 
 <style scoped>

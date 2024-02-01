@@ -62,20 +62,24 @@ export const useOpenViduStore
     isPublic: ref(is_public.value),
   });
 
-  const book_info = ref(null);
 
   // 방 생성 요청 시 전달할 파라미터
   const roomInitializationParam = ref({
     sessionProperties: session_properties.value,
     connectionProperties: connection_properties.value,
-    roomInfo: ref(room_info.value),
-    bookInfo: ref(book_info.value),
+    // roomInfo: ref(room_info.value),
+    // bookInfo: ref(null),
+    roomInfo : null,
+    bookInfo : null,
   });
 
 
-  const createRoom = async () => {
+  const createRoom = async (bookmodal) => {
     const apiPath = apiRootPath + '/session';
-
+    // console.log("ovjs : " + bookmodal)
+    roomInitializationParam.value.bookInfo = bookmodal;
+    roomInitializationParam.value.roomInfo = room_info.value;
+    console.log("title! : " +roomInitializationParam.value.bookInfo.title);
     // 방 정보 setting
     if (room_password.value === null && is_public === false) {
       console.log('방은 비공개인데 비밀번호가 설정되지 않았음');
@@ -83,6 +87,7 @@ export const useOpenViduStore
     }
     try {
       const response = await axios.post(apiPath, roomInitializationParam.value);
+
       if (response.data.status === 201) {
         room_id.value = response.data.get('roomId');
         ovToken.value = response.data.get('token');
@@ -90,6 +95,7 @@ export const useOpenViduStore
       }
     } catch (error) {
       console.error(error.response);
+      console.log(apiPath);
       console.error('방 생성 실패: ', error);
     }
   };
@@ -174,8 +180,9 @@ export const useOpenViduStore
   };
 
   return {
+    room_name,
+    room_password,
     is_public,
-    book_info,
     ovToken,
     createRoom,
     getConnectionToken,

@@ -4,12 +4,13 @@
 
   const dialog = ref('true');
   components: {NewRoomModal};
+  const props = defineProps({bookdetail : Object});
 </script>
 
 <script>
-  export default{
-    props:['bookdetail'],
-}
+//   export default{
+//     props:['bookdetail'],
+// }
 </script>
 
 
@@ -28,10 +29,10 @@
              style='background: white; '>
           <div class='col-9'>
             <div class=' npsfont text-h6 ellipsis'>
-              {{bookdetail.title}}
+              {{props.bookdetail.title}}
             </div>
             <div class=' npsfont'>
-              {{ bookdetail.author }}
+              {{ props.bookdetail.author }}
             </div>
             <!-- Dialog -->
           </div>
