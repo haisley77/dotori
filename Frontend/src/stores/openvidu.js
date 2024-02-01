@@ -26,25 +26,6 @@ export const useOpenViduStore
   const member_id = ref(47);
 
 
-  // onMounted(() => {
-  //   member_id = await axios.getMemberId(path정보, accesstoken);
-  //   sessionStorage.setItem('ovToken', ovToken.value);
-  //   const storedOVToken = sessionStorage.getItem('ovToken');
-  //   if (storedOVToken) {
-  //     console.log('onMounted 시점에 토큰 발견 : ' + storedOVToken);
-  //     ovToken.value = storedOVToken;
-  //     session.connect(ovToken.value).then(() => {
-  //       console.log('ov와 연결 성공!');
-  //     })
-  //       .catch((error) => {
-  //         console.error('ov와 연결 실패:', error);
-  //       });
-  //   } else {
-  //     console.log('onMounted 시점에 토큰 발견 실패 : ');
-  //   }
-  // });
-
-
   // 방 세션 설정 정보
   const session_properties = ref({});
 
@@ -65,18 +46,15 @@ export const useOpenViduStore
 
   // 방 생성 요청 시 전달할 파라미터
   const roomInitializationParam = ref({
-    sessionProperties: session_properties.value,
-    connectionProperties: connection_properties.value,
-    // roomInfo: ref(room_info.value),
-    // bookInfo: ref(null),
+    sessionProperties: {},
+    connectionProperties: {},
     roomInfo : null,
     bookInfo : null,
   });
 
 
-  const createRoom = async (bookmodal) => {
+  const createRoom = (bookmodal) => {
     const apiPath = apiRootPath + '/session';
-    // console.log("ovjs : " + bookmodal)
     roomInitializationParam.value.bookInfo = bookmodal;
 
     console.log(room_name.value);
@@ -85,34 +63,46 @@ export const useOpenViduStore
     room_info.value.isPublic = is_public.value;
     roomInitializationParam.value.roomInfo = room_info;
     console.log("title! : " +roomInitializationParam.value.bookInfo.title);
+
+
+    console.log(roomInitializationParam.value.sessionProperties);
+    console.log(roomInitializationParam.value.connectionProperties);
+    console.log(roomInitializationParam.value.roomInfo);
+    console.log(roomInitializationParam.value.bookInfo);
     // 방 정보 setting
     if (room_password.value === null && is_public === false) {
       console.log('방은 비공개인데 비밀번호가 설정되지 않았음');
       return;
     }
-    try {
-      const response = await axios.post(apiPath, roomInitializationParam.value);
 
-      if (response.data.status === 201) {
-        room_id.value = response.data.get('roomId');
-        ovToken.value = response.data.get('token');
-        console.log('방 생성 성공 !!');
-      }
-    } catch (error) {
-      console.error(error.response);
-      console.log(apiPath);
-      console.error('방 생성 실패: ', error);
-    }
+    axios.post(apiPath, roomInitializationParam.value)
+      .then((response) => {
+        if (response.data.status === 201) {
+          console.log('방 생성 성공 !!');
+          console.log(response);
+          room_id.value = response.data.get('roomId');
+          ovToken.value = response.data.get('token');
+
+
+          // sessionStorage.setItem('ovToken', ovToken.value);
+          console.log('token sessionStorage 저장 성공');
+          connectToOpenVidu();
+        }
+      }).catch ((error) => {
+        console.error(error.response);
+        console.log(apiPath);
+        console.error('방 생성 실패: ', error);
+      });
   };
 
-  const getConnectionToken = async () => {
+  const getConnectionToken = () => {
     const apiPath = apiRootPath + '/connection';
-    try {
-      const response = await axios.post(apiPath, connection_properties.value, {
-        params: {
-          roomId: room_id.value,
-        },
-      });
+
+    axios.post(apiPath, connection_properties.value, {
+      params: {
+        roomId: room_id.value,
+      },
+    }).then((response) => {
       if (response.status === 200) {
         room_id.value = response.data.get('roomId');
         ovToken.value = response.data.get('token');
@@ -120,64 +110,62 @@ export const useOpenViduStore
       if (response.status === 202) {
         console.log(response.data.get('message'));
       }
-    } catch (error) {
+    }).catch ((error) => {
       console.error(error.response);
       console.error('커넥션 생성 실패' + error);
-    }
+    });
   };
 
-  const addRoomMember = async () => {
+  const addRoomMember = () => {
     const apiPath = apiRootPath + '/add';
 
-    try {
-      const response = await axios.post(apiPath, {
-        params: {
-          roomId: room_id.value,
-          memberId: member_id.value,
-        },
-      });
+    axios.post(apiPath, {
+      params: {
+        roomId: room_id.value,
+        memberId: member_id.value,
+      },
+    }).then((response) => {
       if (response.status === 200) {
         console.log('방 참여 정보 갱신 성공 !!');
       }
       if (response.status === 201) {
         console.log('인원 초과로 방 참여 처리 불가');
       }
-    } catch (error) {
+    }).catch((error) => {
       console.log(error.response);
       // console.error(error.response.data.get('message'));
       console.error('방 참여 정보 갱신 처리 중 오류 발생');
-    }
+    });
+
   };
 
-  const removeRoomMember = async () => {
+  const removeRoomMember = () => {
     const apiPath = apiRootPath + '/remove';
 
-    try {
-      const response = await axios.delete(apiPath, {
-        params: {
-          roomId: room_id.value,
-          memberId: member_id.value,
-        },
-      });
+    axios.delete(apiPath, {
+      params: {
+        roomId: room_id.value,
+        memberId: member_id.value,
+      },
+    }).then((response) => {
       if (response.status === 200) {
         console.log('방 나가기 정보 갱신 성공 !!');
       }
-    } catch (error) {
+    }).catch((error) => {
       console.error(error.response);
       console.error('방 나가기 정보 갱신 처리 중 오류 발생');
-    }
+    });
+
   };
 
 
   const connectToOpenVidu = () => {
-    sessionStorage.setItem('ovToken', ovToken.value);
-    console.log('token sessionStorage 저장 성공');
 
-    session.connect(sessionStorage.getItem('ovToken'))
+    session.connect(ovToken.value)
       .then(() => {
         console.log('ov와 연결 성공!');
         // 방 참여 인원 정보 갱신
-        addRoomMember().then(()=>console.log('참여 처리 성공')).catch((error)=>console.error('에러에러'));
+        addRoomMember();
       })
       .catch((error) => {
         console.error('ov와 연결 실패:', error);
