@@ -53,17 +53,10 @@ export const useOpenViduStore
 
   // 방 생성 정보
   const room_info = ref({
-<<<<<<< Updated upstream
     hostId: ref(member_id.value),
     title: ref(room_name.value),
     password: ref(room_password.value),
     isRecording: ref(is_recording.value),
-=======
-    hostId: member_id.value,
-    title: bookmodal,
-    password: null,
-    isRecording: false,
->>>>>>> Stashed changes
     joinCnt: 0,
     limitCnt: ref(role_cnt.value),
     isPublic: ref(is_public.value),
