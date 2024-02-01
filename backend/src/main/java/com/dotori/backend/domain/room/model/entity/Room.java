@@ -23,6 +23,7 @@ import com.dotori.backend.domain.book.model.entity.Book;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
@@ -53,6 +54,7 @@ public class Room extends BaseTimeEntity {
 	@Column(name = "is_recording")
 	private boolean isRecording;
 
+	@Setter
 	@Column(name = "join_cnt")
 	private int joinCnt;
 
@@ -67,13 +69,17 @@ public class Room extends BaseTimeEntity {
 
 	@Builder
 	public Room(Book book, List<RoomMember> roomMembers, Long hostId, String title, String password,
-		boolean isPublic, String sessionId) {
+		boolean isRecording, Integer joinCnt, Integer limitCnt, boolean isPublic, String sessionId) {
 		this.book = book;
 		this.roomMembers = roomMembers;
 		this.hostId = hostId;
 		this.title = title;
 		this.password = password;
+		this.isRecording = isRecording;
+		this.joinCnt = joinCnt;
+		this.limitCnt = limitCnt;
 		this.isPublic = isPublic;
 		this.sessionId = sessionId;
 	}
+
 }
