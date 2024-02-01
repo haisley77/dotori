@@ -2,6 +2,9 @@ spring:
   config:
     import:
       - optional:file:env/test-db.env[.properties]
+      - optional:file:application-video.yml
+      - optional:file:application-security.yml
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${MYSQL_TEST_URL}
