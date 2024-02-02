@@ -13,7 +13,7 @@
     <!--      </div>-->
     <!--    </div>-->
     <div class=" flex">
-      <div style="width: 220px;height: 220px; border-radius: 50%; border: #35daa0 5px solid; padding: 3px;background: white;"
+      <div style="width: 220px;height: 220px; border-radius: 50%; border:#C7A96E 5px solid; padding: 3px;background: white;"
            class="q-ma-lg flex justify-center items-center relative-position" v-for="item in 13">
         <img src="../../assets/MyPageImages/pikachu.jpg" width="100%" style="width:200px;height:200px;border-radius: 50%;object-fit: contain">
         <q-btn unelevated rounded label="피카츄" class="absolute-bottom-right my-avatar-btn"></q-btn>
@@ -54,7 +54,7 @@
   }
 
   .my-avatar-btn {
-    background-color: #35daa0;
+    background-color: #C7A96E;
     font-family: "NPSfontBold";
     color: white;
   }

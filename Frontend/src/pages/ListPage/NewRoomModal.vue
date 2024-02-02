@@ -1,120 +1,119 @@
 <template>
-<div class ="row">
-  <div class ="col-10 offset-1">
-    <div class="body q-ma-sm q-pa-sm">
-      <div class="book row ">
-        <div class="col-4 q-ma-sm">
-          <q-card dark bordered class="mycard book-story q-pa-sm flex justify-center items-center"
-                  style="height:500px">
-            <img height=100% src="../../assets/BookImages/rabbitandturtle.jpg" alt="책" style="object-fit: fill;">
-          </q-card>
-        </div>
-        <div class="book-info col-8 q-ma-sm" >
-          <q-card dark bordered class="mycard book-story q-pa-sm q-mb-sm" style="height: 50%">
-            <div class="book-info-inner">
-              <div class="card-inner">
-                <q-card-section>
-                  <h4 class="q-pa-none q-ma-none">{{ title }}</h4>
-                  <div class="text-subtitle1">{{ writer }}</div>
-                </q-card-section>
-                <q-separator inset />
-                <q-card-section>
-                  {{ content }}
-                </q-card-section>
+  <div class='row'>
+    <div class='col-10 offset-1'>
+      <div class='body q-ma-sm q-pa-sm'>
+        <!-- 책과 책 정보 row-->
+        <div class='book row q-gutter-x-sm'>
+          <!-- 왼쪽 칼럼   책 이미지 -->
+          <div class='col-4 flex justify-center items-center q-pa-sm'
+               style='border: 5px solid #C7A96E; border-radius: 20px;height: 100%'>
+            <img :src="bookmodal.bookImg" alt='책'
+                 style='object-fit: fill;border-radius: 20px;'>
+          </div>
+          <!-- 오른쪽 칼럼-->
+          <div class='book-info col-8 q-gutter-y-sm'>
+            <!--            책 제목과 줄거리-->
+            <div style='border: 5px solid #C7A96E; border-radius: 20px;height: 50%' class='q-pa-sm'>
+              <div class='text-h5'>제목 : {{ bookmodal.title }}</div>
+              <div>저자 : {{ bookmodal.author }}</div>
+              <hr />
+              {{ bookmodal.summary }}
+            </div>
+            <!--            등장 인물-->
+            <div style='border: 5px solid #C7A96E; border-radius: 20px;height: 50%' class='q-pa-sm'>
+              <div class='text-h5'>역할 소개</div>
+              <hr />
+              <div class='flex'>
+                <Character v-for='item in bookmodal.roleCnt' />
               </div>
             </div>
-          </q-card>
-          <q-card dark bordered class="mycard book-roles q-pa-sm" style="height: 50%">
-            <div class="book-info-inner">
-              <div class="card-inner q-ma-none">
+          </div>
+        </div>
+        <!--방 새로 만들기-->
+        <div class='row'>
+          <div class='col q-mt-sm'>
+            <q-card flat class='mycard room-input col-12' style='border-radius: 20px;border: 5px solid #C7A96E'>
+              <div class='room-info-inner'>
                 <q-card-section>
-                  <h4 class="q-pa-none q-ma-none">역할 소개</h4>
+                  <div class='q-pa-none q-ma-none text-h5'>방을 직접 만들 수 있어요!</div>
                 </q-card-section>
                 <q-separator inset />
-                <q-card-section>
-                  <div class="role-info">
-                    <Character v-for="index in 5" :key="index" />
+                <div class='row q-mb-sm q-mt-sm'>
+                  <div class='col-8 offset-1'>
+                    <q-input rounded outlined label='방 제목을 입력하세요!' v-model='room_name' />
                   </div>
-                </q-card-section>
+                  <div class='col-3 flex justify-center'>
+                    <q-checkbox keep-color v-model='is_private' label='비밀로 할래요!' color='cyan' />
+                  </div>
+                </div>
+                <div class='row q-mb-sm' v-if='is_private'>
+                  <div class='col-8 offset-1'>
+                    <q-input rounded outlined label='방 비밀번호를 입력하세요!' type='password' v-model='room_password' />
+                  </div>
+                </div>
+                <div class='row q-mb-sm'>
+                  <div class='col-9 flex'>
+                  </div>
+                  <div class='col-3 flex justify-center'>
+                    <q-btn unelevated color='my-green' rounded label='방 만들기' @click='joinRoom'></q-btn>
+                  </div>
+                </div>
+
               </div>
-            </div>
-          </q-card>
+            </q-card>
+          </div>
         </div>
       </div>
 
-      <div>
-        <div class="col-12 q-pa-sm">
-          <q-card class="mycard room-input q-pa-sm q-mb-sm col-12">
-            <div class="room-info-inner">
-              <q-card-section>
-                <h4 class="q-pa-none q-ma-none">방을 직접 만들 수 있어요!</h4>
-              </q-card-section>
-              <q-separator inset />
-              <div class="row q-mb-sm q-mt-sm">
-                <div class="col-8 offset-1">
-                  <q-input rounded outlined label="방 제목을 입력하세요!" v-model="roomName" />
-                </div>
-                <div class="col-3 flex justify-center">
-                  <q-checkbox keep-color v-model="open" label="비밀로 할래요!" color="cyan" />
-                </div>
-              </div>
-              <div class="row q-mb-sm" v-if="open">
-                <div class="col-8 offset-1">
-                  <q-input rounded outlined label="방 비밀번호를 입력하세요!" type="password" v-model="roomPassword" />
-                </div>
-              </div>
-              <div class="row q-mb-sm">
-                <div class="col-9 flex">
-                </div>
-                <div class="col-3 flex justify-center">
-                  <q-btn unelevated color="my-green" rounded label="방 만들기"></q-btn>
-                </div>
-              </div>
-
-            </div>
-          </q-card>
-        </div>
-      </div>
     </div>
-
   </div>
-
-</div>
-
 
 </template>
 
-<script>
+
+<script setup>
   import Character from 'components/MyPageComponents/Character.vue';
-  import {ref, defineComponent} from 'vue';
+  import {storeToRefs} from 'pinia';
+  import {useRouter} from 'vue-router';
+  import {useOpenViduStore} from 'stores/openvidu';
+  import {onMounted} from 'vue';
 
-  export default defineComponent({
-    components: {Character},
-    setup() {
-      const open = ref(false);
-      const imageUrl = ref('../assets/rabbitandturtle.jpg');
-      const title = ref('토끼와 거북이');
-      const content = ref('옛날 옛적에, 토끼와 거북이가 살고 있었다.\n' +
-        '                어느날 토끼가 거북이를 느림보라고 놀려대자, 거북이는 자극을 받고 토끼에게 달리기 경주를 제안하였다.\n' +
-        '                경주를 시작한 토끼는 거북이가 한참 뒤쳐진 것을 보고 안심을 하고 중간에 낮잠을 잔다.' +
-        '                어느날 토끼가 거북이를 느림보라고 놀려대자, 거북이는 자극을 받고 토끼에게 달리기 경주를 제안하였다.\n' +
-        '                경주를 시작한 토끼는 거북이가 한참 뒤쳐진 것을 보고 안심을 하고 중간에 낮잠을 잔다.');
-      const writer = ref('도토리 오리지널');
 
-      const roomName = ref('');
-      const roomPassword = ref('');
+  const router = useRouter();
+  const props = defineProps({bookmodal: Object});
+  const moveWaitingRoom = () => {
+    router.push('/room');
 
-      return {
-        open,
-        title,
-        content,
-        writer,
-        imageUrl,
-        roomName,
-        roomPassword,
-      };
-    },
+  };
+
+  const openViduStore = useOpenViduStore();
+  const {room_name, room_password, is_private} = storeToRefs(openViduStore);
+  const {createRoom, connectToOpenVidu, addRoomMember} = openViduStore;
+
+  onMounted(() => {
+    // member_id = await axios.get(path정보, accesstoken);
   });
+
+  const components = {Character};
+  const joinRoom = () => {
+    createRoom(props.bookmodal)
+      .then(() => {
+        connectToOpenVidu()
+          .then(() => {
+            addRoomMember()
+              .then(() => {
+                // console.log('드디어 도착');
+                moveWaitingRoom();
+              })
+              .catch((error) => {
+                console.log('참여 인원 갱신 중 에러 발생')
+              })
+          })
+          .catch((error) => {
+            console.log('ov에 연결 중 에러 발생');
+          })
+      })
+  };
 </script>
 
 <style scoped>
@@ -131,8 +130,7 @@
   }
 
   .book-info-inner, .room-info-inner {
-    //border: dashed #cc765a 5px;
-    border-radius: 20px;
+    //border: dashed #cc765a 5px; border-radius: 20px;
   }
 
   .book-info {
@@ -145,7 +143,7 @@
     width: 100%;
     color: black;
     border-radius: 20px;
-    background-color: #35daa0;
+    background-color: #C7A96E;
   }
 
   .role-info {
@@ -156,7 +154,7 @@
     width: 100%;
     display: flex;
     border-radius: 20px;
-    background-color: #35daa0;
+    background-color: #C7A96E;
     flex-direction: column;
   }
 
@@ -165,7 +163,7 @@
   }
 
   .bg-my-green {
-    background: #35daa0 !important;
+    background: #C7A96E !important;
   }
 
   @font-face {
@@ -176,7 +174,7 @@
   }
 </style>
 
-<style lang="scss">
+<style lang='scss'>
   .mycard.q-card > div:last-child {
     //border-bottom: dashed #cc765a 5px !important;
     //border-top: dashed #cc765a 5px !important;

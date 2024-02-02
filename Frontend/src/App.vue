@@ -1,13 +1,15 @@
 <template>
+  <Header/>
   <router-view />
 </template>
-
+<script setup>
+  import Header from 'components/CommonComponents/Header.vue';
+</script>
 <script>
 import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'App',
-
 });
 </script>
 <style>
@@ -20,5 +22,12 @@ export default defineComponent({
 
   .npsfont {
     font-family: 'NPSfontBold';
+  }
+
+  .text-brand {
+    color: #C7A96E !important;
+  }
+  .bg-brand {
+    background: #C7A96E !important;
   }
 </style>

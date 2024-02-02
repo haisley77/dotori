@@ -1,6 +1,7 @@
 package com.dotori.backend.domain.book.model.entity;
 
 import static javax.persistence.GenerationType.*;
+import static lombok.AccessLevel.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,15 +9,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@NoArgsConstructor // 아무런 매개변수가 없는 생성자
-// @AllArgsConstructor : 클래스에 대해 모든 필드를 파라미터로 받는 생성자를 자동으로 생성
+@NoArgsConstructor(access = PROTECTED)
 @Table(name = "book")
+@DynamicInsert
 public class Book {
 	@Id
 	@Column(name = "book_id")
@@ -30,15 +34,21 @@ public class Book {
 	private String bookImg;
 
 	@Column(length = 20)
+	@ColumnDefault("'저자 미상'")
 	private String author;
+
+	@Column(length = 300)
+	private String summary;
 
 	@Column(name = "role_cnt")
 	private int roleCnt;
 
 	@Builder
-	public Book(String title, String bookImg, String author) {
+	public Book(String title, String bookImg, String author, String summary, int roleCnt) {
 		this.title = title;
 		this.bookImg = bookImg;
 		this.author = author;
+		this.summary = summary;
+		this.roleCnt = roleCnt;
 	}
 }
