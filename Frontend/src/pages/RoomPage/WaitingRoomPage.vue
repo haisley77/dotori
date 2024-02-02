@@ -17,7 +17,7 @@
           <RoomChat :session='session'></RoomChat>
         </div>
         <div class='col-4 q-pa-sm'>
-          <StartReady></StartReady>
+          <StartReady :isHost="is_host"></StartReady>
         </div>
       </div>
     </div>
@@ -39,15 +39,20 @@
 
   const openViduStore = useOpenViduStore();
   const {roomInitializationParam, session} = storeToRefs(openViduStore);
-  // const session = openViduStore.session;
   const bookInfo = roomInitializationParam.value.bookInfo;
   const roomInfo = roomInitializationParam.value.roomInfo;
 
+  const member_id = ref(0);
+  const is_host = ref(false);
   onMounted(() => {
-    console.log(session);
-    console.log(bookInfo);
-    console.log(roomInfo);
+    // 대기방에 들어온 사용자의 아이디를 조회
+    member_id.value = 50;
+    // 대기방에 들어온 사용자가 방장인 경우
+   if (member_id.value === roomInfo.hostId) {
+     is_host.value = true;
+    }
   })
+
   const router = useRouter();
 
   // const roomInfo = ref({
