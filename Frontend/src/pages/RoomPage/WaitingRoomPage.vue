@@ -17,7 +17,7 @@
           <RoomChat :session='session'></RoomChat>
         </div>
         <div class='col-4 q-pa-sm'>
-          <StartReady :isHost="is_host"></StartReady>
+          <StartReady :isHost='is_host' :roleCnt='role_cnt'></StartReady>
         </div>
       </div>
     </div>
@@ -44,13 +44,16 @@
 
   const member_id = ref(0);
   const is_host = ref(false);
+  const role_cnt = ref(0);
+
   onMounted(() => {
     // 대기방에 들어온 사용자의 아이디를 조회
     member_id.value = 50;
     // 대기방에 들어온 사용자가 방장인 경우
-   if (member_id.value === roomInfo.hostId) {
+    if (member_id.value === roomInfo.hostId) {
      is_host.value = true;
     }
+   role_cnt.value = roomInfo.limitCnt;
   })
 
   const router = useRouter();

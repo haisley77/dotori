@@ -50,9 +50,11 @@ export const useOpenViduStore
   const room_name = ref(null);
   const room_password = ref(null);
   const is_private = ref(false);
-  const member_id = ref(50);
   const subscribers = ref([]);
   const mainStreamManager = ref();
+  const member_id = ref(40);
+
+
   // 방 세션 설정 정보
   const session_properties = ref({});
 
