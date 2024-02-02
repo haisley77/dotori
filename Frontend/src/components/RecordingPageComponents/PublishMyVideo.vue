@@ -71,7 +71,8 @@
         this.renderer.setSize(this.width, this.height);
         THREE.ColorManagement.legacy = false;
         this.renderer.outputEncoding = THREE.sRGBEncoding;
-        document.body.appendChild(this.renderer.domElement);//???????????????????이거 없어도 될까???
+        document.getElementById("canvasDiv").appendChild(this.renderer.domElement);
+        // document.body.appendChild(this.renderer.domElement);//???????????????????이거 없어도 될까???
         //이게 있어야 스트림을 뽑아낸다
         // Set up the basic lighting for the scene
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
@@ -146,7 +147,7 @@
               this.morphTargetMeshes = [];
             }
             this.gltf = gltf;
-            console.log();
+            // console.log();
             this.scene.add(gltf.scene);
             this.init(gltf);
           },
@@ -337,7 +338,7 @@
       // myCanvas.style.border = '10px solid red';
       const canvasStream = myCanvas.captureStream();
 
-      const publisher = OV.initPublisher(undefined, {
+      const publisher = ovstore.OV.initPublisher(undefined, {
         audioSource: canvasStream.getAudioTracks()[0], // The source of audio. If undefined default microphone
         videoSource: canvasStream.getVideoTracks()[0], // The source of video. If undefined default webcam
         // videoSource: canvasStream, // The source of video. If undefined default webcam

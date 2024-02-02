@@ -165,6 +165,7 @@ export const useOpenViduStore
       session.connect(ovToken.value)
         .then(() => {
           console.log('ov와 연결 성공!');
+          console.log(ovToken.value);
           resolve(); // Resolve the promise on successful connection
         })
         .catch((error) => {
@@ -191,6 +192,6 @@ export const useOpenViduStore
     connectToOpenVidu,
     addRoomMember,
     publish,
-    subscribers, mainStreamManager,
+    subscribers, mainStreamManager,OV
   };
 }, {persist: {storage: sessionStorage}});

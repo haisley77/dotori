@@ -3,19 +3,19 @@
 
   const props = defineProps({streamManager: Object, id: String});
 
-  const video = ref();
+  const thisvideo = ref();
   onMounted(() => {
-    video.value.setAttribute('id', props.id);
-    props.streamManager.addVideoElement(video);
+    thisvideo.value.setAttribute('id', props.id);
+    console.log("props.id : " + props.id );
+
+    props.streamManager.addVideoElement(document.getElementById(props.id));
   });
 </script>
 
 <template>
-  <video autoplay ref="video" />
+  <video autoplay ref="thisvideo" id = "myovvideo" style="z-index: 2"/>
 </template>
 
 <style scoped>
-  //video {
-  //  display: none;
-  //}
+
 </style>

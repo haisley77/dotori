@@ -25,13 +25,14 @@
     </div>
   </div>
   <div class="row">
-    <div v-if='mainStreamManager'>
-      <ov-video :stream-manager='mainStreamManager' id="connectPlayer" />
+    <div v-if='ovstore.mainStreamManager'>
+      <ov-video :stream-manager='ovstore.mainStreamManager' :id='ovstore.mainStreamManager.stream.streamId' />
     </div>
-    <ov-video v-for='sub in subscribers' :key='sub.stream.connection.connectionId' :stream-manager='sub'
+    <ov-video v-for='sub in ovstore.subscribers' :key='sub.stream.connection.connectionId' :stream-manager='sub'
               :id='sub.stream.streamId' />
 
   </div>
+  <div id = "canvasDiv"></div>
 </template>
 
 
