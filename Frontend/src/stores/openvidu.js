@@ -21,8 +21,8 @@ export const useOpenViduStore
   const room_password = ref(null);
   const is_private = ref(false);
   const member_id = ref(50);
-
-
+  const subscribers = ref([]);
+  const mainStreamManager = ref();
   // 방 세션 설정 정보
   const session_properties = ref({});
 
@@ -138,11 +138,11 @@ export const useOpenViduStore
 
     axios.delete(apiPath)
       .then((response) => {
-      if (response.status === 200) {
-        console.log('방 나가기 정보 갱신 성공 !!');
-        // 페이지 이동
-      }
-    }).catch((error) => {
+        if (response.status === 200) {
+          console.log('방 나가기 정보 갱신 성공 !!');
+          // 페이지 이동
+        }
+      }).catch((error) => {
       console.error(error.response);
       console.error('방 나가기 정보 갱신 처리 중 오류 발생');
     });
@@ -151,9 +151,21 @@ export const useOpenViduStore
 
   const connectToOpenVidu = () => {
     return new Promise((resolve, reject) => {
+      session.on('streamCreated', ({stream}) => {
+        const subscriber = session.subscribe(stream, stream.streamId);
+        subscribers.value.push(subscriber);
+      });
+      //스트림이 사라지면 그 스트림은 구독을 취소한다
+      session.on('streamDestroyed', ({stream}) => {
+        const index = subscribers.value.indexOf(stream.streamManager, 0);
+        if (index >= 0) {
+          subscribers.value.splice(index, 1);
+        }
+      });
       session.connect(ovToken.value)
         .then(() => {
           console.log('ov와 연결 성공!');
+          console.log(ovToken.value);
           resolve(); // Resolve the promise on successful connection
         })
         .catch((error) => {
@@ -162,7 +174,14 @@ export const useOpenViduStore
         });
     });
   };
-
+  const publish = (publisher) => {
+    session.publish(publisher).then(() => {
+      mainStreamManager.value = publisher;
+      console.log('published my video!');
+    }).catch((error) => {
+      console.log(error);
+    });
+  };
 
   return {
     room_name,
@@ -172,5 +191,7 @@ export const useOpenViduStore
     createRoom,
     connectToOpenVidu,
     addRoomMember,
+    publish,
+    subscribers, mainStreamManager,OV
   };
 }, {persist: {storage: sessionStorage}});
