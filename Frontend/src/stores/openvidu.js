@@ -41,13 +41,15 @@ export const useOpenViduStore
   });
 
 
+
+
   // 방 생성 요청 시 전달할 파라미터
-  const roomInitializationParam = {
+  const roomInitializationParam = ref({
     sessionProperties: null,
     connectionProperties: null,
     roomInfo: null,
     bookInfo: null,
-  };
+  });
 
 
   const createRoom = (bookmodal) => {
@@ -59,8 +61,8 @@ export const useOpenViduStore
       room_info.value.isPublic = !is_private;
       room_info.value.limitCnt = bookmodal.roleCnt;
 
-      roomInitializationParam.bookInfo = bookmodal;
-      roomInitializationParam.roomInfo = room_info.value;
+      roomInitializationParam.value.bookInfo = bookmodal;
+      roomInitializationParam.value.roomInfo = room_info.value;
 
       // 방 정보 setting
       if (room_password.value === null && is_private === true) {
@@ -69,7 +71,7 @@ export const useOpenViduStore
         return;
       }
 
-      axios.post(apiPath, roomInitializationParam)
+      axios.post(apiPath, roomInitializationParam.value)
         .then((response) => {
           console.log(response.status);
           if (response.status === 201) {
@@ -165,10 +167,12 @@ export const useOpenViduStore
 
 
   return {
+    session,
     room_name,
     room_password,
     is_private,
     ovToken,
+    roomInitializationParam,
     createRoom,
     connectToOpenVidu,
     addRoomMember,

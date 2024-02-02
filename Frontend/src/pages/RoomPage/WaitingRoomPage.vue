@@ -14,7 +14,7 @@
       </div>
       <div class='row'>
         <div class='col-8 q-pa-sm' style='height: 210px'>
-          <RoomChat></RoomChat>
+          <RoomChat :session='session'></RoomChat>
         </div>
         <div class='col-4 q-pa-sm'>
           <StartReady></StartReady>
@@ -32,22 +32,37 @@
   import StartReady from 'components/RoomPageComponents/StartReady.vue';
   import RoomChat from 'components/RoomPageComponents/RoomChat.vue';
   import RoomTitle from 'components/RoomPageComponents/RoomTitle.vue';
-  import Header from 'components/CommonComponents/Header.vue';
-  import {ref} from 'vue';
+  import {onMounted, ref} from 'vue';
+  import {storeToRefs} from 'pinia';
+  import {useRouter} from 'vue-router';
+  import {useOpenViduStore} from 'stores/openvidu';
 
-  const roomInfo = ref({
-    title: '토끼와 거북이 오실분~',
-    roomNumber: '14',
-    public: true,
-  });
+  const openViduStore = useOpenViduStore();
+  const {roomInitializationParam, session} = storeToRefs(openViduStore);
+  // const session = openViduStore.session;
+  const bookInfo = roomInitializationParam.value.bookInfo;
+  const roomInfo = roomInitializationParam.value.roomInfo;
 
-  const bookInfo = ref({
-    title: '토끼와 거북이',
-    author: '도토리',
-    limitCnt: '4',
-    joinCnt: '3',
-    summary: '토끼와 거북이 이야기는 토끼와 거북이가 경주를 벌이는 이야기입니다.'
-  });
+  onMounted(() => {
+    console.log(session);
+    console.log(bookInfo);
+    console.log(roomInfo);
+  })
+  const router = useRouter();
+
+  // const roomInfo = ref({
+  //   title: '토끼와 거북이 오실분~',
+  //   roomNumber: '14',
+  //   public: true,
+  // });
+
+  // const bookInfo = ref({
+  //   title: '토끼와 거북이',
+  //   author: '도토리',
+  //   limitCnt: '4',
+  //   joinCnt: '3',
+  //   summary: '토끼와 거북이 이야기는 토끼와 거북이가 경주를 벌이는 이야기입니다.'
+  // });
 
   const playerList = ref([
     {
@@ -60,16 +75,16 @@
       profileImg: 'src/assets/MyPageImages/winter.png',
 
     },
-    {
-      name: '카리나',
-      profileImg: 'src/assets/MyPageImages/karina.jpg',
+    // {
+    //   name: '카리나',
+    //   profileImg: 'src/assets/MyPageImages/karina.jpg',
 
-    },
-    {
-      name: '아이유',
-      profileImg: 'src/assets/MyPageImages/iupic.jpg',
+    // },
+    // {
+    //   name: '아이유',
+    //   profileImg: 'src/assets/MyPageImages/iupic.jpg',
 
-    },
+    // },
 
 
   ]);
