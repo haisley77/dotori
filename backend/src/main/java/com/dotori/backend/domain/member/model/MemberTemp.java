@@ -59,4 +59,8 @@ public class MemberTemp {
 		this.nickname = updateNickname;
 	}
 
+	public void updateProfileImg(String updateProfileImg) {
+		this.profileImg = updateProfileImg;
+	}
+
 }

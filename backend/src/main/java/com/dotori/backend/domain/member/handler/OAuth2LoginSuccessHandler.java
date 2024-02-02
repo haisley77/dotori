@@ -3,7 +3,6 @@ package com.dotori.backend.domain.member.handler;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -25,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 
 	private final JwtService jwtService;
-	private RedisService redisService;
+	private final RedisService redisService;
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -45,15 +44,10 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 		String accessToken = jwtService.createAccessToken(oAuth2User.getEmail());
 		String refreshToken = jwtService.createAndStoreRefreshToken(oAuth2User.getEmail());
 
-		//로그인성공하고 쿠키생성부분
-		Cookie cookie = new Cookie("accessToken", accessToken);
-		cookie.setHttpOnly(true); //HttpOnly 플래그 JavaScript를 포함한 클라이언트 측 스크립트로부터 접근x
-		cookie.setSecure(true); // Secure 플래그 HTTPS에서만 쿠키 전송
-		cookie.setPath("/"); // 쿠키 경로 설정
-		response.addCookie(cookie);
-
-		// jwtService.sendAccessToken(response, accessToken);
+		//쿠키생성
+		jwtService.sendAccessToken(response, accessToken);
 		jwtService.updateRefreshToken(oAuth2User.getEmail(), refreshToken);
+		
 		response.sendRedirect("http://localhost:9000");
 	}
 }

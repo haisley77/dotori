@@ -9,14 +9,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.core.authority.mapping.NullAuthoritiesMapper;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.dotori.backend.domain.member.Repository.MemberRepository;
 import com.dotori.backend.domain.member.jwt.service.JwtService;
 import com.dotori.backend.domain.member.model.MemberTemp;
 import com.dotori.backend.domain.member.redis.RedisService;
+import com.dotori.backend.domain.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,8 +45,8 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 	private final JwtService jwtService;
 	private final MemberRepository memberRepository;
 
-	private GrantedAuthoritiesMapper authoritiesMapper = new NullAuthoritiesMapper();
-	private RedisService redisService;
+	private final GrantedAuthoritiesMapper authoritiesMapper = new NullAuthoritiesMapper();
+	private final RedisService redisService;
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
@@ -63,6 +65,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 		// 따라서, 위의 경우를 제외하면 추출한 refreshToken은 모두 null
 		// 액세스 토큰에서 이메일 추출
 		Optional<String> email = jwtService.extractEmailFromAccessToken(request);
+		log.info("email:{}", email);
 
 		// 이메일을 기반으로 Redis에서 리프레쉬 토큰 가져오기
 		String refreshToken = email.flatMap(redisService::getRefreshToken)
@@ -70,10 +73,16 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 			.orElse(null);
 
 		// 리프레시 토큰이 reids에 존재했다면, 사용자가 AccessToken이 만료되어서
-		// RefreshToken까지 보낸 것이므로 리프레시 토큰이 DB의 리프레시 토큰과 일치하는지 판단 후,
+		// RefreshToken까지 보낸 것이므로 리프레시 토큰이 DB의 리프레시 토큰과 일치하는지 and redis 블랙리스트에 등록된 토큰이 아닌지 판단 후,
 		// 일치한다면 AccessToken을 재발급해준다.
+
 		if (refreshToken != null) {
-			checkRefreshTokenAndReIssueAccessToken(response, request);
+			// 블랙리스트에 있는지 확인
+			if (redisService.isBlacklisted(refreshToken)) {
+				response.sendError(HttpStatus.UNAUTHORIZED.value(), "유효하지않은 refresh 토큰입니다. 다시시도해주세요");
+				return;
+			}
+			checkRefreshTokenAndMakeAccessToken(response, request);
 			return; // RefreshToken을 보낸 경우에는 AccessToken을 재발급 하고 인증 처리는 하지 않게 하기위해 바로 return으로 필터 진행 막기
 		}
 
@@ -91,38 +100,35 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 	 *  JwtService.createAccessToken()으로 AccessToken 생성,
 	 *  그 후 쿠키에 AccessToken 재설정
 	 */
-	public void checkRefreshTokenAndReIssueAccessToken(HttpServletResponse response, HttpServletRequest request) {
-		// JWT에서 이메일 추출
-		Optional<String> emailOpt = jwtService.extractEmailFromAccessToken(request);
+	public ResponseEntity<?> checkRefreshTokenAndMakeAccessToken(HttpServletResponse response,
+		HttpServletRequest request) {
+		Optional<String> jwtemail = jwtService.extractEmailFromAccessToken(request);
 
-		emailOpt.ifPresent(email -> {
-			// Redis에서 이메일로 리프레시 토큰을 조회
-			Optional<String> refreshTokenOpt = redisService.getRefreshToken(email);
-
-			refreshTokenOpt.ifPresent(refreshToken -> {
-				// 리프레시 토큰이 존재하고 유효한 경우
-				if (jwtService.isTokenValid(refreshToken)) {
-					// 새로운 액세스 토큰 발급
-					String newAccessToken = jwtService.createAccessToken(email);
-
-					// 새로운 액세스 토큰을 쿠키에 설정
-					jwtService.sendAccessToken(response, newAccessToken);
-				} else {
-					// 리프레시 토큰이 유효하지 않은 경우, 에러 처리
-					// 예: 로그아웃 처리, 에러 응답 전송 등
-				}
-			});
-
-			// 리프레시 토큰이 Redis에서 찾을 수 없는 경우의 에러 처리
-			if (!refreshTokenOpt.isPresent()) {
-				// 에러 처리 로직
-			}
-		});
-
-		// JWT에서 이메일을 추출할 수 없는 경우의 에러 처리
-		if (!emailOpt.isPresent()) {
-			// 에러 처리 로직
+		if (!jwtemail.isPresent()) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+				.body("accesstoken이 존재하지않거나 만료되었습니다. 다시시도해주세요");
 		}
+
+		String email = jwtemail.get();
+		Optional<String> refreshTokenOpt = redisService.getRefreshToken(email);
+
+		if (!refreshTokenOpt.isPresent()) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+				.body("refreshtoken이 없습니다.");
+		}
+
+		String refreshToken = refreshTokenOpt.get();
+
+		if (!jwtService.isTokenValid(refreshToken)) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+				.body("refreshtoken이 유효하지않거나 만료되었습니다. 다시시도해주세요");
+		}
+
+		// 리프레시 토큰이 유효한 경우 새로운 액세스 토큰 발급 및 쿠키에 추가
+		String newAccessToken = jwtService.createAccessToken(email);
+		jwtService.sendAccessToken(response, newAccessToken);
+
+		return ResponseEntity.ok("accesstoken 생성완료");
 	}
 
 	/**

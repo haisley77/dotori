@@ -16,6 +16,7 @@ public class RedisService {
 
 	private final RedisTemplate<String, String> redisTemplate;
 	private static final String REFRESH_TOKEN_KEY_PREFIX = "refreshToken:";
+	private static final String BLACKLIST_PREFIX = "blacklist:";
 	private static final long TRACKING_USER_EXPIRE_TIME = 15 * 60 * 1000L;    // 15분
 
 	public boolean checkDuplicateLogins(String email) {
@@ -37,6 +38,16 @@ public class RedisService {
 		String key = REFRESH_TOKEN_KEY_PREFIX + email;
 		redisTemplate.delete(key);
 		log.info("RefreshToken removed from Redis for email: {}", email);
+	}
+
+	// 블랙리스트에 토큰 추가
+	public void addToBlacklist(String refreshToken) {
+		redisTemplate.opsForSet().add(BLACKLIST_PREFIX, refreshToken);
+	}
+
+	// 블랙리스트에 토큰이 있는지 확인
+	public boolean isBlacklisted(String refreshToken) {
+		return redisTemplate.opsForSet().isMember(BLACKLIST_PREFIX, refreshToken);
 	}
 
 	//트래킹부분

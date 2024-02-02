@@ -10,12 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.dotori.backend.domain.member.Repository.MemberRepository;
 import com.dotori.backend.domain.member.redis.RedisService;
+import com.dotori.backend.domain.member.repository.MemberRepository;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -42,10 +43,6 @@ public class JwtService {
 	@Value("${jwt.refresh.header}")
 	private String refreshHeader;
 
-	/**
-	 * JWT의 Subject와 Claim으로 email 사용 -> 클레임의 name을 "email"으로 설정
-	 * JWT의 헤더에 들어오는 값 : 'Authorization(Key) = Bearer {토큰} (Value)' 형식
-	 */
 	private static final String ACCESS_TOKEN_SUBJECT = "AccessToken";
 	private static final String REFRESH_TOKEN_SUBJECT = "RefreshToken";
 	private static final String EMAIL_CLAIM = "email";
@@ -55,7 +52,7 @@ public class JwtService {
 	private final RedisService redisService;
 
 	/**
-	 * AccessToken 생성 메소드
+	 * AccessToken 생성
 	 */
 	public String createAccessToken(String email) {
 		Date now = new Date();
@@ -72,7 +69,6 @@ public class JwtService {
 
 	/**
 	 * RefreshToken 생성
-	 * RefreshToken은 Claim에 email도 넣지 않으므로 withClaim() X
 	 */
 	public String createRefreshToken() {
 		Date now = new Date();
@@ -86,12 +82,14 @@ public class JwtService {
 	 * AccessToken 쿠키로보내기
 	 */
 	public void sendAccessToken(HttpServletResponse response, String accessToken) {
-		Cookie accessTokenCookie = new Cookie("accessToken", accessToken);
-		accessTokenCookie.setHttpOnly(true); // JavaScript 접근 방지
-		accessTokenCookie.setSecure(true); // HTTPS 연결에서만 전송
-		accessTokenCookie.setPath("/"); // 쿠키 경로 설정
+		ResponseCookie cookie = ResponseCookie.from("accessToken", accessToken)
+			.httpOnly(true) // JavaScript 접근 방지
+			// .secure(true) // HTTPS에서만 전송
+			.path("/") // 쿠키 경로
+			.sameSite("Lax") // SameSite 설정
+			.build(); // 쿠키 생성
 
-		response.addCookie(accessTokenCookie);
+		response.setHeader("Set-Cookie", cookie.toString()); // 생성된 쿠키를 응답 헤더에 추가
 		log.info("AccessToken 쿠키에 설정 완료");
 	}
 
@@ -161,5 +159,15 @@ public class JwtService {
 			log.error("유효하지 않은 토큰입니다. {}", e.getMessage());
 			return false;
 		}
+	}
+
+	public void removeAccessToken(HttpServletResponse response) {
+		Cookie cookie = new Cookie("accessToken", null);
+		cookie.setMaxAge(0);
+		cookie.setHttpOnly(true);
+		cookie.setSecure(true);
+		cookie.setPath("/");
+		response.addCookie(cookie);
+		log.info("AccessToken 쿠키 제거");
 	}
 }

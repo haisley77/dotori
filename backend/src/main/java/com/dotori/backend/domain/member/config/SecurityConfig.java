@@ -6,18 +6,18 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.dotori.backend.domain.member.Repository.MemberRepository;
 import com.dotori.backend.domain.member.handler.OAuth2LoginFailureHandler;
 import com.dotori.backend.domain.member.handler.OAuth2LoginSuccessHandler;
 import com.dotori.backend.domain.member.jwt.filter.JwtAuthenticationProcessingFilter;
 import com.dotori.backend.domain.member.jwt.service.JwtService;
+import com.dotori.backend.domain.member.redis.RedisService;
+import com.dotori.backend.domain.member.repository.MemberRepository;
 import com.dotori.backend.domain.member.service.CustomOAuth2UserService;
-import com.dotori.backend.domain.member.service.LoginService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
 
@@ -30,13 +30,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-	private final LoginService loginService;
 	private final JwtService jwtService;
 	private final MemberRepository memberRepository;
-	private final ObjectMapper objectMapper;
 	private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
 	private final OAuth2LoginFailureHandler oAuth2LoginFailureHandler;
 	private final CustomOAuth2UserService customOAuth2UserService;
+	private final LogoutSuccessHandler OAuth2LogoutSuccessHandler;
+	private final RedisService redisService;
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -72,6 +72,12 @@ public class SecurityConfig {
 
 			.anyRequest()
 			.authenticated() // 위의 경로 이외에는 모두 인증된 사용자만 접근 가능
+			.and()
+			.logout()
+			.logoutUrl("/logout") // 로그아웃 URL 지정
+			.logoutSuccessHandler(OAuth2LogoutSuccessHandler)
+			.invalidateHttpSession(true) // 세션 무효화
+			.deleteCookies("JSESSIONID") // 쿠키 삭제
 
 			.and()
 			//== 소셜 로그인 설정 ==//
@@ -79,7 +85,7 @@ public class SecurityConfig {
 			.successHandler(oAuth2LoginSuccessHandler) // 성공시 Handler 설정
 			.failureHandler(oAuth2LoginFailureHandler) // 소셜 로그인 실패 시 핸들러 설정
 			.userInfoEndpoint()
-			.userService(customOAuth2UserService); // customUserService 설정
+			.userService(customOAuth2UserService);// customUserService 설정
 
 		// 원래 스프링 시큐리티 필터 순서가 LogoutFilter 이후에 로그인 필터 동작
 		// 순서 : LogoutFilter -> JwtAuthenticationProcessingFilter -> CustomJsonUsernamePasswordAuthenticationFilter
@@ -110,7 +116,7 @@ public class SecurityConfig {
 	@Bean
 	public JwtAuthenticationProcessingFilter jwtAuthenticationProcessingFilter() {
 		JwtAuthenticationProcessingFilter jwtAuthenticationFilter = new JwtAuthenticationProcessingFilter(jwtService,
-			memberRepository);
+			memberRepository, redisService);
 		return jwtAuthenticationFilter;
 	}
 
