@@ -1,12 +1,14 @@
-package com.dotori.backend.domain.member.Repository;
+package com.dotori.backend.domain.member.repository;
 
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import com.dotori.backend.domain.member.model.MemberTemp;
 import com.dotori.backend.domain.member.type.SocialType;
 
+@Repository
 public interface MemberRepository extends JpaRepository<MemberTemp, Long> {
 	Optional<MemberTemp> findByEmail(String Email);
 

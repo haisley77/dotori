@@ -9,7 +9,7 @@ import lombok.ToString;
 @Getter
 @ToString
 public class GetScenesResponse {
-	private List<SimpleSceneDto> scenes;
+	private final List<SimpleSceneDto> scenes;
 
 	public GetScenesResponse(List<SceneDto> sceneDtos) {
 		this.scenes = sceneDtos.stream()

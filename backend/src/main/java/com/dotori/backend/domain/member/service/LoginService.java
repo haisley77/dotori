@@ -5,8 +5,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.dotori.backend.domain.member.Repository.MemberRepository;
 import com.dotori.backend.domain.member.model.MemberTemp;
+import com.dotori.backend.domain.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 

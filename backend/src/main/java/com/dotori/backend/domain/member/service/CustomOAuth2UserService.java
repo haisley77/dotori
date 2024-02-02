@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 
 import com.dotori.backend.domain.member.CustomOAuth2User;
 import com.dotori.backend.domain.member.OAuthAttributes;
-import com.dotori.backend.domain.member.Repository.MemberRepository;
 import com.dotori.backend.domain.member.model.MemberTemp;
+import com.dotori.backend.domain.member.repository.MemberRepository;
 import com.dotori.backend.domain.member.type.SocialType;
 
 import lombok.RequiredArgsConstructor;
