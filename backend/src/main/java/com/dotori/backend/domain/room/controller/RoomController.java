@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,22 +60,23 @@ public class RoomController {
 
 	@PostMapping("/session")
 	public ResponseEntity<Map<String, String>> createRoom(
-		@RequestBody(required = true) RoomInitializationDto params) {
+		@RequestBody(required = false) RoomInitializationDto params) {
 		Map<String, String> resultData = new HashMap<>();
 		try {
 			openvidu.fetch();
 			resultData = roomService.createRoom(openvidu, params);
 			return new ResponseEntity<>(resultData, HttpStatus.CREATED);
 		} catch (Exception e) {
+			e.printStackTrace();
 			resultData.put("message", "방 생성 중 문제 발생");
 			return new ResponseEntity<>(resultData, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
-	@DeleteMapping("/remove")
+	@DeleteMapping("/remove/{roomId}/{memberId}")
 	public ResponseEntity<Map<String, String>> removeRoomMember(
-		@RequestParam("roomId") Long roomId,
-		@RequestParam("memberId") Long memberId) {
+		@PathVariable("roomId") Long roomId,
+		@PathVariable("memberId") Long memberId) {
 		Map<String, String> resultData = new HashMap<>();
 		try {
 			openvidu.fetch();
@@ -95,8 +97,8 @@ public class RoomController {
 		return ResponseEntity.ok(roomDtos);
 	}
 
-	@PostMapping("/connection")
-	public ResponseEntity<Map<String, String>> connectionByRoomId(@RequestParam("roomId") Long roomId,
+	@PostMapping("/connection/{roomId}")
+	public ResponseEntity<Map<String, String>> connectionByRoomId(@PathVariable("roomId") Long roomId,
 		@RequestBody(required = false) Map<String, Object> connectionProperties) {
 		Map<String, String> resultData = new HashMap<>();
 		try {
@@ -120,10 +122,10 @@ public class RoomController {
 
 	}
 
-	@PostMapping("/add")
+	@PostMapping("/add/{roomId}/{memberId}")
 	public ResponseEntity<Map<String, String>> addRoomMember(
-		@RequestParam("roomId") Long roomId,
-		@RequestParam("memberId") Long memberId) {
+		@PathVariable("roomId") Long roomId,
+		@PathVariable("memberId") Long memberId) {
 		Map<String, String> resultData = new HashMap<>();
 		try {
 			openvidu.fetch();
