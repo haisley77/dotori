@@ -14,7 +14,7 @@
       <div class=' column q-pa-sm background-white'>
         제목 : {{props.bookInfo.title}}<br />
         저자 :  {{props.bookInfo.author}}<br />
-        필요 인원 : {{props.bookInfo.limitCnt}}<br />
+        필요 인원 : {{props.bookInfo.roleCnt}}<br />
         줄거리 : {{props.bookInfo.summary}}
         <br />
       </div>
