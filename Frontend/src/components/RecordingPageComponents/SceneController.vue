@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <div class="controller-container col-4 q-pl-xs">
+  <div class="controller-container col-4 q-pt-sm">
     <div class="out-back q-pa-sm" style="height: 100%">
       <div class="in-back q-pa-sm" style="width: 100%; height: 100%">
         <div class="button-container row">
@@ -39,58 +39,9 @@
     font-family: 'NPSfontBold';
   }
 
-  .entire-container {
-    height: 85vh;
-    //border: green solid 1px;
-    //background: #d2fff7;
-  }
-
-  .left-container {
-    height: 100%;
-    //border: red solid 1px;
-  }
-
-  .scene-short-info-container {
-    //border: black solid 1px;
-  }
-
-  .scene-number-container {
-
-  }
-
-  .right-container {
-    height: 100%;
-    //border: blue solid 1px;
-  }
-
-  .scene-info-container {
-    height: 70%;
-    //border: black solid 1px;
-  }
-
-  .scene-background-container {
-    height: 100%;
-  }
-
-  .script-controller-container {
-    height: 30%;
-  }
-
-  .scene-script-container {
-    height: 100%;
-    //border: dimgrey solid 1px;
-    //display: flex;
-    //justify-content: center;
-    //align-items: center;
-  }
-
-  .scene-thumbnail-container {
-    width: 100%;
-  }
-
 
   .controller-container {
-    height: 100%;
+    height: 180px;
     //border: black solid 1px;
   }
 
@@ -130,23 +81,6 @@
     border-radius: 15px;
   }
 
-  .white-background {
-    background: white;
-    border-radius: 15px;
-    width: 100%;
-    border: #cc765a dashed 4px
-  }
-
-  .script-background {
-    background: white;
-    border-radius: 15px;
-    height: 100%;
-    border: #cc765a dashed 4px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
   .button-container {
     background: white;
     border-radius: 15px;
@@ -154,8 +88,4 @@
     //border: #cc765a dashed 4px;
   }
 
-  .scene-bordering {
-    border-radius: 15px;
-    border: red solid 4px
-  }
 </style>
