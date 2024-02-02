@@ -55,20 +55,6 @@
 
   const router = useRouter();
 
-  // const roomInfo = ref({
-  //   title: '토끼와 거북이 오실분~',
-  //   roomNumber: '14',
-  //   public: true,
-  // });
-
-  // const bookInfo = ref({
-  //   title: '토끼와 거북이',
-  //   author: '도토리',
-  //   limitCnt: '4',
-  //   joinCnt: '3',
-  //   summary: '토끼와 거북이 이야기는 토끼와 거북이가 경주를 벌이는 이야기입니다.'
-  // });
-
   const playerList = ref([
     {
       name: '조석현',
