@@ -1,14 +1,5 @@
 <template>
   <!--  <Header />-->
-  <div class="row">
-        <q-btn color="brown-5" class="col-2 npsfont" label="방만들기" @click="connectToNewSession"></q-btn>
-        <div class="col-2"></div>
-        <q-input color="brown-5" class="col-2 npsfont" v-model='sessionId'></q-input>
-        <q-btn color="brown-5" class="col-2 npsfont" label="방참가" @click="connectToAnotherSession"></q-btn>
-    <!--    onMount시점에 내 비디오를 켜고, 캔버스를 생성해서 모델을 입힌다.-->
-    <!--    비디오와 캔버스를 displaynone하고-->
-    <!--    publish가 된다-->
-  </div>
   <div class="row flex justify-center q-px-none">
     <!--    <q-btn @click='sendMessage' label='testBtn'/>-->
     <div class="col-11">
@@ -28,9 +19,18 @@
         <div class="left-container col-3 q-pt-sm">
           <Script />
           <SceneController />
+          <init-my-video />
         </div>
       </div>
     </div>
+  </div>
+  <div class="row">
+    <div v-if='mainStreamManager'>
+      <ov-video :stream-manager='mainStreamManager' id="connectPlayer" />
+    </div>
+    <ov-video v-for='sub in subscribers' :key='sub.stream.connection.connectionId' :stream-manager='sub'
+              :id='sub.stream.streamId' />
+
   </div>
 </template>
 
@@ -41,40 +41,16 @@
   import SceneContainer from 'components/RecordingPageComponents/MainScene.vue';
   import Script from 'components/RecordingPageComponents/Script.vue';
   import SceneController from 'components/RecordingPageComponents/SceneController.vue';
-  import {ref,onMounted} from 'vue';
-  import {useOpenViduStore2} from 'stores/openvidu2';
+  import {ref, onMounted} from 'vue';
+  import InitMyVideo from 'components/RecordingPageComponents/PublishMyVideo.vue';
+  import OvVideo from 'components/RecordingPageComponents/OvVideo.vue';
 
-  const ovstore2 = useOpenViduStore2();
-  // import {useOpenViduStore} from 'stores/openvidu';
-  //
-  // const openViduStore = useOpenViduStore();
-  // // const text = ref('');
-  // const sendMessage = () => {
-  //   console.log("btnclick")
-  //   openViduStore.sendText('hello!!!');
-  // };
-  // const thumbStyle = {
-  //   right: '1.5px',
-  //   borderRadius: '5px',
-  //   backgroundColor: '#C7A96E',
-  //   width: '5px',
-  //   opacity: 0.75,
-  // };
-  //
-  // const barStyle = {
-  //   borderRadius: '9px',
-  //   backgroundColor: '#ffffff',
-  //   width: '8px',
-  //   opacity: 0,
-  // };
+  import {useOpenViduStore} from 'stores/openvidu';
 
-  const sessionId = ref('');
-  const connectToNewSession = () => {
-    ovstore2.connectToNewSession();
-  };
-  const connectToAnotherSession = () => {
-    ovstore2.connectToAnotherSession(sessionId.value);
-  };
+  const ovstore = useOpenViduStore();
+  const subscribers = ovstore.subscribers;
+  const mainStreamManager = ovstore.mainStreamManager;
+
 </script>
 <style scoped>
   @font-face {
