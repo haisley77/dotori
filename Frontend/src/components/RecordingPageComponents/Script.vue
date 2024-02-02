@@ -3,29 +3,37 @@
 </script>
 
 <template>
-  <div class="scene-script-container npsfont text-center col-8 q-pr-xs ">
+  <div class="scene-script-container npsfont col-8">
     <div class="out-back q-pa-sm" style="height: 100%">
       <div class="in-back q-pa-sm" style="height: 100%">
         <div class="script-background">
+          <h4 class="q-my-sm q-mx-none text-center">대본📃</h4>
+          <!--          <h6 class="q-ml-none q-mt-sm q-mb-none">역할에 맞는 대본을 읽어보세요!</h6>-->
+          <hr />
           <div class="role-script-container">
-            <p class="text-weight-bold q-ma-none">호랑이 : 어흥어흥 ~ 어흥어흥어흐얼어어흥어흥 ~ 어흥어흥어흐얼어어흥어흥 ~ 어흥어흥어흐얼어</p>
+            <p class="text-weight-bold q-ma-none">🐇 : 어흥어흥 ~ 어흥어흥어흐얼어어흥어흥 ~ 어흥어흥어흐얼어어흥어흥 ~ 어흥어흥어흐얼어</p>
           </div>
+          <br />
           <div class="role-script-container">
-            <p class="text-weight-bold q-ma-none">호랑이 : 어흥어흥 ~ 어흥어흥어흐얼어</p>
+            <p class="text-weight-bold q-ma-none">🐇 : 어흥어흥 ~ 어흥어흥어흐얼어</p>
           </div>
+          <br />
           <div class="role-script-container">
-            <p class="text-weight-bold q-ma-none">호랑이 : 어흥어흥 ~ 어흥어흥어흐얼어</p>
+            <p class="text-weight-bold q-ma-none">🐇 : 어흥어흥 ~ 어흥어흥어흐얼어</p>
           </div>
-
+          <br />
           <div class="role-script-container">
-            <p class="text-weight-bold q-ma-none">돼지: 꿀굴굴굴꿀...</p>
+            <p class="text-weight-bold q-ma-none">🐢: 꿀굴굴굴꿀...</p>
           </div>
+          <br />
           <div class="role-script-container">
-            <p class="text-weight-bold q-ma-none">호랑이 : 어흥어흥 ~ 어흥어흥어흐얼어</p>
+            <p class="text-weight-bold q-ma-none">🐢 : 어흥어흥 ~ 어흥어흥어흐얼어</p>
           </div>
+          <br />
           <div class="role-script-container">
-            <p class="text-weight-bold q-ma-none">돼지: 꿀굴굴굴꿀...</p>
+            <p class="text-weight-bold q-ma-none">🐢: 꿀굴굴굴꿀...</p>
           </div>
+          <br />
         </div>
       </div>
     </div>
@@ -44,85 +52,13 @@
     font-family: 'NPSfontBold';
   }
 
-  .entire-container {
-    height: 85vh;
-    //border: green solid 1px;
-    //background: #d2fff7;
-  }
-
-  .left-container {
-    height: 100%;
-    //border: red solid 1px;
-  }
-
-  .scene-short-info-container {
-    //border: black solid 1px;
-  }
-
-  .scene-number-container {
-
-  }
-
-  .right-container {
-    height: 100%;
-    //border: blue solid 1px;
-  }
-
-  .scene-info-container {
-    height: 70%;
-    //border: black solid 1px;
-  }
-
-  .scene-background-container {
-    height: 100%;
-  }
-
-  .script-controller-container {
-    height: 30%;
-  }
 
   .scene-script-container {
-    height: 100%;
+    height: 570px;
     //border: dimgrey solid 1px;
     //display: flex;
     //justify-content: center;
     //align-items: center;
-  }
-
-  .scene-thumbnail-container {
-    width: 100%;
-  }
-
-
-  .controller-container {
-    height: 100%;
-    //border: black solid 1px;
-  }
-
-  .left-button-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .center-button-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .right-button-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .play-button-container {
-    margin-right: 10px;
-  }
-
-  .stop-button-container {
-    margin-left: 10px;
   }
 
   .out-back {
@@ -135,32 +71,12 @@
     border-radius: 15px;
   }
 
-  .white-background {
-    background: white;
-    border-radius: 15px;
-    width: 100%;
-    border: #cc765a dashed 4px
-  }
 
   .script-background {
     background: white;
     border-radius: 15px;
     height: 100%;
-    //border: #cc765a dashed 4px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+
   }
 
-  .button-container {
-    background: white;
-    border-radius: 15px;
-    height: 100%;
-    border: #cc765a dashed 4px;
-  }
-
-  .scene-bordering {
-    border-radius: 15px;
-    border: red solid 4px
-  }
 </style>

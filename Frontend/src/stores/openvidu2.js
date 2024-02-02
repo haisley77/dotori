@@ -80,9 +80,9 @@ export const useOpenViduStore2
   };
 
   //다른 사람이 만들어둔 session에 연결한다
-  const connectToAnotherSession = () => {
+  const connectToAnotherSession = (id) => {
     //sessionId에 연결하여 토큰을 받아온다
-    instance.post('/openvidu/api/sessions/' + sessionId.value + '/connection')
+    instance.post('/openvidu/api/sessions/' + id + '/connection')
       .then((response) => {
         ovToken.value = response.data.token;
         console.log('토큰 : ' + ovToken.value);
