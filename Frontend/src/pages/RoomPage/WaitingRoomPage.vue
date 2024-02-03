@@ -54,26 +54,38 @@
      is_host.value = true;
     }
    role_cnt.value = roomInfo.limitCnt;
+    playerList.value.push({
+      name: '유저1',
+      profileImg: 'src/assets/MyPageImages/iupic.jpg',
+      roleName: '유저1',
+      roleIndex: 5,
+      state: false,
+    });
+
   })
 
   const router = useRouter();
 
   const playerList = ref([
-    {
-      name: '조석현',
-      profileImg: 'src/assets/MyPageImages/cho.jpg',
-
-    },
+    // {
+    //   name: '조석현',
+    //   profileImg: 'src/assets/MyPageImages/cho.jpg',
+    //   role: '',
+    // },
     {
       name: 'Winter',
       profileImg: 'src/assets/MyPageImages/winter.png',
-
+      roleName: 'Winter',
+      roleIndex: 5,
+      state: false,
     },
-    // {
-    //   name: '카리나',
-    //   profileImg: 'src/assets/MyPageImages/karina.jpg',
-
-    // },
+    {
+      name: '카리나',
+      profileImg: 'src/assets/MyPageImages/karina.jpg',
+      roleName: '카리나',
+      roleIndex: 5,
+      state: false,
+    },
     // {
     //   name: '아이유',
     //   profileImg: 'src/assets/MyPageImages/iupic.jpg',

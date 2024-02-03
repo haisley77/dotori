@@ -6,18 +6,18 @@
           <div class="profile-background q-pa-sm">
             <div class="dashed column items-center">
               <img :src="props.playerList[player - 1].profileImg" class="profile-pic q-mr-md q-mt-sm" alt="user-profile-img" style="object-fit: cover">
-              <h4 class="q-mr-md q-mt-md q-mb-sm player-name">{{ props.playerList[player - 1].name }}</h4>
+              <h4 class="q-mr-md q-mt-md q-mb-sm player-name">{{ props.playerList[player - 1].roleName }}</h4>
               <div class="row q-mt-none q-mb-sm">
                 <q-btn unelevated rounded color="my-brown q-mr-sm btn-font">
                   <q-menu fit anchor="bottom start" self="top left">
-                    <q-item v-for="(role, index) in roleList" :key="role" clickable :disable="selectedRoleList[player - 1]" @click="toggleRole(player - 1, index)">
-                      <q-item-section>{{ role }}</q-item-section>
+                    <q-item v-for="(role, index) in roleList" :key="role" clickable  @click="toggleRole(player,index)">
+                      <q-item-section>{{ role.name }}</q-item-section>
                     </q-item>
                   </q-menu>
                   <div>역할 선택하기</div>
                 </q-btn>
-                <q-btn unelevated rounded color="my-green q-ml-sm btn-font">
-                  <div>커스텀 아바타</div>
+                <q-btn unelevated rounded color="my-green q-ml-sm btn-font" @click="cancelSelection(player)">
+                  <div>선택 취소</div>
                 </q-btn>
               </div>
             </div>
@@ -59,15 +59,56 @@
   const props = defineProps({ playerList: Object });
 
   // 역할 리스트
-  const roleList = ref(['토끼', '거북이']);
-  // 대기방에 접속한 사용자가 선택한 역할 리스트
-  const selectedRoleList = ref(Array(roleList.value.length).fill(false));
+  const roleList = ref([
+    {
+      name: '토끼',
+      image: '',
+      selected: false,
+    },
+    {
+      name: '거북이',
+      image: '',
+      selected: false,
+    },
+    {
+      name: '호랑이',
+      image: '',
+      selected: false,
+    },
+  ]);
 
-  // 클릭 시 비활성화
-  const toggleRole = (selectedIndex, roleIndex) => {
-    selectedRoleList.value[selectedIndex] = !selectedRoleList.value[selectedIndex];
-    console.log(`Player ${selectedIndex + 1} chose role: ${roleList.value[roleIndex]}`);
+  // 오픈비두 서버에 채팅 데이터와 함께 roleList, playerList 보내고 파싱해서 roleList 를 갱신한다.
+
+
+
+  const toggleRole = (player, selectedIndex) => {
+    // 역할 선택
+    if (props.playerList[player-1].roleIndex === selectedIndex) {
+      alert('정상적으로 선택되었습니다.');
+      return;
+    }
+    // 역할 중복 선택 불가
+    const selectedRole = roleList.value[selectedIndex];
+    if (selectedRole && selectedRole.selected) {
+      alert('해당 역할은 이미 선택되었습니다.');
+      return;
+    }
+    const prevSelectedRole = roleList.value[props.playerList[player-1].roleIndex];
+    if (prevSelectedRole) {
+      prevSelectedRole.selected = false;
+    }
+    if (selectedRole) {
+      selectedRole.selected = true;
+      props.playerList[player-1].roleName = selectedRole.name;
+      props.playerList[player-1].roleIndex = selectedIndex;
+    }
   };
+
+  const cancelSelection = (player) => {
+    roleList.value[props.playerList[player-1].roleIndex].selected = false;
+    props.playerList[player-1].roleName = props.playerList[player-1].name;
+    props.playerList[player-1].roleIndex = 5;
+  }
 </script>
 
 
