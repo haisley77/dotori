@@ -102,16 +102,11 @@
           .then(() => {
             addRoomMember()
               .then(() => {
-                // console.log('드디어 도착');
                 moveWaitingRoom();
               })
-              .catch((error) => {
-                console.log('참여 인원 갱신 중 에러 발생')
-              })
+              .catch()
           })
-          .catch((error) => {
-            console.log('ov에 연결 중 에러 발생');
-          })
+          .catch()
       })
   };
 </script>

@@ -61,7 +61,7 @@ export const useOpenViduStore
   // 커넥션 설정 정보
   const connection_properties = ref({});
 
-  // 방 생성 정보
+  // 방 정보
   const room_info = ref({
     hostId: member_id.value,
     title: null,
@@ -72,10 +72,6 @@ export const useOpenViduStore
     isPublic: true,
   });
 
-
-
-
-  // 방 생성 요청 시 전달할 파라미터
   const roomInitializationParam = ref({
     sessionProperties: null,
     connectionProperties: null,
@@ -90,16 +86,17 @@ export const useOpenViduStore
 
       room_info.value.title = room_name.value;
       room_info.value.password = room_password.value;
-      room_info.value.isPublic = !is_private;
+      room_info.value.isPublic = !is_private.value;
       room_info.value.limitCnt = bookmodal.roleCnt;
 
+      console.log(!is_private.value);
+      console.log(room_info.value.isPublic);
       roomInitializationParam.value.bookInfo = bookmodal;
       roomInitializationParam.value.roomInfo = room_info.value;
 
       // 방 정보 setting
-      if (room_password.value === null && is_private === true) {
-        console.log('비밀번호 입력 필수');
-        reject('비밀번호 입력 필수'); // Reject the promise with an error message
+      if (room_password.value === null && is_private.value === true) {
+        reject('비밀번호 입력 필수');
         return;
       }
 
@@ -110,13 +107,13 @@ export const useOpenViduStore
             room_id.value = response.data.roomId;
             ovToken.value = response.data.token;
 
-            resolve(response.data); // Resolve the promise with the response data
+            resolve(response.data);
           }
         })
         .catch((error) => {
           console.error('방 생성 실패 !!');
           console.error(error.response);
-          reject(error); // Reject the promise with the error
+          reject(error);
         });
     });
   };
@@ -130,17 +127,16 @@ export const useOpenViduStore
           if (response.status === 200) {
             room_id.value = response.data.roomId;
             ovToken.value = response.data.token;
-            resolve(response.data); // Resolve with the response data
+            resolve(response.data);
           }
           if (response.status === 202) {
             console.log(response.data.message);
-            reject(new Error(response.data.message)); // Reject with an error containing the message
+            reject(new Error(response.data.message));
           }
         })
         .catch((error) => {
           console.error(error.response);
-          console.error('커넥션 생성 실패');
-          reject(error); // Reject with the axios error
+          reject(error);
         });
     });
   };
@@ -198,13 +194,12 @@ export const useOpenViduStore
       });
       session.connect(ovToken.value)
         .then(() => {
-          console.log('ov와 연결 성공!');
           console.log(ovToken.value);
-          resolve(); // Resolve the promise on successful connection
+          resolve();
         })
         .catch((error) => {
           console.error('ov와 연결 실패:', error);
-          reject(error); // Reject the promise with the error on connection failure
+          reject(error);
         });
     });
   };
@@ -218,7 +213,6 @@ export const useOpenViduStore
   };
 
   return {
-    session,
     room_name,
     room_password,
     is_private,
