@@ -164,20 +164,24 @@ export const useOpenViduStore
   };
 
   const removeRoomMember = () => {
-    const apiPath = apiRootPath + `/remove/${room_id.value}/${member_id.value}`;
+    return new Promise((resolve, reject) => {
+      const apiPath = apiRootPath + `/remove/${room_id.value}/${member_id.value}`;
 
-    axios.delete(apiPath)
-      .then((response) => {
-        if (response.status === 200) {
-          console.log('방 나가기 정보 갱신 성공 !!');
-          // 페이지 이동
-        }
-      }).catch((error) => {
-      console.error(error.response);
-      console.error('방 나가기 정보 갱신 처리 중 오류 발생');
+      axios.delete(apiPath)
+        .then((response) => {
+          if (response.status === 200) {
+            console.log('방 나가기 정보 갱신 성공 !!');
+            resolve(response.data); // 성공 시 resolve 호출
+          }
+        })
+        .catch((error) => {
+          console.error(error.response);
+          console.error('방 나가기 정보 갱신 처리 중 오류 발생');
+          reject(error); // 실패 시 reject 호출
+        });
     });
-
   };
+
 
   const connectToOpenVidu = () => {
     return new Promise((resolve, reject) => {
