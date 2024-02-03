@@ -18,10 +18,10 @@ public class RoomDto {
 	private Long hostId;
 	private String title;
 	private String password;
-	private boolean isRecording;
+	private Boolean isRecording;
 	private int joinCnt;
 	private int limitCnt;
-	private boolean isPublic;
+	private Boolean isPublic;
 	private String sessionId;
 
 	public RoomDto(Room room) {
@@ -30,10 +30,10 @@ public class RoomDto {
 		this.hostId = room.getHostId();
 		this.title = room.getTitle();
 		this.password = room.getPassword();
-		this.isRecording = room.isRecording();
+		this.isRecording = room.getIsRecording();
 		this.joinCnt = room.getJoinCnt();
 		this.limitCnt = room.getLimitCnt();
-		this.isPublic = room.isPublic();
+		this.isPublic = room.getIsPublic();
 		this.sessionId = room.getSessionId();
 	}
 }
