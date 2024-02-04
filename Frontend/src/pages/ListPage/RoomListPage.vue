@@ -1,8 +1,6 @@
 <template>
   <q-page padding>
-
     <div class='row q-mb-md'>
-
       <div class='search row flex justify-center items-center' style='width: 100%;'>
         <q-input
           class=''
@@ -25,7 +23,7 @@
 
     <div class='row q-col-gutter-x-md q-col-gutter-y-md'>
       <div v-for='room in rooms' :key='room.roomId' class='col-12 col-sm-6 col-md-4 col-lg-3 q-pa-md'>
-        <EnterRoomComponent :room='room'></EnterRoomComponent>
+        <EnterRoomComponent :room='room' @click="() => encounterRoom(room)"></EnterRoomComponent>
       </div>
     </div>
   </q-page>
@@ -33,14 +31,25 @@
 
 <script>
   import EnterRoomComponent from 'components/ListPageComponents/EnterRoomComponent.vue';
+  import {storeToRefs} from 'pinia';
   import {ref, onMounted} from 'vue';
+  import { useRouter } from 'vue-router';
+  import {useOpenViduStore} from 'stores/openvidu';
   import axios from 'axios';
-
 
   export default {
     components: {EnterRoomComponent},
     setup() {
+      const router = useRouter(); 
       const rooms = ref([]);
+
+      const openViduStore = useOpenViduStore();
+      const {roomInitializationParam, room_name, room_password, is_private} = storeToRefs(openViduStore);
+      const {getConnectionToken, connectToOpenVidu, addRoomMember} = openViduStore;
+
+      const moveWaitingRoom = (room) => {
+        router.push('/room');
+      };
 
       onMounted(() => {
         fetchRooms();
@@ -60,8 +69,36 @@
       }
     };
 
+    const encounterRoom = (room) => {
+      // 유저 방정보, 책정보 가지고 입장. 
+      roomInitializationParam.value.bookInfo = room.book;
+      roomInitializationParam.value.roomInfo = room;
+      console.log("책정보",roomInitializationParam.value.bookInfo);
+      console.log("방정보",roomInitializationParam.value.roomInfo);
+      getConnectionToken(room)
+        .then(() => {
+          connectToOpenVidu()
+            .then(() => {
+              addRoomMember()
+                .then(() => {
+                  // console.log('드디어 도착');
+                  moveWaitingRoom(room);
+                })
+                .catch((error) => {
+                  console.log('참여 인원 갱신 중 에러 발생')
+                })
+            })
+            .catch((error) => {
+              console.log('ov에 연결 중 에러 발생');
+            })
+        })
+    };
+
+
     return {
         rooms,
+        moveWaitingRoom,
+        encounterRoom
       };
     },
   };

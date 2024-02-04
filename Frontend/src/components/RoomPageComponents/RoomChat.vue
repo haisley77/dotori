@@ -18,13 +18,17 @@
 
 <script setup>
 import {ref, onMounted } from 'vue'
+import {useOpenViduStore} from 'stores/openvidu';
+
+const openViduStore = useOpenViduStore();
 const chatMessage = ref('');
+
 
 // 변경하지 않는 부분
 onMounted(() => {
   //채팅 기능을 초기화.
-  if (openviduSession.value) {
-    openviduSession.value.on('signal:chat', (event) => {
+  if (session.value) {
+    session.value.on('signal:chat', (event) => {
       const data = JSON.parse(event.data);
       appendMessage(data.nickname, data.message);
     });
@@ -32,12 +36,12 @@ onMounted(() => {
 });
 
 const sendMessage = () => {
-  if (chatMessage.value && openviduSession.value) {
+  if (chatMessage.value && session.value) {
     const data = {
       message: chatMessage.value,
       nickname: '사용자 닉네임',
     };
-    openviduSession.value.signal({
+    session.value.signal({
       data: JSON.stringify(data),
       type: 'chat',
     });

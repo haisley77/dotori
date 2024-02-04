@@ -23,6 +23,18 @@ export const useOpenViduStore
   const member_id = ref(50);
 
 
+  // 세션 정보 저장
+  const sessionInfo = ref({
+    session, // 세션 객체
+    ovToken, // 토큰 정보
+    room_id, // 방 ID
+    room_name, // 방 이름
+    room_password, // 방 비밀번호
+    is_private, // 비밀 방 여부
+    member_id, // 사용자 ID
+  });
+
+
   // 방 세션 설정 정보
   const session_properties = ref({});
 
@@ -89,9 +101,10 @@ export const useOpenViduStore
     });
   };
 
-  const getConnectionToken = () => {
+  const getConnectionToken = (room) => {
+    console.log('getConnectionToken 호출됨', room);
     return new Promise((resolve, reject) => {
-      const apiPath = apiRootPath + `/connection/${room_id.value}`;
+      const apiPath = apiRootPath + `/connection/${room.roomId}`;
 
       axios.post(apiPath, connection_properties.value)
         .then((response) => {
@@ -168,6 +181,7 @@ export const useOpenViduStore
 
   return {
     session,
+    sessionInfo,
     room_name,
     room_password,
     is_private,
@@ -176,5 +190,6 @@ export const useOpenViduStore
     createRoom,
     connectToOpenVidu,
     addRoomMember,
+    getConnectionToken
   };
 }, {persist: {storage: sessionStorage}});

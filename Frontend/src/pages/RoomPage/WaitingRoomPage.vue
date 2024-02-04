@@ -42,9 +42,9 @@
   const roomInfo = roomInitializationParam.value.roomInfo;
 
   onMounted(() => {
-    console.log(session);
-    console.log(bookInfo);
-    console.log(roomInfo);
+    console.log("세션정보" ,session);
+    console.log("대기방책정보",bookInfo);
+    console.log("대기방룸정보",roomInfo);
   })
   const router = useRouter();
 
