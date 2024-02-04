@@ -260,9 +260,15 @@ export const useOpenViduStore
     });
   };
 
-  // 역할 정보 업데이트 이벤트가 발생하면 받은 데이터를 json 객체로 파싱한다.
+  // 역할 정보 업데이트 이벤트가 발생하면 받은 데이터를 json 객체로 파싱하여 반영한다.
   session.on('update-role', (event) => {
     const receivedData = JSON.parse(event.data);
+    playerList.forEach((playerInfo, index) => {
+      playerList[index] = receivedData.data.playerList[index];
+    })
+    roleList.forEach((roleInfo, index) => {
+      roleList[index] = receivedData.data.roleList[index];
+    })
   });
 
   const sendMoveInfoToOpenVidu = () => {
