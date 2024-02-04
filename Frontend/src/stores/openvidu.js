@@ -257,7 +257,7 @@ export const useOpenViduStore
       profileImg: 'src/assets/MyPageImages/winter.png',
       roleName: 'Winter',
       roleIndex: 5,
-      state: false,
+      readyState: true,
     },
     {
       name: '카리나',
@@ -265,7 +265,7 @@ export const useOpenViduStore
       profileImg: 'src/assets/MyPageImages/karina.jpg',
       roleName: '카리나',
       roleIndex: 5,
-      state: false,
+      readyState: true,
     },
     // {
     //   name: '아이유',
