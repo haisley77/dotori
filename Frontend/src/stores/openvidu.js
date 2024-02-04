@@ -303,22 +303,22 @@ export const useOpenViduStore
   // signal 타입 이벤트가 도착하면 받은 데이터를 json 객체로 파싱하여 반영한다.
   session.on('signal', (event) => {
     const receivedData = JSON.parse(event.data);
-    if (receivedData.data.info === 'update-role') {
+    if (receivedData.data && receivedData.data.info === 'update-role') {
       playerList.forEach((playerInfo, index) => {
         playerList[index] = receivedData.data.playerList[index];
       })
       roleList.forEach((roleInfo, index) => {
         roleList[index] = receivedData.data.roleList[index];
       })
-    } else if (receivedData.data.info === 'move-recording') {
-      if (receivedData.data.recording === true) {
+    } else if (receivedData.data && receivedData.data.info === 'move-recording') {
+      if (receivedData.data && receivedData.data.recording === true) {
         room_info.value.isRecording = true;
         router.push('/recording'); // 녹화방으로 이동
       }
-    } else if (receivedData.data.info === 'player-incoming') {
+    } else if (receivedData.data && receivedData.data.info === 'player-incoming') {
       playerList.push(receivedData.data.player);
       // room joinCnt 갱신
-    } else if (receivedData.data.info === 'chatting') {
+    } else if (receivedData.data && receivedData.data.info === 'chatting') {
       // 채팅 코드 넣기
     }
   });
