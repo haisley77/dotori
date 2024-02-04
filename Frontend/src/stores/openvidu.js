@@ -206,7 +206,7 @@ export const useOpenViduStore
 
       room_info.value.isRecording = isRecording;
 
-      axios.patch(apiPath, room_info.value)
+      axios.post(apiPath, room_info.value)
         .then((response) => {
           console.log(response.status);
           if (response.status === 200) {
