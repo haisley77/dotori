@@ -37,7 +37,7 @@
   import {useOpenViduStore} from 'stores/openvidu';
 
   const openViduStore = useOpenViduStore();
-  const {roomInitializationParam, session} = storeToRefs(openViduStore);
+  const {roomInitializationParam, session, playerList: playerList} = storeToRefs(openViduStore);
   const bookInfo = roomInitializationParam.value.bookInfo;
   const roomInfo = roomInitializationParam.value.roomInfo;
 
@@ -47,32 +47,6 @@
     console.log("대기방룸정보",roomInfo);
   })
   const router = useRouter();
-
-  const playerList = ref([
-    {
-      name: '조석현',
-      profileImg: 'src/assets/MyPageImages/cho.jpg',
-
-    },
-    {
-      name: 'Winter',
-      profileImg: 'src/assets/MyPageImages/winter.png',
-
-    },
-    {
-      name: '카리나',
-      profileImg: 'src/assets/MyPageImages/karina.jpg',
-
-    },
-    {
-      name: '아이유',
-      profileImg: 'src/assets/MyPageImages/iupic.jpg',
-
-    },
-
-
-  ]);
-
 
 </script>
 

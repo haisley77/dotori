@@ -22,6 +22,7 @@ export const useOpenViduStore
   const is_private = ref(false);
   const member_id = ref(50);
 
+  const playerList = ref([]);
 
   // 세션 정보 저장
   const sessionInfo = ref({
@@ -33,7 +34,6 @@ export const useOpenViduStore
     is_private, // 비밀 방 여부
     member_id, // 사용자 ID
   });
-
 
   // 방 세션 설정 정보
   const session_properties = ref({});
@@ -51,9 +51,6 @@ export const useOpenViduStore
     limitCnt: 0,
     isPublic: true,
   });
-
-
-
 
   // 방 생성 요청 시 전달할 파라미터
   const roomInitializationParam = ref({
@@ -134,6 +131,13 @@ export const useOpenViduStore
         .then((response) => {
           if (response.status === 200) {
 
+            // 방 멤버 추가 성공
+            const newMember = {
+              name: response.data.nickname,  // 멤버의 이름 또는 다른 식별자
+              profileImg: response.data.profileImg,  // 멤버의 프로필 이미지
+            };
+            playerList.value.push(newMember);
+
             resolve(response.data); // Resolve the promise with the response data
           } else if (response.status === 201) {
             console.log('인원 초과로 방 참여 처리 불가');
@@ -181,6 +185,7 @@ export const useOpenViduStore
 
   return {
     session,
+    playerList,
     sessionInfo,
     room_name,
     room_password,
@@ -190,6 +195,7 @@ export const useOpenViduStore
     createRoom,
     connectToOpenVidu,
     addRoomMember,
-    getConnectionToken
+    getConnectionToken,
+    removeRoomMember
   };
 }, {persist: {storage: sessionStorage}});
