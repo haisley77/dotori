@@ -1,4 +1,4 @@
-import {ref} from 'vue';
+import {ref, watch} from 'vue';
 import {defineStore} from 'pinia';
 import {OpenVidu} from 'openvidu-browser';
 
@@ -215,20 +215,27 @@ export const useOpenViduStore
     });
   };
 
-  const sendingData = ref({
-    message: null,
+  const sendingRoleData = ref({
     playerList: null,
     roleList: null,
   });
 
+  const sendingMoveData = ref({
+    recording: null,
+  });
 
-  watch(sendingData, () => {
+
+  watch(sendingRoleData, () => {
     sendRoleInfoToOpenVidu();
+  });
+
+  watch(sendingMoveData, () => {
+    sendMoveInfoToOpenVidu();
   });
 
   const sendRoleInfoToOpenVidu = () => {
     session.signal({
-      data: JSON.stringify(sendingData.value),
+      data: JSON.stringify(sendingRoleData.value),
       to: [],
       type: 'update-role',
     })
@@ -243,6 +250,30 @@ export const useOpenViduStore
   // 역할 정보 업데이트 이벤트가 발생하면 받은 데이터를 json 객체로 파싱한다.
   session.on('update-role', (event) => {
     const receivedData = JSON.parse(event.data);
+  });
+
+  const sendMoveInfoToOpenVidu = () => {
+    session.signal({
+      data: JSON.stringify(sendingMoveData.value),
+      to: [],
+      type: 'move-recording',
+    })
+      .then(() => {
+        console.log('녹화방 이동 정보 전송 성공');
+      })
+      .catch(error => {
+        console.error('녹화방 이동 정보 전송 실패');
+      });
+  }
+
+
+  // 녹화방 이동 이벤트가 발생하면 받은 데이터를 json 객체로 파싱한다.
+  session.on("move-recording", (event) => {
+    const receivedData = JSON.parse(event.data);
+    if (receivedData.data.recording === true) {
+      room_info.value.isRecording = true;
+      router.push('/recording'); // 녹화방으로 이동
+    }
   });
 
   const playerList = [
@@ -299,7 +330,8 @@ export const useOpenViduStore
     is_private,
     ovToken,
     roomInitializationParam,
-    sendingData,
+    sendingRoleData,
+    sendingMoveData,
     createRoom,
     connectToOpenVidu,
     addRoomMember,

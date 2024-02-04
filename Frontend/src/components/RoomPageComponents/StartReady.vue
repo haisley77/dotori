@@ -1,6 +1,8 @@
 <script setup>
   import {useRouter} from 'vue-router';
   import {ref} from 'vue';
+  import {useOpenViduStore} from 'stores/openvidu';
+  import {storeToRefs} from 'pinia';
 
   const props = defineProps({
     roomInfo: Object,
@@ -10,6 +12,8 @@
 
   const router = useRouter();
   const btnValue = ref(false);
+  const openViduStore = useOpenViduStore();
+  const {sendingMoveData} = storeToRefs(openViduStore);
 
   const updateState = () => {
     props.playerList.forEach((user) => {
@@ -25,8 +29,11 @@
     })
     if (props.roomInfo.hostId === props.memberId) {  // 방장인 경우에는 참여자들의 준비상태를 확인한다.
       if (checkReadyState()) {  // 모든 참여자들이 준비상태인 경우
-        // 역할 정보 db 반영하러 간다.  (axios)
         // openvidu 서버에 모든 참여자 녹화방으로 이동하라는 메시지를 보낸다.
+        props.roomInfo.isRecording = true;
+        sendingMoveData.value.recording = true;
+        // 역할 정보 db 반영하러 간다.  (axios) -> 정말 의미없지 않을까?
+        // db에 room 정보 반영하러 간다. (axios) -> 정말 의미없지 않을까?
         moveRecording();  // 녹화방으로 이동
       }
     }

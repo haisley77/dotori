@@ -89,12 +89,12 @@
   });
 
   const openViduStore = useOpenViduStore();
-  const {sendingData} = storeToRefs(openViduStore);
+  const {sendingRoleData} = storeToRefs(openViduStore);
 
 
-  const makeSendingData = () => {
-    sendingData.value.roleList = props.roleList;
-    sendingData.value.playerList = props.playerList;
+  const makeSendingRoleData = () => {
+    sendingRoleData.value.roleList = props.roleList;
+    sendingRoleData.value.playerList = props.playerList;
   }
 
 
@@ -119,14 +119,14 @@
       props.playerList[player-1].roleName = selectedRole.name;
       props.playerList[player-1].roleIndex = selectedIndex;
     }
-    makeSendingData();
+    makeSendingRoleData();
   };
 
   const cancelRole = (player) => {
    props. roleList[props.playerList[player-1].roleIndex].selected = false;
     props.playerList[player-1].roleName = props.playerList[player-1].name;
     props.playerList[player-1].roleIndex = 5;
-    makeSendingData();
+    makeSendingRoleData();
   }
 </script>
 
