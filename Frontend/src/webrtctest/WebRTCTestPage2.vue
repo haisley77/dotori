@@ -339,7 +339,6 @@
         avatar.applyMatrix(matrix, {scale: 40});
       }
       // Apply Blendshapes
-      console.log("Apply Blendshapes")
       const blendshapes = landmarks.faceBlendshapes;
       if (blendshapes && blendshapes.length > 0) {
         const coefsMap = retarget(blendshapes);
