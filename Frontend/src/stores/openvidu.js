@@ -60,7 +60,7 @@ export const useOpenViduStore
   // 커넥션 설정 정보
   const connection_properties = ref({});
 
-  // 방 정보
+  // 방 설정 정보
   const room_info = ref({
     hostId: member_id.value,
     title: null,
@@ -88,8 +88,6 @@ export const useOpenViduStore
       room_info.value.isPublic = !is_private.value;
       room_info.value.limitCnt = bookmodal.roleCnt;
 
-      console.log(!is_private.value);
-      console.log(room_info.value.isPublic);
       roomInitializationParam.value.bookInfo = bookmodal;
       roomInitializationParam.value.roomInfo = room_info.value;
 
@@ -170,13 +168,13 @@ export const useOpenViduStore
         .then((response) => {
           if (response.status === 200) {
             console.log('방 나가기 정보 갱신 성공 !!');
-            resolve(response.data); // 성공 시 resolve 호출
+            resolve(response.data);
           }
         })
         .catch((error) => {
           console.error(error.response);
           console.error('방 나가기 정보 갱신 처리 중 오류 발생');
-          reject(error); // 실패 시 reject 호출
+          reject(error);
         });
     });
   };
@@ -308,8 +306,8 @@ export const useOpenViduStore
       memberId: 1,
       profileImg: 'src/assets/MyPageImages/winter.png',
       roleName: 'Winter',
-      roleIndex: 5,
-      readyState: true,
+      roleIndex: 5,     // db에서 조회해 온 역할 정보들을 가진 roleList 상의 인덱스를 저장합니다. 초기엔 5 default.
+      readyState: true, // 유저의 준비 상태를 저장합니다. 녹화방 이동을 테스트하기 위해 true로 지정. 원래는 false default.
     },
     {
       name: '카리나',
