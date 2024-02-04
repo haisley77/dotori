@@ -23,7 +23,7 @@
 
     <div class='row q-col-gutter-x-md q-col-gutter-y-md'>
       <div v-for='room in rooms' :key='room.roomId' class='col-12 col-sm-6 col-md-4 col-lg-3 q-pa-md'>
-        <EnterRoomComponent :room='room' @click="() => encounterRoom(room)"></EnterRoomComponent>
+        <EnterRoomComponent :room='room' @click="() => enterRoom(room)"></EnterRoomComponent>
       </div>
     </div>
   </q-page>
@@ -69,7 +69,7 @@
       }
     };
 
-    const encounterRoom = (room) => {
+    const enterRoom = (room) => {
       // 유저 방정보, 책정보 가지고 입장. 
       roomInitializationParam.value.bookInfo = room.book;
       roomInitializationParam.value.roomInfo = room;
@@ -98,7 +98,7 @@
     return {
         rooms,
         moveWaitingRoom,
-        encounterRoom
+        enterRoom
       };
     },
   };
