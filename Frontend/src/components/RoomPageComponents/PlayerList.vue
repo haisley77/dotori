@@ -90,6 +90,7 @@
 
   const openViduStore = useOpenViduStore();
   const {sendingRoleData} = storeToRefs(openViduStore);
+  const {sendRoleInfoToOpenVidu} = openViduStore;
 
 
   const makeSendingRoleData = () => {
@@ -120,6 +121,7 @@
       props.playerList[player-1].roleIndex = selectedIndex;
     }
     makeSendingRoleData();
+    sendRoleInfoToOpenVidu();
   };
 
   const cancelRole = (player) => {
@@ -127,6 +129,7 @@
     props.playerList[player-1].roleName = props.playerList[player-1].name;
     props.playerList[player-1].roleIndex = 5;
     makeSendingRoleData();
+    sendRoleInfoToOpenVidu();
   }
 </script>
 

@@ -14,7 +14,7 @@
   const btnValue = ref(false);
   const openViduStore = useOpenViduStore();
   const {sendingMoveData} = storeToRefs(openViduStore);
-  const {updateRoom} = openViduStore;
+  const {updateRoom,sendMoveInfoToOpenVidu} = openViduStore;
 
   const updateState = () => {
     props.playerList.forEach((user) => {
@@ -30,17 +30,23 @@
     })
     if (props.roomInfo.hostId === props.memberId) {  // 방장인 경우에는 참여자들의 준비상태를 확인한다.
       if (checkReadyState()) {  // 모든 참여자들이 준비상태인 경우
-        // openvidu 서버에 모든 참여자 녹화방으로 이동하라는 메시지를 보낸다.
+        // openvidu 서버에 모든 참여자 녹화방으로 이동하라는 메시지 send
         props.roomInfo.isRecording = true;
         sendingMoveData.value.recording = true;
-        // 역할 정보 db 반영하러 간다.  (axios) -> 정말 의미없지 않을까?
-        // db에 room 정보 반영하러 간다. (axios) -> 정말 의미없지 않을까?
-        updateRoom(props.roomInfo.isRecording)
-          .then((response) => {
-            moveRecording();  // 녹화방으로 이동
+        sendMoveInfoToOpenVidu()
+          .then(() => {
+            // 역할 정보 db 반영하러 간다.  (axios) -> 정말 의미없지 않을까?
+
+            updateRoom(props.roomInfo.isRecording)    // db에 room 정보 반영하러 간다. (axios)
+              .then((response) => {
+                moveRecording();
+              })
+              .catch((error) => {
+                console.error('방 정보 갱신 중 에러 발생 : ' + error);
+              })
           })
           .catch((error) => {
-            console.error('방 정보 갱신 중 에러 발생 : ' + error);
+            console.error(error);
           })
       }
     }

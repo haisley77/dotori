@@ -203,6 +203,7 @@ export const useOpenViduStore
 
   const connectToOpenVidu = () => {
     return new Promise((resolve, reject) => {
+      //새로운 스트림이 생기면 그 스트림에 구독한다
       session.on('streamCreated', ({stream}) => {
         const subscriber = session.subscribe(stream, stream.streamId);
         subscribers.value.push(subscriber);
@@ -243,28 +244,21 @@ export const useOpenViduStore
     recording: null,
   });
 
-
-  watch(sendingRoleData, () => {
-    sendRoleInfoToOpenVidu();
-  });
-
-  watch(sendingMoveData, () => {
-    sendMoveInfoToOpenVidu();
-  });
-
   const sendRoleInfoToOpenVidu = () => {
-    session.signal({
-      data: JSON.stringify(sendingRoleData.value),
-      to: [],
-      type: 'update-role',
-    })
-      .then(() => {
-        console.log('역할 선택 정보 전송 성공');
+    return new Promise((resolve, reject) => {
+      session.signal({
+        data: JSON.stringify(sendingRoleData.value),
+        to: [],
+        type: 'update-role',
       })
-      .catch(error => {
-        console.error('역할 선택 정보 전송 실패');
-      });
-  }
+        .then(() => {
+          resolve('역할 선택 정보 전송 성공');
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  };
 
   // 역할 정보 업데이트 이벤트가 발생하면 받은 데이터를 json 객체로 파싱한다.
   session.on('update-role', (event) => {
@@ -272,18 +266,20 @@ export const useOpenViduStore
   });
 
   const sendMoveInfoToOpenVidu = () => {
-    session.signal({
-      data: JSON.stringify(sendingMoveData.value),
-      to: [],
-      type: 'move-recording',
-    })
-      .then(() => {
-        console.log('녹화방 이동 정보 전송 성공');
+    return new Promise((resolve, reject) => {
+      session.signal({
+        data: JSON.stringify(sendingMoveData.value),
+        to: [],
+        type: 'move-recording',
       })
-      .catch(error => {
-        console.error('녹화방 이동 정보 전송 실패');
-      });
-  }
+        .then(() => {
+          resolve('녹화방 이동 정보 전송 성공');
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  };
 
 
   // 녹화방 이동 이벤트가 발생하면 받은 데이터를 json 객체로 파싱한다.
@@ -363,6 +359,7 @@ export const useOpenViduStore
     updateRoom,
     publish,
     sendRoleInfoToOpenVidu,
+    sendMoveInfoToOpenVidu,
     playerList,
     roleList,
     subscribers, mainStreamManager, OV,bookInfoList,
