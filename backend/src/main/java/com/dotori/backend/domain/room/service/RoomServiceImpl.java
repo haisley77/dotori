@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,11 +60,10 @@ public class RoomServiceImpl implements RoomService {
 		List<RoomMember> roomMembers = new ArrayList<>();
 
 		BookDto bookInfo = params.getBookInfo();
-		Optional<Book> optionalBook = bookRepository.findById(bookInfo.getBookId());
-		if (optionalBook.isEmpty()) {
-			throw new RuntimeException("책 정보 반영 중 문제 발생");
-		}
-		Book book = optionalBook.get();
+		Book book = bookRepository.findById(bookInfo.getBookId()).orElseThrow(
+			() -> new EntityNotFoundException("해당하는 책 정보를 찾을 수 없습니다.")
+		);
+
 		RoomDto roomInfo = params.getRoomInfo();
 		Room room = Room.builder()
 			.book(book)
@@ -94,11 +94,11 @@ public class RoomServiceImpl implements RoomService {
 
 	@Override
 	public Session findSessionByRoomId(OpenVidu openvidu, Long roomId) {
-		Optional<Room> optionalRoom = roomRepository.findById(roomId);
-		if (optionalRoom.isPresent()) {
-			return openvidu.getActiveSession(optionalRoom.get().getSessionId());
-		}
-		throw new RuntimeException("방 조회 불가");
+		// 방 id 에 해당하는 방을 가져옵니다.
+		Room room = roomRepository.findById(roomId).orElseThrow(
+			() -> new EntityNotFoundException("해당하는 방을 찾을 수 없습니다.")
+		);
+		return openvidu.getActiveSession(room.getSessionId());
 	}
 
 	public List<Room> getAllRooms() {
@@ -119,12 +119,10 @@ public class RoomServiceImpl implements RoomService {
 
 	@Override
 	public boolean checkJoinPossible(OpenVidu openvidu, Long roomId) {
-		// 방 id에 해당하는 방 엔티티를 가져옵니다.
-		Optional<Room> optionalRoom = roomRepository.findById(roomId);
-		if (optionalRoom.isEmpty()) {
-			throw new RuntimeException("방 조회 불가");
-		}
-		Room room = optionalRoom.get();
+		// 방 id 에 해당하는 방을 가져옵니다.
+		Room room = roomRepository.findById(roomId).orElseThrow(
+			() -> new EntityNotFoundException("해당하는 방을 찾을 수 없습니다.")
+		);
 
 		// // 방에 연결된 유효한 connection 리스트를 openvidu 서버에서 불러옵니다.
 		// List<Connection> activeConnections = openvidu.getActiveSession(room.getSessionId()).getActiveConnections();
@@ -137,11 +135,9 @@ public class RoomServiceImpl implements RoomService {
 	@Override
 	public void addMemberToRoom(Long roomId, Long memberId) {
 		// 방 id에 해당하는 방을 가져옵니다.
-		Optional<Room> optionalRoom = roomRepository.findById(roomId);
-		if (optionalRoom.isEmpty()) {
-			throw new RuntimeException("방 조회 불가");
-		}
-		Room room = optionalRoom.get();
+		Room room = roomRepository.findById(roomId).orElseThrow(
+			() -> new EntityNotFoundException("해당하는 방을 찾을 수 없습니다.")
+		);
 
 		// member id에 해당하는 멤버를 방 참여 멤버로 등록합니다.
 		// Member member = memberRepository.findById(memberId);
@@ -159,20 +155,18 @@ public class RoomServiceImpl implements RoomService {
 	@Override
 	public void removeMemberFromRoom(OpenVidu openvidu, Long roomId, Long memberId) {
 		// 방 참여 멤버를 DB에서 지웁니다.
-		Optional<RoomMember> optionalRoomMember = roomMemberRepository.findByRoomRoomIdAndMemberMemberId(roomId,
-			memberId);
-		if (optionalRoomMember.isEmpty()) {
-			throw new RuntimeException("유저 조회 불가");
-		}
-		RoomMember roomMember = optionalRoomMember.get();
+		RoomMember roomMember = roomMemberRepository.findByRoomRoomIdAndMemberMemberId(roomId,
+			memberId).orElseThrow(
+			() -> new EntityNotFoundException("해당하는 방 참여자를 찾을 수 없습니다.")
+		);
+
 		roomMemberRepository.delete(roomMember);
 
 		// 방 id 에 해당하는 방을 가져옵니다.
-		Optional<Room> optionalRoom = roomRepository.findById(roomId);
-		if (optionalRoom.isEmpty()) {
-			throw new RuntimeException("방 조회 불가");
-		}
-		Room room = optionalRoom.get();
+		Room room = roomRepository.findById(roomId).orElseThrow(
+			() -> new EntityNotFoundException("해당하는 방을 찾을 수 없습니다.")
+		);
+
 		// 방 참여 인원을 갱신합니다.
 		room.setJoinCnt(room.getJoinCnt() - 1);
 
@@ -181,5 +175,32 @@ public class RoomServiceImpl implements RoomService {
 			roomRepository.delete(room);
 		}
 	}
+
+	@Override
+	public void updateRoom(Long roomId, RoomDto roomInfo) {
+		Room room = roomRepository.findById(roomId).orElseThrow(
+			() -> new EntityNotFoundException("해당하는 방이 존재하지 않습니다.")
+		);
+
+		// Room 엔티티의 roomMembers 필드를 복사하여 새로운 리스트 생성
+		List<RoomMember> newRoomMembers = new ArrayList<>(room.getRoomMembers());
+
+		// 새로운 Room 엔티티 생성
+		Room newRoom = Room.builder()
+			.book(room.getBook())
+			.roomMembers(newRoomMembers)
+			.hostId(roomInfo.getHostId())
+			.title(roomInfo.getTitle())
+			.password(roomInfo.getPassword())
+			.isRecording(roomInfo.getIsRecording())
+			.joinCnt(roomInfo.getJoinCnt())
+			.limitCnt(room.getLimitCnt())
+			.isPublic(roomInfo.getIsPublic())
+			.sessionId(room.getSessionId())
+			.build();
+
+		roomRepository.save(newRoom);
+	}
+
 
 }

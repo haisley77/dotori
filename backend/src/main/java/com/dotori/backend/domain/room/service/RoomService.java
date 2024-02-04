@@ -3,6 +3,7 @@ package com.dotori.backend.domain.room.service;
 import java.util.List;
 import java.util.Map;
 
+import com.dotori.backend.domain.room.model.dto.RoomDto;
 import com.dotori.backend.domain.room.model.dto.RoomInitializationDto;
 import com.dotori.backend.domain.room.model.entity.Room;
 
@@ -29,4 +30,6 @@ public interface RoomService {
 	void addMemberToRoom(Long roomId, Long memberId);
 
 	void removeMemberFromRoom(OpenVidu openvidu, Long roomId, Long memberId);
+
+	void updateRoom(Long roomId, RoomDto roomInfo);
 }

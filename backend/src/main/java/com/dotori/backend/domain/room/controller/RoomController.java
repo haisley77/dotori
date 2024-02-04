@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -141,6 +142,24 @@ public class RoomController {
 			resultData.put("message", e.getMessage());
 			return new ResponseEntity<>(resultData, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+
+	// @PatchMapping("/update/{roomId}")
+	@PostMapping("/update/{roomId}")
+	public ResponseEntity<Map<String, String>> updateRoom(@PathVariable("roomId") Long roomId,
+		@RequestBody(required = true) RoomDto roomInfo) {
+		Map<String, String> resultData = new HashMap<>();
+		try {
+			openvidu.fetch();
+			roomService.updateRoom(roomId, roomInfo);
+			resultData.put("roomId", String.valueOf(roomId));
+			return new ResponseEntity<>(resultData, HttpStatus.OK);
+		} catch (Exception e) {
+			resultData.put("message", e.getMessage());
+			return new ResponseEntity<>(resultData, HttpStatus.INTERNAL_SERVER_ERROR);
+
+		}
+
 	}
 
 }
