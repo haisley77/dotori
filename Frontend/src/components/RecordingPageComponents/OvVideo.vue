@@ -13,7 +13,7 @@
 </script>
 
 <template>
-  <video autoplay ref="thisvideo" id = "myovvideo" style="z-index: 2"/>
+  <video autoplay ref="thisvideo" id = "myovvideo" style="z-index: 2;width: 250px"/>
 </template>
 
 <style scoped>
