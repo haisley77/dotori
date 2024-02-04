@@ -37,7 +37,8 @@
   import {useOpenViduStore} from 'stores/openvidu';
 
   const openViduStore = useOpenViduStore();
-  const {roomInitializationParam, session, playerList: playerList} = storeToRefs(openViduStore);
+  const {roomInitializationParam, playerList: playerList} = storeToRefs(openViduStore);
+  const { session } = openViduStore;
   const bookInfo = roomInitializationParam.value.bookInfo;
   const roomInfo = roomInitializationParam.value.roomInfo;
 

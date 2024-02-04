@@ -4,7 +4,7 @@
       <!-- <div class="column"> -->
         <div class="background-white">
       <!-- 채팅 로그 -->
-        <div ref="chatLog" style="height: 110px; overflow-y: auto; padding: 10px;"></div>
+        <div id="chatLog" style="height: 110px; overflow-y: auto; padding: 10px;"></div>
         <!-- </div> -->
         <div class="row ">
           <q-input color="green" bg-color="green-1" v-model="chatMessage" @keyup.enter="sendMessage" placeholder="메시지를 입력하세요" :dense="dense" class="col-11"/>
@@ -18,10 +18,9 @@
 
 <script setup>
 import {ref, onMounted } from 'vue'
-import {useOpenViduStore} from 'stores/openvidu';
-
-const openViduStore = useOpenViduStore();
+const props = defineProps(['session']); 
 const chatMessage = ref('');
+const chatLog = document.getElementById('chatLog');
 
 
 // 변경하지 않는 부분
