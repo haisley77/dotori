@@ -1,7 +1,6 @@
 <script setup>
   import {ref} from 'vue';
-  import NewRoomModal from 'pages/ListPage/NewRoomModal.vue';
-
+  const { room } = defineProps(['room']);
   const dialog = ref('true');
 </script>
 
@@ -11,7 +10,7 @@
       <div style='background: white; border-radius: 0px' class='q-pa-xs'>
         <q-img
           :ratio='9/9'
-          src='~assets/BookImages/rabbitandturtle.jpg'
+          :src="room.book.bookImg"
           style='border-radius: 0px'
         />
         <hr style='border: #C7A96E 1px solid' />
@@ -19,23 +18,19 @@
              style='background: white; '>
           <div class='col-9'>
             <div class=' npsfont text-h6 ellipsis'>
-              방 제목이 여기 들어갑니다
+              {{ room.title }}
             </div>
             <div class='npsfont'>
-              책 제목 : 토끼와 거북이
+              {{ room.book.title }}
             </div>
             <div class='flex justify-between'>
               <div class='npsfont'>
-                방장 : 도토리03
+                {{ room.hostId }}
               </div>
               <div class='npsfont'>
-                인원 : 3/4
+                인원 : {{ room.joinCnt }}/{{ room.limitCnt }}
               </div>
-
-
             </div>
-
-            <!-- Dialog -->
           </div>
           <div class='col-3'>
             <div class='q-pa-sm flex justify-end items-center'>

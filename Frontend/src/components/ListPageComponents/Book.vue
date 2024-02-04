@@ -7,8 +7,6 @@
   const props = defineProps({bookdetail : Object});
 </script>
 
-
-
 <template>
   <article>
     <div style='background: #C7A96E; border-radius: 0px' class='q-pa-xs'>

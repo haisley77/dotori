@@ -6,6 +6,7 @@ import {localAxios} from '../axios/http-commons';
 import {useRouter} from 'vue-router';
 import axios from 'axios';
 
+const nickname = ref(''); 
 
 export const useOpenViduStore2
   = defineStore('openViduStore2', () => {
@@ -100,5 +101,5 @@ export const useOpenViduStore2
   };
 
 
-  return {changeSessionId, connectToNewSession, connectToAnotherSession};
+  return { nickname, changeSessionId, connectToNewSession, connectToAnotherSession};
 }, {persist: {storage: sessionStorage}});

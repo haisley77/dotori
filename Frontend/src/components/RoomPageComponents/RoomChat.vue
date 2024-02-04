@@ -1,34 +1,23 @@
 <template>
-  <div style="height: 100%" class="background-green q-pa-sm">
+  <!-- <div style="height: 100%" class="background-green q-pa-sm"> -->
     <div style="height: 100%" class="background-yellow q-pa-sm">
-
-      <div class="column">
+      <!-- <div class="column"> -->
         <div class="background-white">
-          [19:45] 🔔도토리씨앗유저님이 로비에 참가하셨습니다.<br/>
-          [19:55] 도토리씨앗유저 : 안녕하세요~<br/>
-          [19:55] 도토리씨앗유저 : 안녕하세요~<br/>
-          [19:55] 도토리씨앗유저 : 안녕하세요~<br/>
-        </div>
+      <!-- 채팅 로그 -->
+        <div ref="chatLog" style="height: 110px; overflow-y: auto; padding: 10px;"></div>
+        <!-- </div> -->
         <div class="row ">
-          <q-input color="green" bg-color="green-1" v-model="text" :dense="dense" class="col-11"/>
+          <q-input color="green" bg-color="green-1" v-model="chatMessage" @keyup.enter="sendMessage" placeholder="메시지를 입력하세요" :dense="dense" class="col-11"/>
           <q-btn color="my-green" bg-color="white" class="col-1 q-pa-none npsfont chat">전송</q-btn>
         </div>
       </div>
-
- <!-- 채팅 로그 -->
- <div ref="chatLog" style="height: 150px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;"></div>
-<!-- 메시지 input -->
-<input v-model="chatMessage" @keyup.enter="sendMessage" placeholder="메시지를 입력하세요" />
-
-
     </div>
-  </div>
+  <!-- </div> -->
 </template>
 
 
 <script setup>
 import {ref, onMounted } from 'vue'
-
 const chatMessage = ref('');
 
 // 변경하지 않는 부분
@@ -54,7 +43,6 @@ const sendMessage = () => {
     });
 
     appendMessage(data.nickname, data.message);
-
     chatMessage.value = '';
   }
 };
