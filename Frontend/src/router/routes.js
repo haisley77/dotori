@@ -14,10 +14,7 @@ const routes = [
     path: '/signup',
     component: () => import('pages/LoginPage/SingupPage.vue'),
   },
-  {
-    path: '/kakaologin',
-    component: () => import('pages/LoginPage/KakaoLogin.vue'),
-  },
+
   // 마이페이지
   {
     path: '/my-page',
