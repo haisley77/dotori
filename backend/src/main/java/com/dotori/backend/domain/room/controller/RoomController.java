@@ -144,7 +144,8 @@ public class RoomController {
 		}
 	}
 
-	@PatchMapping("/update/{roomId}")
+	// @PatchMapping("/update/{roomId}")
+	@PostMapping("/update/{roomId}")
 	public ResponseEntity<Map<String, String>> updateRoom(@PathVariable("roomId") Long roomId,
 		@RequestBody(required = true) RoomDto roomInfo) {
 		Map<String, String> resultData = new HashMap<>();
