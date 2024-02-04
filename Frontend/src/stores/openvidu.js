@@ -181,6 +181,27 @@ export const useOpenViduStore
     });
   };
 
+  const updateRoom = (isRecording) => {
+    return new Promise((resolve, reject) => {
+      const apiPath = apiRootPath + `/update/${room_id.value}`;
+
+      room_info.value.isRecording = isRecording;
+
+      axios.patch(apiPath, room_info.value)
+        .then((response) => {
+          console.log(response.status);
+          if (response.status === 200) {
+            room_id.value = response.data.roomId;
+            resolve(response.data);
+          }
+        })
+        .catch((error) => {
+          console.error(error.response);
+          reject(error);
+        });
+    });
+  };
+
 
   const connectToOpenVidu = () => {
     return new Promise((resolve, reject) => {
@@ -335,6 +356,7 @@ export const useOpenViduStore
     createRoom,
     connectToOpenVidu,
     addRoomMember,
+    updateRoom,
     publish,
     sendRoleInfoToOpenVidu,
     playerList,

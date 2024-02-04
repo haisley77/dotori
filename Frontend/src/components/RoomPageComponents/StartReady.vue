@@ -14,6 +14,7 @@
   const btnValue = ref(false);
   const openViduStore = useOpenViduStore();
   const {sendingMoveData} = storeToRefs(openViduStore);
+  const {updateRoom} = openViduStore;
 
   const updateState = () => {
     props.playerList.forEach((user) => {
@@ -34,7 +35,13 @@
         sendingMoveData.value.recording = true;
         // 역할 정보 db 반영하러 간다.  (axios) -> 정말 의미없지 않을까?
         // db에 room 정보 반영하러 간다. (axios) -> 정말 의미없지 않을까?
-        moveRecording();  // 녹화방으로 이동
+        updateRoom(props.roomInfo.isRecording)
+          .then((response) => {
+            moveRecording();  // 녹화방으로 이동
+          })
+          .catch((error) => {
+            console.error('방 정보 갱신 중 에러 발생 : ' + error);
+          })
       }
     }
   }
