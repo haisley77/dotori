@@ -288,7 +288,7 @@ export const useOpenViduStore
   };
 
 
-  // 녹화방 이동 이벤트가 발생하면 받은 데이터를 json 객체로 파싱한다.
+  // 녹화방 이동 이벤트가 발생하면 받은 데이터를 json 객체로 파싱하여 반영한다.
   session.on("move-recording", (event) => {
     const receivedData = JSON.parse(event.data);
     if (receivedData.data.recording === true) {
