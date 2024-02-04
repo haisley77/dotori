@@ -329,18 +329,24 @@ export const useOpenViduStore
   // 역할 리스트
   const roleList = [
     {
+      // roleId:
       name: '토끼',
-      image: '',
+      maskPath: '',
+      // maskThumbnailPath:
       selected: false,
     },
     {
+      // roleId:
       name: '거북이',
-      image: '',
+      maskPath: '',
+      // maskThumbnailPath:
       selected: false,
     },
     {
+      // roleId:
       name: '호랑이',
-      image: '',
+      maskPath: '',
+      // maskThumbnailPath:
       selected: false,
     },
   ];
