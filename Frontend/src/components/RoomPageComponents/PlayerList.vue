@@ -124,7 +124,7 @@
   };
 
   const cancelRole = (player) => {
-   props. roleList[props.playerList[player-1].roleIndex].selected = false;
+    props.roleList[props.playerList[player-1].roleIndex].selected = false;
     props.playerList[player-1].roleName = props.playerList[player-1].name;
     props.playerList[player-1].roleIndex = 5;
     makeSendingRoleData();
