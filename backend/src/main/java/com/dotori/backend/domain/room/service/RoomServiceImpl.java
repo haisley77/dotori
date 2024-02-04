@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -181,5 +182,32 @@ public class RoomServiceImpl implements RoomService {
 			roomRepository.delete(room);
 		}
 	}
+
+	@Override
+	public void updateRoom(Long roomId, RoomDto roomInfo) {
+		Room room = roomRepository.findById(roomId).orElseThrow(
+			() -> new EntityNotFoundException("해당하는 방이 존재하지 않습니다.")
+		);
+
+		// Room 엔티티의 roomMembers 필드를 복사하여 새로운 리스트 생성
+		List<RoomMember> newRoomMembers = new ArrayList<>(room.getRoomMembers());
+
+		// 새로운 Room 엔티티 생성
+		Room newRoom = Room.builder()
+			.book(room.getBook())
+			.roomMembers(newRoomMembers)
+			.hostId(roomInfo.getHostId())
+			.title(roomInfo.getTitle())
+			.password(roomInfo.getPassword())
+			.isRecording(roomInfo.getIsRecording())
+			.joinCnt(roomInfo.getJoinCnt())
+			.limitCnt(room.getLimitCnt())
+			.isPublic(roomInfo.getIsPublic())
+			.sessionId(room.getSessionId())
+			.build();
+
+		roomRepository.save(newRoom);
+	}
+
 
 }
