@@ -3,7 +3,8 @@
     <div class="row">
       <div v-for="player in 4" :key="player" class="col-6 q-pa-sm text-h3">
         <div v-if="player <= props.playerList.length">
-          <div class="profile-background q-pa-sm">
+          <!-- 플레이어가 있으면서 사용자의 프로필이 맞는 경우-->
+          <div class="profile-background q-pa-sm" v-if="props.memberId === props.playerList[player-1].memberId">
             <div class="dashed column items-center">
               <img :src="props.playerList[player - 1].profileImg" class="profile-pic q-mr-md q-mt-sm" alt="user-profile-img" style="object-fit: cover">
               <h4 class="q-mr-md q-mt-md q-mb-sm player-name">{{ props.playerList[player - 1].roleName }}</h4>
@@ -16,8 +17,31 @@
                   </q-menu>
                   <div>역할 선택하기</div>
                 </q-btn>
-                <q-btn unelevated rounded color="my-green q-ml-sm btn-font" @click="cancelSelection(player)">
+                <q-btn unelevated rounded color="my-green q-ml-sm btn-font" @click="cancelRole(player)">
                   <div>선택 취소</div>
+                </q-btn>
+              </div>
+            </div>
+          </div>
+          <!-- 플레이어가 있으면서 사용자의 프로필이 아닌 경우-->
+          <div class="profile-background q-pa-sm" v-else>
+            <div class="dashed column items-center">
+              <img :src="props.playerList[player - 1].profileImg" class="profile-pic q-mr-md q-mt-sm" alt="user-profile-img" style="object-fit: cover">
+              <h4 class="q-mr-md q-mt-md q-mb-sm player-name">{{ props.playerList[player - 1].roleName }}</h4>
+              <div class="row q-mt-none q-mb-sm" style="visibility: hidden">
+                <q-btn unelevated rounded color="my-brown q-mr-sm btn-font">
+                  <q-menu fit anchor="bottom start" self="top left">
+                    <q-item clickable>
+                      <q-item-section>토끼</q-item-section>
+                    </q-item>
+                    <q-item clickable>
+                      <q-item-section>거북이</q-item-section>
+                    </q-item>
+                  </q-menu>
+                  <div>역할 선택하기</div>
+                </q-btn>
+                <q-btn unelevated rounded color="my-green q-ml-sm btn-font">
+                  <div>커스텀 아바타</div>
                 </q-btn>
               </div>
             </div>
@@ -54,31 +78,23 @@
 </template>
 
 <script setup>
-  import { ref } from 'vue';
+  import {storeToRefs} from 'pinia';
+  import {useOpenViduStore} from 'stores/openvidu';
 
-  const props = defineProps({ playerList: Object });
+  const props = defineProps({
+    playerList: Object,
+    roleList: Object,
+    memberId: Object,
+  });
 
-  // 역할 리스트
-  const roleList = ref([
-    {
-      name: '토끼',
-      image: '',
-      selected: false,
-    },
-    {
-      name: '거북이',
-      image: '',
-      selected: false,
-    },
-    {
-      name: '호랑이',
-      image: '',
-      selected: false,
-    },
-  ]);
+  const openViduStore = useOpenViduStore();
+  const {sendingData} = storeToRefs(openViduStore);
 
-  // 오픈비두 서버에 채팅 데이터와 함께 roleList, playerList 보내고 파싱해서 roleList 를 갱신한다.
 
+  const makeSendingData = () => {
+    sendingData.value.roleList = props.roleList;
+    sendingData.value.playerList = props.playerList;
+  }
 
 
   const toggleRole = (player, selectedIndex) => {
@@ -88,12 +104,12 @@
       return;
     }
     // 역할 중복 선택 불가
-    const selectedRole = roleList.value[selectedIndex];
+    const selectedRole = props.roleList[selectedIndex];
     if (selectedRole && selectedRole.selected) {
       alert('해당 역할은 이미 선택되었습니다.');
       return;
     }
-    const prevSelectedRole = roleList.value[props.playerList[player-1].roleIndex];
+    const prevSelectedRole = props.roleList[props.playerList[player-1].roleIndex];
     if (prevSelectedRole) {
       prevSelectedRole.selected = false;
     }
@@ -102,12 +118,14 @@
       props.playerList[player-1].roleName = selectedRole.name;
       props.playerList[player-1].roleIndex = selectedIndex;
     }
+    makeSendingData();
   };
 
-  const cancelSelection = (player) => {
-    roleList.value[props.playerList[player-1].roleIndex].selected = false;
+  const cancelRole = (player) => {
+   props. roleList[props.playerList[player-1].roleIndex].selected = false;
     props.playerList[player-1].roleName = props.playerList[player-1].name;
     props.playerList[player-1].roleIndex = 5;
+    makeSendingData();
   }
 </script>
 

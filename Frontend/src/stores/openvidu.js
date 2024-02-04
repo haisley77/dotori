@@ -54,7 +54,6 @@ export const useOpenViduStore
   const mainStreamManager = ref();
   const member_id = ref(40);
 
-
   // 방 세션 설정 정보
   const session_properties = ref({});
 
@@ -216,16 +215,98 @@ export const useOpenViduStore
     });
   };
 
+  const sendingData = ref({
+    message: null,
+    playerList: null,
+    roleList: null,
+  });
+
+
+  watch(sendingData, () => {
+    sendRoleInfoToOpenVidu();
+  });
+
+  const sendRoleInfoToOpenVidu = () => {
+    session.signal({
+      data: JSON.stringify(sendingData.value),
+      to: [],
+      type: 'update-role',
+    })
+      .then(() => {
+        console.log('역할 선택 정보 전송 성공');
+      })
+      .catch(error => {
+        console.error('역할 선택 정보 전송 실패');
+      });
+  }
+
+  // 역할 정보 업데이트 이벤트가 발생하면 받은 데이터를 json 객체로 파싱한다.
+  session.on('update-role', (event) => {
+    const receivedData = JSON.parse(event.data);
+  });
+
+  const playerList = [
+    // {
+    //   name: '조석현',
+    //   profileImg: 'src/assets/MyPageImages/cho.jpg',
+    //   role: '',
+    // },
+    {
+      name: 'Winter',
+      memberId: 1,
+      profileImg: 'src/assets/MyPageImages/winter.png',
+      roleName: 'Winter',
+      roleIndex: 5,
+      state: false,
+    },
+    {
+      name: '카리나',
+      memberId: 2,
+      profileImg: 'src/assets/MyPageImages/karina.jpg',
+      roleName: '카리나',
+      roleIndex: 5,
+      state: false,
+    },
+    // {
+    //   name: '아이유',
+    //   profileImg: 'src/assets/MyPageImages/iupic.jpg',
+    // },
+
+  ];
+
+  // 역할 리스트
+  const roleList = [
+    {
+      name: '토끼',
+      image: '',
+      selected: false,
+    },
+    {
+      name: '거북이',
+      image: '',
+      selected: false,
+    },
+    {
+      name: '호랑이',
+      image: '',
+      selected: false,
+    },
+  ];
+
   return {
     room_name,
     room_password,
     is_private,
     ovToken,
     roomInitializationParam,
+    sendingData,
     createRoom,
     connectToOpenVidu,
     addRoomMember,
     publish,
+    sendRoleInfoToOpenVidu,
+    playerList,
+    roleList,
     subscribers, mainStreamManager, OV,bookInfoList,
   };
 }, {persist: {storage: sessionStorage}});

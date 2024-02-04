@@ -6,7 +6,7 @@
       </div>
       <div class='row'>
         <div class='col-8 q-pa-sm'>
-          <PlayerList :playerList='playerList'></PlayerList>
+          <PlayerList :playerList='playerList' :roleList="roleList" :memberId="member_id"></PlayerList>
         </div>
         <div class='col-4 q-pa-sm'>
           <BookInfo :bookInfo='bookInfo'></BookInfo>
@@ -17,7 +17,7 @@
           <RoomChat></RoomChat>
         </div>
         <div class='col-4 q-pa-sm'>
-          <StartReady :isHost='is_host' :roleCnt='role_cnt'></StartReady>
+          <StartReady :isHost='is_host' :roleCnt='role_cnt' :playerList='playerList'></StartReady>
         </div>
       </div>
     </div>
@@ -37,8 +37,10 @@
   import {useRouter} from 'vue-router';
   import {useOpenViduStore} from 'stores/openvidu';
 
+  const router = useRouter();
   const openViduStore = useOpenViduStore();
   const {roomInitializationParam} = storeToRefs(openViduStore);
+  const {playerList,roleList} = openViduStore;
   const bookInfo = roomInitializationParam.value.bookInfo;
   const roomInfo = roomInitializationParam.value.roomInfo;
 
@@ -48,52 +50,22 @@
 
   onMounted(() => {
     // 대기방에 들어온 사용자의 아이디를 조회
-    member_id.value = 50;
-    // 대기방에 들어온 사용자가 방장인 경우
+    // member_id = await axios.get(path, accessToken);
+    member_id.value = 40;
+
     if (member_id.value === roomInfo.hostId) {
-     is_host.value = true;
+      is_host.value = true;
     }
-   role_cnt.value = roomInfo.limitCnt;
-    playerList.value.push({
+    role_cnt.value = roomInfo.limitCnt;
+    playerList.push({
       name: '유저1',
+      memberId: 40,
       profileImg: 'src/assets/MyPageImages/iupic.jpg',
       roleName: '유저1',
       roleIndex: 5,
-      state: false,
+      readyState: false,
     });
-
   })
-
-  const router = useRouter();
-
-  const playerList = ref([
-    // {
-    //   name: '조석현',
-    //   profileImg: 'src/assets/MyPageImages/cho.jpg',
-    //   role: '',
-    // },
-    {
-      name: 'Winter',
-      profileImg: 'src/assets/MyPageImages/winter.png',
-      roleName: 'Winter',
-      roleIndex: 5,
-      state: false,
-    },
-    {
-      name: '카리나',
-      profileImg: 'src/assets/MyPageImages/karina.jpg',
-      roleName: '카리나',
-      roleIndex: 5,
-      state: false,
-    },
-    // {
-    //   name: '아이유',
-    //   profileImg: 'src/assets/MyPageImages/iupic.jpg',
-
-    // },
-
-
-  ]);
 
 
 </script>
