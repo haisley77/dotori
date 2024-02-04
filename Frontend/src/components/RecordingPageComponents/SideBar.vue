@@ -1,12 +1,12 @@
 <template>
-  <div class='q-mt-sm' style='height: 210px'>
+  <div class='' style='height: 210px'>
     <q-scroll-area
       :thumb-style='thumbStyle'
       :bar-style='barStyle'
       style='height: 210px; max-width: 100%;'
     >
       <div class='flex no-wrap'>
-        <SideBarComponent v-for='page in 6' :page-no='page' :cur-page='currentPageNo' @moveToPage='moveToPage'/>
+        <SideBarComponent v-for='page in 6' :page-no='page' :cur-page='props.curPage' @moveToPage='moveToPage' />
       </div>
     </q-scroll-area>
   </div>
@@ -15,10 +15,12 @@
   import SideBarComponent from 'components/RecordingPageComponents/SideBarComponent.vue';
   import {ref} from 'vue';
 
-  const currentPageNo = ref(1);
+  const props = defineProps({curPage: Number});
+  const emit = defineEmits(['moveToPage']);
   const moveToPage = (nextPage) => {
     // alert("move!");
-    currentPageNo.value = nextPage;
+    // props.curPage.value = nextPage;
+    emit('moveToPage',nextPage);
   };
   const thumbStyle = {
     right: '1.5px',

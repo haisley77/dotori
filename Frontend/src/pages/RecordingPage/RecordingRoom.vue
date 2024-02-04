@@ -9,16 +9,16 @@
         <!--          <SideBar />-->
         <!--        </div>-->
         <div class='right-container q-pr-sm q-pt-sm q-pl-sm col-9'>
-          <MainScene />
-          <side-bar></side-bar>
+          <MainScene :curPage='curPage' />
+          <side-bar :curPage='curPage' @moveToPage='moveToPage'></side-bar>
           <!--          <div class="script-controller-container row">-->
           <!--&lt;!&ndash;            <Script />&ndash;&gt;-->
           <!--&lt;!&ndash;            <SceneController />&ndash;&gt;-->
           <!--          </div>-->
         </div>
         <div class='left-container col-3 q-pt-sm'>
-          <Script />
-          <SceneController />
+          <Script :cur-page='curPage'/>
+          <SceneController :curPage='curPage' @moveToPage='moveToPage' />
 
         </div>
       </div>
@@ -44,7 +44,10 @@
   const ovstore = useOpenViduStore();
   const subscribers = ovstore.subscribers;
   const mainStreamManager = ovstore.mainStreamManager;
-
+  const curPage = ref(1);
+  const moveToPage = (nextPage) => {
+    curPage.value = nextPage;
+  };
 </script>
 <style scoped>
   @font-face {

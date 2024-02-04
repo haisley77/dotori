@@ -2,20 +2,23 @@
 
   import OvVideo from 'components/RecordingPageComponents/OvVideo.vue';
   import {useOpenViduStore} from 'stores/openvidu';
+  import {ref} from 'vue';
 
   const ovstore = useOpenViduStore();
+  const props = defineProps({curPage: Number});
+  const imagesrc = ref(ovstore.bookInfoList[props.curPage - 1].img);
 </script>
 
 <template>
-  <div class='scene-info-container '>
+  <div class='scene-info-container q-pa-sm'>
 
-    <div class=' ' style='height: 100%'>
+    <div class=' ' style='height: 100%;border-radius: 15px'>
       <div class='scene-background-container relative-position'>
         <q-img
-          class = "q-pa-xs"
-          src='~assets/BookImages/img/scene_3.png'
+          class='q-pa-xs'
+         :src='ovstore.bookInfoList[props.curPage - 1].img'
           :ratio='16/9'
-          style='height: 100%; border-radius: 15px; border:6px #C7A96E solid; background: white;'
+          style='height: 100%; '
         />
         <div class='flex justify-center absolute-bottom q-ma-none q-pa-none'>
           <div v-if='ovstore.mainStreamManager' class='q-ma-none q-pa-none'>
@@ -46,7 +49,7 @@
 
   .scene-info-container {
     height: 570px;
-  //border: black solid 1px;
+  //border-radius: 15px; border: #C7A96E solid 6px;
   }
 
   .scene-background-container {
