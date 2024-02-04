@@ -4,7 +4,7 @@
 
 <template>
   <div class="controller-container col-4 q-pt-sm">
-    <div class="out-back q-pa-sm" style="height: 100%">
+    <div class="out-back " style="height: 100%">
       <div class="in-back q-pa-sm" style="width: 100%; height: 100%">
         <div class="button-container row">
           <div class="left-button-container col-3">
@@ -73,11 +73,14 @@
 
   .out-back {
     background: #C7A96E;
+    padding : 6px;
     border-radius: 15px;
   }
 
   .in-back {
-    background: white;
+    //background: #ffee9a;
+    background: #ffffff;
+
     border-radius: 15px;
   }
 

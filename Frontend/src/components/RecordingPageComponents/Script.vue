@@ -4,12 +4,12 @@
 
 <template>
   <div class="scene-script-container npsfont col-8">
-    <div class="out-back q-pa-sm" style="height: 100%">
+    <div class="out-back q-pa-xs" style="height: 100%">
       <div class="in-back q-pa-sm" style="height: 100%">
-        <div class="script-background">
-          <h4 class="q-my-sm q-mx-none text-center">대본📃</h4>
+        <div class="script-background q-pa-sm">
+          <h4 class="q-my-none q-mx-none text-center">대본📃</h4>
           <!--          <h6 class="q-ml-none q-mt-sm q-mb-none">역할에 맞는 대본을 읽어보세요!</h6>-->
-          <hr />
+          <hr style='border: 2px dashed #6E4E1F' class = "q-mb-md" />
           <div class="role-script-container">
             <p class="text-weight-bold q-ma-none">🐇 : 어흥어흥 ~ 어흥어흥어흐얼어어흥어흥 ~ 어흥어흥어흐얼어어흥어흥 ~ 어흥어흥어흐얼어</p>
           </div>
@@ -64,9 +64,11 @@
   .out-back {
     background: #C7A96E;
     border-radius: 15px;
+    padding : 6px;
   }
 
   .in-back {
+    //background: #ffee9a;
     background: white;
     border-radius: 15px;
   }
