@@ -100,5 +100,5 @@ export const useOpenViduStore2
   };
 
 
-  return {changeSessionId, connectToNewSession, connectToAnotherSession};
+  return { changeSessionId, connectToNewSession, connectToAnotherSession};
 }, {persist: {storage: sessionStorage}});

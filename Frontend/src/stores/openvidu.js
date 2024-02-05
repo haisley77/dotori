@@ -77,6 +77,7 @@ export const useOpenViduStore
     roomInfo: null,
     bookInfo: null,
   });
+  });
 
 
   const createRoom = (bookmodal) => {
@@ -90,6 +91,8 @@ export const useOpenViduStore
 
       roomInitializationParam.value.bookInfo = bookmodal;
       roomInitializationParam.value.roomInfo = room_info.value;
+      roomInitializationParam.value.bookInfo = bookmodal;
+      roomInitializationParam.value.roomInfo = room_info.value;
 
       // 방 정보 setting
       if (room_password.value === null && is_private.value === true) {
@@ -97,6 +100,7 @@ export const useOpenViduStore
         return;
       }
 
+      axios.post(apiPath, roomInitializationParam.value)
       axios.post(apiPath, roomInitializationParam.value)
         .then((response) => {
           console.log(response.status);
@@ -115,9 +119,10 @@ export const useOpenViduStore
     });
   };
 
-  const getConnectionToken = () => {
+  const getConnectionToken = (room) => {
+    console.log('getConnectionToken 호출됨', room);
     return new Promise((resolve, reject) => {
-      const apiPath = apiRootPath + `/connection/${room_id.value}`;
+      const apiPath = apiRootPath + `/connection/${room.roomId}`;
 
       axios.post(apiPath, connection_properties.value)
         .then((response) => {
@@ -145,6 +150,13 @@ export const useOpenViduStore
       axios.post(apiPath)
         .then((response) => {
           if (response.status === 200) {
+
+            // 방 멤버 추가 성공
+            const newMember = {
+              name: response.data.nickname,  // 멤버의 이름 또는 다른 식별자
+              profileImg: response.data.profileImg,  // 멤버의 프로필 이미지
+            };
+            playerList.value.push(newMember);
 
             resolve(response.data); // Resolve the promise with the response data
           } else if (response.status === 201) {
@@ -379,6 +391,9 @@ export const useOpenViduStore
   ];
 
   return {
+    session,
+    playerList,
+    sessionInfo,
     room_name,
     room_password,
     is_private,
@@ -398,5 +413,7 @@ export const useOpenViduStore
     playerList,
     roleList,
     subscribers, mainStreamManager, OV,bookInfoList,
+    getConnectionToken,
+    removeRoomMember
   };
 }, {persist: {storage: sessionStorage}});

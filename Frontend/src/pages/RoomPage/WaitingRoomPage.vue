@@ -14,14 +14,13 @@
       </div>
       <div class='row'>
         <div class='col-8 q-pa-sm' style='height: 210px'>
-          <RoomChat></RoomChat>
+          <RoomChat :session='session'></RoomChat>
         </div>
         <div class='col-4 q-pa-sm'>
           <StartReady :roomInfo='roomInfo' :memberId='member_id' :playerList='playerList'></StartReady>
         </div>
       </div>
     </div>
-
   </div>
 
 
@@ -32,6 +31,10 @@
   import StartReady from 'components/RoomPageComponents/StartReady.vue';
   import RoomChat from 'components/RoomPageComponents/RoomChat.vue';
   import RoomTitle from 'components/RoomPageComponents/RoomTitle.vue';
+  import {onMounted, ref} from 'vue';
+  import {storeToRefs} from 'pinia';
+  import {useRouter} from 'vue-router';
+  import {useOpenViduStore} from 'stores/openvidu';
   import {onMounted, ref} from 'vue';
   import {storeToRefs} from 'pinia';
   import {useRouter} from 'vue-router';
