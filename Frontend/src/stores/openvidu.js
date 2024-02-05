@@ -392,7 +392,6 @@ export const useOpenViduStore
   return {
     session,
     playerList,
-    sessionInfo,
     room_name,
     room_password,
     is_private,
