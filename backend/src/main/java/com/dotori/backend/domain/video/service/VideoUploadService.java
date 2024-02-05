@@ -7,10 +7,6 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
 
-import javax.annotation.PostConstruct;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,28 +19,9 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 public class VideoUploadService {
-	@Value("${videos.path.scene}")
-	String scenePath;
-
-	@Value("${videos.path.chunk}")
-	String chunkPath;
-
-	private File sceneDirectory;
-
-	private File chunkDirectory;
-
-	private final ResourceLoader resourceLoader;
-
+	private final File chunkDirectory;
+	private final File sceneDirectory;
 	public static final String TEMP_PART_NAME = "temp.part";
-
-	@PostConstruct
-	public void init() throws IOException {
-		log.info("[PostConstruct] called");
-		sceneDirectory = resourceLoader.getResource("file:" + scenePath).getFile();
-		chunkDirectory = resourceLoader.getResource("file:" + chunkPath).getFile();
-		log.info("sceneDirectory = " + sceneDirectory);
-		log.info("chunkDirectory = " + chunkDirectory);
-	}
 
 	public File uploadChunkFiles(VideoSceneUploadRequest videoSceneUploadRequest) {
 		log.info("[uploadChunkFiles] called");
