@@ -150,13 +150,6 @@ export const useOpenViduStore
         .then((response) => {
           if (response.status === 200) {
 
-            // 방 멤버 추가 성공
-            const newMember = {
-              name: response.data.nickname,  // 멤버의 이름 또는 다른 식별자
-              profileImg: response.data.profileImg,  // 멤버의 프로필 이미지
-            };
-            playerList.value.push(newMember);
-
             resolve(response.data); // Resolve the promise with the response data
           } else if (response.status === 201) {
             console.log('인원 초과로 방 참여 처리 불가');
