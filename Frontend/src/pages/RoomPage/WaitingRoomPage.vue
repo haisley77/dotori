@@ -32,15 +32,9 @@
   import RoomChat from 'components/RoomPageComponents/RoomChat.vue';
   import RoomTitle from 'components/RoomPageComponents/RoomTitle.vue';
   import {onMounted, ref} from 'vue';
-  import {storeToRefs} from 'pinia';
-  import {useRouter} from 'vue-router';
   import {useOpenViduStore} from 'stores/openvidu';
-  import {onMounted, ref} from 'vue';
   import {storeToRefs} from 'pinia';
-  import {useRouter} from 'vue-router';
-  import {useOpenViduStore} from 'stores/openvidu';
 
-  const router = useRouter();
   const openViduStore = useOpenViduStore();
   const {roomInitializationParam,sendingPlayerData} = storeToRefs(openViduStore);
   const {playerList,roleList,sendPlayerInfoToOpenVidu} = openViduStore;
