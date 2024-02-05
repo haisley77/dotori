@@ -17,7 +17,7 @@
           <RoomChat></RoomChat>
         </div>
         <div class='col-4 q-pa-sm'>
-          <StartReady :isHost='is_host' :roleCnt='role_cnt' :playerList='playerList'></StartReady>
+          <StartReady :roomInfo='roomInfo' :memberId='member_id' :playerList='playerList'></StartReady>
         </div>
       </div>
     </div>
@@ -45,23 +45,17 @@
   const roomInfo = roomInitializationParam.value.roomInfo;
 
   const member_id = ref(0);
-  const is_host = ref(false);
-  const role_cnt = ref(0);
 
   onMounted(() => {
     // 대기방에 들어온 사용자의 아이디를 조회
     // member_id = await axios.get(path, accessToken);
     member_id.value = 40;
 
-    if (member_id.value === roomInfo.hostId) {
-      is_host.value = true;
-    }
-    role_cnt.value = roomInfo.limitCnt;
     playerList.push({
-      name: '유저1',
-      memberId: 40,
+      name: '방장',
+      memberId: member_id.value,
       profileImg: 'src/assets/MyPageImages/iupic.jpg',
-      roleName: '유저1',
+      roleName: '방장',
       roleIndex: 5,
       readyState: false,
     });

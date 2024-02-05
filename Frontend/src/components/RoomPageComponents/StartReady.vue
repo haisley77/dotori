@@ -81,7 +81,7 @@
       '
       class='background-yellow q-pa-sm'
     >
-      <q-btn unelevated class='start-btn' @click='updateState' :disable='btnValue'>
+      <q-btn unelevated class='start-btn' @click='updateState' >
         <svg xmlns='http://www.w3.org/2000/svg' height='48' width='54' viewBox='0 0 576 512'>
           <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
           <path fill='#FFD43B'
