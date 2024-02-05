@@ -5,8 +5,8 @@ spring:
       - optional:file:env/video.env[.properties]
       - optional:file:env/secret-key.env[.properties]
   redis:
-    host: localhost
-    port: 6379
+    host: ${REDIS_HOST}
+    port: ${REDIS_PORT}
   session:
     store-type: redis
 
