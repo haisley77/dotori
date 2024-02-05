@@ -39,14 +39,16 @@
 
   const openViduStore = useOpenViduStore();
   const {roomInitializationParam, session} = storeToRefs(openViduStore);
-  // const session = openViduStore.session;
   const bookInfo = roomInitializationParam.value.bookInfo;
   const roomInfo = roomInitializationParam.value.roomInfo;
 
   onMounted(() => {
-    console.log(session);
-    console.log(bookInfo);
-    console.log(roomInfo);
+    // 대기방에 들어온 사용자의 아이디를 조회
+    member_id.value = 50;
+    // 대기방에 들어온 사용자가 방장인 경우
+   if (member_id.value === roomInfo.hostId) {
+     is_host.value = true;
+    }
   })
   const router = useRouter();
   import {onMounted, ref} from 'vue';
