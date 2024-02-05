@@ -61,8 +61,6 @@ spring:
             client-name: ${NAVER_CLIENT_NAME}
             authorization-grant-type: ${NAVER_AUTHORIZATION_GRANT_TYPE}
 
-
-
 jwt:
   secretKey: ${SECRET_KEY}
   access:
