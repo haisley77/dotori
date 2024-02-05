@@ -59,12 +59,6 @@
     return true;
   }
   const moveRecording = () => {
-
-    // 준비 상태 확인
-
-    // 역할 고정
-
-    // 녹화방으로 이동
     router.push('/recording');
   };
 </script>
