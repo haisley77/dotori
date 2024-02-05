@@ -1,6 +1,5 @@
 package com.dotori.backend.domain.book.service;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,8 +11,6 @@ import org.springframework.stereotype.Service;
 import com.dotori.backend.domain.book.model.dto.BookDto;
 import com.dotori.backend.domain.book.model.dto.BookMapper;
 import com.dotori.backend.domain.book.model.dto.RoleDto;
-import com.dotori.backend.domain.book.model.dto.response.GetBookResponse;
-import com.dotori.backend.domain.book.model.dto.response.GetBooksResponse;
 import com.dotori.backend.domain.book.model.entity.Book;
 import com.dotori.backend.domain.book.model.entity.Role;
 import com.dotori.backend.domain.book.repository.BookRepository;
