@@ -19,10 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dotori.backend.domain.member.jwt.service.JwtService;
 import com.dotori.backend.domain.member.model.entity.Member;
-import com.dotori.backend.domain.member.redis.RedisService;
 import com.dotori.backend.domain.member.repository.MemberRepository;
+import com.dotori.backend.domain.member.service.JwtService;
+import com.dotori.backend.domain.member.service.RedisService;
 
 import lombok.RequiredArgsConstructor;
 

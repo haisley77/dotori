@@ -1,4 +1,4 @@
-package com.dotori.backend.domain.member.redis;
+package com.dotori.backend.common.config;
 
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.context.annotation.Bean;
@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 @Configuration
 @EnableRedisRepositories
 @EnableRedisHttpSession
-public class RedisRepositoryConfig {
+public class RedisConfig {
 	private final RedisProperties redisProperties;
 
 	@Bean

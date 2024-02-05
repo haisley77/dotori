@@ -15,8 +15,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.dotori.backend.common.entity.BaseTimeEntity;
-import com.dotori.backend.domain.member.type.Role;
-import com.dotori.backend.domain.member.type.SocialType;
+import com.dotori.backend.domain.member.model.Enum.Role;
+import com.dotori.backend.domain.member.model.Enum.SocialType;
 import com.dotori.backend.domain.room.model.entity.RoomMember;
 
 import lombok.AllArgsConstructor;

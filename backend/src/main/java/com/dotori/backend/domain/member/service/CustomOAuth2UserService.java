@@ -11,11 +11,11 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-import com.dotori.backend.domain.member.CustomOAuth2User;
-import com.dotori.backend.domain.member.OAuthAttributes;
+import com.dotori.backend.domain.member.model.Enum.SocialType;
+import com.dotori.backend.domain.member.model.dto.CustomOAuth2User;
+import com.dotori.backend.domain.member.model.dto.OAuthAttributes;
 import com.dotori.backend.domain.member.model.entity.Member;
 import com.dotori.backend.domain.member.repository.MemberRepository;
-import com.dotori.backend.domain.member.type.SocialType;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

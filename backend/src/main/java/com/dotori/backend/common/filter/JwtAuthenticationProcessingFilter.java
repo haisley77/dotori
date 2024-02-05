@@ -1,4 +1,4 @@
-package com.dotori.backend.domain.member.jwt.filter;
+package com.dotori.backend.common.filter;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -15,10 +15,10 @@ import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMap
 import org.springframework.security.core.authority.mapping.NullAuthoritiesMapper;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.dotori.backend.domain.member.jwt.service.JwtService;
 import com.dotori.backend.domain.member.model.entity.Member;
-import com.dotori.backend.domain.member.redis.RedisService;
 import com.dotori.backend.domain.member.repository.MemberRepository;
+import com.dotori.backend.domain.member.service.JwtService;
+import com.dotori.backend.domain.member.service.RedisService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

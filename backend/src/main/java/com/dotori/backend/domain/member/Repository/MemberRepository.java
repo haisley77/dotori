@@ -5,8 +5,8 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.dotori.backend.domain.member.model.Enum.SocialType;
 import com.dotori.backend.domain.member.model.entity.Member;
-import com.dotori.backend.domain.member.type.SocialType;
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {

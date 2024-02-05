@@ -1,14 +1,10 @@
-package com.dotori.backend.domain.member;
+package com.dotori.backend.domain.member.model.dto;
 
 import java.util.Map;
 
-import com.dotori.backend.domain.member.dto.GoogleOAuth2UserInfo;
-import com.dotori.backend.domain.member.dto.KakaoOAuth2UserInfo;
-import com.dotori.backend.domain.member.dto.NaverOAuth2UserInfo;
-import com.dotori.backend.domain.member.dto.OAuth2UserInfo;
+import com.dotori.backend.domain.member.model.Enum.Role;
+import com.dotori.backend.domain.member.model.Enum.SocialType;
 import com.dotori.backend.domain.member.model.entity.Member;
-import com.dotori.backend.domain.member.type.Role;
-import com.dotori.backend.domain.member.type.SocialType;
 
 import lombok.Builder;
 import lombok.Getter;

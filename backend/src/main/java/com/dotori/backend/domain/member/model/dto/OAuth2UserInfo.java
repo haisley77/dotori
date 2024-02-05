@@ -1,4 +1,4 @@
-package com.dotori.backend.domain.member.dto;
+package com.dotori.backend.domain.member.model.dto;
 
 import java.util.Map;
 
