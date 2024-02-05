@@ -1,5 +1,5 @@
 <template>
-  <!-- <div style="height: 100%" class="background-green q-pa-sm"> -->
+  <div style="height: 100%" class="background-green q-pa-sm">
     <div style="height: 100%" class="background-yellow q-pa-sm">
       <!-- <div class="column"> -->
         <div class="background-white">
@@ -12,7 +12,7 @@
         </div>
       </div>
     </div>
-  <!-- </div> -->
+  </div>
 </template>
 
 
@@ -108,3 +108,4 @@ const appendMessage = (nickname, message) => {
     font-family: 'NPSfontBold';
   }
 </style>
+
