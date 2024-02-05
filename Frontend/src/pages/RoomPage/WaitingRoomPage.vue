@@ -23,7 +23,6 @@
     </div>
   </div>
 
-
 </template>
 <script setup>
   import PlayerList from 'components/RoomPageComponents/PlayerList.vue';
@@ -40,7 +39,6 @@
   const {playerList,roleList,sendPlayerInfoToOpenVidu} = openViduStore;
   const bookInfo = roomInitializationParam.value.bookInfo;
   const roomInfo = roomInitializationParam.value.roomInfo;
-
   const member_id = ref(0);
 
   onMounted(() => {

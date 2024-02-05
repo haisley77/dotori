@@ -4,7 +4,7 @@
       <div class="column">
         <div class="background-white">
           <!-- 채팅 로그 -->
-          <div ref="chatLog" style="height: 150px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;">
+          <div ref="chatLog" style="height: 100px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;">
             <div v-for="(message, index) in messageList" :key="index">{{ message }}</div>
           </div>
         </div>
@@ -22,15 +22,15 @@
 import { ref, onMounted} from 'vue';
 import {useOpenViduStore} from 'stores/openvidu';
 const openViduStore = useOpenViduStore();
-const {session} = openViduStore;
+const {session, playerList} = openViduStore;
 const chatMessage = ref('');
 const messageList = ref([]);
 
 onMounted(() => {
   if (session) {
     session.on('signal:chat', (event) => {
-      // const data = JSON.parse(event.data);
-      // appendMessage(data.nickname, data.message);
+    const data = JSON.parse(event.data);
+    appendMessage(data.nickname, data.message);
     });
   }
 });
@@ -39,21 +39,25 @@ const sendMessage = () => {
   if (chatMessage.value && session) {
     const data = {
       message: chatMessage.value,
-      nickname: '사용자 닉네임',
+      nickname: playerList.roleName,
     };
     session.signal({
       data: JSON.stringify(data),
       type: 'chat',
     });
 
-    appendMessage(data.nickname, data.message);
+    // appendMessage(data.nickname, data.message);
     chatMessage.value = '';
   }
 };
 
 const appendMessage = (nickname, message) => {
-  messageList.value.push(`${nickname}: ${message}`);
+  const formattedMessage = `${nickname}: ${message}`;
+  messageList.value.push(formattedMessage);
+  if (nickname !== playerList.roleName) {
+  }
 };
+
 </script>
 
 <style scoped>
