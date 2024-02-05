@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class VideoService {
 	private final VideoUploadService videoUploadService;
-	private final VideoManageService videoSceneManageService;
+	private final VideoManageService videoManageService;
 
 	// TODO front 기능 개발에 따라 차후 수정
 	@Transactional
@@ -28,7 +28,7 @@ public class VideoService {
 		// TODO room 개발 완료시 수정
 		// Room room = roomService.getRoom(videoSceneUploadRequest.get(roomId));
 		Room room = null;
-		videoSceneManageService.saveSceneVideo(
+		videoManageService.saveSceneVideo(
 			room,
 			videoSceneUploadRequest.getSceneOrder(),
 			uploadSceneVideo.toString()
