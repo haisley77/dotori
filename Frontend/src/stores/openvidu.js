@@ -1,4 +1,4 @@
-import {ref, watch} from 'vue';
+import {ref} from 'vue';
 import {defineStore} from 'pinia';
 import {OpenVidu} from 'openvidu-browser';
 
@@ -53,6 +53,7 @@ export const useOpenViduStore
   const subscribers = ref([]);
   const mainStreamManager = ref();
   const member_id = ref(40);
+
 
   // 방 세션 설정 정보
   const session_properties = ref({});

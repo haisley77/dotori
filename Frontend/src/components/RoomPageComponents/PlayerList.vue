@@ -77,7 +77,6 @@
     </div>
   </div>
 </template>
-
 <script setup>
   import {storeToRefs} from 'pinia';
   import {useOpenViduStore} from 'stores/openvidu';
