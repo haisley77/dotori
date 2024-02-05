@@ -32,8 +32,8 @@ public class OAuth2LogoutSuccessHandler implements LogoutSuccessHandler {
 		accessTokenOpt.ifPresent(token -> {
 			// 쿠키에서 accessToken 제거
 			jwtService.removeAccessToken(response);
-
 			// Email 추출 후 Redis에서 refreshToken 블랙리스트 처리
+			//(블랙리스트:해당 리프레쉬토큰은 로그아웃처리가 끝난토큰이므로 후에 요청이와도 재사용되면안됨)
 			jwtService.extractEmail(token).ifPresent(email -> {
 				Optional<String> refreshTokenOpt = redisService.getRefreshToken(email);
 				refreshTokenOpt.ifPresent(refreshToken -> {
@@ -47,8 +47,8 @@ public class OAuth2LogoutSuccessHandler implements LogoutSuccessHandler {
 
 		// 클라이언트에 로그아웃 완료 응답
 		response.setStatus(HttpServletResponse.SC_OK);
-		response.getWriter().print("로그아웃 완료");
-		response.sendRedirect("/");
+		// response.getWriter().print("로그아웃 완료");
+
 	}
 
 }

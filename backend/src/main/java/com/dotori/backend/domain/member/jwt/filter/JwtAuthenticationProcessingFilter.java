@@ -83,6 +83,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 				return;
 			}
 			checkRefreshTokenAndMakeAccessToken(response, request);
+			filterChain.doFilter(request, response);
 			return; // RefreshToken을 보낸 경우에는 AccessToken을 재발급 하고 인증 처리는 하지 않게 하기위해 바로 return으로 필터 진행 막기
 		}
 
@@ -91,7 +92,9 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 		// AccessToken이 유효하다면, 인증 객체가 담긴 상태로 다음 필터로 넘어가기 때문에 인증 성공
 		if (refreshToken == null) {
 			checkAccessTokenAndAuthentication(request, response, filterChain);
+			filterChain.doFilter(request, response);
 		}
+
 	}
 
 	/**
