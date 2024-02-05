@@ -1,19 +1,19 @@
 package com.dotori.backend.domain.member.controller;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,24 +32,19 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class memberController {
 
-	private JwtService jwtService;
-	private MemberRepository memberRepository;
+	private final JwtService jwtService;
+	private final MemberRepository memberRepository;
 
-	private RedisService redisService;
+	private final RedisService redisService;
 
-	@GetMapping("/token")
-	public ResponseEntity<?> checkLoginStatus(HttpServletRequest request) {
-		// JWT 검증 로직 (쿠키에서 추출, 검증 등)
-		// 여기서는 예시로 쿠키의 존재 여부만 확인합니다.
-		Cookie[] cookies = request.getCookies();
-		if (cookies != null) {
-			for (Cookie cookie : cookies) {
-				if ("jwt".equals(cookie.getName())) {
-					return ResponseEntity.ok().body("로그인.");
-				}
-			}
-		}
-		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인안됨");
+	@GetMapping("/status")
+	public ResponseEntity<?> getAuthStatus() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+		// 인증 객체가 null이 아니고, 인증이 유효한 경우
+		boolean isAuthenticated = authentication != null && authentication.isAuthenticated();
+
+		return ResponseEntity.ok(Collections.singletonMap("isAuthenticated", isAuthenticated));
 	}
 
 	@GetMapping("/detail")
@@ -74,24 +69,25 @@ public class memberController {
 		}
 	}
 
-	@PostMapping("/logout")
-	public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) {
-		// JWT 토큰 추출
-		Optional<String> accessToken = jwtService.extractAccessToken(request);
-
-		accessToken.ifPresent(token -> {
-			// 쿠키 제거
-			jwtService.removeAccessToken(response);
-
-			// Refresh Token 제거
-			jwtService.extractEmail(token).ifPresent(redisService::removeRefreshToken);
-		});
-
-		return ResponseEntity.ok("로그아웃완료");
-	}
+	// @PostMapping("/logout")
+	// public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) {
+	// 	// JWT 토큰 추출
+	// 	Optional<String> accessToken = jwtService.extractAccessToken(request);
+	//
+	// 	accessToken.ifPresent(token -> {
+	// 		// 쿠키 제거
+	// 		jwtService.removeAccessToken(response);
+	//
+	// 		// Refresh Token 제거
+	// 		jwtService.extractEmail(token).ifPresent(redisService::removeRefreshToken);
+	// 	});
+	//
+	// 	return ResponseEntity.ok("로그아웃완료");
+	// }
 
 	@PutMapping("/update_nickname")
-	public ResponseEntity<?> updateNickname(HttpServletRequest request, @RequestParam String newNickname) {
+	public ResponseEntity<?> updateNickname(HttpServletRequest request,
+		@RequestParam("newNickname") String newNickname) {
 		// JWT에서 이메일 추출
 		Optional<String> jwtemail = jwtService.extractEmailFromAccessToken(request);
 		if (!jwtemail.isPresent()) {
