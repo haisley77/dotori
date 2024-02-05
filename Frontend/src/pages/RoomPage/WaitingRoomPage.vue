@@ -46,21 +46,24 @@
   onMounted(() => {
     // 대기방에 들어온 사용자의 아이디를 조회
     // member_id = await axios.get(path, accessToken);
-    member_id.value = 30;
+    member_id.value = 20;
 
-    // 대기방에 들어오면 내 정보를 playerList에 추가하고 갱신을 요청합니다.
     const player = {
-      name: '들어온사람',
+      name: '방장하은',
       memberId: member_id.value,
       profileImg: 'src/assets/MyPageImages/iupic.jpg',
-      roleName: '들어온사람',
+      roleName: '방장하은',
       roleIndex: 5,
       readyState: false,
     };
 
-    sendingIncomingData.value.player = player;
-    sendIncomingInfoToOpenVidu();
 
+    if (roomInfo.hostId === member_id.value) {  // 방장이면 참여자 리스트에 본인 추가
+      playerList.value.push(player);
+    } else {  // 방장이 아니면 들어왔다고 signal
+      sendingIncomingData.value.player = player;
+      sendIncomingInfoToOpenVidu();
+    }
   })
 
 

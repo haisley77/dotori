@@ -350,8 +350,15 @@ export const useOpenViduStore
   session.on('signal:player-incoming', (event) => {
     console.log('받음');
     const receivedData = JSON.parse(event.data);
-    playerList.value = receivedData.playerList;
-    // room joinCnt 갱신
+    // 방장이 아니면
+    if (member_id.value !== room_info.value.hostId) {
+      playerList.value = receivedData.playerList;
+      // 만약 들어오기 전에 role을 변경하고 있다면 roleList도 같이 보내야함
+      // room joinCnt 갱신
+      console.log('방장이 준 정보로 업데이트한다.');
+    } else {
+      console.log('방장이라서 업데이트 안한다');
+    }
   });
 
   // 방 참여자가 playerList를 요청하면 방장이 대표로 기존 playerList에 해당 player를 추가해 방 참여자들에게 보낸다.
