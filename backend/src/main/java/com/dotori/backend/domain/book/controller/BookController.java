@@ -1,13 +1,12 @@
 package com.dotori.backend.domain.book.controller;
 
-import static org.springframework.http.HttpStatus.*;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dotori.backend.domain.book.model.dto.BookDetailDto;
 import com.dotori.backend.domain.book.model.dto.GetSceneResponse;
 import com.dotori.backend.domain.book.model.dto.GetScenesResponse;
 import com.dotori.backend.domain.book.model.dto.response.GetBookResponse;
@@ -27,12 +26,13 @@ public class BookController {
 
 	@GetMapping
 	public ResponseEntity<GetBooksResponse> getBooks() {
-		return new ResponseEntity<>(bookService.getBooks(), OK);
+		return ResponseEntity.ok(new GetBooksResponse(bookService.getBooks()));
 	}
 
 	@GetMapping("/{bookId}")
 	public ResponseEntity<GetBookResponse> getBook(@PathVariable Long bookId) {
-		return new ResponseEntity<>(bookService.getBook(bookId), OK);
+		return ResponseEntity.ok(
+			new GetBookResponse(bookService.getBook(bookId), bookService.getRolesByBookId(bookId)));
 	}
 
 	@GetMapping("/{bookId}/scenes")
@@ -44,5 +44,16 @@ public class BookController {
 	public ResponseEntity<GetSceneResponse> getSceneBySceneId(@PathVariable Long sceneId) {
 		return ResponseEntity.ok()
 			.body(new GetSceneResponse(sceneService.getScene(sceneId)));
+	}
+
+	@GetMapping("/{bookId}/detail")
+	public ResponseEntity<BookDetailDto> getBookDetailByBookId(@PathVariable Long bookId) {
+		return ResponseEntity.ok().body(
+			BookDetailDto.builder()
+				.book(bookService.getBook(bookId))
+				.roles(bookService.getRolesByBookId(bookId))
+				.scenes(sceneService.getSceneDetailsByBookId(bookId))
+				.build()
+		);
 	}
 }

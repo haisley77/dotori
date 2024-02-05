@@ -39,4 +39,12 @@ public class SceneService {
 			.orElseThrow(() -> new EntityNotFoundException("해당하는 scene이 존재하지 않습니다."));
 		return toSceneDetailDto(scene);
 	}
+
+	@Transactional(readOnly = true)
+	public List<SceneDetailDto> getSceneDetailsByBookId(Long bookId) {
+		return sceneRepository.findByBook_BookId(bookId)
+			.stream()
+			.map(BookMapper::toSceneDetailDto)
+			.collect(toList());
+	}
 }
