@@ -99,7 +99,6 @@ export const useOpenViduStore
         return;
       }
 
-      axios.post(apiPath, roomInitializationParam.value);
       axios.post(apiPath, roomInitializationParam.value)
         .then((response) => {
           console.log(response.status);
