@@ -18,7 +18,7 @@
 
 <script setup>
 import {ref, onMounted } from 'vue'
-const props = defineProps(['session']); 
+const props = defineProps(['session']);
 const chatMessage = ref('');
 const chatLog = document.getElementById('chatLog');
 
@@ -26,7 +26,7 @@ const chatLog = document.getElementById('chatLog');
 // 변경하지 않는 부분
 onMounted(() => {
   //채팅 기능을 초기화.
-  if (session.value) {
+  if (session) {
     session.value.on('signal:chat', (event) => {
       const data = JSON.parse(event.data);
       appendMessage(data.nickname, data.message);
@@ -35,7 +35,7 @@ onMounted(() => {
 });
 
 const sendMessage = () => {
-  if (chatMessage.value && session.value) {
+  if (chatMessage.value && session) {
     const data = {
       message: chatMessage.value,
       nickname: '사용자 닉네임',
