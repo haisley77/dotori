@@ -27,12 +27,13 @@ public class BookController {
 
 	@GetMapping
 	public ResponseEntity<GetBooksResponse> getBooks() {
-		return new ResponseEntity<>(bookService.getBooks(), OK);
+		return ResponseEntity.ok(new GetBooksResponse(bookService.getBooks()));
 	}
 
 	@GetMapping("/{bookId}")
 	public ResponseEntity<GetBookResponse> getBook(@PathVariable Long bookId) {
-		return new ResponseEntity<>(bookService.getBook(bookId), OK);
+		return ResponseEntity.ok(
+			new GetBookResponse(bookService.getBook(bookId), bookService.getRolesByBookId(bookId)));
 	}
 
 	@GetMapping("/{bookId}/scenes")

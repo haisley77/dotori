@@ -30,29 +30,26 @@ public class BookService {
 
 	private final RoleRepository roleRepository;
 
-	public GetBooksResponse getBooks() {
-		List<BookDto> books = bookRepository.findAll()
+	public List<BookDto> getBooks() {
+		return bookRepository.findAll()
 			.stream()
 			.map(BookMapper::toBookDto)
 			.collect(Collectors.toList());
-
-		return GetBooksResponse.builder().books(books).build();
 	}
 
-	public GetBookResponse getBook(Long bookId) {
+	public BookDto getBook(Long bookId) {
 		Book book = bookRepository.findById(bookId).orElseThrow(
 			() -> new EntityNotFoundException("해당하는 책이 존재하지 않습니다.")
 		);
 
-		BookDto bookDto = BookMapper.toBookDto(book);
+		return BookMapper.toBookDto(book);
+	}
 
+	public List<RoleDto> getRolesByBookId(Long bookId) {
 		List<Role> roleList = roleRepository.findByBook_BookId(bookId);
-		List<RoleDto> roles = new LinkedList<>();
 
-		for (Role role : roleList) {
-			roles.add(BookMapper.toRoleDto(role));
-		}
-
-		return GetBookResponse.builder().book(bookDto).roles(roles).build();
+		return roleList.stream()
+			.map(BookMapper::toRoleDto)
+			.collect(Collectors.toList());
 	}
 }
