@@ -2,13 +2,12 @@
   <div class="player">
     <div class="row">
       <div v-for="player in 4" :key="player" class="col-6 q-pa-sm text-h3">
-        <div v-if="player <= props.playerList.length">
+        <div v-if="player <= playerList.length">
           <!-- 플레이어가 있으면서 사용자의 프로필이 맞는 경우-->
-          <div class="profile-background q-pa-sm" >
-<!--               v-if="props.memberId === props.playerList[player-1].memberId"-->
+          <div class="profile-background q-pa-sm" v-if="memberId === playerList[player-1].memberId">
             <div class="dashed column items-center">
-              <img :src="props.playerList[player - 1].profileImg" class="profile-pic q-mr-md q-mt-sm" alt="user-profile-img" style="object-fit: cover">
-              <h4 class="q-mr-md q-mt-md q-mb-sm player-name">{{ props.playerList[player - 1].roleName }}</h4>
+              <img :src="playerList[player - 1].profileImg" class="profile-pic q-mr-md q-mt-sm" alt="user-profile-img" style="object-fit: cover">
+              <h4 class="q-mr-md q-mt-md q-mb-sm player-name">{{ playerList[player - 1].roleName }}</h4>
               <div class="row q-mt-none q-mb-sm">
                 <q-btn unelevated rounded color="my-brown q-mr-sm btn-font">
                   <q-menu fit anchor="bottom start" self="top left">
@@ -24,29 +23,29 @@
               </div>
             </div>
           </div>
-<!--          &lt;!&ndash; 플레이어가 있으면서 사용자의 프로필이 아닌 경우&ndash;&gt;-->
-<!--          <div class="profile-background q-pa-sm" v-else>-->
-<!--            <div class="dashed column items-center">-->
-<!--              <img :src="props.playerList[player - 1].profileImg" class="profile-pic q-mr-md q-mt-sm" alt="user-profile-img" style="object-fit: cover">-->
-<!--              <h4 class="q-mr-md q-mt-md q-mb-sm player-name">{{ props.playerList[player - 1].roleName }}</h4>-->
-<!--              <div class="row q-mt-none q-mb-sm" style="visibility: hidden">-->
-<!--                <q-btn unelevated rounded color="my-brown q-mr-sm btn-font">-->
-<!--                  <q-menu fit anchor="bottom start" self="top left">-->
-<!--                    <q-item clickable>-->
-<!--                      <q-item-section>토끼</q-item-section>-->
-<!--                    </q-item>-->
-<!--                    <q-item clickable>-->
-<!--                      <q-item-section>거북이</q-item-section>-->
-<!--                    </q-item>-->
-<!--                  </q-menu>-->
-<!--                  <div>역할 선택하기</div>-->
-<!--                </q-btn>-->
-<!--                <q-btn unelevated rounded color="my-green q-ml-sm btn-font">-->
-<!--                  <div>커스텀 아바타</div>-->
-<!--                </q-btn>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
+          <!-- 플레이어가 있으면서 사용자의 프로필이 아닌 경우-->
+          <div class="profile-background q-pa-sm" v-else>
+            <div class="dashed column items-center">
+              <img :src="playerList[player - 1].profileImg" class="profile-pic q-mr-md q-mt-sm" alt="user-profile-img" style="object-fit: cover">
+              <h4 class="q-mr-md q-mt-md q-mb-sm player-name">{{ playerList[player - 1].roleName }}</h4>
+              <div class="row q-mt-none q-mb-sm" style="visibility: hidden">
+                <q-btn unelevated rounded color="my-brown q-mr-sm btn-font">
+                  <q-menu fit anchor="bottom start" self="top left">
+                    <q-item clickable>
+                      <q-item-section>토끼</q-item-section>
+                    </q-item>
+                    <q-item clickable>
+                      <q-item-section>거북이</q-item-section>
+                    </q-item>
+                  </q-menu>
+                  <div>역할 선택하기</div>
+                </q-btn>
+                <q-btn unelevated rounded color="my-green q-ml-sm btn-font">
+                  <div>커스텀 아바타</div>
+                </q-btn>
+              </div>
+            </div>
+          </div>
         </div>
         <!-- 플레이어가 없는 경우 -->
         <div v-else>

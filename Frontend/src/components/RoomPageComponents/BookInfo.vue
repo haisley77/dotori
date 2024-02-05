@@ -12,10 +12,10 @@
       </div>
       <hr class='q-ma-none' />
       <div class=' column q-pa-sm background-white'>
-        제목 : {{props.bookInfo.title}}<br />
-        저자 :  {{props.bookInfo.author}}<br />
-        필요 인원 : {{props.bookInfo.roleCnt}}<br />
-        줄거리 : {{props.bookInfo.summary}}
+        제목 : {{bookInfo.title}}<br />
+        저자 :  {{bookInfo.author}}<br />
+        필요 인원 : {{bookInfo.roleCnt}}<br />
+        줄거리 : {{bookInfo.summary}}
         <br />
       </div>
     </div>
