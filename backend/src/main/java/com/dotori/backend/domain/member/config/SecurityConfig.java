@@ -1,5 +1,6 @@
 package com.dotori.backend.domain.member.config;
 
+import org.apache.hc.core5.http.HttpHeaders;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -64,17 +65,17 @@ public class SecurityConfig {
 			// 기본 페이지, css, image, js 하위 폴더에 있는 자료들은 모두 접근 가능
 			.antMatchers("/",
 				"/css/**", "/images/**", "/js/**",
-				"/favicon.ico", "/resources/**", "/static/**")
+				"/favicon.ico", "/resources/**", "/static/**", "/error")
 			.permitAll()
 
 			.antMatchers("/**")
 			.permitAll() // 회원가입 접근 가능
 
-			.anyRequest()
-			.authenticated() // 위의 경로 이외에는 모두 인증된 사용자만 접근 가능
+			// .anyRequest()
+			// .authenticated() // 위의 경로 이외에는 모두 인증된 사용자만 접근 가능
 			.and()
 			.logout()
-			.logoutUrl("/logout") // 로그아웃 URL 지정
+			.logoutUrl("/api/members/logout") // 로그아웃 URL 지정
 			.logoutSuccessHandler(OAuth2LogoutSuccessHandler)
 			.invalidateHttpSession(true) // 세션 무효화
 			.deleteCookies("JSESSIONID") // 쿠키 삭제
@@ -105,9 +106,13 @@ public class SecurityConfig {
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
-		configuration.addAllowedOrigin("*"); // 모든 도메인에서 접근 허용 (실제 운영 환경에서는 보안 상의 이유로 특정 도메인만 허용해야 함)
+		configuration.addAllowedOriginPattern("*"); // 모든 도메인에서 접근 허용
 		configuration.addAllowedMethod("*"); // 모든 HTTP 메소드 허용
 		configuration.addAllowedHeader("*"); // 모든 헤더 허용
+		configuration.setAllowCredentials(true); // 쿠키 허용
+		configuration.addExposedHeader(HttpHeaders.LOCATION); // 특정 헤더 노출
+		configuration.addExposedHeader(HttpHeaders.SET_COOKIE); // 쿠키 설정 헤더 노출
+
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
 		return source;
