@@ -7,41 +7,49 @@
   const slides = ref([{
     img: 'src/assets/MyPageImages/karina.jpg',
     name: 'first',
-    headText: 'FirstStop',
-    bottomText: 'this is first stop',
+    headText: '도토리에 오신것을 환영합니다',
+    bottomText: '카리나!!!!',
 
   }, {
     img: 'src/assets/MyPageImages/winter.png',
     name: 'second',
-    headText: 'secondStop',
-    bottomText: 'this is second stop',
+    headText: 'Welcome To Dotori Online',
+    bottomText: '윈터!!!',
+
+  }, {
+    img: 'src/assets/MyPageImages/iupic.jpg',
+    name: 'third',
+    headText: '나만의 이야기를 만들어보세요',
+    bottomText: '아이유!!',
 
   }]);
 </script>
 
 <template>
   <q-carousel
-
+    navigation
     infinite
-    :autoplay="autoplay"
+    :autoplay='autoplay'
     animated
-    v-model="slide"
-    height="600px"
+    v-model='slide'
+    height='91vh'
   >
     <q-carousel-slide
-      v-for="(slide, index) in slides"
-      :key="index"
-      :name="slide.name"
-      :img-src="slide.img"
+      v-for='(slide, index) in slides'
+      :key='index'
+      :name='slide.name'
+      :img-src='slide.img'
     >
-      <div class="absolute-bottom custom-caption">
-        <div class="text-h2 npsfont">{{ slide.headText }}</div>
-        <div class="text-subtitle1 npsfont">{{ slide.bottomText }}</div>
+      <div class='absolute-bottom custom-caption'>
+        <div class='text-h2 npsfont q-pa-sm text-border'>{{ slide.headText }}</div>
+        <div class='text-h3 npsfont q-pa-sm text-border'>{{ slide.bottomText }}</div>
       </div>
     </q-carousel-slide>
   </q-carousel>
 </template>
 
-<style lang="scss" scoped>
-
+<style lang='scss' scoped>
+  .text-border {
+    text-shadow: -1px 0px #C7A96E, 0px 1px #C7A96E, 1px 0px #C7A96E, 0px -1px #C7A96E;
+  }
 </style>

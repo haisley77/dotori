@@ -4,17 +4,17 @@
   <MainPageCarousel />
   <div class="row">
 
-    <div class="col-10 offset-1">
+    <div class="col-12">
 
-      <div class="row" style="height: 100px"></div>
+      <div class="row" style="height: 250px"></div>
       <div ref="animatedTextRef1" class="animated-text">
         <ElementOne />
       </div>
-      <div class="row" style="height: 300px"></div>
+      <div class="row" style="height: 250px;"></div>
       <div ref="animatedTextRef2" class="animated-text">
         <ElementTwo />
       </div>
-      <div class="row" style="height: 300px"></div>
+      <div class="row" style="height: 250px"></div>
       <div ref="animatedTextRef3" class="animated-text">
         <ElementThree />
         <div class="row" style="height: 300px"></div>
