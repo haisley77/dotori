@@ -272,4 +272,60 @@ class BookControllerTest {
 				jsonPath("$.sceneDetailDto.scriptDto[1].roleDto.maskPath").value(script2.getRole().getMaskPath()))
 			.andDo(print());
 	}
+
+	@Test
+	@DisplayName("책 상세정보 조회 테스트 - 책, 장면, 대사, 역할 포함")
+	void getBookDetailByBookId() throws Exception {
+		Book book = Book.builder()
+			.title("title1")
+			.author("author1")
+			.roleCnt(1)
+			.bookImg("bookImg1")
+			.summary("summary1")
+			.build();
+		bookRepository.save(book);
+
+		Scene scene = Scene.builder()
+			.backgroundImage("bgImg1")
+			.sceneOrder(1)
+			.book(book)
+			.build();
+
+		Role role1 = Role.builder()
+			.book(book)
+			.name("name1")
+			.maskPath("maskPath1")
+			.build();
+
+		Role role2 = Role.builder()
+			.book(book)
+			.name("name2")
+			.maskPath("maskPath2")
+			.build();
+
+		roleRepository.save(role1);
+		roleRepository.save(role2);
+
+		Script script1 = Script.builder()
+			.scene(scene)
+			.role(role1)
+			.content("content1")
+			.scriptOrder(1)
+			.build();
+
+		Script script2 = Script.builder()
+			.scene(scene)
+			.role(role2)
+			.content("content2")
+			.scriptOrder(2)
+			.build();
+		scene.addScript(script1);
+		scene.addScript(script2);
+		sceneRepository.save(scene);
+
+		mockMvc.perform(get("/api/books/{bookId}/detail", book.getBookId()))
+			.andExpect(status().isOk())
+			.andExpect(content().contentType(APPLICATION_JSON))
+			.andDo(print());
+	}
 }
