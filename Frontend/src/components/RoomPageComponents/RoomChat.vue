@@ -18,16 +18,16 @@
 
 <script setup>
 import {ref, onMounted } from 'vue'
-const props = defineProps(['session']);
+import {useOpenViduStore} from 'stores/openvidu';
 const chatMessage = ref('');
 const chatLog = document.getElementById('chatLog');
-
+const {session} = useOpenViduStore;
 
 // 변경하지 않는 부분
 onMounted(() => {
   //채팅 기능을 초기화.
   if (session) {
-    session.value.on('signal:chat', (event) => {
+    session.on('signal:chat', (event) => {
       const data = JSON.parse(event.data);
       appendMessage(data.nickname, data.message);
     });
@@ -40,7 +40,7 @@ const sendMessage = () => {
       message: chatMessage.value,
       nickname: '사용자 닉네임',
     };
-    session.value.signal({
+    session.signal({
       data: JSON.stringify(data),
       type: 'chat',
     });
