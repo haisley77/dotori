@@ -7,7 +7,7 @@
         <div id="chatLog" style="height: 110px; overflow-y: auto; padding: 10px;"></div>
         <!-- </div> -->
         <div class="row ">
-          <q-input color="green" bg-color="green-1" v-model="chatMessage" @keyup.enter="sendMessage" placeholder="메시지를 입력하세요" :dense="dense" class="col-11"/>
+          <q-input color="brown-1" bg-color="brown-1" v-model="chatMessage" @keyup.enter="sendMessage" placeholder="메시지를 입력하세요" :dense="dense" class="col-11"/>
           <q-btn color="my-green" bg-color="white" class="col-1 q-pa-none npsfont chat">전송</q-btn>
         </div>
       </div>
