@@ -65,25 +65,26 @@ const appendMessage = (nickname, message) => {
 
 
 <style scoped>
-.bg-my-green {
-  background: #35daa0 !important;
-}
 
-.input-background {
-  background-color: floralwhite;
-  height: 1em;
+  .bg-my-green {
+    background: #C7A96E !important;
+  }
 
-}
+  .input-background {
+    background-color: floralwhite;
+    height: 1em;
 
-.send-button {
-  height: 1em;
-}
+  }
 
-.background-green {
-  background: #35daa0;
-  border-radius: 20px 20px 20px 20px;
+  .send-button {
+    height: 1em;
+  }
 
-}
+  .background-green {
+    background: #C7A96E;
+    border-radius: 20px 20px 20px 20px;
+
+  }
 
   .background-yellow {
     background: white;
@@ -96,14 +97,14 @@ const appendMessage = (nickname, message) => {
     height: 7.5em;
     //color : #a84d2f; border-radius: 10px 10px 10px 10px; font-family: NPSfontBold; //border: solid #cc765a 2px;
 
-}
+  }
 
   .chat {
     border-radius: 20px 20px 20px 20px;
     //border: solid #cc765a 2px;
   }
 
-.npsfont {
-  font-family: 'NPSfontBold';
-}
+  .npsfont {
+    font-family: 'NPSfontBold';
+  }
 </style>
