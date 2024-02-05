@@ -80,6 +80,7 @@
 <script setup>
   import {storeToRefs} from 'pinia';
   import {useOpenViduStore} from 'stores/openvidu';
+  import {onMounted,ref,watch} from 'vue';
 
   const props = defineProps({
     memberId: Object,
@@ -89,25 +90,32 @@
   const {sendingRoleData,playerList,roleList} = storeToRefs(openViduStore);
   const {sendRoleInfoToOpenVidu} = openViduStore;
 
-
   const makeSendingRoleData = () => {
     sendingRoleData.value.roleList = roleList.value;
     sendingRoleData.value.playerList = playerList.value;
   }
+  watch(playerList.value, (newItems, oldItems) => {
+    // 변경된 요소의 인덱스 찾기
+    const changedIndex = playerList.value.findIndex((item, index) => {
+      return newItems === item && oldItems[index] !== newItems;
+    });
+    if (changedIndex !== -1 && changedIndex !== 0) {
+      playerList.value[changedIndex] = {
+        name: newItems.value[changedIndex].name,
+        memberId: newItems.value[changedIndex].memberId,
+        profileImg: newItems.value[changedIndex].profileImg,
+        roleName: newItems.value[changedIndex].roleName,
+        roleIndex: newItems.value[changedIndex].roleIndex,
+        readyState: newItems.value[changedIndex].readyState,
+      }
+    }
+  }, {deep: true});
 
 
   const toggleRole = (player, selectedIndex) => {
     // 역할 선택
     if (playerList.value[player-1].roleIndex === selectedIndex) {
       alert('정상적으로 선택되었습니다.');
-      playerList.value[player-1] = {
-        name: playerList.value[player-1].name,
-        memberId: playerList.value[player-1].memberId,
-        profileImg: playerList.value[player-1].profileImg,
-        roleName: playerList.value[player-1].roleName,
-        roleIndex: playerList.value[player-1].roleIndex,
-        readyState: playerList.value[player-1].readyState,
-      };
       return;
     }
     // 역할 중복 선택 불가
@@ -122,15 +130,9 @@
     }
     if (selectedRole) {
       selectedRole.selected = true;
+      playerList.value[player-1].roleName = selectedRole.name;
+      playerList.value[player-1].roleIndex = selectedIndex;
 
-      playerList.value[player-1] = {
-        name: playerList.value[player-1].name,
-        memberId: playerList.value[player-1].memberId,
-        profileImg: playerList.value[player-1].profileImg,
-        roleName: selectedRole.name,
-        roleIndex: selectedIndex,
-        readyState: playerList.value[player-1].readyState,
-      };
     }
     makeSendingRoleData();
     sendRoleInfoToOpenVidu();
@@ -138,15 +140,8 @@
 
   const cancelRole = (player) => {
     roleList.value[playerList.value[player-1].roleIndex].selected = false;
-
-    playerList.value[player-1] = {
-      name: playerList.value[player-1].name,
-      memberId: playerList.value[player-1].memberId,
-      profileImg: playerList.value[player-1].profileImg,
-      roleName: playerList.value[player-1].name,
-      roleIndex: 5,
-      readyState: playerList.value[player-1].readyState,
-    };
+    playerList.value[player-1].roleName = playerList.value[player-1].name;
+    playerList.value[player-1].roleIndex = 5;
     makeSendingRoleData();
     sendRoleInfoToOpenVidu();
   }

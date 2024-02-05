@@ -52,7 +52,7 @@ export const useOpenViduStore
   const is_private = ref(false);
   const subscribers = ref([]);
   const mainStreamManager = ref();
-  const member_id = ref(40);
+  const member_id = ref(20);
 
   // 방 세션 설정 정보
   const session_properties = ref({});
@@ -60,7 +60,7 @@ export const useOpenViduStore
   // 커넥션 설정 정보
   const connection_properties = ref({});
 
-  // 방 설정 정보
+  // 방 생성 정보
   const room_info = ref({
     hostId: member_id.value,
     title: null,
@@ -71,6 +71,8 @@ export const useOpenViduStore
     isPublic: true,
   });
 
+
+  // 방 생성에 필요한 초기 정보(dto)임. 방 정보 아님 !!!!!!!!!!!!!!!!! 책 정보 방 정보 따로 저장해야함
   const roomInitializationParam = ref({
     sessionProperties: null,
     connectionProperties: null,
@@ -248,6 +250,11 @@ export const useOpenViduStore
   });
 
   const sendingPlayerData = ref({
+    playerList: null,
+  });
+
+  const sendingIncomingData = ref({
+    incoming: true,
     player: null,
   });
 
@@ -302,53 +309,74 @@ export const useOpenViduStore
     });
   };
 
+  const sendIncomingInfoToOpenVidu = () => {
+    return new Promise((resolve, reject) => {
+      session.signal({
+        data: JSON.stringify(sendingIncomingData.value),
+        to: [],
+        type: 'signal:give-playerList',
+      })
+        .then(() => {
+          console.log('전송함');
+          resolve('누군가들어옴');
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  };
 
-  // signal 타입 이벤트가 도착하면 받은 데이터를 json 객체로 파싱하여 반영한다.
+  // 방 참여자의 역할 정보가 변경되었다는 이벤트를 수신하면 방 참여자들은 변경 내용을 반영한다.
   session.on('signal:update-role', (event) => {
-    console.log('여기임');
-    console.log(event);
     const receivedData = JSON.parse(event.data);
-    console.log(receivedData);
-    playerList.value.forEach((playerInfo, index) => {
-      playerList.value[index] = receivedData.playerList[index];
-    });
-    roleList.value.forEach((roleInfo, index) => {
-      roleList.value[index] = receivedData.roleList[index];
-    });
+    playerList.value = receivedData.playerList;
+    roleList.value = receivedData.roleList
     console.log(playerList.value);
     console.log(roleList.value);
   });
 
+  // 녹화방으로 이동하라는 이벤트를 수신하면 방 참여자들은 모두 녹화방으로 이동한다.
   session.on('signal:move-recording', (event) => {
     console.log('받음');
     const receivedData = JSON.parse(event.data);
     if (receivedData.recording === true) {
-      room_info.value.isRecording = true;
+      // room_info.value.isRecording = true;
+      // room isRecording 갱신
       router.push('/recording'); // 녹화방으로 이동
     }
   });
 
+  // 방 참여자가 발생하면 방에 있던 모든 참여자들은 playerList를 갱신하여 반영한다.
   session.on('signal:player-incoming', (event) => {
     console.log('받음');
     const receivedData = JSON.parse(event.data);
-    playerList.value.push(receivedData.player);
+    playerList.value = receivedData.playerList;
     // room joinCnt 갱신
   });
 
+  // 방 참여자가 playerList를 요청하면 방장이 대표로 기존 playerList에 해당 player를 추가해 방 참여자들에게 보낸다.
+  session.on('signal:give-playerList', (event) => {
+    console.log('받음');
+    const receivedData = JSON.parse(event.data);
+    if (member_id.value === room_info.value.hostId) {
+      console.log('방장이니까 playerList 정보를 주겠다..');
+      playerList.value.push(receivedData.player);
+      sendingPlayerData.value.playerList = playerList.value;
+      sendPlayerInfoToOpenVidu();
+    } else {
+      console.log('방장이 아니라서 playerList 정보를 줄 수 없다...');
+    }
+  });
+
   const playerList = ref([
-    // {
-    //   name: '조석현',
-    //   profileImg: 'src/assets/MyPageImages/cho.jpg',
-    //   role: '',
-    // },
-    // {
-    //   name: 'Winter',
-    //   memberId: 1,
-    //   profileImg: 'src/assets/MyPageImages/winter.png',
-    //   roleName: 'Winter',
-    //   roleIndex: 5,     // db에서 조회해 온 역할 정보들을 가진 roleList 상의 인덱스를 저장합니다. 초기엔 5 default.
-    //   readyState: false, // 유저의 준비 상태를 저장합니다. 녹화방 이동을 테스트하기 위해 true로 지정. 원래는 false default.
-    // },
+    {
+      name: 'Winter',
+      memberId: 1,
+      profileImg: 'src/assets/MyPageImages/winter.png',
+      roleName: 'Winter',
+      roleIndex: 5,     // db에서 조회해 온 역할 정보들을 가진 roleList 상의 인덱스를 저장합니다. 초기엔 5 default.
+      readyState: false, // 유저의 준비 상태를 저장합니다. 녹화방 이동을 테스트하기 위해 true로 지정. 원래는 false default.
+    },
     // {
     //   name: '카리나',
     //   memberId: 2,
@@ -357,11 +385,6 @@ export const useOpenViduStore
     //   roleIndex: 5,
     //   readyState: true,
     // },
-    // {
-    //   name: '아이유',
-    //   profileImg: 'src/assets/MyPageImages/iupic.jpg',
-    // },
-
   ]);
 
 // 역할 리스트
@@ -400,6 +423,7 @@ export const useOpenViduStore
     sendingRoleData,
     sendingMoveData,
     sendingPlayerData,
+    sendingIncomingData,
     createRoom,
     connectToOpenVidu,
     addRoomMember,
@@ -408,6 +432,7 @@ export const useOpenViduStore
     sendRoleInfoToOpenVidu,
     sendMoveInfoToOpenVidu,
     sendPlayerInfoToOpenVidu,
+    sendIncomingInfoToOpenVidu,
     roleList,
     subscribers, mainStreamManager, OV, bookInfoList,
     getConnectionToken,

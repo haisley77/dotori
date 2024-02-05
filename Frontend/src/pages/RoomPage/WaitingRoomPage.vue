@@ -36,8 +36,8 @@
   import {storeToRefs} from 'pinia';
 
   const openViduStore = useOpenViduStore();
-  const {roomInitializationParam,sendingPlayerData,playerList,roleList} = storeToRefs(openViduStore);
-  const {sendPlayerInfoToOpenVidu} = openViduStore;
+  const {roomInitializationParam,sendingIncomingData,playerList} = storeToRefs(openViduStore);
+  const {sendIncomingInfoToOpenVidu} = openViduStore;
   const bookInfo = roomInitializationParam.value.bookInfo;
   const roomInfo = roomInitializationParam.value.roomInfo;
 
@@ -46,21 +46,20 @@
   onMounted(() => {
     // 대기방에 들어온 사용자의 아이디를 조회
     // member_id = await axios.get(path, accessToken);
-    member_id.value = 20;
+    member_id.value = 30;
 
     // 대기방에 들어오면 내 정보를 playerList에 추가하고 갱신을 요청합니다.
     const player = {
-      name: '방장',
+      name: '들어온사람',
       memberId: member_id.value,
       profileImg: 'src/assets/MyPageImages/iupic.jpg',
-      roleName: '방장',
+      roleName: '들어온사람',
       roleIndex: 5,
       readyState: false,
     };
-    playerList.value.push(player);
 
-    sendingPlayerData.value.player = player;
-    sendPlayerInfoToOpenVidu();
+    sendingIncomingData.value.player = player;
+    sendIncomingInfoToOpenVidu();
 
   })
 
