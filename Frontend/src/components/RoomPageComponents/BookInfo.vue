@@ -11,7 +11,7 @@
         <img src='../../assets/BookImages/rabbitandturtle.jpg' class='bookimg q-pb-sm'>
       </div>
       <hr class='q-ma-none' />
-      <div class=' column q-pa-sm background-white'>
+      <div class=' column q-pa-sm background-white' style="overflow: auto">
         제목 : {{bookInfo.title}}<br />
         저자 :  {{bookInfo.author}}<br />
         필요 인원 : {{bookInfo.roleCnt}}<br />
