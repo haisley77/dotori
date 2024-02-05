@@ -15,13 +15,12 @@ import lombok.ToString;
 @ToString
 @RequiredArgsConstructor
 public class VideoSceneUploadRequest {
-	@NotBlank
 	@Positive
-	private Long roomId;
+	private final Long roomId;
 
 	@NotNull
 	@Positive
-	private int sceneOrder;
+	private final int sceneOrder;
 
 	@NotBlank
 	private final String fileName;
