@@ -236,20 +236,27 @@ export const useOpenViduStore
   };
 
   const sendingRoleData = ref({
+    info: 'update-role',
     playerList: null,
     roleList: null,
   });
 
   const sendingMoveData = ref({
+    info: 'move-recording',
     recording: null,
   });
+
+  const sendingPlayerData = ref({
+    info: 'player-incoming',
+    player: null,
+  })
 
   const sendRoleInfoToOpenVidu = () => {
     return new Promise((resolve, reject) => {
       session.signal({
         data: JSON.stringify(sendingRoleData.value),
         to: [],
-        type: 'update-role',
+        type: 'signal',
       })
         .then(() => {
           resolve('역할 선택 정보 전송 성공');
@@ -260,23 +267,12 @@ export const useOpenViduStore
     });
   };
 
-  // 역할 정보 업데이트 이벤트가 발생하면 받은 데이터를 json 객체로 파싱하여 반영한다.
-  session.on('update-role', (event) => {
-    const receivedData = JSON.parse(event.data);
-    playerList.forEach((playerInfo, index) => {
-      playerList[index] = receivedData.data.playerList[index];
-    })
-    roleList.forEach((roleInfo, index) => {
-      roleList[index] = receivedData.data.roleList[index];
-    })
-  });
-
   const sendMoveInfoToOpenVidu = () => {
     return new Promise((resolve, reject) => {
       session.signal({
         data: JSON.stringify(sendingMoveData.value),
         to: [],
-        type: 'move-recording',
+        type: 'signal'
       })
         .then(() => {
           resolve('녹화방 이동 정보 전송 성공');
@@ -287,15 +283,46 @@ export const useOpenViduStore
     });
   };
 
+  const sendPlayerInfoToOpenVidu = () => {
+    return new Promise((resolve, reject) => {
+      session.signal({
+        data: JSON.stringify(sendingPlayerData.value),
+        to: [],
+        type: 'signal',
+      })
+        .then(() => {
+          resolve('새로운 참여자 정보 전송 성공');
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  };
 
-  // 녹화방 이동 이벤트가 발생하면 받은 데이터를 json 객체로 파싱하여 반영한다.
-  session.on("move-recording", (event) => {
+
+  // signal 타입 이벤트가 도착하면 받은 데이터를 json 객체로 파싱하여 반영한다.
+  session.on('signal', (event) => {
     const receivedData = JSON.parse(event.data);
-    if (receivedData.data.recording === true) {
-      room_info.value.isRecording = true;
-      router.push('/recording'); // 녹화방으로 이동
+    if (receivedData.data.info === 'update-role') {
+      playerList.forEach((playerInfo, index) => {
+        playerList[index] = receivedData.data.playerList[index];
+      })
+      roleList.forEach((roleInfo, index) => {
+        roleList[index] = receivedData.data.roleList[index];
+      })
+    } else if (receivedData.data.info === 'move-recording') {
+      if (receivedData.data.recording === true) {
+        room_info.value.isRecording = true;
+        router.push('/recording'); // 녹화방으로 이동
+      }
+    } else if (receivedData.data.info === 'player-incoming') {
+      playerList.push(receivedData.data.player);
+      // room joinCnt 갱신
+    } else if (receivedData.data.info === 'chatting') {
+      // 채팅 코드 넣기
     }
   });
+
 
   const playerList = [
     // {
@@ -359,6 +386,7 @@ export const useOpenViduStore
     roomInitializationParam,
     sendingRoleData,
     sendingMoveData,
+    sendingPlayerData,
     createRoom,
     connectToOpenVidu,
     addRoomMember,
@@ -366,6 +394,7 @@ export const useOpenViduStore
     publish,
     sendRoleInfoToOpenVidu,
     sendMoveInfoToOpenVidu,
+    sendPlayerInfoToOpenVidu,
     playerList,
     roleList,
     subscribers, mainStreamManager, OV,bookInfoList,

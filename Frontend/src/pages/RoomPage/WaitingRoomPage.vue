@@ -39,8 +39,8 @@
 
   const router = useRouter();
   const openViduStore = useOpenViduStore();
-  const {roomInitializationParam} = storeToRefs(openViduStore);
-  const {playerList,roleList} = openViduStore;
+  const {roomInitializationParam,sendingPlayerData} = storeToRefs(openViduStore);
+  const {playerList,roleList,sendPlayerInfoToOpenVidu} = openViduStore;
   const bookInfo = roomInitializationParam.value.bookInfo;
   const roomInfo = roomInitializationParam.value.roomInfo;
 
@@ -51,14 +51,20 @@
     // member_id = await axios.get(path, accessToken);
     member_id.value = 40;
 
-    playerList.push({
+    // 대기방에 들어오면 내 정보를 playerList에 추가하고 갱신을 요청합니다.
+    const player = {
       name: '방장',
       memberId: member_id.value,
       profileImg: 'src/assets/MyPageImages/iupic.jpg',
       roleName: '방장',
       roleIndex: 5,
       readyState: false,
-    });
+    };
+    playerList.push(player);
+
+    sendingPlayerData.value.player = player;
+    sendPlayerInfoToOpenVidu();
+
   })
 
 
