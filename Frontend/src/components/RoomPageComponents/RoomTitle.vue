@@ -7,7 +7,7 @@
   <div class='row col  background-green q-pa-sm q-mb-none q-ml-sm q-mr-sm q-mt-sm'>
     <div class='row col npsfont background-yellow q-pa-sm q-ma-none justify-between'>
       <h5 class='q-ma-none q-pl-md'>
-        {{ props.roomInfo.roomNumber }}
+<!--        {{ props.roomInfo.roomNumber }}-->
       </h5>
       <h5 class='q-ma-none'>
         {{ props.roomInfo.title }}
