@@ -32,7 +32,7 @@ spring:
           naver:
             client-id: ${NAVER_CLIENT_ID}
             client-secret: ${NAVER_CLIENT_SECRET}
-            redirect-uri: ${NAVER_SCOPE}
+            redirect-uri: ${NAVER_REDIRECT_URI}
             scope: ${NAVER_SCOPE}
             client-name: ${NAVER_CLIENT_NAME}
             authorization-grant-type: ${NAVER_AUTHORIZATION_GRANT_TYPE}
