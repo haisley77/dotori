@@ -1,35 +1,36 @@
 <template>
   <div style="height: 100%" class="background-green q-pa-sm">
     <div style="height: 100%" class="background-yellow q-pa-sm">
-      <!-- <div class="column"> -->
+      <div class="column">
         <div class="background-white">
-      <!-- 채팅 로그 -->
-        <div id="chatLog" style="height: 110px; overflow-y: auto; padding: 10px;"></div>
-        <!-- </div> -->
+          <!-- 채팅 로그 -->
+          <div ref="chatLog" style="height: 150px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;">
+            <div v-for="(message, index) in messageList" :key="index">{{ message }}</div>
+          </div>
+        </div>
+
         <div class="row ">
-          <q-input color="green" bg-color="green-1" v-model="chatMessage" @keyup.enter="sendMessage" placeholder="메시지를 입력하세요" :dense="dense" class="col-11"/>
-          <q-btn color="my-green" bg-color="white" class="col-1 q-pa-none npsfont chat">전송</q-btn>
+          <q-input color="green" bg-color="green-1" v-model="chatMessage" @keyup.enter="sendMessage" placeholder="메시지를 입력하세요" class="col-11"/>
+          <q-btn color="my-green" bg-color="white" @click="sendMessage" class="col-1 q-pa-none npsfont chat">전송</q-btn>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-
 <script setup>
-import {ref, onMounted } from 'vue'
+import { ref, onMounted} from 'vue';
 import {useOpenViduStore} from 'stores/openvidu';
+const openViduStore = useOpenViduStore();
+const {session} = openViduStore;
 const chatMessage = ref('');
-const chatLog = document.getElementById('chatLog');
-const {session} = useOpenViduStore;
+const messageList = ref([]);
 
-// 변경하지 않는 부분
 onMounted(() => {
-  //채팅 기능을 초기화.
   if (session) {
     session.on('signal:chat', (event) => {
-      const data = JSON.parse(event.data);
-      appendMessage(data.nickname, data.message);
+      // const data = JSON.parse(event.data);
+      // appendMessage(data.nickname, data.message);
     });
   }
 });
@@ -51,18 +52,9 @@ const sendMessage = () => {
 };
 
 const appendMessage = (nickname, message) => {
-  const chatLog = document.getElementById('chatLog');
-  if (chatLog) {
-    const messageElement = document.createElement('div');
-    messageElement.textContent = `${nickname}: ${message}`;
-    chatLog.appendChild(messageElement);
-    chatLog.scrollTop = chatLog.scrollHeight;
-  }
+  messageList.value.push(`${nickname}: ${message}`);
 };
 </script>
-
-
-
 
 <style scoped>
 

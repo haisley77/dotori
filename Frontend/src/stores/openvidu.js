@@ -219,6 +219,7 @@ export const useOpenViduStore
           subscribers.value.splice(index, 1);
         }
       });
+      
       session.connect(ovToken.value)
         .then(() => {
           console.log(ovToken.value);
