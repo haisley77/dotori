@@ -32,4 +32,6 @@ public interface RoomService {
 	void removeMemberFromRoom(OpenVidu openvidu, Long roomId, Long memberId);
 
 	void updateRoom(Long roomId, RoomDto roomInfo);
+
+	Room getRoom(Long roomId);
 }
