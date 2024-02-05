@@ -4,7 +4,8 @@
       <div v-for="player in 4" :key="player" class="col-6 q-pa-sm text-h3">
         <div v-if="player <= playerList.length">
           <!-- 플레이어가 있으면서 사용자의 프로필이 맞는 경우-->
-          <div class="profile-background q-pa-sm" v-if="memberId === playerList[player-1].memberId">
+          <div class="profile-background q-pa-sm">
+               <!-- v-if="memberId === playerList[player-1].memberId" -->
             <div class="dashed column items-center">
               <img :src="playerList[player - 1].profileImg" class="profile-pic q-mr-md q-mt-sm" alt="user-profile-img" style="object-fit: cover">
               <h4 class="q-mr-md q-mt-md q-mb-sm player-name">{{ playerList[player - 1].roleName }}</h4>
@@ -24,28 +25,28 @@
             </div>
           </div>
           <!-- 플레이어가 있으면서 사용자의 프로필이 아닌 경우-->
-          <div class="profile-background q-pa-sm" v-else>
-            <div class="dashed column items-center">
-              <img :src="playerList[player - 1].profileImg" class="profile-pic q-mr-md q-mt-sm" alt="user-profile-img" style="object-fit: cover">
-              <h4 class="q-mr-md q-mt-md q-mb-sm player-name">{{ playerList[player - 1].roleName }}</h4>
-              <div class="row q-mt-none q-mb-sm" style="visibility: hidden">
-                <q-btn unelevated rounded color="my-brown q-mr-sm btn-font">
-                  <q-menu fit anchor="bottom start" self="top left">
-                    <q-item clickable>
-                      <q-item-section>토끼</q-item-section>
-                    </q-item>
-                    <q-item clickable>
-                      <q-item-section>거북이</q-item-section>
-                    </q-item>
-                  </q-menu>
-                  <div>역할 선택하기</div>
-                </q-btn>
-                <q-btn unelevated rounded color="my-green q-ml-sm btn-font">
-                  <div>커스텀 아바타</div>
-                </q-btn>
-              </div>
-            </div>
-          </div>
+<!--          <div class="profile-background q-pa-sm" v-else>-->
+<!--            <div class="dashed column items-center">-->
+<!--              <img :src="playerList[player - 1].profileImg" class="profile-pic q-mr-md q-mt-sm" alt="user-profile-img" style="object-fit: cover">-->
+<!--              <h4 class="q-mr-md q-mt-md q-mb-sm player-name">{{ playerList[player - 1].roleName }}</h4>-->
+<!--              <div class="row q-mt-none q-mb-sm" style="visibility: hidden">-->
+<!--                <q-btn unelevated rounded color="my-brown q-mr-sm btn-font">-->
+<!--                  <q-menu fit anchor="bottom start" self="top left">-->
+<!--                    <q-item clickable>-->
+<!--                      <q-item-section>토끼</q-item-section>-->
+<!--                    </q-item>-->
+<!--                    <q-item clickable>-->
+<!--                      <q-item-section>거북이</q-item-section>-->
+<!--                    </q-item>-->
+<!--                  </q-menu>-->
+<!--                  <div>역할 선택하기</div>-->
+<!--                </q-btn>-->
+<!--                <q-btn unelevated rounded color="my-green q-ml-sm btn-font">-->
+<!--                  <div>커스텀 아바타</div>-->
+<!--                </q-btn>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
         </div>
         <!-- 플레이어가 없는 경우 -->
         <div v-else>
@@ -81,51 +82,71 @@
   import {useOpenViduStore} from 'stores/openvidu';
 
   const props = defineProps({
-    playerList: Object,
-    roleList: Object,
     memberId: Object,
   });
 
   const openViduStore = useOpenViduStore();
-  const {sendingRoleData} = storeToRefs(openViduStore);
+  const {sendingRoleData,playerList,roleList} = storeToRefs(openViduStore);
   const {sendRoleInfoToOpenVidu} = openViduStore;
 
 
   const makeSendingRoleData = () => {
-    sendingRoleData.value.roleList = props.roleList;
-    sendingRoleData.value.playerList = props.playerList;
+    sendingRoleData.value.roleList = roleList.value;
+    sendingRoleData.value.playerList = playerList.value;
   }
 
 
   const toggleRole = (player, selectedIndex) => {
     // 역할 선택
-    if (props.playerList[player-1].roleIndex === selectedIndex) {
+    if (playerList.value[player-1].roleIndex === selectedIndex) {
       alert('정상적으로 선택되었습니다.');
+      playerList.value[player-1] = {
+        name: playerList.value[player-1].name,
+        memberId: playerList.value[player-1].memberId,
+        profileImg: playerList.value[player-1].profileImg,
+        roleName: playerList.value[player-1].roleName,
+        roleIndex: playerList.value[player-1].roleIndex,
+        readyState: playerList.value[player-1].readyState,
+      };
       return;
     }
     // 역할 중복 선택 불가
-    const selectedRole = props.roleList[selectedIndex];
+    const selectedRole = roleList.value[selectedIndex];
     if (selectedRole && selectedRole.selected) {
       alert('해당 역할은 이미 선택되었습니다.');
       return;
     }
-    const prevSelectedRole = props.roleList[props.playerList[player-1].roleIndex];
+    const prevSelectedRole = roleList.value[playerList.value[player-1].roleIndex];
     if (prevSelectedRole) {
       prevSelectedRole.selected = false;
     }
     if (selectedRole) {
       selectedRole.selected = true;
-      props.playerList[player-1].roleName = selectedRole.name;
-      props.playerList[player-1].roleIndex = selectedIndex;
+
+      playerList.value[player-1] = {
+        name: playerList.value[player-1].name,
+        memberId: playerList.value[player-1].memberId,
+        profileImg: playerList.value[player-1].profileImg,
+        roleName: selectedRole.name,
+        roleIndex: selectedIndex,
+        readyState: playerList.value[player-1].readyState,
+      };
     }
     makeSendingRoleData();
     sendRoleInfoToOpenVidu();
   };
 
   const cancelRole = (player) => {
-    props.roleList[props.playerList[player-1].roleIndex].selected = false;
-    props.playerList[player-1].roleName = props.playerList[player-1].name;
-    props.playerList[player-1].roleIndex = 5;
+    roleList.value[playerList.value[player-1].roleIndex].selected = false;
+
+    playerList.value[player-1] = {
+      name: playerList.value[player-1].name,
+      memberId: playerList.value[player-1].memberId,
+      profileImg: playerList.value[player-1].profileImg,
+      roleName: playerList.value[player-1].name,
+      roleIndex: 5,
+      readyState: playerList.value[player-1].readyState,
+    };
     makeSendingRoleData();
     sendRoleInfoToOpenVidu();
   }

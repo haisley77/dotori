@@ -6,7 +6,7 @@
       </div>
       <div class='row'>
         <div class='col-8 q-pa-sm'>
-          <PlayerList :playerList='playerList' :roleList="roleList" :memberId="member_id"></PlayerList>
+          <PlayerList :memberId="member_id"></PlayerList>
         </div>
         <div class='col-4 q-pa-sm'>
           <BookInfo :bookInfo='bookInfo'></BookInfo>
@@ -36,8 +36,8 @@
   import {storeToRefs} from 'pinia';
 
   const openViduStore = useOpenViduStore();
-  const {roomInitializationParam,sendingPlayerData} = storeToRefs(openViduStore);
-  const {playerList,roleList,sendPlayerInfoToOpenVidu} = openViduStore;
+  const {roomInitializationParam,sendingPlayerData,playerList,roleList} = storeToRefs(openViduStore);
+  const {sendPlayerInfoToOpenVidu} = openViduStore;
   const bookInfo = roomInitializationParam.value.bookInfo;
   const roomInfo = roomInitializationParam.value.roomInfo;
 
@@ -57,7 +57,7 @@
       roleIndex: 5,
       readyState: false,
     };
-    playerList.push(player);
+    playerList.value.push(player);
 
     sendingPlayerData.value.player = player;
     sendPlayerInfoToOpenVidu();
