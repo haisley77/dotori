@@ -88,7 +88,20 @@ class BookControllerTest {
 		bookRepository.save(book2);
 
 		//when
-		mockMvc.perform(get("/api/books")).andDo(print()).andExpect(status().isOk());
+		mockMvc.perform(get("/api/books")).andExpect(status().isOk())
+			.andExpect(content().contentType(APPLICATION_JSON))
+			.andExpect(jsonPath("$.books.size()").value(2L))
+			.andExpect(jsonPath("$.books[0].title").value(book1.getTitle()))
+			.andExpect(jsonPath("$.books[0].bookImg").value(book1.getBookImg()))
+			.andExpect(jsonPath("$.books[0].roleCnt").value(book1.getRoleCnt()))
+			.andExpect(jsonPath("$.books[0].author").value(book1.getAuthor()))
+			.andExpect(jsonPath("$.books[0].summary").value(book1.getSummary()))
+			.andExpect(jsonPath("$.books[1].title").value(book2.getTitle()))
+			.andExpect(jsonPath("$.books[1].bookImg").value(book2.getBookImg()))
+			.andExpect(jsonPath("$.books[1].roleCnt").value(book2.getRoleCnt()))
+			.andExpect(jsonPath("$.books[1].author").value(book2.getAuthor()))
+			.andExpect(jsonPath("$.books[1].summary").value(book2.getSummary()))
+			.andDo(print());
 
 		//then
 	}
@@ -116,7 +129,21 @@ class BookControllerTest {
 		//when
 
 		//then
-		mockMvc.perform(get("/api/books/1")).andDo(print()).andExpect(status().isOk());
+		mockMvc.perform(get("/api/books/1"))
+			.andExpect(status().isOk())
+			.andExpect(content().contentType(APPLICATION_JSON))
+			.andExpect(jsonPath("$.book.title").value(book1.getTitle()))
+			.andExpect(jsonPath("$.book.bookImg").value(book1.getBookImg()))
+			.andExpect(jsonPath("$.book.roleCnt").value(book1.getRoleCnt()))
+			.andExpect(jsonPath("$.book.author").value(book1.getAuthor()))
+			.andExpect(jsonPath("$.book.summary").value(book1.getSummary()))
+			.andExpect(jsonPath("$.roles.size()").value(2))
+			.andExpect(jsonPath("$.roles[0].name").value(role1.getName()))
+			.andExpect(jsonPath("$.roles[0].maskPath").value(role1.getMaskPath()))
+			.andExpect(jsonPath("$.roles[1].name").value(role2.getName()))
+			.andExpect(jsonPath("$.roles[1].maskPath").value(role2.getMaskPath()))
+			.andDo(print())
+		;
 	}
 
 	@Test
