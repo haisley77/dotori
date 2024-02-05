@@ -4,3 +4,4 @@ spring:
       - application-db.yml
       - application-security.yml
       - application-video.yml
+      - application-openvidu.yml
