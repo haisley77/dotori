@@ -37,6 +37,23 @@
   import {useRouter} from 'vue-router';
   import {useOpenViduStore} from 'stores/openvidu';
 
+  const openViduStore = useOpenViduStore();
+  const {roomInitializationParam, session} = storeToRefs(openViduStore);
+  // const session = openViduStore.session;
+  const bookInfo = roomInitializationParam.value.bookInfo;
+  const roomInfo = roomInitializationParam.value.roomInfo;
+
+  onMounted(() => {
+    console.log(session);
+    console.log(bookInfo);
+    console.log(roomInfo);
+  })
+  const router = useRouter();
+  import {onMounted, ref} from 'vue';
+  import {storeToRefs} from 'pinia';
+  import {useRouter} from 'vue-router';
+  import {useOpenViduStore} from 'stores/openvidu';
+
   const router = useRouter();
   const openViduStore = useOpenViduStore();
   const {roomInitializationParam} = storeToRefs(openViduStore);
