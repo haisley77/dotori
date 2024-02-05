@@ -1,31 +1,7 @@
 spring:
   config:
     import:
-      - optional:file:env/test-db.env[.properties]
-      - optional:file:env/video.env[.properties]
       - optional:file:env/secret-key.env[.properties]
-  redis:
-    host: ${REDIS_HOST}
-    port: ${REDIS_PORT}
-  session:
-    store-type: redis
-
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${MYSQL_TEST_URL}
-    username: ${MYSQL_TEST_USERNAME}
-    password: ${MYSQL_TEST_PASSWORD}
-
-  jpa:
-    database: mysql
-    database-platform: org.hibernate.dialect.MySQL8Dialect
-    open-in-view: false
-    properties:
-      hibernate:
-        format_sql: true
-      show-sql: true
-    hibernate:
-      ddl-auto: create
   security:
     oauth2:
       client:
@@ -61,6 +37,12 @@ spring:
             client-name: ${NAVER_CLIENT_NAME}
             authorization-grant-type: ${NAVER_AUTHORIZATION_GRANT_TYPE}
 
+  redis:
+    host: ${REDIS_HOST}
+    port: ${REDIS_PORT}
+  session:
+    store-type: redis
+
 jwt:
   secretKey: ${SECRET_KEY}
   access:
@@ -70,7 +52,13 @@ jwt:
     expiration: ${REFRESH_EXPIRATION}
     header: ${REFRESH_HEADER}
 
-videos:
-  path:
-    scene: ${SCENE_DIRECTORY_PATH}
-    chunk: ${CHUNK_DIRECTORY_PATH}
+logging:
+  level:
+    org:
+      springframework:
+        security: trace
+        web: trace
+        oauth2:
+          client: trace
+        data:
+          redis: trace
