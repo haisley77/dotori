@@ -14,7 +14,7 @@
       </div>
       <div class='row'>
         <div class='col-8 q-pa-sm' style='height: 210px'>
-          <RoomChat :session='session'></RoomChat>
+          <RoomChat :playerList='playerList' :memberId='member_id'></RoomChat>
         </div>
         <div class='col-4 q-pa-sm'>
           <StartReady :roomInfo='roomInfo' :memberId='member_id' :playerList='playerList'></StartReady>
@@ -44,7 +44,7 @@
   onMounted(() => {
     // 대기방에 들어온 사용자의 아이디를 조회
     // member_id = await axios.get(path, accessToken);
-    member_id.value = 20;
+    member_id.value = 2;
 
     // 대기방에 들어오면 내 정보를 playerList에 추가하고 갱신을 요청합니다.
     const player = {
@@ -59,7 +59,6 @@
 
     sendingPlayerData.value.player = player;
     sendPlayerInfoToOpenVidu();
-
   })
 
 

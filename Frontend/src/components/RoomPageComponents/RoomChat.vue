@@ -19,12 +19,19 @@
 </template>
 
 <script setup>
-import { ref, onMounted} from 'vue';
+// memberid도 함께 받아서, 
+// playerlist 와 일치하는지 확인 (본인 확인)
+// 본인의 이름을 채팅에 띄우기
+import { ref, onMounted, defineProps} from 'vue';
 import {useOpenViduStore} from 'stores/openvidu';
 const openViduStore = useOpenViduStore();
-const {session, playerList} = openViduStore;
+const {session } = openViduStore;
 const chatMessage = ref('');
 const messageList = ref([]);
+const props = defineProps({
+    playerList: Object,
+    memberId: Object,
+  });
 
 onMounted(() => {
   if (session) {
@@ -37,16 +44,15 @@ onMounted(() => {
 
 const sendMessage = () => {
   if (chatMessage.value && session) {
+    const matchingPlayer = props.playerList.find(player => player.memberId === props.memberId);
     const data = {
       message: chatMessage.value,
-      nickname: playerList.roleName,
+      nickname: matchingPlayer.name,
     };
     session.signal({
       data: JSON.stringify(data),
       type: 'chat',
     });
-
-    // appendMessage(data.nickname, data.message);
     chatMessage.value = '';
   }
 };
@@ -54,14 +60,11 @@ const sendMessage = () => {
 const appendMessage = (nickname, message) => {
   const formattedMessage = `${nickname}: ${message}`;
   messageList.value.push(formattedMessage);
-  if (nickname !== playerList.roleName) {
-  }
 };
 
 </script>
 
 <style scoped>
-
   .bg-my-green {
     background: #C7A96E !important;
   }

@@ -334,11 +334,6 @@ export const useOpenViduStore
   });
 
   const playerList = [
-    // {
-    //   name: '조석현',
-    //   profileImg: 'src/assets/MyPageImages/cho.jpg',
-    //   role: '',
-    // },
     {
       name: 'Winter',
       memberId: 1,
@@ -347,19 +342,14 @@ export const useOpenViduStore
       roleIndex: 5,     // db에서 조회해 온 역할 정보들을 가진 roleList 상의 인덱스를 저장합니다. 초기엔 5 default.
       readyState: false, // 유저의 준비 상태를 저장합니다. 녹화방 이동을 테스트하기 위해 true로 지정. 원래는 false default.
     },
-    // {
-    //   name: '카리나',
-    //   memberId: 2,
-    //   profileImg: 'src/assets/MyPageImages/karina.jpg',
-    //   roleName: '카리나',
-    //   roleIndex: 5,
-    //   readyState: true,
-    // },
-    // {
-    //   name: '아이유',
-    //   profileImg: 'src/assets/MyPageImages/iupic.jpg',
-    // },
-
+    {
+      name: '카리나',
+      memberId: 2,
+      profileImg: 'src/assets/MyPageImages/karina.jpg',
+      roleName: '카리나',
+      roleIndex: 5,
+      readyState: true,
+    },
   ];
 
 // 역할 리스트
