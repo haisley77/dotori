@@ -6,7 +6,7 @@ import com.dotori.backend.domain.member.dto.GoogleOAuth2UserInfo;
 import com.dotori.backend.domain.member.dto.KakaoOAuth2UserInfo;
 import com.dotori.backend.domain.member.dto.NaverOAuth2UserInfo;
 import com.dotori.backend.domain.member.dto.OAuth2UserInfo;
-import com.dotori.backend.domain.member.model.MemberTemp;
+import com.dotori.backend.domain.member.model.entity.Member;
 import com.dotori.backend.domain.member.type.Role;
 import com.dotori.backend.domain.member.type.SocialType;
 
@@ -74,8 +74,8 @@ public class OAuthAttributes {
 	 * email에는 UUID로 중복 없는 랜덤 값 생성
 	 * role은 GUEST로 설정
 	 */
-	public MemberTemp toEntity(SocialType socialType, OAuth2UserInfo oauth2UserInfo) {
-		return MemberTemp.builder()
+	public Member toEntity(SocialType socialType, OAuth2UserInfo oauth2UserInfo) {
+		return Member.builder()
 			.socialType(socialType)
 			.socialId(oauth2UserInfo.getId())
 			.email(oauth2UserInfo.getEmail())
