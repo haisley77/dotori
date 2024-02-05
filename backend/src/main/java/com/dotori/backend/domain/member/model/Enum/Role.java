@@ -1,4 +1,4 @@
-package com.dotori.backend.domain.member.type;
+package com.dotori.backend.domain.member.model.Enum;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

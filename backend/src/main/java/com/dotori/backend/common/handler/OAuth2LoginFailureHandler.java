@@ -1,4 +1,4 @@
-package com.dotori.backend.domain.member.handler;
+package com.dotori.backend.common.handler;
 
 import java.io.IOException;
 

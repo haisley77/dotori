@@ -19,10 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dotori.backend.domain.member.jwt.service.JwtService;
-import com.dotori.backend.domain.member.model.MemberTemp;
-import com.dotori.backend.domain.member.redis.RedisService;
+import com.dotori.backend.domain.member.model.entity.Member;
 import com.dotori.backend.domain.member.repository.MemberRepository;
+import com.dotori.backend.domain.member.service.JwtService;
+import com.dotori.backend.domain.member.service.RedisService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -52,10 +52,10 @@ public class memberController {
 		Optional<String> jwtdetail = jwtService.extractEmailFromAccessToken(request);
 
 		if (jwtdetail.isPresent()) {
-			Optional<MemberTemp> emaildetail = memberRepository.findByEmail(jwtdetail.get());
+			Optional<Member> emaildetail = memberRepository.findByEmail(jwtdetail.get());
 
 			if (emaildetail.isPresent()) {
-				MemberTemp member = emaildetail.get();
+				Member member = emaildetail.get();
 				Map<String, Object> memberInfo = new HashMap<>();
 				memberInfo.put("nickName", member.getNickname());
 				memberInfo.put("email", member.getEmail());
@@ -97,7 +97,7 @@ public class memberController {
 
 		// 사용자 정보 찾기 및 닉네임 업데이트
 		String email = jwtemail.get();
-		MemberTemp member = memberRepository.findByEmail(email)
+		Member member = memberRepository.findByEmail(email)
 			.orElseThrow(() -> new EntityNotFoundException("해당이메일은 가입되지않은 이메일입니다: " + email));
 
 		member.updateNickname(newNickname);
@@ -117,7 +117,7 @@ public class memberController {
 
 		// 사용자 정보 찾기 및 프로필사진 업데이트
 		String email = emailOpt.get();
-		MemberTemp member = memberRepository.findByEmail(email)
+		Member member = memberRepository.findByEmail(email)
 			.orElseThrow(() -> new EntityNotFoundException("해당이메일은 가입되지않은 이메일입니다: " + email));
 
 		member.updateProfileImg(newProfileImg);

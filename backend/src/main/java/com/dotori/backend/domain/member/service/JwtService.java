@@ -1,4 +1,4 @@
-package com.dotori.backend.domain.member.jwt.service;
+package com.dotori.backend.domain.member.service;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.dotori.backend.domain.member.redis.RedisService;
 import com.dotori.backend.domain.member.repository.MemberRepository;
 
 import lombok.Getter;

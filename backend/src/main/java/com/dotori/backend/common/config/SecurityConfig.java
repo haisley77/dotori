@@ -1,4 +1,4 @@
-package com.dotori.backend.domain.member.config;
+package com.dotori.backend.common.config;
 
 import org.apache.hc.core5.http.HttpHeaders;
 import org.springframework.context.annotation.Bean;
@@ -12,13 +12,13 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.dotori.backend.domain.member.handler.OAuth2LoginFailureHandler;
-import com.dotori.backend.domain.member.handler.OAuth2LoginSuccessHandler;
-import com.dotori.backend.domain.member.jwt.filter.JwtAuthenticationProcessingFilter;
-import com.dotori.backend.domain.member.jwt.service.JwtService;
-import com.dotori.backend.domain.member.redis.RedisService;
+import com.dotori.backend.common.filter.JwtAuthenticationProcessingFilter;
+import com.dotori.backend.common.handler.OAuth2LoginFailureHandler;
+import com.dotori.backend.common.handler.OAuth2LoginSuccessHandler;
 import com.dotori.backend.domain.member.repository.MemberRepository;
 import com.dotori.backend.domain.member.service.CustomOAuth2UserService;
+import com.dotori.backend.domain.member.service.JwtService;
+import com.dotori.backend.domain.member.service.RedisService;
 
 import lombok.RequiredArgsConstructor;
 

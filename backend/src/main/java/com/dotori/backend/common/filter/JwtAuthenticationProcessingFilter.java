@@ -1,4 +1,4 @@
-package com.dotori.backend.domain.member.jwt.filter;
+package com.dotori.backend.common.filter;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -15,10 +15,10 @@ import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMap
 import org.springframework.security.core.authority.mapping.NullAuthoritiesMapper;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.dotori.backend.domain.member.jwt.service.JwtService;
-import com.dotori.backend.domain.member.model.MemberTemp;
-import com.dotori.backend.domain.member.redis.RedisService;
+import com.dotori.backend.domain.member.model.entity.Member;
 import com.dotori.backend.domain.member.repository.MemberRepository;
+import com.dotori.backend.domain.member.service.JwtService;
+import com.dotori.backend.domain.member.service.RedisService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -139,9 +139,9 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 	 * jwtService.createRefreshToken()으로 리프레시 토큰 재발급 후
 	 * Redis에 재발급한 리프레시 토큰 업데이트
 	 */
-	private String reIssueRefreshToken(MemberTemp memberTemp) {
+	private String reIssueRefreshToken(Member member) {
 		String reIssuedRefreshToken = jwtService.createRefreshToken();
-		redisService.saveRefreshToken(memberTemp.getEmail(), reIssuedRefreshToken,
+		redisService.saveRefreshToken(member.getEmail(), reIssuedRefreshToken,
 			jwtService.getRefreshTokenExpirationPeriod(), TimeUnit.MILLISECONDS);
 		return reIssuedRefreshToken;
 	}

@@ -1,4 +1,4 @@
-package com.dotori.backend.domain.member;
+package com.dotori.backend.domain.member.model.dto;
 
 import java.util.Collection;
 import java.util.Map;
@@ -6,7 +6,7 @@ import java.util.Map;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 
-import com.dotori.backend.domain.member.type.Role;
+import com.dotori.backend.domain.member.model.Enum.Role;
 
 import lombok.Getter;
 

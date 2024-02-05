@@ -1,4 +1,4 @@
-package com.dotori.backend.domain.member.handler;
+package com.dotori.backend.common.handler;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -10,8 +10,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import com.dotori.backend.domain.member.jwt.service.JwtService;
-import com.dotori.backend.domain.member.redis.RedisService;
+import com.dotori.backend.domain.member.service.JwtService;
+import com.dotori.backend.domain.member.service.RedisService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

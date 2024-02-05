@@ -5,12 +5,12 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.dotori.backend.domain.member.model.MemberTemp;
-import com.dotori.backend.domain.member.type.SocialType;
+import com.dotori.backend.domain.member.model.Enum.SocialType;
+import com.dotori.backend.domain.member.model.entity.Member;
 
 @Repository
-public interface MemberRepository extends JpaRepository<MemberTemp, Long> {
-	Optional<MemberTemp> findByEmail(String Email);
+public interface MemberRepository extends JpaRepository<Member, Long> {
+	Optional<Member> findByEmail(String Email);
 
 	/**
 	 * 소셜 타입과 소셜의 식별값으로 회원 찾는 메소드
@@ -18,5 +18,5 @@ public interface MemberRepository extends JpaRepository<MemberTemp, Long> {
 	 * 유저 객체는 DB에 있지만, 추가 정보가 빠진 상태이다.
 	 * 따라서 추가 정보를 입력받아 회원 가입을 진행할 때 소셜 타입, 식별자로 해당 회원을 찾기 위한 메소드
 	 */
-	Optional<MemberTemp> findBySocialTypeAndSocialId(SocialType socialType, String socialId);
+	Optional<Member> findBySocialTypeAndSocialId(SocialType socialType, String socialId);
 }

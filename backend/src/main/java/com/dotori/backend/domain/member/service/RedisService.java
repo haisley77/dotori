@@ -1,4 +1,4 @@
-package com.dotori.backend.domain.member.redis;
+package com.dotori.backend.domain.member.service;
 
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
