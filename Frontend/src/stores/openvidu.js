@@ -77,7 +77,6 @@ export const useOpenViduStore
     roomInfo: null,
     bookInfo: null,
   });
-  });
 
 
   const createRoom = (bookmodal) => {
@@ -100,7 +99,7 @@ export const useOpenViduStore
         return;
       }
 
-      axios.post(apiPath, roomInitializationParam.value)
+      axios.post(apiPath, roomInitializationParam.value);
       axios.post(apiPath, roomInitializationParam.value)
         .then((response) => {
           console.log(response.status);
@@ -261,7 +260,7 @@ export const useOpenViduStore
   const sendingPlayerData = ref({
     info: 'player-incoming',
     player: null,
-  })
+  });
 
   const sendRoleInfoToOpenVidu = () => {
     return new Promise((resolve, reject) => {
@@ -284,7 +283,7 @@ export const useOpenViduStore
       session.signal({
         data: JSON.stringify(sendingMoveData.value),
         to: [],
-        type: 'signal'
+        type: 'signal',
       })
         .then(() => {
           resolve('녹화방 이동 정보 전송 성공');
@@ -312,16 +311,16 @@ export const useOpenViduStore
   };
 
 
-  // signal 타입 이벤트가 도착하면 받은 데이터를 json 객체로 파싱하여 반영한다.
+// signal 타입 이벤트가 도착하면 받은 데이터를 json 객체로 파싱하여 반영한다.
   session.on('signal', (event) => {
     const receivedData = JSON.parse(event.data);
     if (receivedData.data && receivedData.data.info === 'update-role') {
       playerList.forEach((playerInfo, index) => {
         playerList[index] = receivedData.data.playerList[index];
-      })
+      });
       roleList.forEach((roleInfo, index) => {
         roleList[index] = receivedData.data.roleList[index];
-      })
+      });
     } else if (receivedData.data && receivedData.data.info === 'move-recording') {
       if (receivedData.data && receivedData.data.recording === true) {
         room_info.value.isRecording = true;
@@ -365,7 +364,7 @@ export const useOpenViduStore
 
   ];
 
-  // 역할 리스트
+// 역할 리스트
   const roleList = [
     {
       // roleId:
@@ -410,10 +409,9 @@ export const useOpenViduStore
     sendRoleInfoToOpenVidu,
     sendMoveInfoToOpenVidu,
     sendPlayerInfoToOpenVidu,
-    playerList,
     roleList,
-    subscribers, mainStreamManager, OV,bookInfoList,
+    subscribers, mainStreamManager, OV, bookInfoList,
     getConnectionToken,
-    removeRoomMember
+    removeRoomMember,
   };
 }, {persist: {storage: sessionStorage}});
