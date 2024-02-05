@@ -240,18 +240,15 @@ export const useOpenViduStore
   };
 
   const sendingRoleData = ref({
-    info: 'update-role',
     playerList: null,
     roleList: null,
   });
 
   const sendingMoveData = ref({
-    info: 'move-recording',
     recording: null,
   });
 
   const sendingPlayerData = ref({
-    info: 'player-incoming',
     player: null,
   });
 
@@ -260,7 +257,7 @@ export const useOpenViduStore
       session.signal({
         data: JSON.stringify(sendingRoleData.value),
         to: [],
-        type: 'signal',
+        type: 'signal:update-role',
       })
         .then(() => {
           resolve('역할 선택 정보 전송 성공');
@@ -276,7 +273,7 @@ export const useOpenViduStore
       session.signal({
         data: JSON.stringify(sendingMoveData.value),
         to: [],
-        type: 'signal',
+        type: 'signal:move-recording',
       })
         .then(() => {
           resolve('녹화방 이동 정보 전송 성공');
@@ -292,7 +289,7 @@ export const useOpenViduStore
       session.signal({
         data: JSON.stringify(sendingPlayerData.value),
         to: [],
-        type: 'signal',
+        type: 'signal:player-incoming',
       })
         .then(() => {
           resolve('새로운 참여자 정보 전송 성공');
@@ -304,29 +301,36 @@ export const useOpenViduStore
   };
 
 
-// signal 타입 이벤트가 도착하면 받은 데이터를 json 객체로 파싱하여 반영한다.
-  session.on('signal', (event) => {
+  // signal 타입 이벤트가 도착하면 받은 데이터를 json 객체로 파싱하여 반영한다.
+  session.on('signal:update-role', (event) => {
     const receivedData = JSON.parse(event.data);
-    if (receivedData.data && receivedData.data.info === 'update-role') {
+    if (receivedData.data) {
       playerList.forEach((playerInfo, index) => {
         playerList[index] = receivedData.data.playerList[index];
       });
       roleList.forEach((roleInfo, index) => {
         roleList[index] = receivedData.data.roleList[index];
       });
-    } else if (receivedData.data && receivedData.data.info === 'move-recording') {
+    }
+  });
+
+  session.on('signal:move-recording', (event) => {
+    const receivedData = JSON.parse(event.data);
+    if (receivedData.data){
       if (receivedData.data && receivedData.data.recording === true) {
         room_info.value.isRecording = true;
         router.push('/recording'); // 녹화방으로 이동
       }
-    } else if (receivedData.data && receivedData.data.info === 'player-incoming') {
-      playerList.push(receivedData.data.player);
-      // room joinCnt 갱신
-    } else if (receivedData.data && receivedData.data.info === 'chatting') {
-      // 채팅 코드 넣기
     }
   });
 
+  session.on('signal:player-incoming', (event) => {
+    const receivedData = JSON.parse(event.data);
+    if (receivedData.data) {
+      playerList.push(receivedData.data.player);
+      // room joinCnt 갱신
+    }
+  });
 
   const playerList = [
     // {
@@ -340,16 +344,16 @@ export const useOpenViduStore
       profileImg: 'src/assets/MyPageImages/winter.png',
       roleName: 'Winter',
       roleIndex: 5,     // db에서 조회해 온 역할 정보들을 가진 roleList 상의 인덱스를 저장합니다. 초기엔 5 default.
-      readyState: true, // 유저의 준비 상태를 저장합니다. 녹화방 이동을 테스트하기 위해 true로 지정. 원래는 false default.
+      readyState: false, // 유저의 준비 상태를 저장합니다. 녹화방 이동을 테스트하기 위해 true로 지정. 원래는 false default.
     },
-    {
-      name: '카리나',
-      memberId: 2,
-      profileImg: 'src/assets/MyPageImages/karina.jpg',
-      roleName: '카리나',
-      roleIndex: 5,
-      readyState: true,
-    },
+    // {
+    //   name: '카리나',
+    //   memberId: 2,
+    //   profileImg: 'src/assets/MyPageImages/karina.jpg',
+    //   roleName: '카리나',
+    //   roleIndex: 5,
+    //   readyState: true,
+    // },
     // {
     //   name: '아이유',
     //   profileImg: 'src/assets/MyPageImages/iupic.jpg',
