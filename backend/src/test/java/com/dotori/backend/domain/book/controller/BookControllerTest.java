@@ -1,6 +1,7 @@
 package com.dotori.backend.domain.book.controller;
 
 import static org.springframework.http.MediaType.*;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -10,6 +11,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,6 +20,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import com.dotori.backend.domain.book.model.entity.Book;
 import com.dotori.backend.domain.book.model.entity.Role;
@@ -48,6 +52,17 @@ class BookControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;
+
+	@Autowired
+	private WebApplicationContext context;
+
+	@BeforeEach
+	public void setup() {
+		mockMvc = MockMvcBuilders
+			.webAppContextSetup(context)
+			.apply(springSecurity()) // 스프링 시큐리티와 함께 MockMvc 설정
+			.build();
+	}
 
 	@DisplayName("책 목록 조회 테스트")
 	@Test
@@ -218,14 +233,16 @@ class BookControllerTest {
 			.andExpect(jsonPath("$.sceneDetailDto.scriptDto[0].roleDto").isNotEmpty())
 			.andExpect(jsonPath("$.sceneDetailDto.scriptDto[0].roleDto.roleId").value(script1.getRole().getRoleId()))
 			.andExpect(jsonPath("$.sceneDetailDto.scriptDto[0].roleDto.name").value(script1.getRole().getName()))
-			.andExpect(jsonPath("$.sceneDetailDto.scriptDto[0].roleDto.maskPath").value(script1.getRole().getMaskPath()))
+			.andExpect(
+				jsonPath("$.sceneDetailDto.scriptDto[0].roleDto.maskPath").value(script1.getRole().getMaskPath()))
 			.andExpect(jsonPath("$.sceneDetailDto.scriptDto[1].scriptId").value(script2.getScriptId()))
 			.andExpect(jsonPath("$.sceneDetailDto.scriptDto[1].scriptOrder").value(script2.getScriptOrder()))
 			.andExpect(jsonPath("$.sceneDetailDto.scriptDto[1].content").value(script2.getContent()))
 			.andExpect(jsonPath("$.sceneDetailDto.scriptDto[1].roleDto").isNotEmpty())
 			.andExpect(jsonPath("$.sceneDetailDto.scriptDto[1].roleDto.roleId").value(script2.getRole().getRoleId()))
 			.andExpect(jsonPath("$.sceneDetailDto.scriptDto[1].roleDto.name").value(script2.getRole().getName()))
-			.andExpect(jsonPath("$.sceneDetailDto.scriptDto[1].roleDto.maskPath").value(script2.getRole().getMaskPath()))
+			.andExpect(
+				jsonPath("$.sceneDetailDto.scriptDto[1].roleDto.maskPath").value(script2.getRole().getMaskPath()))
 			.andDo(print());
 	}
 }
