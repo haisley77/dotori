@@ -54,7 +54,6 @@ export const useOpenViduStore
   const mainStreamManager = ref();
   const member_id = ref(40);
 
-
   // 방 세션 설정 정보
   const session_properties = ref({});
 

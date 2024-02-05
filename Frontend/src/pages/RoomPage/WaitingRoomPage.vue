@@ -17,7 +17,7 @@
           <RoomChat></RoomChat>
         </div>
         <div class='col-4 q-pa-sm'>
-          <StartReady :roomInfo='roomInfo' :memberId='member_id' :playerList='playerList'></StartReady>
+          <StartReady :isHost='is_host' :roleCnt='role_cnt' :playerList='playerList'></StartReady>
         </div>
       </div>
     </div>
@@ -37,25 +37,6 @@
   import {useRouter} from 'vue-router';
   import {useOpenViduStore} from 'stores/openvidu';
 
-  const openViduStore = useOpenViduStore();
-  const {roomInitializationParam} = storeToRefs(openViduStore);
-  const bookInfo = roomInitializationParam.value.bookInfo;
-  const roomInfo = roomInitializationParam.value.roomInfo;
-
-  onMounted(() => {
-    // 대기방에 들어온 사용자의 아이디를 조회
-    member_id.value = 50;
-    // 대기방에 들어온 사용자가 방장인 경우
-   if (member_id.value === roomInfo.hostId) {
-     is_host.value = true;
-    }
-  })
-  const router = useRouter();
-  import {onMounted, ref} from 'vue';
-  import {storeToRefs} from 'pinia';
-  import {useRouter} from 'vue-router';
-  import {useOpenViduStore} from 'stores/openvidu';
-
   const router = useRouter();
   const openViduStore = useOpenViduStore();
   const {roomInitializationParam} = storeToRefs(openViduStore);
@@ -64,17 +45,23 @@
   const roomInfo = roomInitializationParam.value.roomInfo;
 
   const member_id = ref(0);
+  const is_host = ref(false);
+  const role_cnt = ref(0);
 
   onMounted(() => {
     // 대기방에 들어온 사용자의 아이디를 조회
     // member_id = await axios.get(path, accessToken);
     member_id.value = 40;
 
+    if (member_id.value === roomInfo.hostId) {
+      is_host.value = true;
+    }
+    role_cnt.value = roomInfo.limitCnt;
     playerList.push({
-      name: '방장',
-      memberId: member_id.value,
+      name: '유저1',
+      memberId: 40,
       profileImg: 'src/assets/MyPageImages/iupic.jpg',
-      roleName: '방장',
+      roleName: '유저1',
       roleIndex: 5,
       readyState: false,
     });
