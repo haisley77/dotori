@@ -124,7 +124,7 @@
   }
 
   .book-info-inner, .room-info-inner {
-    border: dashed #cc765a 5px; border-radius: 20px;
+    //border: dashed #cc765a 5px; border-radius: 20px;
   }
 
   .book-info {
