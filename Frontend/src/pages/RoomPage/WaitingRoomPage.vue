@@ -14,7 +14,7 @@
       </div>
       <div class='row'>
         <div class='col-8 q-pa-sm' style='height: 210px'>
-          <RoomChat :session='session'></RoomChat>
+          <RoomChat></RoomChat>
         </div>
         <div class='col-4 q-pa-sm'>
           <StartReady :roomInfo='roomInfo' :memberId='member_id' :playerList='playerList'></StartReady>
@@ -38,7 +38,7 @@
   import {useOpenViduStore} from 'stores/openvidu';
 
   const openViduStore = useOpenViduStore();
-  const {roomInitializationParam, session} = storeToRefs(openViduStore);
+  const {roomInitializationParam} = storeToRefs(openViduStore);
   const bookInfo = roomInitializationParam.value.bookInfo;
   const roomInfo = roomInitializationParam.value.roomInfo;
 
