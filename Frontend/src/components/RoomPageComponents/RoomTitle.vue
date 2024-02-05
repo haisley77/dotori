@@ -10,7 +10,7 @@
 <!--        {{ props.roomInfo.roomNumber }}-->
       </h5>
       <h5 class='q-ma-none'>
-        {{ props.roomInfo.title }}
+        {{ roomInfo.title }}
       </h5>
       <h5 class='q-ma-none q-pr-md'>
         <span v-if='props.roomInfo.isPublic'>공개방🔓</span>
