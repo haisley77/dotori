@@ -14,7 +14,7 @@
       </div>
       <div class='row'>
         <div class='col-8 q-pa-sm' style='height: 210px'>
-          <RoomChat></RoomChat>
+          <RoomChat :session='session'></RoomChat>
         </div>
         <div class='col-4 q-pa-sm'>
           <StartReady :roomInfo='roomInfo' :memberId='member_id' :playerList='playerList'></StartReady>
