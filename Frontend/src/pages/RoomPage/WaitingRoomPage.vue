@@ -46,7 +46,7 @@
   onMounted(() => {
     // 대기방에 들어온 사용자의 아이디를 조회
     // member_id = await axios.get(path, accessToken);
-    member_id.value = 40;
+    member_id.value = 20;
 
     // 대기방에 들어오면 내 정보를 playerList에 추가하고 갱신을 요청합니다.
     const player = {
