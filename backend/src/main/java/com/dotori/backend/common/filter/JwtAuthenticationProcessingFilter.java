@@ -91,7 +91,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 		// AccessToken이 없거나 유효하지 않다면, 인증 객체가 담기지 않은 상태로 다음 필터로 넘어가기 때문에 403 에러 발생
 		// AccessToken이 유효하다면, 인증 객체가 담긴 상태로 다음 필터로 넘어가기 때문에 인증 성공
 		if (refreshToken == null) {
-			checkAccessTokenAndAuthentication(request, response, filterChain);
+			checkAccessTokenAndAuthentication(request);
 			filterChain.doFilter(request, response);
 		}
 
@@ -154,16 +154,13 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 	 * 인증 허가 처리된 객체를 SecurityContextHolder에 담기
 	 * 그 후 다음 인증 필터로 진행
 	 */
-	public void checkAccessTokenAndAuthentication(HttpServletRequest request, HttpServletResponse response,
-		FilterChain filterChain) throws ServletException, IOException {
+	public void checkAccessTokenAndAuthentication(HttpServletRequest request) {
 		log.info("checkAccessTokenAndAuthentication() 호출");
 		jwtService.extractAccessToken(request)
 			.filter(jwtService::isTokenValid)
 			.ifPresent(accessToken -> jwtService.extractEmail(accessToken)
 				.ifPresent(email -> memberRepository.findByEmail(email)
 				));
-
-		filterChain.doFilter(request, response);
 	}
 
 }

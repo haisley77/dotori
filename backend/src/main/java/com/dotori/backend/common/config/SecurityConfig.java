@@ -55,8 +55,7 @@ public class SecurityConfig {
 			// .and()
 
 			//
-			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-
+			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
 
 			//== URL별 권한 관리 옵션 ==//
