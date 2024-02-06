@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dotori.backend.domain.room.model.entity.Room;
-import com.dotori.backend.domain.video.model.dto.SceneVideoDto;
 import com.dotori.backend.domain.video.model.dto.VideoDto;
 import com.dotori.backend.domain.video.model.entity.SceneVideo;
 import com.dotori.backend.domain.video.model.entity.Video;
