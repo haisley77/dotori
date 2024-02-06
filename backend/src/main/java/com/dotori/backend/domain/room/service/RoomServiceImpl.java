@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
@@ -211,6 +213,11 @@ public class RoomServiceImpl implements RoomService {
 		return roomRepository.findById(roomId).orElseThrow(
 			() -> new EntityNotFoundException(("해당하는 방이 존재하지 않습니다."))
 		);
+	}
+
+	@Override
+	public void removeExpiredRooms(List<Session> activeSessions) {
+		
 	}
 
 }

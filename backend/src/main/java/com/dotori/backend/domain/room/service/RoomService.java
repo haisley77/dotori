@@ -34,4 +34,6 @@ public interface RoomService {
 	void updateRoom(Long roomId, RoomDto roomInfo);
 
 	Room getRoom(Long roomId);
+
+	void removeExpiredRooms(List<Session> activeSessions);
 }

@@ -98,6 +98,23 @@ public class RoomController {
 
 	}
 
+	@DeleteMapping("/remove/expired-room")
+	public ResponseEntity<Map<String, String>> removeExpiredRoom() {
+		Map<String, String> resultData = new HashMap<>();
+		try {
+			openvidu.fetch();
+			List<Session> activeSessions = openvidu.getActiveSessions();
+			roomService.removeExpiredRooms(activeSessions);
+			// roomService.removeMemberFromRoom(openvidu, roomId, memberId);
+			resultData.put("message", "삭제 완료");
+			return new ResponseEntity<>(resultData, HttpStatus.OK);
+		} catch (Exception e) {
+			resultData.put("message", e.getMessage());
+			return new ResponseEntity<>(resultData, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
+
 	@GetMapping
 	public ResponseEntity<List<RoomDto>> getAllRooms() {
 		List<Room> rooms = roomService.getAllRooms();
