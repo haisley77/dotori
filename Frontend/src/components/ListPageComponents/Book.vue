@@ -3,7 +3,6 @@
   import NewRoomModal from 'pages/ListPage/NewRoomModal.vue';
 
   const dialog = ref('true');
-  components: {NewRoomModal};
   const props = defineProps({bookdetail : Object});
 </script>
 
@@ -21,10 +20,10 @@
              style='background: white; '>
           <div class='col-9'>
             <div class=' npsfont text-h6 ellipsis'>
-              {{props.bookdetail.title}}
+              {{ bookdetail.title }}
             </div>
             <div class=' npsfont'>
-              {{ props.bookdetail.author }}
+              {{ bookdetail.author }}
             </div>
             <!-- Dialog -->
           </div>

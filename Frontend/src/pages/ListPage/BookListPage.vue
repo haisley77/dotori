@@ -32,7 +32,7 @@
 </template>
 
 <script>
-  import {ref, onMounted} from 'vue';
+  import {onMounted, ref} from 'vue';
   import Book from 'components/ListPageComponents/Book.vue';
   import axios from 'axios';
 

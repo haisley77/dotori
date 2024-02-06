@@ -77,10 +77,6 @@ export const useOpenViduStore
     isPublic: true,
   });
 
-  // const room = ref({
-
-  // });
-
   // 책, 역할 설정 정보
   const bookDetail = ref({
     book: {},
