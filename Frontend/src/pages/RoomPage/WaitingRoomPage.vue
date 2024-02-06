@@ -40,6 +40,8 @@
   // const bookInfo = roomInitializationParam.value.bookInfo;
   // const roomInfo = roomInitializationParam.value.roomInfo;
 
+
+
   // 이 부분에서 store/openvidu.js에 있는 room_info, book_info, role_info, scene_info 가져와서
   // const bookinfo, roominfo, sceneinfo, roleinfo 변수에 저장하기.
 

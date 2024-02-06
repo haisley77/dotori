@@ -74,20 +74,16 @@ export const useOpenViduStore
     isPublic: true,
   });
 
+  const room = ref({
+
+  });
+
   // 책, 역할 설정 정보
-  const book_info = ref({
+  const bookDetail = ref({
     book: {},
     roles: [],
+    scenes:[],
   });
-
-  // 장면 설정 정보
-  const scene_info = ref({
-    scenes: [],
-  });
-
-  // 장면 상세 정보
-  // const scene_detail_info = ref({
-  // });
 
   const roomInitializationParam = ref({
     sessionProperties: null,
@@ -446,9 +442,7 @@ export const useOpenViduStore
     room_password,
     is_private,
     ovToken,
-    book_info,
-    room_info,
-    scene_info,
+    bookDetail,
     roomInitializationParam,
     sendingRoleData,
     sendingMoveData,

@@ -64,6 +64,21 @@
       }
     };
 
+      // 해당 방에 대한 책의 모든 정보(역할,책,장면)를 불러온다.
+      const fetchBookdetail = async (bookId) => {
+    try {
+      const response = await axios.get(`http://localhost:8080/api/books/${bookId}/detail`);
+      console.log('API Response:', response);
+      if (response.status === 200) {
+        bookDetail.value = response.data;
+      } else {
+        console.error('Failed to fetch books. Status:', response.status);
+      }
+    } catch (error) {
+      console.error('Error fetching books:', error);
+    }
+  };
+
     return {
         books,
         enterBook,

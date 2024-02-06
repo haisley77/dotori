@@ -20,7 +20,6 @@
         />
       </div>
     </div>
-
     <div class='row q-col-gutter-x-md q-col-gutter-y-md'>
       <div v-for='room in rooms' :key='room.roomId' class='col-12 col-sm-6 col-md-4 col-lg-3 q-pa-md'>
         <EnterRoomComponent :room='room' @click="() => enterRoom(room)"></EnterRoomComponent>
@@ -43,7 +42,7 @@
       const router = useRouter();
       const rooms = ref([]);
       const openViduStore = useOpenViduStore();
-      const {book_info, scene_info, room_info, room_name, room_password, is_private} = storeToRefs(openViduStore);
+      const {bookDetail} = storeToRefs(openViduStore);
       const {getConnectionToken, connectToOpenVidu, addRoomMember} = openViduStore;
 
       const moveWaitingRoom = (room) => {
@@ -69,13 +68,13 @@
         }
       };
 
-      // 해당 방에 대한 책과 역할 정보를 불러온다.
-      const fetchBooks = async (bookId) => {
+      // 해당 방에 대한 책의 모든 정보(역할,책,장면)를 불러온다.
+      const fetchBookDetail = async (bookId) => {
         try {
-          const response = await axios.get(`http://localhost:8080/api/books/${bookId}`);
+          const response = await axios.get(`http://localhost:8080/api/books/${bookId}/detail`);
           console.log('API Response:', response);
           if (response.status === 200) {
-            book_info.value = response.data;
+            bookDetail.value = response.data;
           } else {
             console.error('Failed to fetch books. Status:', response.status);
           }
@@ -84,67 +83,31 @@
         }
       };
 
-      // 해당 방의 책에 대한 장면 정보를 불러온다.
-      const fetchScenes = async (bookId) => {
-        try {
-          const response = await axios.get(`http://localhost:8080/api/books/${bookId}/scenes`);
-          console.log('API Response:', response);
-          if (response.status === 200) {
-            scene_info.value = response.data;
-          } else {
-            console.error('Failed to fetch scenes. Status:', response.status);
-          }
-        } catch (error) {
-          console.error('Error fetching scenes:', error);
-        }
-      };
-
       const enterRoom = (room) => {
-        room_info.value = {
-        hostId: room.hostId,
-        title: room.title,
-        password: room.password,
-        isRecording: room.isRecording,
-        joinCnt: room.joinCnt,
-        limitCnt: room.limitCnt,
-        isPublic: room.isPublic,
-      };
-
-      room_name = room.title;
-      room_password = room.password;
-      is_private = room.isPublic;
-
-        getConnectionToken(room)
-          .then(() => {
-            connectToOpenVidu()
-              .then(() => {
-                addRoomMember()
-                  .then(() => {
-                    fetchBooks(room.bookId);
-                    fetchScenes(room.bookId);
-                    moveWaitingRoom(room);
-                  })
-                  .catch((error) => {
-                    console.log('참여 인원 갱신 중 에러 발생')
-                  })
-              })
-              .catch((error) => {
-                console.log('ov에 연결 중 에러 발생');
-              })
-          })
-      };
-
+      getConnectionToken(room)
+        .then(() => {
+          connectToOpenVidu()
+            .then(() => {
+              addRoomMember()
+                .then(() => {
+                  fetchBookDetail(room.book.bookId)
+                  moveWaitingRoom(room);
+                })
+                .catch((error) => {
+                  console.log('참여 인원 갱신 중 에러 발생')
+                })
+            })
+            .catch((error) => {
+              console.log('ov에 연결 중 에러 발생');
+            })
+        })
+    };
 
       return {
         rooms,
         moveWaitingRoom,
         enterRoom,
-        room_name,
-        room_password,
-        is_private,
-        book_info,
-        scene_info,
-        room_info
+        bookDetail
       };
     },
   };
