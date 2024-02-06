@@ -35,7 +35,7 @@
   import {storeToRefs} from 'pinia';
 
   const openViduStore = useOpenViduStore();
-  const {roomInitializationParam,sendingIncomingData,playerList} = storeToRefs(openViduStore);
+  const {roomInitializationParam,sendingIncomingData,playerList,isHost} = storeToRefs(openViduStore);
   const {sendIncomingInfoToOpenVidu} = openViduStore;
   const bookInfo = roomInitializationParam.value.bookInfo;
   const roomInfo = roomInitializationParam.value.roomInfo;
@@ -56,7 +56,7 @@
     };
 
 
-    if (roomInfo.hostId === member_id.value) {  // 방장이면 참여자 리스트에 본인 추가
+    if (isHost.value) {  // 방장이면 참여자 리스트에 본인 추가
       playerList.value.push(player);
     } else {  // 방장이 아니면 들어왔다고 signal
       sendingIncomingData.value.player = player;

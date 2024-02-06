@@ -341,7 +341,7 @@ export const useOpenViduStore
   session.on('signal:move-recording', (event) => {
     console.log('받음');
     const receivedData = JSON.parse(event.data);
-    if (!isHost) {
+    if (!isHost.value) {
       if (receivedData.recording === true) {
         // room_info.value.isRecording = true;
         // room isRecording 갱신
@@ -355,7 +355,7 @@ export const useOpenViduStore
     console.log('받음');
     const receivedData = JSON.parse(event.data);
     // 방장이 아니면
-    if (member_id.value !== room_info.value.hostId) {
+    if (!isHost.value) {
       playerList.value = receivedData.playerList;
       // 만약 들어오기 전에 role을 변경하고 있다면 roleList도 같이 보내야함
       // room joinCnt 갱신
@@ -369,7 +369,7 @@ export const useOpenViduStore
   session.on('signal:give-playerList', (event) => {
     console.log('받음');
     const receivedData = JSON.parse(event.data);
-    if (member_id.value === room_info.value.hostId) {
+    if (isHost.value) {
       console.log('방장이니까 playerList 정보를 주겠다..');
       playerList.value.push(receivedData.player);
       sendingPlayerData.value.playerList = playerList.value;
