@@ -7,10 +7,6 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
 
-import javax.annotation.PostConstruct;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,28 +19,9 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 public class VideoUploadService {
-	@Value("${videos.path.scene}")
-	String scenePath;
-
-	@Value("${videos.path.chunk}")
-	String chunkPath;
-
-	private File sceneDirectory;
-
-	private File chunkDirectory;
-
-	private final ResourceLoader resourceLoader;
-
+	private final File chunkDirectory;
+	private final File sceneDirectory;
 	public static final String TEMP_PART_NAME = "temp.part";
-
-	@PostConstruct
-	public void init() throws IOException {
-		log.info("[PostConstruct] called");
-		sceneDirectory = resourceLoader.getResource("file:" + scenePath).getFile();
-		chunkDirectory = resourceLoader.getResource("file:" + chunkPath).getFile();
-		log.info("sceneDirectory = " + sceneDirectory);
-		log.info("chunkDirectory = " + chunkDirectory);
-	}
 
 	public File uploadChunkFiles(VideoSceneUploadRequest videoSceneUploadRequest) {
 		log.info("[uploadChunkFiles] called");
@@ -57,8 +34,8 @@ public class VideoUploadService {
 
 		File uploadedFile;
 		if (videoSceneUploadRequest.isEnd()) {
-			String extractFileExtension = extractFileExtension(videoSceneUploadRequest.getFileName());
-			uploadedFile = mergeChunkFiles(videoSceneUploadRequest.getFileName(), tempDirectory, extractFileExtension);
+			String[] fileName = splitFileName(videoSceneUploadRequest.getFileName());
+			uploadedFile = mergeChunkFiles(fileName[0], tempDirectory, fileName[1]);
 			deleteChunkFiles(tempDirectory);
 			return uploadedFile;
 		}
@@ -85,12 +62,14 @@ public class VideoUploadService {
 		return savedDirectory.toFile();
 	}
 
-	private String extractFileExtension(String originalFileName) {
+	private String[] splitFileName(String originalFileName) {
 		int idx = originalFileName.lastIndexOf(".");
+		String[] result = {originalFileName, ".mkv"};
 		if (idx > 0) {
-			return originalFileName.substring(idx);
+			result[0] = originalFileName.substring(0, idx);
+			result[1] = originalFileName.substring(idx);
 		}
-		return ".mkv";
+		return result;
 	}
 
 	private File mergeChunkFiles(String fileName, File tempDirectory, String fileExtension) {
