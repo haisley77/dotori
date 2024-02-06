@@ -55,7 +55,7 @@ public class SecurityConfig {
 			.csrf()
 			.disable() // csrf 보안 사용 X
 
-			//세션없는 stateless 환경
+			// 세션없는 stateless 환경
 			.sessionManagement()
 			.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
@@ -69,13 +69,20 @@ public class SecurityConfig {
 				"/css/**", "/images/**", "/js/**",
 				"/favicon.ico", "/resources/**", "/static/**", "/error")
 			.permitAll()
-			//로그인은 항상 접근가능
-			.antMatchers("/login/*", "/oauth/*", "/oauth2.0/*")
+			// 로그인은 항상 접근가능
+			.antMatchers("/login/**", "/oauth/**", "/oauth2.0/**")
 			// .antMatchers("**")
 			.permitAll()
 
+			// api 제한
 			.antMatchers("/api/members/detail", "/api/members/update_nickname", "/api/members/update_profileimg")
 			.hasRole("USER")
+			// .anyRequest()
+			// .authenticated() // 위의 경로 이외에는 모두 인증된 사용자만 접근 가능
+
+			// 페이지접근 제한
+			// .antMatchers("/my-page", "/my-page/info", "/my-page/collection", "/my-page/avatar")
+			// .hasRole("USER")
 			// .anyRequest()
 			// .authenticated() // 위의 경로 이외에는 모두 인증된 사용자만 접근 가능
 
