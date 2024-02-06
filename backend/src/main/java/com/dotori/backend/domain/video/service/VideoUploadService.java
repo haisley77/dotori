@@ -34,8 +34,8 @@ public class VideoUploadService {
 
 		File uploadedFile;
 		if (videoSceneUploadRequest.isEnd()) {
-			String extractFileExtension = extractFileExtension(videoSceneUploadRequest.getFileName());
-			uploadedFile = mergeChunkFiles(videoSceneUploadRequest.getFileName(), tempDirectory, extractFileExtension);
+			String[] fileName = splitFileName(videoSceneUploadRequest.getFileName());
+			uploadedFile = mergeChunkFiles(fileName[0], tempDirectory, fileName[1]);
 			deleteChunkFiles(tempDirectory);
 			return uploadedFile;
 		}
@@ -62,12 +62,14 @@ public class VideoUploadService {
 		return savedDirectory.toFile();
 	}
 
-	private String extractFileExtension(String originalFileName) {
+	private String[] splitFileName(String originalFileName) {
 		int idx = originalFileName.lastIndexOf(".");
+		String[] result = {originalFileName, ".mkv"};
 		if (idx > 0) {
-			return originalFileName.substring(idx);
+			result[0] = originalFileName.substring(0, idx);
+			result[1] = originalFileName.substring(idx);
 		}
-		return ".mkv";
+		return result;
 	}
 
 	private File mergeChunkFiles(String fileName, File tempDirectory, String fileExtension) {
