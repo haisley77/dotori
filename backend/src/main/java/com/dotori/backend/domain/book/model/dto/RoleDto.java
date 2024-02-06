@@ -11,5 +11,4 @@ public class RoleDto {
 	private final Long roleId;
 	private final String name;
 	private final String maskPath;
-	private final String maskThumbnailPath;
 }

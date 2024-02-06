@@ -2,9 +2,8 @@ package com.dotori.backend.domain.book.service;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
-import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
@@ -31,20 +30,25 @@ public class BookService {
 	private final RoleRepository roleRepository;
 
 	public GetBooksResponse getBooks() {
-		List<BookDto> books = bookRepository.findAll()
-			.stream()
-			.map(BookMapper::toBookDto)
-			.collect(Collectors.toList());
+
+		List<Book> bookList = bookRepository.findAll();
+		List<BookDto> books = new LinkedList<>();
+
+		for (Book book : bookList) {
+			books.add(BookMapper.toBookDto(book));
+		}
 
 		return GetBooksResponse.builder().books(books).build();
 	}
 
 	public GetBookResponse getBook(Long bookId) {
-		Book book = bookRepository.findById(bookId).orElseThrow(
-			() -> new EntityNotFoundException("해당하는 책이 존재하지 않습니다.")
-		);
+		Optional<Book> findBook = bookRepository.findById(bookId);
 
-		BookDto bookDto = BookMapper.toBookDto(book);
+		if (findBook.isEmpty()) {
+			return null;
+		}
+
+		BookDto bookDto = BookMapper.toBookDto(findBook.get());
 
 		List<Role> roleList = roleRepository.findByBook_BookId(bookId);
 		List<RoleDto> roles = new LinkedList<>();

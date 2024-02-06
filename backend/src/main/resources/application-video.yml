@@ -1,9 +1,0 @@
-spring:
-  config:
-    import:
-      - optional:file:env/video.env[.properties]
-
-videos:
-  path:
-    scene: ${SCENE_DIRECTORY_PATH}
-    chunk: ${CHUNK_DIRECTORY_PATH}
