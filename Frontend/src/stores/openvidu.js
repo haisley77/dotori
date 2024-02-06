@@ -56,6 +56,7 @@ export const useOpenViduStore
 
   // 방장인지 아닌지 판단하는 변수 (일단 true로 주겠음)
   const isHost = ref(true);
+  const canMoveToRecording = ref(false);
 
   // 방 세션 설정 정보
   const session_properties = ref({});
@@ -367,12 +368,10 @@ export const useOpenViduStore
   session.on('signal:move-recording', (event) => {
     console.log('받음');
     const receivedData = JSON.parse(event.data);
-    if (!isHost.value) {
-      if (receivedData.recording === true) {
-        // room_info.value.isRecording = true;
-        // room isRecording 갱신
-        router.push('/recording'); // 녹화방으로 이동 -> 수정필요
-      }
+    if (receivedData.recording) {
+      room_info.value.isRecording = true;
+      canMoveToRecording.value = true;
+      // room 정보 녹화중 반영
     }
   });
 
@@ -450,6 +449,7 @@ export const useOpenViduStore
   ]);
 
   return {
+    room_info,
     isHost,
     session,
     playerList,
@@ -477,5 +477,6 @@ export const useOpenViduStore
     subscribers, mainStreamManager, OV, bookInfoList,
     getConnectionToken,
     removeRoomMember,
+    canMoveToRecording,
   };
 }, {persist: {storage: sessionStorage}});

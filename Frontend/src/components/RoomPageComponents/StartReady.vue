@@ -12,11 +12,11 @@
   const router = useRouter();
   const btnValue = ref(false);
   const openViduStore = useOpenViduStore();
-  const {playerList,isHost,sendingMoveData,sendingReadyData} = storeToRefs(openViduStore);
+  const {canMoveToRecording,playerList,isHost,sendingMoveData,sendingReadyData} = storeToRefs(openViduStore);
   const {updateRoom,sendMoveInfoToOpenVidu,sendReadyInfoToOpenVidu} = openViduStore;
 
-  watch(props.roomInfo, (newItems, oldItems) => {
-    if (props.roomInfo.isRecording) {
+  watch(canMoveToRecording, (newItems, oldItems) => {
+    if (newItems) {
       moveRecording();
     }
   });
@@ -38,9 +38,8 @@
     playerList.value.forEach((user) => {
       if (user.memberId === props.memberId) {
         user.readyState = true;
-        readyCnt++;
       }
-      if (user.memberId !== props.memberId && user.readyState) {
+      if (user.readyState) {
         readyCnt++;
       }
     })
@@ -50,6 +49,7 @@
         .then(() => {
           sendingMoveData.value.recording = true;
           sendMoveInfoToOpenVidu();
+          canMoveToRecording.value = true;
         })
         .catch((error) => {
           console.error(error);
