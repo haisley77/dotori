@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
@@ -31,6 +32,8 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 		Authentication authentication) throws IOException, ServletException {
 		log.info("OAuth2 Login 성공!");
 		try {
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+			log.info("authentication:{}", authentication);
 			CustomOAuth2User oAuth2User = (CustomOAuth2User)authentication.getPrincipal();
 			loginSuccess(response, oAuth2User); // 로그인에 성공한 경우 access, refresh 토큰 생성
 		} catch (Exception e) {
