@@ -6,7 +6,7 @@
       </div>
       <div class='row'>
         <div class='col-8 q-pa-sm'>
-          <PlayerList :memberId="member_id"></PlayerList>
+          <PlayerList :memberId="memberId"></PlayerList>
         </div>
         <div class='col-4 q-pa-sm'>
           <BookInfo :bookInfo='bookInfo'></BookInfo>
@@ -14,10 +14,10 @@
       </div>
       <div class='row'>
         <div class='col-8 q-pa-sm' style='height: 210px'>
-          <RoomChat :playerList='playerList' :memberId='member_id'></RoomChat>
+          <RoomChat :playerList='playerList' :memberId='memberId'></RoomChat>
         </div>
         <div class='col-4 q-pa-sm'>
-          <StartReady :roomInfo='roomInfo' :memberId='member_id'></StartReady>
+          <StartReady :roomInfo='roomInfo' :memberId='memberId'></StartReady>
         </div>
       </div>
     </div>
@@ -39,16 +39,16 @@
   const {sendIncomingInfoToOpenVidu} = openViduStore;
   const bookInfo = roomInitializationParam.value.bookInfo;
   const roomInfo = roomInitializationParam.value.roomInfo;
-  const member_id = ref(0);
+  const memberId = ref(0);
 
   onMounted(() => {
     // 대기방에 들어온 사용자의 아이디를 조회
-    // member_id = await axios.get(path, accessToken);
-    member_id.value = 30;
+    // memberId = await axios.get(path, accessToken);
+    memberId.value = 30;
 
     const player = {
       name: '방장하은',
-      memberId: member_id.value,
+      memberId: memberId.value,
       profileImg: 'src/assets/MyPageImages/iupic.jpg',
       roleName: '방장하은',
       roleIndex: 5,

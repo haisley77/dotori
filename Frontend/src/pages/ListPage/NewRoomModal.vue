@@ -90,7 +90,7 @@
   const {createRoom, connectToOpenVidu, addRoomMember} = openViduStore;
 
   onMounted(() => {
-    // member_id = await axios.get(path정보, accesstoken);
+      // member_id = await axios.get(path정보, accesstoken);
   });
 
   const components = {Character};

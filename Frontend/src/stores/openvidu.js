@@ -46,13 +46,13 @@ export const useOpenViduStore
 
   const apiRootPath = '/api/rooms';
 
-  const room_id = ref(0);
-  const room_name = ref(null);
-  const room_password = ref(null);
-  const is_private = ref(false);
+  const roomId = ref(0);
+  const roomName = ref(null);
+  const roomPassword = ref(null);
+  const isPrivate = ref(false);
   const subscribers = ref([]);
   const mainStreamManager = ref();
-  const member_id = ref(30);
+  const memberId = ref(30);
 
   // 방장인지 아닌지 판단하는 변수 (일단 true로 주겠음)
   const isHost = ref(true);
@@ -66,7 +66,7 @@ export const useOpenViduStore
 
   // 방 설정 정보
   const room_info = ref({
-    hostId: member_id.value,
+    hostId: memberId.value,
     title: null,
     password: null,
     isRecording: false,
@@ -87,16 +87,16 @@ export const useOpenViduStore
     return new Promise((resolve, reject) => {
       const apiPath = apiRootPath + '/session';
 
-      room_info.value.title = room_name.value;
-      room_info.value.password = room_password.value;
-      room_info.value.isPublic = !is_private.value;
+      room_info.value.title = roomName.value;
+      room_info.value.password = roomPassword.value;
+      room_info.value.isPublic = !isPrivate.value;
       room_info.value.limitCnt = bookmodal.roleCnt;
 
       roomInitializationParam.value.bookInfo = bookmodal;
       roomInitializationParam.value.roomInfo = room_info.value;
 
       // 방 정보 setting
-      if (room_password.value === null && is_private.value === true) {
+      if (roomPassword.value === null && isPrivate.value === true) {
         reject('비밀번호 입력 필수');
         return;
       }
@@ -105,7 +105,7 @@ export const useOpenViduStore
         .then((response) => {
           console.log(response.status);
           if (response.status === 201) {
-            room_id.value = response.data.roomId;
+            roomId.value = response.data.roomId;
             ovToken.value = response.data.token;
 
             resolve(response.data);
@@ -127,7 +127,7 @@ export const useOpenViduStore
       axios.post(apiPath, connection_properties.value)
         .then((response) => {
           if (response.status === 200) {
-            room_id.value = response.data.roomId;
+            roomId.value = response.data.roomId;
             ovToken.value = response.data.token;
             resolve(response.data);
           }
@@ -145,7 +145,7 @@ export const useOpenViduStore
 
   const addRoomMember = () => {
     return new Promise((resolve, reject) => {
-      const apiPath = apiRootPath + `/add/${room_id.value}/${member_id.value}`;
+      const apiPath = apiRootPath + `/add/${roomId.value}/${memberId.value}`;
 
       axios.post(apiPath)
         .then((response) => {
@@ -167,7 +167,7 @@ export const useOpenViduStore
 
   const removeRoomMember = () => {
     return new Promise((resolve, reject) => {
-      const apiPath = apiRootPath + `/remove/${room_id.value}/${member_id.value}`;
+      const apiPath = apiRootPath + `/remove/${roomId.value}/${memberId.value}`;
 
       axios.delete(apiPath)
         .then((response) => {
@@ -186,7 +186,7 @@ export const useOpenViduStore
 
   const updateRoom = (isRecording) => {
     return new Promise((resolve, reject) => {
-      const apiPath = apiRootPath + `/update/${room_id.value}`;
+      const apiPath = apiRootPath + `/update/${roomId.value}`;
 
       room_info.value.isRecording = isRecording;
 
@@ -194,7 +194,7 @@ export const useOpenViduStore
         .then((response) => {
           console.log(response.status);
           if (response.status === 200) {
-            room_id.value = response.data.roomId;
+            roomId.value = response.data.roomId;
             resolve(response.data);
           }
         })
@@ -404,16 +404,7 @@ export const useOpenViduStore
     }
   });
 
-  const playerList = ref([
-    // {
-    //   name: 'Winter',
-    //   memberId: 1,
-    //   profileImg: 'src/assets/MyPageImages/winter.png',
-    //   roleName: 'Winter',
-    //   roleIndex: 5,     // db에서 조회해 온 역할 정보들을 가진 roleList 상의 인덱스를 저장합니다. 초기엔 5 default.
-    //   readyState: false, // 유저의 준비 상태를 저장합니다. 녹화방 이동을 테스트하기 위해 true로 지정. 원래는 false default.
-    // },
-  ]);
+  const playerList = ref([]);
 
 // 역할 리스트
   const roleList = ref([
@@ -445,9 +436,9 @@ export const useOpenViduStore
     isHost,
     session,
     playerList,
-    room_name,
-    room_password,
-    is_private,
+    room_name: roomName,
+    room_password: roomPassword,
+    is_private: isPrivate,
     ovToken,
     roomInitializationParam,
     sendingReadyData,

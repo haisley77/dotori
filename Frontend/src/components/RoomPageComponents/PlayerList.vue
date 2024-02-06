@@ -79,7 +79,7 @@
 <script setup>
   import {storeToRefs} from 'pinia';
   import {useOpenViduStore} from 'stores/openvidu';
-  import {onMounted,ref,watch} from 'vue';
+  import {watch} from 'vue';
 
   const props = defineProps({
     memberId: Object,
