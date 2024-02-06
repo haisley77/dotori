@@ -74,7 +74,8 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 		log.info("role:{}", role);
 		if (email.isPresent() && role.isPresent()) {
 			Member member = memberRepository.findByEmail(email.get()).orElse(null);
-			SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.get());
+
+			SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + role.get());
 			List<GrantedAuthority> authorities = Collections.singletonList(authority);
 
 			// Authentication 객체 생성
