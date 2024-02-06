@@ -42,9 +42,8 @@
     setup() {
       const router = useRouter();
       const rooms = ref([]);
-
       const openViduStore = useOpenViduStore();
-      const {roomInitializationParam, room_name, room_password, is_private} = storeToRefs(openViduStore);
+      const {book_info, scene_info, room_info, room_name, room_password, is_private} = storeToRefs(openViduStore);
       const {getConnectionToken, connectToOpenVidu, addRoomMember} = openViduStore;
 
       const moveWaitingRoom = (room) => {
@@ -55,6 +54,7 @@
         fetchRooms();
       });
 
+      // 방 목록 정보를 불러온다.
       const fetchRooms = async () => {
         try {
           const response = await axios.get('http://localhost:8080/api/rooms');
@@ -69,19 +69,59 @@
         }
       };
 
+      // 해당 방에 대한 책과 역할 정보를 불러온다.
+      const fetchBooks = async (bookId) => {
+        try {
+          const response = await axios.get(`http://localhost:8080/api/books/${bookId}`);
+          console.log('API Response:', response);
+          if (response.status === 200) {
+            book_info.value = response.data;
+          } else {
+            console.error('Failed to fetch books. Status:', response.status);
+          }
+        } catch (error) {
+          console.error('Error fetching books:', error);
+        }
+      };
+
+      // 해당 방의 책에 대한 장면 정보를 불러온다.
+      const fetchScenes = async (bookId) => {
+        try {
+          const response = await axios.get(`http://localhost:8080/api/books/${bookId}/scenes`);
+          console.log('API Response:', response);
+          if (response.status === 200) {
+            scene_info.value = response.data;
+          } else {
+            console.error('Failed to fetch scenes. Status:', response.status);
+          }
+        } catch (error) {
+          console.error('Error fetching scenes:', error);
+        }
+      };
+
       const enterRoom = (room) => {
-        // 유저 방정보, 책정보 가지고 입장.
-        roomInitializationParam.value.bookInfo = room.book;
-        roomInitializationParam.value.roomInfo = room;
-        console.log("책정보",roomInitializationParam.value.bookInfo);
-        console.log("방정보",roomInitializationParam.value.roomInfo);
+        room_info.value = {
+        hostId: room.hostId,
+        title: room.title,
+        password: room.password,
+        isRecording: room.isRecording,
+        joinCnt: room.joinCnt,
+        limitCnt: room.limitCnt,
+        isPublic: room.isPublic,
+      };
+
+      room_name = room.title;
+      room_password = room.password;
+      is_private = room.isPublic;
+
         getConnectionToken(room)
           .then(() => {
             connectToOpenVidu()
               .then(() => {
                 addRoomMember()
                   .then(() => {
-                    // console.log('드디어 도착');
+                    fetchBooks(room.bookId);
+                    fetchScenes(room.bookId);
                     moveWaitingRoom(room);
                   })
                   .catch((error) => {
@@ -98,7 +138,13 @@
       return {
         rooms,
         moveWaitingRoom,
-        enterRoom
+        enterRoom,
+        room_name,
+        room_password,
+        is_private,
+        book_info,
+        scene_info,
+        room_info
       };
     },
   };
