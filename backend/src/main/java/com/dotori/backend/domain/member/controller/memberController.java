@@ -50,7 +50,6 @@ public class memberController {
 
 	@GetMapping("/detail")
 	public ResponseEntity<?> getMemberInfo(HttpServletRequest request) {
-		System.out.println(SecurityContextHolder.getContext().getAuthentication());
 		Optional<String> jwtdetail = jwtService.extractEmailFromAccessToken(request);
 
 		if (jwtdetail.isPresent()) {
