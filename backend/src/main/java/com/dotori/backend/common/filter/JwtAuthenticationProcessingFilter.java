@@ -106,6 +106,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 	public ResponseEntity<?> checkRefreshTokenAndMakeAccessToken(HttpServletResponse response,
 		HttpServletRequest request) {
 		Optional<String> jwtemail = jwtService.extractEmailFromAccessToken(request);
+		Optional<String> jwtrole = jwtService.extractroleFromAccessToken(request);
 
 		if (!jwtemail.isPresent()) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
@@ -113,6 +114,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 		}
 
 		String email = jwtemail.get();
+		String role = jwtrole.get();
 		Optional<String> refreshTokenOpt = redisService.getRefreshToken(email);
 
 		if (!refreshTokenOpt.isPresent()) {
@@ -128,7 +130,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 		}
 
 		// 리프레시 토큰이 유효한 경우 새로운 액세스 토큰 발급 및 쿠키에 추가
-		String newAccessToken = jwtService.createAccessToken(email);
+		String newAccessToken = jwtService.createAccessToken(email, role);
 		jwtService.sendAccessToken(response, newAccessToken);
 
 		return ResponseEntity.ok("accesstoken 생성완료");
