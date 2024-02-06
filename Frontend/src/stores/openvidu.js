@@ -93,8 +93,6 @@ export const useOpenViduStore
 
       roomInitializationParam.value.bookInfo = bookmodal;
       roomInitializationParam.value.roomInfo = room_info.value;
-      roomInitializationParam.value.bookInfo = bookmodal;
-      roomInitializationParam.value.roomInfo = room_info.value;
 
       // 방 정보 setting
       if (room_password.value === null && is_private.value === true) {
