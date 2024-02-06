@@ -12,7 +12,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.dotori.backend.common.filter.JwtAuthenticationProcessingFilter;
 import com.dotori.backend.common.handler.OAuth2LoginFailureHandler;
 import com.dotori.backend.common.handler.OAuth2LoginSuccessHandler;
 import com.dotori.backend.domain.member.repository.MemberRepository;
@@ -118,11 +117,11 @@ public class SecurityConfig {
 		return source;
 	}
 
-	@Bean
-	public JwtAuthenticationProcessingFilter jwtAuthenticationProcessingFilter() {
-		JwtAuthenticationProcessingFilter jwtAuthenticationFilter = new JwtAuthenticationProcessingFilter(jwtService,
-			memberRepository, redisService);
-		return jwtAuthenticationFilter;
-	}
+	// @Bean
+	// public JwtAuthenticationProcessingFilter jwtAuthenticationProcessingFilter() {
+	// 	JwtAuthenticationProcessingFilter jwtAuthenticationFilter = new JwtAuthenticationProcessingFilter(jwtService,
+	// 		memberRepository, redisService);
+	// 	return jwtAuthenticationFilter;
+	// }
 
 }
