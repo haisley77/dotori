@@ -1,7 +1,18 @@
 package com.dotori.backend.domain.video.controller;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StreamUtils;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,5 +38,25 @@ public class VideoController {
 		if (!videoService.uploadSceneVideo(videoSceneUploadRequest))
 			return ResponseEntity.status(206).build();
 		return ResponseEntity.ok().build();
+	}
+
+	@GetMapping("/{videoId}")
+	private void downloadVideo(
+		@PathVariable(name = "videoId") Long videoId,
+		HttpServletResponse response
+	) {
+		log.info("[downloadVideo] called");
+		response.setContentType(MediaType.APPLICATION_OCTET_STREAM.getType());
+		response.addHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"dotori.mp4\"");
+
+		try {
+			InputStream inputStream = new FileInputStream(videoService.downloadVideo(videoId));
+			StreamUtils.copy(inputStream, response.getOutputStream());
+
+			response.flushBuffer();
+			inputStream.close();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }
