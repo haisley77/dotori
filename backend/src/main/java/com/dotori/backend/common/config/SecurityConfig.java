@@ -1,17 +1,22 @@
 package com.dotori.backend.common.config;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.hc.core5.http.HttpHeaders;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import com.dotori.backend.common.filter.JwtAuthenticationProcessingFilter;
 import com.dotori.backend.common.handler.OAuth2LoginFailureHandler;
 import com.dotori.backend.common.handler.OAuth2LoginSuccessHandler;
 import com.dotori.backend.domain.member.repository.MemberRepository;
@@ -54,24 +59,43 @@ public class SecurityConfig {
 			// .disable()
 			// .and()
 
-			//
-			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-
+			// 세션없는 stateless 환경
+			.sessionManagement()
+			.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
 
-			//== URL별 권한 관리 옵션 ==//
+			.addFilterBefore(new JwtAuthenticationProcessingFilter(jwtService, memberRepository, redisService),
+				AnonymousAuthenticationFilter.class)
+			// URL별 권한 관리 옵션
 			.authorizeRequests()
 			// 기본 페이지, css, image, js 하위 폴더에 있는 자료들은 모두 접근 가능
 			.antMatchers("/",
 				"/css/**", "/images/**", "/js/**",
 				"/favicon.ico", "/resources/**", "/static/**", "/error")
 			.permitAll()
+			// 로그인은 항상 접근가능
+			.antMatchers("/login/**", "/oauth/**", "/oauth2.0/**")
+			// .antMatchers("**")
+			.permitAll()
 
-			.antMatchers("/**")
-			.permitAll() // 회원가입 접근 가능
-
+			// api 제한
+			.antMatchers("/api/members/detail", "/api/members/update_nickname", "/api/members/update_profileimg")
+			.hasRole("USER")
 			// .anyRequest()
 			// .authenticated() // 위의 경로 이외에는 모두 인증된 사용자만 접근 가능
+
+			// 페이지접근 제한
+			// .antMatchers("/my-page", "/my-page/info", "/my-page/collection", "/my-page/avatar")
+			// .hasRole("USER")
+			// .anyRequest()
+			// .authenticated() // 위의 경로 이외에는 모두 인증된 사용자만 접근 가능
+
+			//예외핸들러
+			.and()
+			.exceptionHandling()
+			.authenticationEntryPoint(authenticationEntryPoint())
+
+			//로그아웃
 			.and()
 			.logout()
 			.logoutUrl("/api/members/logout") // 로그아웃 URL 지정
@@ -80,12 +104,12 @@ public class SecurityConfig {
 			.deleteCookies("JSESSIONID") // 쿠키 삭제
 
 			.and()
-			//== 소셜 로그인 설정 ==//
+			//소셜 로그인 설정
 			.oauth2Login()
 			.successHandler(oAuth2LoginSuccessHandler) // 성공시 Handler 설정
 			.failureHandler(oAuth2LoginFailureHandler) // 소셜 로그인 실패 시 핸들러 설정
 			.userInfoEndpoint()
-			.userService(customOAuth2UserService);// customUserService 설정
+			.userService(customOAuth2UserService);   // customUserService 설정
 
 		// 원래 스프링 시큐리티 필터 순서가 LogoutFilter 이후에 로그인 필터 동작
 		// 순서 : LogoutFilter -> JwtAuthenticationProcessingFilter -> CustomJsonUsernamePasswordAuthenticationFilter
@@ -117,11 +141,19 @@ public class SecurityConfig {
 		return source;
 	}
 
-	// @Bean
-	// public JwtAuthenticationProcessingFilter jwtAuthenticationProcessingFilter() {
-	// 	JwtAuthenticationProcessingFilter jwtAuthenticationFilter = new JwtAuthenticationProcessingFilter(jwtService,
-	// 		memberRepository, redisService);
-	// 	return jwtAuthenticationFilter;
-	// }
+	private AuthenticationEntryPoint authenticationEntryPoint() {
+		return (request, response, authException) -> {
+			// 인증되지 않은 사용자의 요청 처리 로직
+			// 예: 로그인 페이지로 리다이렉트 또는 오류 메시지 응답
+			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "접근이 거절되었습니다.");
+		};
+	}
+
+	@Bean
+	public JwtAuthenticationProcessingFilter jwtAuthenticationProcessingFilter() {
+		JwtAuthenticationProcessingFilter jwtAuthenticationFilter = new JwtAuthenticationProcessingFilter(jwtService,
+			memberRepository, redisService);
+		return jwtAuthenticationFilter;
+	}
 
 }

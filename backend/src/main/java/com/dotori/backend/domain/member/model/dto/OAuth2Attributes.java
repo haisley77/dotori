@@ -14,13 +14,13 @@ import lombok.Getter;
  * 소셜별로 데이터를 받는 데이터를 분기 처리하는 DTO 클래스
  */
 @Getter
-public class OAuthAttributes {
+public class OAuth2Attributes {
 
 	private final String nameAttributeKey; // OAuth2 로그인 진행 시 키가 되는 필드 값, PK와 같은 의미
 	private final OAuth2UserInfo oauth2UserInfo; // 소셜 타입별 로그인 유저 정보(닉네임, 이메일, 프로필 사진 등등)
 
 	@Builder
-	public OAuthAttributes(String nameAttributeKey, OAuth2UserInfo oauth2UserInfo) {
+	public OAuth2Attributes(String nameAttributeKey, OAuth2UserInfo oauth2UserInfo) {
 		this.nameAttributeKey = nameAttributeKey;
 		this.oauth2UserInfo = oauth2UserInfo;
 	}
@@ -31,7 +31,7 @@ public class OAuthAttributes {
 	 * 소셜별 of 메소드(ofGoogle, ofKaKao, ofNaver)들은 각각 소셜 로그인 API에서 제공하는
 	 * 회원의 식별값(id), attributes, nameAttributeKey를 저장 후 build
 	 */
-	public static OAuthAttributes of(SocialType socialType,
+	public static OAuth2Attributes of(SocialType socialType,
 		String userNameAttributeName, Map<String, Object> attributes) {
 
 		if (socialType == SocialType.NAVER) {
@@ -43,22 +43,22 @@ public class OAuthAttributes {
 		return ofGoogle(userNameAttributeName, attributes);
 	}
 
-	private static OAuthAttributes ofKakao(String userNameAttributeName, Map<String, Object> attributes) {
-		return OAuthAttributes.builder()
+	private static OAuth2Attributes ofKakao(String userNameAttributeName, Map<String, Object> attributes) {
+		return OAuth2Attributes.builder()
 			.nameAttributeKey(userNameAttributeName)
 			.oauth2UserInfo(new KakaoOAuth2UserInfo(attributes))
 			.build();
 	}
 
-	public static OAuthAttributes ofGoogle(String userNameAttributeName, Map<String, Object> attributes) {
-		return OAuthAttributes.builder()
+	public static OAuth2Attributes ofGoogle(String userNameAttributeName, Map<String, Object> attributes) {
+		return OAuth2Attributes.builder()
 			.nameAttributeKey(userNameAttributeName)
 			.oauth2UserInfo(new GoogleOAuth2UserInfo(attributes))
 			.build();
 	}
 
-	public static OAuthAttributes ofNaver(String userNameAttributeName, Map<String, Object> attributes) {
-		return OAuthAttributes.builder()
+	public static OAuth2Attributes ofNaver(String userNameAttributeName, Map<String, Object> attributes) {
+		return OAuth2Attributes.builder()
 			.nameAttributeKey(userNameAttributeName)
 			.oauth2UserInfo(new NaverOAuth2UserInfo(attributes))
 			.build();

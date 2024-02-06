@@ -1,6 +1,8 @@
 package com.dotori.backend.common.filter;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -11,8 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
-import org.springframework.security.core.authority.mapping.NullAuthoritiesMapper;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.dotori.backend.domain.member.model.entity.Member;
@@ -41,11 +46,8 @@ import lombok.extern.slf4j.Slf4j;
 public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 
 	private static final String NO_CHECK_URL = "/login/*"; // "/login"으로 들어오는 요청은 Filter 작동 X
-
 	private final JwtService jwtService;
 	private final MemberRepository memberRepository;
-
-	private final GrantedAuthoritiesMapper authoritiesMapper = new NullAuthoritiesMapper();
 	private final RedisService redisService;
 
 	@Override
@@ -64,8 +66,23 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 		// redis에 RefreshToken이 있는 경우는, AccessToken이 만료되어 요청한 경우밖에 없다.
 		// 따라서, 위의 경우를 제외하면 추출한 refreshToken은 모두 null
 		// 액세스 토큰에서 이메일 추출
+
+		//세션을 사용하지않으므로 모든요청마다 security context에 authentication객체를 넣어줘야함
 		Optional<String> email = jwtService.extractEmailFromAccessToken(request);
+		Optional<String> role = jwtService.extractroleFromAccessToken(request);
 		log.info("email:{}", email);
+		log.info("role:{}", role);
+		if (email.isPresent() && role.isPresent()) {
+			Member member = memberRepository.findByEmail(email.get()).orElse(null);
+
+			SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + role.get());
+			List<GrantedAuthority> authorities = Collections.singletonList(authority);
+
+			// Authentication 객체 생성
+			Authentication authentication = new UsernamePasswordAuthenticationToken(member, null, authorities);
+
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+		}
 
 		// 이메일을 기반으로 Redis에서 리프레쉬 토큰 가져오기
 		String refreshToken = email.flatMap(redisService::getRefreshToken)
@@ -91,7 +108,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 		// AccessToken이 없거나 유효하지 않다면, 인증 객체가 담기지 않은 상태로 다음 필터로 넘어가기 때문에 403 에러 발생
 		// AccessToken이 유효하다면, 인증 객체가 담긴 상태로 다음 필터로 넘어가기 때문에 인증 성공
 		if (refreshToken == null) {
-			checkAccessTokenAndAuthentication(request, response, filterChain);
+			checkAccessTokenAndAuthentication(request);
 			filterChain.doFilter(request, response);
 		}
 
@@ -106,6 +123,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 	public ResponseEntity<?> checkRefreshTokenAndMakeAccessToken(HttpServletResponse response,
 		HttpServletRequest request) {
 		Optional<String> jwtemail = jwtService.extractEmailFromAccessToken(request);
+		Optional<String> jwtrole = jwtService.extractroleFromAccessToken(request);
 
 		if (!jwtemail.isPresent()) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
@@ -113,6 +131,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 		}
 
 		String email = jwtemail.get();
+		String role = jwtrole.get();
 		Optional<String> refreshTokenOpt = redisService.getRefreshToken(email);
 
 		if (!refreshTokenOpt.isPresent()) {
@@ -128,7 +147,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 		}
 
 		// 리프레시 토큰이 유효한 경우 새로운 액세스 토큰 발급 및 쿠키에 추가
-		String newAccessToken = jwtService.createAccessToken(email);
+		String newAccessToken = jwtService.createAccessToken(email, role);
 		jwtService.sendAccessToken(response, newAccessToken);
 
 		return ResponseEntity.ok("accesstoken 생성완료");
@@ -154,16 +173,12 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 	 * 인증 허가 처리된 객체를 SecurityContextHolder에 담기
 	 * 그 후 다음 인증 필터로 진행
 	 */
-	public void checkAccessTokenAndAuthentication(HttpServletRequest request, HttpServletResponse response,
-		FilterChain filterChain) throws ServletException, IOException {
+	public void checkAccessTokenAndAuthentication(HttpServletRequest request) {
 		log.info("checkAccessTokenAndAuthentication() 호출");
 		jwtService.extractAccessToken(request)
 			.filter(jwtService::isTokenValid)
 			.ifPresent(accessToken -> jwtService.extractEmail(accessToken)
 				.ifPresent(email -> memberRepository.findByEmail(email)
 				));
-
-		filterChain.doFilter(request, response);
 	}
-
 }

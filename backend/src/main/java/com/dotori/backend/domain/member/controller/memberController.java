@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -41,8 +42,8 @@ public class memberController {
 	public ResponseEntity<?> getAuthStatus() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-		// 인증 객체가 null이 아니고, 인증이 유효한 경우
-		boolean isAuthenticated = authentication != null && authentication.isAuthenticated();
+		boolean isAnonymous = authentication instanceof AnonymousAuthenticationToken;
+		boolean isAuthenticated = authentication != null && authentication.isAuthenticated() && !isAnonymous;
 
 		return ResponseEntity.ok(Collections.singletonMap("isAuthenticated", isAuthenticated));
 	}

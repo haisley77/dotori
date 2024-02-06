@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.dotori.backend.domain.member.model.Enum.SocialType;
 import com.dotori.backend.domain.member.model.dto.CustomOAuth2User;
-import com.dotori.backend.domain.member.model.dto.OAuthAttributes;
+import com.dotori.backend.domain.member.model.dto.OAuth2Attributes;
 import com.dotori.backend.domain.member.model.entity.Member;
 import com.dotori.backend.domain.member.repository.MemberRepository;
 
@@ -55,7 +55,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 		Map<String, Object> attributes = oAuth2User.getAttributes(); // 소셜 로그인에서 API가 제공하는 userInfo의 Json 값(유저 정보들)
 
 		// socialType에 따라 유저 정보를 통해 OAuthAttributes 객체 생성
-		OAuthAttributes extractAttributes = OAuthAttributes.of(socialType, userNameAttributeName, attributes);
+		OAuth2Attributes extractAttributes = OAuth2Attributes.of(socialType, userNameAttributeName, attributes);
 
 		Member createdUser = getUser(extractAttributes, socialType); // getUser() 메소드로 User 객체 생성 후 반환
 
@@ -83,7 +83,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 	 * SocialType과 attributes에 들어있는 소셜 로그인의 식별값 id를 통해 회원을 찾아 반환하는 메소드
 	 * 만약 찾은 회원이 있다면, 그대로 반환하고 없다면 saveUser()를 호출하여 회원을 저장한다.
 	 */
-	private Member getUser(OAuthAttributes attributes, SocialType socialType) {
+	private Member getUser(OAuth2Attributes attributes, SocialType socialType) {
 		Member findUser = memberRepository.findBySocialTypeAndSocialId(socialType,
 			attributes.getOauth2UserInfo().getId()).orElse(null);
 
@@ -97,7 +97,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 	 * OAuthAttributes의 toEntity() 메소드를 통해 빌더로 User 객체 생성 후 반환
 	 * 생성된 User 객체를 DB에 저장 : socialType, socialId, email, role 값만 있는 상태
 	 */
-	private Member saveUser(OAuthAttributes attributes, SocialType socialType) {
+	private Member saveUser(OAuth2Attributes attributes, SocialType socialType) {
 		Member createdUser = attributes.toEntity(socialType, attributes.getOauth2UserInfo());
 		return memberRepository.save(createdUser);
 	}
