@@ -240,6 +240,10 @@ export const useOpenViduStore
     });
   };
 
+  const sendingReadyData = ref({
+    playerList: null,
+  });
+
   const sendingRoleData = ref({
     playerList: null,
     roleList: null,
@@ -257,6 +261,23 @@ export const useOpenViduStore
     incoming: true,
     player: null,
   });
+
+  const sendReadyInfoToOpenVidu = () => {
+    return new Promise((resolve, reject) => {
+      session.signal({
+        data: JSON.stringify(sendingReadyData.value),
+        to: [],
+        type: 'signal:update-ready',
+      })
+        .then(() => {
+          console.log('전송함');
+          resolve('준비 상태 전송 성공');
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  };
 
   const sendRoleInfoToOpenVidu = () => {
     return new Promise((resolve, reject) => {
@@ -325,6 +346,13 @@ export const useOpenViduStore
         });
     });
   };
+
+  // 방 참여자의 준비 상태를 반영한다.
+  session.on('signal:update-ready', (event) => {
+    const receivedData = JSON.parse(event.data);
+    playerList.value = receivedData.playerList;
+    console.log(playerList.value);
+  });
 
   // 방 참여자의 역할 정보가 변경되었다는 이벤트를 수신하면 방 참여자들은 변경 내용을 반영한다.
   session.on('signal:update-role', (event) => {
@@ -430,6 +458,7 @@ export const useOpenViduStore
     is_private,
     ovToken,
     roomInitializationParam,
+    sendingReadyData,
     sendingRoleData,
     sendingMoveData,
     sendingPlayerData,
@@ -439,6 +468,7 @@ export const useOpenViduStore
     addRoomMember,
     updateRoom,
     publish,
+    sendReadyInfoToOpenVidu,
     sendRoleInfoToOpenVidu,
     sendMoveInfoToOpenVidu,
     sendPlayerInfoToOpenVidu,

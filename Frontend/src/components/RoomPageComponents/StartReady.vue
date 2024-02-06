@@ -1,6 +1,6 @@
 <script setup>
   import {useRouter} from 'vue-router';
-  import {ref} from 'vue';
+  import {ref, watch} from 'vue';
   import {useOpenViduStore} from 'stores/openvidu';
   import {storeToRefs} from 'pinia';
 
@@ -12,14 +12,22 @@
   const router = useRouter();
   const btnValue = ref(false);
   const openViduStore = useOpenViduStore();
-  const {playerList,isHost,sendingMoveData} = storeToRefs(openViduStore);
-  const {updateRoom,sendMoveInfoToOpenVidu} = openViduStore;
+  const {playerList,isHost,sendingMoveData,sendingReadyData} = storeToRefs(openViduStore);
+  const {updateRoom,sendMoveInfoToOpenVidu,sendReadyInfoToOpenVidu} = openViduStore;
+
+  watch(props.roomInfo, (newItems, oldItems) => {
+    if (props.roomInfo.isRecording) {
+      moveRecording();
+    }
+  });
 
   const updateState = () => {
     playerList.value.forEach((user) => {
       if (user.memberId === props.memberId) {
         user.readyState = true;
         btnValue.value = true;
+        sendingReadyData.value.playerList = playerList.value;
+        sendReadyInfoToOpenVidu();
         alert('곧 시작합니다. 잠시만 기다려주세요!');
       }
     })
@@ -41,13 +49,7 @@
       updateRoom(true)
         .then(() => {
           sendingMoveData.value.recording = true;
-          sendMoveInfoToOpenVidu()
-            .then(() => {
-              moveRecording();
-            })
-            .catch((error) => {
-              console.error(error)
-            });
+          sendMoveInfoToOpenVidu();
         })
         .catch((error) => {
           console.error(error);
