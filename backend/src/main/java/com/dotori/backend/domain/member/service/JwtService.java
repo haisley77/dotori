@@ -45,6 +45,7 @@ public class JwtService {
 	private static final String ACCESS_TOKEN_SUBJECT = "AccessToken";
 	private static final String REFRESH_TOKEN_SUBJECT = "RefreshToken";
 	private static final String EMAIL_CLAIM = "email";
+	private static final String ROLE_CLAIM = "role";
 	private static final String BEARER = "Bearer ";
 
 	private final MemberRepository memberRepository;
@@ -53,17 +54,14 @@ public class JwtService {
 	/**
 	 * AccessToken 생성
 	 */
-	public String createAccessToken(String email) {
+	public String createAccessToken(String email, String role) {
 		Date now = new Date();
-		return JWT.create() // JWT 토큰을 생성하는 빌더 반환
-			.withSubject(ACCESS_TOKEN_SUBJECT) // JWT의 Subject 지정 -> AccessToken이므로 AccessToken
+		return JWT.create()
+			.withSubject(ACCESS_TOKEN_SUBJECT)
 			.withExpiresAt(new Date(now.getTime() + accessTokenExpirationPeriod)) // 토큰 만료 시간 설정
-
-			//클레임으로 email 하나만 사용합니다.
-			//추가적으로 식별자나, 이름 등의 정보를 더 추가하셔도 됩니다.
-			//추가하실 경우 .withClaim(클래임 이름, 클래임 값) 으로 설정해주시면 됩니다
 			.withClaim(EMAIL_CLAIM, email)
-			.sign(Algorithm.HMAC512(secretKey)); // HMAC512 알고리즘 사용, application-jwt.yml에서 지정한 secret 키로 암호화
+			.withClaim(ROLE_CLAIM, role)
+			.sign(Algorithm.HMAC512(secretKey));
 	}
 
 	/**
@@ -128,9 +126,28 @@ public class JwtService {
 		}
 	}
 
+	public Optional<String> extractRole(String accessToken) {
+		try {
+			// 토큰 유효성 검사하는 데에 사용할 알고리즘이 있는 JWT verifier builder 반환
+			return Optional.ofNullable(JWT.require(Algorithm.HMAC512(secretKey))
+				.build()
+				.verify(accessToken) // accessToken을 검증하고 유효하지 않다면 예외 발생
+				.getClaim(ROLE_CLAIM) // claim(Role) 가져오기
+				.asString());
+		} catch (Exception e) {
+			log.error("액세스 토큰이 유효하지 않습니다.");
+			return Optional.empty();
+		}
+	}
+
 	public Optional<String> extractEmailFromAccessToken(HttpServletRequest request) {
 		return extractAccessToken(request)
 			.flatMap(this::extractEmail);
+	}
+
+	public Optional<String> extractroleFromAccessToken(HttpServletRequest request) {
+		return extractAccessToken(request)
+			.flatMap(this::extractRole);
 	}
 
 	public String createAndStoreRefreshToken(String email) {

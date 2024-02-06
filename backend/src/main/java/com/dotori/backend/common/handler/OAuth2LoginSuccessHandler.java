@@ -41,7 +41,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 
 	private void loginSuccess(HttpServletResponse response, CustomOAuth2User oAuth2User) throws IOException {
 		//토큰2개생성
-		String accessToken = jwtService.createAccessToken(oAuth2User.getEmail());
+		String accessToken = jwtService.createAccessToken(oAuth2User.getEmail(), oAuth2User.getRole().name());
 		String refreshToken = jwtService.createAndStoreRefreshToken(oAuth2User.getEmail());
 
 		//쿠키생성
