@@ -23,13 +23,13 @@
 
                 <q-card-actions class="flex items-center justify-center">
                     <div class="select_btn-group">
-                        <q-btn flat @click="kakaologin()">
+                        <q-btn flat @click="klogin()">
                             <img src="../assets/login/login_btn_kakao.svg" />
                         </q-btn>
-                        <q-btn flat @click="naverlogin()">
+                        <q-btn flat @click="nlogin()">
                             <img src="../assets/login/login_btn_naver.svg" />
                         </q-btn>
-                        <q-btn flat @click="googlelogin()">
+                        <q-btn flat @click="glogin()">
                             <img src="../assets/login/login_btn_google.svg" />
                         </q-btn>
                     </div>
@@ -48,77 +48,20 @@
 </template>
 
 <script setup>
-    import {ref, onMounted} from 'vue';
-    // import {useCookies} from '@vueuse/integrations/useCookies';
-
-    // const cookies = useCookies();
-
-    const showSocialLoginPopup = url => {
-        const popupHeight = '500';
-        const popupWidth = '500';
-        let popupOptions = `height=${popupHeight},width=${popupWidth},left=${
-            (window.screen.width - popupWidth) / 2
-        },top=${
-            (window.screen.height - popupHeight) / 2
-        },scrollbars=yes,resizable=yes`;
-        openPopup(url, popupOptions);
-    };
-    const openPopup = (url, options) => {
-        window.open(url, '_blank', options);
-    };
-
-    //     const doLogout = () => {
-    //   cookies.remove('user-key')
-    //   userKey.value = ''
-    //   user.value = {}
-    // }
-    const buildAuthUrl = (
-        baseURL,
-        clientId,
-        redirectUri,
-        responseType,
-        scope,
-        state,
-    ) => {
-        return `${baseURL}?response_type=${responseType}&client_id=${clientId}&redirect_uri=${redirectUri}&state=${state}&scope=${encodeURIComponent(
-            scope,
-        )}`;
-    };
-
-    const kakaologin = () => {
-        const url = buildAuthUrl(
-            'https://kauth.kakao.com/oauth/authorize',
-            process.env.VUE_APP_KAKAO_JS_KEY,
-            process.env.VUE_APP_KAKAO_REDIRECT_URL,
-            'code',
-            'account_email profile_nickname',
-            '',
+    const klogin = () => {
+        window.location.replace(
+            'https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&prompt=select_account',
         );
-        showSocialLoginPopup(url);
     };
 
-    const naverlogin = () => {
-        const url = buildAuthUrl(
-            'https://nid.naver.com/oauth2.0/authorize',
-            process.env.VUE_APP_NAVER_CLIENT_ID,
-            process.env.VUE_APP_NAVER_REDIRECT_URL,
-            'code',
-            '',
-            '1234',
+    const nlogin = () => {
+        window.location.replace(
+            'https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=jyvqXeaVOVmV&redirect_uri=http%3A%2F%2Fservice.redirect.url%2Fredirect&state=hLiDdL2uhPtsftcU',
         );
-        showSocialLoginPopup(url);
     };
 
-    const googlelogin = () => {
-        const url = buildAuthUrl(
-            'https://accounts.google.com/o/oauth2/v2/auth',
-            process.env.VUE_APP_GOOGLE_CLIENT_ID,
-            process.env.VUE_APP_GOOGLE_REDIRECT_URL,
-            'code',
-            'email profile',
-            '',
-        );
-        showSocialLoginPopup(url);
+    const glogin = () => {
+        window.location.replace('https://accounts.google.com/o/oauth2/v2/auth');
     };
 </script>
 

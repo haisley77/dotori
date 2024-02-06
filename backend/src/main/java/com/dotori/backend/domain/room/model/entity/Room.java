@@ -1,7 +1,6 @@
 package com.dotori.backend.domain.room.model.entity;
 
 import static javax.persistence.CascadeType.*;
-import static javax.persistence.FetchType.*;
 import static javax.persistence.GenerationType.*;
 import static lombok.AccessLevel.*;
 
@@ -23,7 +22,6 @@ import com.dotori.backend.domain.book.model.entity.Book;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Getter
@@ -35,7 +33,7 @@ public class Room extends BaseTimeEntity {
 	@GeneratedValue(strategy = IDENTITY) // auto_increment
 	private Long roomId;
 
-	@ManyToOne(fetch = LAZY)
+	@ManyToOne
 	@JoinColumn(name = "book_id", nullable = false)
 	private Book book;
 
@@ -52,9 +50,8 @@ public class Room extends BaseTimeEntity {
 	private String password;
 
 	@Column(name = "is_recording")
-	private Boolean isRecording;
+	private boolean isRecording;
 
-	@Setter
 	@Column(name = "join_cnt")
 	private int joinCnt;
 
@@ -62,24 +59,20 @@ public class Room extends BaseTimeEntity {
 	private int limitCnt;
 
 	@Column(name = "is_public")
-	private Boolean isPublic;
+	private boolean isPublic;
 
 	@Column(length = 50, name = "session_id")
 	private String sessionId;
 
 	@Builder
 	public Room(Book book, List<RoomMember> roomMembers, Long hostId, String title, String password,
-		Boolean isRecording, Integer joinCnt, Integer limitCnt, Boolean isPublic, String sessionId) {
+		boolean isPublic, String sessionId) {
 		this.book = book;
 		this.roomMembers = roomMembers;
 		this.hostId = hostId;
 		this.title = title;
 		this.password = password;
-		this.isRecording = isRecording;
-		this.joinCnt = joinCnt;
-		this.limitCnt = limitCnt;
 		this.isPublic = isPublic;
 		this.sessionId = sessionId;
 	}
-
 }
