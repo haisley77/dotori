@@ -6,7 +6,7 @@
       </div>
       <div class='row'>
         <div class='col-8 q-pa-sm'>
-          <PlayerList :memberId="memberId"></PlayerList>
+          <PlayerList></PlayerList>
         </div>
         <div class='col-4 q-pa-sm'>
           <BookInfo :bookInfo='bookInfo'></BookInfo>
@@ -17,7 +17,7 @@
           <RoomChat :playerList='playerList' :memberId='memberId'></RoomChat>
         </div>
         <div class='col-4 q-pa-sm'>
-          <StartReady :roomInfo='roomInfo' :memberId='memberId'></StartReady>
+          <StartReady :roomInfo='roomInfo'></StartReady>
         </div>
       </div>
     </div>
@@ -34,30 +34,85 @@
   import {storeToRefs} from 'pinia';
 
   const openViduStore = useOpenViduStore();
-  const {roomInitializationParam,sendingIncomingData,playerList,isHost} = storeToRefs(openViduStore);
-  const {sendIncomingInfoToOpenVidu} = openViduStore;
+  const {roomInitializationParam,playerList,isHost,memberId} = storeToRefs(openViduStore);
+  const {session} = openViduStore;
   const bookInfo = roomInitializationParam.value.bookInfo;
   const roomInfo = roomInitializationParam.value.roomInfo;
-  const memberId = ref(0);
+
+  const sendingIncomingData = ref({
+    player: null,
+  });
+
+  const sendingPlayerData = ref({
+    playerList: null,
+  });
+
+  const sendIncomingInfoToOpenVidu = () => {
+    return new Promise((resolve, reject) => {
+      session.signal({
+        data: JSON.stringify(sendingIncomingData.value),
+        to: [],
+        type: 'signal:give-playerList',
+      })
+        .then(() => {
+          resolve('플레이어가 들어왔음');
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  };
+
+  const sendPlayerInfoToOpenVidu = () => {
+    return new Promise((resolve, reject) => {
+      session.signal({
+        data: JSON.stringify(sendingPlayerData.value),
+        to: [],
+        type: 'signal:player-incoming',
+      })
+        .then(() => {
+          resolve('새로운 참여자 정보 전송 성공');
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  };
+
+  // 방 참여자가 발생하면 방에 있던 모든 참여자들은 playerList를 갱신하여 반영한다.
+  session.on('signal:player-incoming', (event) => {
+    const receivedData = JSON.parse(event.data);
+    if (!isHost.value) {
+      playerList.value = receivedData.playerList;
+      // 만약 들어오기 전에 role을 변경하고 있다면 roleList도 같이 보내야함
+      // room joinCnt 갱신
+    }
+  });
+
+  // 방 참여자가 참여자 정보를 요청하면 방장은 참여자 정보를 전송한다.
+  session.on('signal:give-playerList', (event) => {
+    const receivedData = JSON.parse(event.data);
+    if (isHost.value) {
+      playerList.value.push(receivedData.player);
+      sendingPlayerData.value.playerList = playerList.value;
+      sendPlayerInfoToOpenVidu();
+    }
+  });
 
   onMounted(() => {
-    // 대기방에 들어온 사용자의 아이디를 조회
-    // memberId = await axios.get(path, accessToken);
-    memberId.value = 30;
 
     const player = {
-      name: '방장하은',
+      name: '김싸피',
       memberId: memberId.value,
       profileImg: 'src/assets/MyPageImages/iupic.jpg',
-      roleName: '방장하은',
+      roleName: '김싸피',
       roleIndex: 5,
       readyState: false,
     };
 
-
-    if (isHost.value) {  // 방장이면 참여자 리스트에 본인 추가
+    if (isHost.value) {
       playerList.value.push(player);
-    } else {  // 방장이 아니면 들어왔다고 signal
+    } else {
       sendingIncomingData.value.player = player;
       sendIncomingInfoToOpenVidu();
     }

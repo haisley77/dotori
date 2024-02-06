@@ -40,15 +40,15 @@
                 <q-separator inset />
                 <div class='row q-mb-sm q-mt-sm'>
                   <div class='col-8 offset-1'>
-                    <q-input rounded outlined label='방 제목을 입력하세요!' v-model='room_name' />
+                    <q-input rounded outlined label='방 제목을 입력하세요!' v-model='roomName' />
                   </div>
                   <div class='col-3 flex justify-center'>
-                    <q-checkbox keep-color v-model='is_private' label='비밀로 할래요!' color='cyan' />
+                    <q-checkbox keep-color v-model='isPrivate' label='비밀로 할래요!' color='cyan' />
                   </div>
                 </div>
-                <div class='row q-mb-sm' v-if='is_private'>
+                <div class='row q-mb-sm' v-if='isPrivate'>
                   <div class='col-8 offset-1'>
-                    <q-input rounded outlined label='방 비밀번호를 입력하세요!' type='password' v-model='room_password' />
+                    <q-input rounded outlined label='방 비밀번호를 입력하세요!' type='password' v-model='roomPassword' />
                   </div>
                 </div>
                 <div class='row q-mb-sm'>
@@ -76,7 +76,7 @@
   import {storeToRefs} from 'pinia';
   import {useRouter} from 'vue-router';
   import {useOpenViduStore} from 'stores/openvidu';
-  import {onMounted} from 'vue';
+  import {ref} from 'vue';
 
 
   const router = useRouter();
@@ -86,12 +86,8 @@
   };
 
   const openViduStore = useOpenViduStore();
-  const {room_name, room_password, is_private} = storeToRefs(openViduStore);
+  const {roomInfo} = storeToRefs(openViduStore);
   const {createRoom, connectToOpenVidu, addRoomMember} = openViduStore;
-
-  onMounted(() => {
-      // member_id = await axios.get(path정보, accesstoken);
-  });
 
   const fetchBooks = async () => {
       try {
@@ -108,14 +104,28 @@
     };
 
 
+  const roomName = ref(null);
+  const roomPassword = ref(null);
+  const isPrivate = ref(false);
 
   const components = {Character};
   const joinRoom = () => {
+
+    if (roomPassword.value === null && isPrivate.value) {
+      alert('비밀번호 입력 필수');
+      return;
+    }
+
+    roomInfo.value.title = roomName.value;
+    roomInfo.value.password = roomPassword.value;
+    roomInfo.value.isPublic = isPrivate;
+    roomInfo.value.limitCnt = props.bookmodal.roleCnt;
+
     createRoom(props.bookmodal)
       .then(() => {
         connectToOpenVidu()
           .then(() => {
-            addRoomMember()
+            addRoomMember(props.bookmodal)
               .then(() => {
                 moveWaitingRoom();
               })

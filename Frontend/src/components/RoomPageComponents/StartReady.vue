@@ -6,50 +6,40 @@
 
   const props = defineProps({
     roomInfo: Object,
-    memberId: Object,
   });
 
   const router = useRouter();
   const btnValue = ref(false);
   const openViduStore = useOpenViduStore();
-  const {canMoveToRecording,playerList,isHost,sendingMoveData,sendingReadyData} = storeToRefs(openViduStore);
-  const {updateRoom,sendMoveInfoToOpenVidu,sendReadyInfoToOpenVidu} = openViduStore;
+  const {playerList,isHost,roomInfo,memberId} = storeToRefs(openViduStore);
+  const {session,updateRoom} = openViduStore;
+  const canMoveWaitingRoom = ref(false);
 
-  watch(canMoveToRecording, (newItems, oldItems) => {
-    if (newItems) {
+  watch(canMoveWaitingRoom, (newVal,oldVal) => {
+    if (newVal){
       moveRecording();
     }
-  });
+  })
+
 
   const updateState = () => {
-    playerList.value.forEach((user) => {
-      if (user.memberId === props.memberId) {
-        user.readyState = true;
-        btnValue.value = true;
-        sendingReadyData.value.playerList = playerList.value;
-        sendReadyInfoToOpenVidu();
-        alert('곧 시작합니다. 잠시만 기다려주세요!');
-      }
-    })
+    const currentUser = playerList.value.find(user => user.memberId === props.memberId);
+    if (currentUser) {
+      currentUser.readyState = true;
+      btnValue.value = true;
+      sendingReadyData.value.playerList = playerList.value;
+      sendReadyInfoToOpenVidu();
+      alert('곧 시작합니다. 잠시만 기다려주세요!');
+    }
   }
 
   const checkReadyState = () => {
-    let readyCnt = 0;
-    playerList.value.forEach((user) => {
-      if (user.memberId === props.memberId) {
-        user.readyState = true;
-      }
-      if (user.readyState) {
-        readyCnt++;
-      }
-    })
-
-    if (readyCnt === playerList.value.length) {
+    const allReady = playerList.value.every(user => user.memberId === props.memberId || user.readyState)
+    if (allReady) {
       updateRoom(true)
         .then(() => {
-          sendingMoveData.value.recording = true;
           sendMoveInfoToOpenVidu();
-          canMoveToRecording.value = true;
+          canMoveWaitingRoom.value = true;
         })
         .catch((error) => {
           console.error(error);
@@ -59,6 +49,60 @@
   const moveRecording = () => {
     router.push('/recording');
   };
+
+  const sendingReadyData = ref({
+    playerList: null,
+  });
+
+  const sendReadyInfoToOpenVidu = () => {
+    return new Promise((resolve, reject) => {
+      session.signal({
+        data: JSON.stringify(sendingReadyData.value),
+        to: [],
+        type: 'signal:update-ready',
+      })
+        .then(() => {
+          resolve('준비 상태 전송 성공');
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  };
+
+  const sendMoveInfoToOpenVidu = () => {
+    return new Promise((resolve, reject) => {
+      session.signal({
+        data: null,
+        to: [],
+        type: 'signal:move-recording',
+      })
+        .then(() => {
+          resolve('녹화방 이동 정보 전송 성공');
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  };
+
+  // 방 참여자의 준비 상태를 반영한다.
+  session.on('signal:update-ready', (event) => {
+    const receivedData = JSON.parse(event.data);
+    playerList.value = receivedData.playerList;
+    // console.log(playerList.value);
+  });
+
+  // 녹화방으로 이동하라는 이벤트를 수신하면 방 참여자들은 모두 녹화방으로 이동한다.
+  session.on('signal:move-recording', (event) => {
+    roomInfo.value.isRecording = true;
+    canMoveWaitingRoom.value = true;
+  });
+
+
+
+
+
 </script>
 
 <template>

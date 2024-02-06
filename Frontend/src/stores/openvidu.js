@@ -11,37 +11,37 @@ export const useOpenViduStore
   = defineStore('openViduStore', () => {
 
 
-  // const bookInfoList = ref([{
-  //   'img': 'src/assets/BookImages/img/scene_1.png',
-  //   'lines': ['사회자 : 곤히 코를 골던 사자가 어흥 소리를 지르며 벌떡 일어났어요. ',
-  //     '사회자 : 달리던 생쥐가 잠자는 사자의 코털을 건드렸지요.'],
-  // }, {
-  //   'img': 'src/assets/BookImages/img/scene_2.png',
-  //   'lines': ['사회자 : 생쥐가 부들부들 떨며 손이 발이 되도록 빌었어요.',
-  //     '생쥐 : 사자님, 제발 살려 주세요! 하늘이 무너져 내려도, 절대 그 은혜를 잊지 않고 꼭 보답하겠어요!',
-  //     '사자 : 후.. 그래. 너같이 작은 것은 먹어도 간에 기별도 안가겠다.'],
-  // }, {
-  //   'img': 'src/assets/BookImages/img/scene_3.png',
-  //   'lines': ['사회자 : 사자는 생쥐를 그냥 놓아주었어요. ',
-  //     '생쥐 : 감사합니다, 사자님! 이 은혜는 잊지 않을게요!',
-  //     '사회자 : 생쥐는 연방 허리 숙여 감사의 인사를 하고, 수풀 사이로 쪼르르 달아났어요.'],
-  // }, {
-  //   'img': 'src/assets/BookImages/img/scene_4.png',
-  //   'lines': ['사회자 : 얼마 후, 사자는 숲속을 걷다 사냥꾼들이 설치한 그물에 걸리게 되었어요.',
-  //     '사회자 : 녹초가 되어 발만 꼼지락거리는데, 어디선가 사각사각 사과 씹는 듯한 소리가 들렸어요.'],
-  // }, {
-  //   'img': 'src/assets/BookImages/img/scene_5.png',
-  //   'lines': ['사회자 : 위에 올라앉은 것은 지난번에 먹는 것도 귀찮아 놓아준 생쥐였어요.',
-  //     '생쥐 : 사자님! 조금만 기다리세요! 제가 구해드릴게요!',
-  //     '사회자 : 생쥐가 죽을힘을 다해 이빨로 그물을 갉았어요.  마침내 그물이 터지고, 사자가 풀려났어요.'],
-  // }, {
-  //   'img': 'src/assets/BookImages/img/scene_6.png',
-  //   'lines': ['생쥐 : 사자님, 괜찮으세요?',
-  //     '사자 : 안녕, 생쥐야! 무슨 말을 해야 할지 모르겠구나!.',
-  //     '생쥐 : 에이, 그럴 때는 그냥 ‘고마워!’ 하면 되는 거예요!',
-  //     '사자 : 고맙다, 생쥐야. 앞으로는 작다고 무시하지 않을게.',
-  //     '사회자 : 사자는 생쥐에게 진심으로 사과를 했고, 둘은 좋은 친구가 되었답니다.'],
-  // }]);
+  const bookInfoList = ref([{
+    'img': 'src/assets/BookImages/img/scene_1.png',
+    'lines': ['사회자 : 곤히 코를 골던 사자가 어흥 소리를 지르며 벌떡 일어났어요. ',
+      '사회자 : 달리던 생쥐가 잠자는 사자의 코털을 건드렸지요.'],
+  }, {
+    'img': 'src/assets/BookImages/img/scene_2.png',
+    'lines': ['사회자 : 생쥐가 부들부들 떨며 손이 발이 되도록 빌었어요.',
+      '생쥐 : 사자님, 제발 살려 주세요! 하늘이 무너져 내려도, 절대 그 은혜를 잊지 않고 꼭 보답하겠어요!',
+      '사자 : 후.. 그래. 너같이 작은 것은 먹어도 간에 기별도 안가겠다.'],
+  }, {
+    'img': 'src/assets/BookImages/img/scene_3.png',
+    'lines': ['사회자 : 사자는 생쥐를 그냥 놓아주었어요. ',
+      '생쥐 : 감사합니다, 사자님! 이 은혜는 잊지 않을게요!',
+      '사회자 : 생쥐는 연방 허리 숙여 감사의 인사를 하고, 수풀 사이로 쪼르르 달아났어요.'],
+  }, {
+    'img': 'src/assets/BookImages/img/scene_4.png',
+    'lines': ['사회자 : 얼마 후, 사자는 숲속을 걷다 사냥꾼들이 설치한 그물에 걸리게 되었어요.',
+      '사회자 : 녹초가 되어 발만 꼼지락거리는데, 어디선가 사각사각 사과 씹는 듯한 소리가 들렸어요.'],
+  }, {
+    'img': 'src/assets/BookImages/img/scene_5.png',
+    'lines': ['사회자 : 위에 올라앉은 것은 지난번에 먹는 것도 귀찮아 놓아준 생쥐였어요.',
+      '생쥐 : 사자님! 조금만 기다리세요! 제가 구해드릴게요!',
+      '사회자 : 생쥐가 죽을힘을 다해 이빨로 그물을 갉았어요.  마침내 그물이 터지고, 사자가 풀려났어요.'],
+  }, {
+    'img': 'src/assets/BookImages/img/scene_6.png',
+    'lines': ['생쥐 : 사자님, 괜찮으세요?',
+      '사자 : 안녕, 생쥐야! 무슨 말을 해야 할지 모르겠구나!.',
+      '생쥐 : 에이, 그럴 때는 그냥 ‘고마워!’ 하면 되는 거예요!',
+      '사자 : 고맙다, 생쥐야. 앞으로는 작다고 무시하지 않을게.',
+      '사회자 : 사자는 생쥐에게 진심으로 사과를 했고, 둘은 좋은 친구가 되었답니다.'],
+  }]);
   const OV = new OpenVidu();
   const session = OV.initSession();
   const ovToken = ref(null);
@@ -49,25 +49,23 @@ export const useOpenViduStore
   const apiRootPath = '/api/rooms';
 
   const roomId = ref(0);
-  const roomName = ref(null);
-  const roomPassword = ref(null);
-  const isPrivate = ref(false);
-  const subscribers = ref([]);
-  const mainStreamManager = ref();
   const memberId = ref(30);
 
-  // 방장인지 아닌지 판단하는 변수 (일단 true로 주겠음)
+  const subscribers = ref([]);
+  const mainStreamManager = ref();
+
+
+  // 방장인지 아닌지 판단
   const isHost = ref(true);
-  const canMoveToRecording = ref(false);
+
 
   // 방 세션 설정 정보
   const session_properties = ref({});
-
   // 커넥션 설정 정보
   const connection_properties = ref({});
 
   // 방 설정 정보
-  const room_info = ref({
+  const roomInfo = ref({
     hostId: memberId.value,
     title: null,
     password: null,
@@ -94,34 +92,17 @@ export const useOpenViduStore
   const createRoom = (bookmodal) => {
     return new Promise((resolve, reject) => {
       const apiPath = apiRootPath + '/session';
-
-      room_info.value.title = roomName.value;
-      room_info.value.password = roomPassword.value;
-      room_info.value.isPublic = !isPrivate.value;
-      room_info.value.limitCnt = bookmodal.roleCnt;
-
       roomInitializationParam.value.bookInfo = bookmodal;
-      roomInitializationParam.value.roomInfo = room_info.value;
-
-      // 방 정보 setting
-      if (roomPassword.value === null && isPrivate.value === true) {
-        reject('비밀번호 입력 필수');
-        return;
-      }
+      roomInitializationParam.value.roomInfo = roomInfo.value;
 
       axios.post(apiPath, roomInitializationParam.value)
         .then((response) => {
-          console.log(response.status);
-          if (response.status === 201) {
-            roomId.value = response.data.roomId;
-            ovToken.value = response.data.token;
-
-            resolve(response.data);
-          }
+          roomId.value = response.data.roomId;
+          ovToken.value = response.data.token;
+          resolve(response.data);
         })
         .catch((error) => {
-          console.error('방 생성 실패 !!');
-          console.error(error.response);
+          console.error('방 생성 실패 : ' + error.response);
           reject(error);
         });
     });
@@ -151,24 +132,22 @@ export const useOpenViduStore
     });
   };
 
-  const addRoomMember = () => {
+  const addRoomMember = (book) => {
     return new Promise((resolve, reject) => {
-      const apiPath = apiRootPath + `/add/${roomId.value}/${memberId.value}`;
+      const apiPath = apiRootPath + `/add/${roomId.value}/${memberId.value}/${book.bookId}`;
 
       axios.post(apiPath)
         .then((response) => {
           if (response.status === 200) {
-
-            resolve(response.data); // Resolve the promise with the response data
+            resolve(response.data);
           } else if (response.status === 201) {
             console.log('인원 초과로 방 참여 처리 불가');
-            reject('인원 초과로 방 참여 처리 불가'); // Reject the promise with an error message
+            reject('인원 초과로 방 참여 처리 불가');
           }
         })
         .catch((error) => {
-          console.log(error.response);
-          console.error('방 참여 정보 갱신 처리 중 오류 발생');
-          reject(error); // Reject the promise with the error
+          console.error('방 참여 정보 갱신 처리 중 오류 발생 : ', error.response);
+          reject(error);
         });
     });
   };
@@ -179,14 +158,10 @@ export const useOpenViduStore
 
       axios.delete(apiPath)
         .then((response) => {
-          if (response.status === 200) {
-            console.log('방 나가기 정보 갱신 성공 !!');
-            resolve(response.data);
-          }
+          resolve(response.data);
         })
         .catch((error) => {
-          console.error(error.response);
-          console.error('방 나가기 정보 갱신 처리 중 오류 발생');
+          console.error('방 나가기 정보 갱신 처리 중 오류 발생 : ', error.response);
           reject(error);
         });
     });
@@ -196,18 +171,15 @@ export const useOpenViduStore
     return new Promise((resolve, reject) => {
       const apiPath = apiRootPath + `/update/${roomId.value}`;
 
-      room_info.value.isRecording = isRecording;
+      roomInfo.value.isRecording = isRecording;
 
-      axios.post(apiPath, room_info.value)
+      axios.post(apiPath, roomInfo.value)
         .then((response) => {
-          console.log(response.status);
-          if (response.status === 200) {
-            roomId.value = response.data.roomId;
-            resolve(response.data);
-          }
+          roomId.value = response.data.roomId;
+          resolve(response.data);
         })
         .catch((error) => {
-          console.error(error.response);
+          console.error('방 정보 업데이트 처리 중 문제 발생 : ', error.response);
           reject(error);
         });
     });
@@ -235,7 +207,7 @@ export const useOpenViduStore
           resolve();
         })
         .catch((error) => {
-          console.error('ov와 연결 실패:', error);
+          console.error('ov와 연결 실패 : ', error);
           reject(error);
         });
     });
@@ -249,168 +221,6 @@ export const useOpenViduStore
     });
   };
 
-  const sendingReadyData = ref({
-    playerList: null,
-  });
-
-  const sendingRoleData = ref({
-    playerList: null,
-    roleList: null,
-  });
-
-  const sendingMoveData = ref({
-    recording: null,
-  });
-
-  const sendingPlayerData = ref({
-    playerList: null,
-  });
-
-  const sendingIncomingData = ref({
-    incoming: true,
-    player: null,
-  });
-
-  const sendReadyInfoToOpenVidu = () => {
-    return new Promise((resolve, reject) => {
-      session.signal({
-        data: JSON.stringify(sendingReadyData.value),
-        to: [],
-        type: 'signal:update-ready',
-      })
-        .then(() => {
-          console.log('전송함');
-          resolve('준비 상태 전송 성공');
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
-  };
-
-  const sendRoleInfoToOpenVidu = () => {
-    return new Promise((resolve, reject) => {
-      session.signal({
-        data: JSON.stringify(sendingRoleData.value),
-        to: [],
-        type: 'signal:update-role',
-      })
-        .then(() => {
-          console.log('전송함');
-          resolve('역할 선택 정보 전송 성공');
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
-  };
-
-  const sendMoveInfoToOpenVidu = () => {
-    return new Promise((resolve, reject) => {
-      session.signal({
-        data: JSON.stringify(sendingMoveData.value),
-        to: [],
-        type: 'signal:move-recording',
-      })
-        .then(() => {
-          console.log('전송함');
-          resolve('녹화방 이동 정보 전송 성공');
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
-  };
-
-  const sendPlayerInfoToOpenVidu = () => {
-    return new Promise((resolve, reject) => {
-      session.signal({
-        data: JSON.stringify(sendingPlayerData.value),
-        to: [],
-        type: 'signal:player-incoming',
-      })
-        .then(() => {
-          console.log('전송함');
-          resolve('새로운 참여자 정보 전송 성공');
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
-  };
-
-  const sendIncomingInfoToOpenVidu = () => {
-    return new Promise((resolve, reject) => {
-      session.signal({
-        data: JSON.stringify(sendingIncomingData.value),
-        to: [],
-        type: 'signal:give-playerList',
-      })
-        .then(() => {
-          console.log('전송함');
-          resolve('누군가들어옴');
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
-  };
-
-  // 방 참여자의 준비 상태를 반영한다.
-  session.on('signal:update-ready', (event) => {
-    const receivedData = JSON.parse(event.data);
-    playerList.value = receivedData.playerList;
-    console.log(playerList.value);
-  });
-
-  // 방 참여자의 역할 정보가 변경되었다는 이벤트를 수신하면 방 참여자들은 변경 내용을 반영한다.
-  session.on('signal:update-role', (event) => {
-    const receivedData = JSON.parse(event.data);
-    playerList.value = receivedData.playerList;
-    roleList.value = receivedData.roleList
-    console.log(playerList.value);
-    console.log(roleList.value);
-  });
-
-  // 녹화방으로 이동하라는 이벤트를 수신하면 방 참여자들은 모두 녹화방으로 이동한다.
-  session.on('signal:move-recording', (event) => {
-    console.log('받음');
-    const receivedData = JSON.parse(event.data);
-    if (receivedData.recording) {
-      room_info.value.isRecording = true;
-      canMoveToRecording.value = true;
-      // room 정보 녹화중 반영
-    }
-  });
-
-  // 방 참여자가 발생하면 방에 있던 모든 참여자들은 playerList를 갱신하여 반영한다.
-  session.on('signal:player-incoming', (event) => {
-    console.log('받음');
-    const receivedData = JSON.parse(event.data);
-    // 방장이 아니면
-    if (!isHost.value) {
-      playerList.value = receivedData.playerList;
-      // 만약 들어오기 전에 role을 변경하고 있다면 roleList도 같이 보내야함
-      // room joinCnt 갱신
-      console.log('방장이 준 정보로 업데이트한다.');
-    } else {
-      console.log('방장이라서 업데이트 안한다');
-    }
-  });
-
-  // 방 참여자가 playerList를 요청하면 방장이 대표로 기존 playerList에 해당 player를 추가해 방 참여자들에게 보낸다.
-  session.on('signal:give-playerList', (event) => {
-    console.log('받음');
-    const receivedData = JSON.parse(event.data);
-    if (isHost.value) {
-      console.log('방장이니까 playerList 정보를 주겠다..');
-      playerList.value.push(receivedData.player);
-      sendingPlayerData.value.playerList = playerList.value;
-      sendPlayerInfoToOpenVidu();
-    } else {
-      console.log('방장이 아니라서 playerList 정보를 줄 수 없다...');
-    }
-  });
 
   const playerList = ref([]);
 
@@ -440,35 +250,22 @@ export const useOpenViduStore
   ]);
 
   return {
-    room_info,
+    roomInfo,
+    memberId,
     isHost,
     session,
     playerList,
-    room_name: roomName,
-    room_password: roomPassword,
-    is_private: isPrivate,
     ovToken,
     bookDetail,
     roomInitializationParam,
-    sendingReadyData,
-    sendingRoleData,
-    sendingMoveData,
-    sendingPlayerData,
-    sendingIncomingData,
     createRoom,
     connectToOpenVidu,
     addRoomMember,
     updateRoom,
     publish,
-    sendReadyInfoToOpenVidu,
-    sendRoleInfoToOpenVidu,
-    sendMoveInfoToOpenVidu,
-    sendPlayerInfoToOpenVidu,
-    sendIncomingInfoToOpenVidu,
     roleList,
     subscribers, mainStreamManager, OV, bookInfoList,
     getConnectionToken,
     removeRoomMember,
-    canMoveToRecording,
   };
 }, {persist: {storage: sessionStorage}});

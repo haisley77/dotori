@@ -79,37 +79,24 @@
 <script setup>
   import {storeToRefs} from 'pinia';
   import {useOpenViduStore} from 'stores/openvidu';
-  import {watch} from 'vue';
-
-  const props = defineProps({
-    memberId: Object,
-  });
+  import {ref, watch} from 'vue';
 
   const openViduStore = useOpenViduStore();
-  const {sendingRoleData,playerList,roleList} = storeToRefs(openViduStore);
-  const {sendRoleInfoToOpenVidu} = openViduStore;
+  const {playerList,roleList,memberId} = storeToRefs(openViduStore);
+  const {session} = openViduStore;
 
   const makeSendingRoleData = () => {
     sendingRoleData.value.roleList = roleList.value;
     sendingRoleData.value.playerList = playerList.value;
   }
-  watch(playerList.value, (newItems, oldItems) => {
-    // 변경된 요소의 인덱스 찾기
-    const changedIndex = playerList.value.findIndex((item, index) => {
-      return newItems === item && oldItems[index] !== newItems;
-    });
-    if (changedIndex !== -1 && changedIndex !== 0) {
-      playerList.value[changedIndex] = {
-        name: newItems.value[changedIndex].name,
-        memberId: newItems.value[changedIndex].memberId,
-        profileImg: newItems.value[changedIndex].profileImg,
-        roleName: newItems.value[changedIndex].roleName,
-        roleIndex: newItems.value[changedIndex].roleIndex,
-        readyState: newItems.value[changedIndex].readyState,
-      }
-    }
-  }, {deep: true});
 
+  watch(playerList.value, (newItems, oldItems) => {
+    newItems.forEach((newItem, index) => {
+      if (oldItems[index] !== newItem) {
+        playerList.value[index] = { ...newItem };
+      }
+    });
+  }, { deep: true });
 
   const toggleRole = (player, selectedIndex) => {
     // 역할 선택
@@ -144,6 +131,40 @@
     makeSendingRoleData();
     sendRoleInfoToOpenVidu();
   }
+
+
+  const sendingRoleData = ref({
+    playerList: null,
+    roleList: null,
+  });
+
+  const sendRoleInfoToOpenVidu = () => {
+    return new Promise((resolve, reject) => {
+      session.signal({
+        data: JSON.stringify(sendingRoleData.value),
+        to: [],
+        type: 'signal:update-role',
+      })
+        .then(() => {
+          console.log('전송함');
+          resolve('역할 선택 정보 전송 성공');
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  };
+
+  // 방 참여자의 역할 정보가 변경되었다는 이벤트를 수신하면 방 참여자들은 변경 내용을 반영한다.
+  session.on('signal:update-role', (event) => {
+    const receivedData = JSON.parse(event.data);
+    playerList.value = receivedData.playerList;
+    roleList.value = receivedData.roleList
+    console.log(playerList.value);
+    console.log(roleList.value);
+  });
+
+
 </script>
 
 
