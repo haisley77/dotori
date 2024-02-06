@@ -93,6 +93,22 @@
     // member_id = await axios.get(path정보, accesstoken);
   });
 
+  const fetchBooks = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/api/books');
+        console.log('API Response:', response);
+        if (response.status === 200) {
+          books.value = response.data.books;
+        } else {
+          console.error('Failed');
+        }
+      } catch (error) {
+        console.error('Error fetching books:', error);
+      }
+    };
+
+
+
   const components = {Character};
   const joinRoom = () => {
     createRoom(props.bookmodal)
