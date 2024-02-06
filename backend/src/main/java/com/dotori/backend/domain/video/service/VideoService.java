@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.dotori.backend.domain.room.model.entity.Room;
 import com.dotori.backend.domain.room.repository.RoomRepository;
+import com.dotori.backend.domain.video.model.dto.VideoDto;
 import com.dotori.backend.domain.video.model.dto.VideoSceneUploadRequest;
 
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class VideoService {
 	private final VideoUploadService videoUploadService;
+	private final VideoDownloadService videoDownloadService;
 	private final VideoManageService videoManageService;
 
 	private final RoomRepository roomRepository;
@@ -35,5 +37,12 @@ public class VideoService {
 
 		videoManageService.saveSceneVideo(room, videoSceneUploadRequest.getSceneOrder(), uploadSceneVideo.toString());
 		return true;
+	}
+
+	@Transactional(readOnly = true)
+	public File downloadVideo(Long videoId) {
+		log.info("[downloadVideo] called");
+		VideoDto videoDto = videoManageService.getVideo(videoId);
+		return videoDownloadService.downloadVideo(videoDto.getPath());
 	}
 }
