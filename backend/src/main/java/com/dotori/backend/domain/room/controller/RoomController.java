@@ -16,14 +16,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dotori.backend.domain.book.model.dto.BookDetailDto;
+import com.dotori.backend.domain.book.service.BookService;
+import com.dotori.backend.domain.book.service.SceneService;
 import com.dotori.backend.domain.room.model.dto.RoomDto;
 import com.dotori.backend.domain.room.model.dto.RoomInitializationDto;
 import com.dotori.backend.domain.room.model.entity.Room;
@@ -49,14 +50,20 @@ public class RoomController {
 
 	private final RoomService roomService;
 
+	private final BookService bookService;
+
+	private final SceneService sceneService;
+
 	@PostConstruct
 	public void init() {
 		this.openvidu = new OpenVidu(OPENVIDU_URL, OPENVIDU_SECRET);
 	}
 
 	@Autowired
-	public RoomController(RoomService roomService) {
+	public RoomController(RoomService roomService, BookService bookService, SceneService sceneService) {
 		this.roomService = roomService;
+		this.bookService = bookService;
+		this.sceneService = sceneService;
 	}
 
 	@PostMapping("/session")
@@ -123,21 +130,31 @@ public class RoomController {
 
 	}
 
-	@PostMapping("/add/{roomId}/{memberId}")
-	public ResponseEntity<Map<String, String>> addRoomMember(
+	@PostMapping("/add/{roomId}/{memberId}/{bookId}")
+	public ResponseEntity<Map<String, Object>> addRoomMember(
 		@PathVariable("roomId") Long roomId,
-		@PathVariable("memberId") Long memberId) {
-		Map<String, String> resultData = new HashMap<>();
+		@PathVariable("memberId") Long memberId,
+		@PathVariable("bookId") Long bookId
+	) {
+		Map<String, Object> resultData = new HashMap<>();
 		try {
 			openvidu.fetch();
-			if (roomService.checkJoinPossible(openvidu, roomId)) {
-				roomService.addMemberToRoom(roomId, memberId);
-				resultData.put("memberId", String.valueOf(memberId));
-				return new ResponseEntity<>(resultData, HttpStatus.OK);
-			} else {
+			if (!roomService.checkJoinPossible(openvidu, roomId)) {
 				resultData.put("message", "인원 초과로 방에 참여할 수 없음");
 				return new ResponseEntity<>(resultData, HttpStatus.ACCEPTED);
 			}
+
+			roomService.addMemberToRoom(roomId, memberId);
+			BookDetailDto bookInfo = BookDetailDto.builder()
+				.book(bookService.getBook(bookId))
+				.roles(bookService.getRolesByBookId(bookId))
+				.scenes(sceneService.getSceneDetailsByBookId(bookId))
+				.build();
+
+			resultData.put("memberId", String.valueOf(memberId));
+			resultData.put("bookInfo", bookInfo);
+
+			return new ResponseEntity<>(resultData, HttpStatus.OK);
 		} catch (Exception e) {
 			resultData.put("message", e.getMessage());
 			return new ResponseEntity<>(resultData, HttpStatus.INTERNAL_SERVER_ERROR);
