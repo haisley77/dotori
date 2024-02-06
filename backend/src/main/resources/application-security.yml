@@ -40,8 +40,6 @@ spring:
   redis:
     host: ${REDIS_HOST}
     port: ${REDIS_PORT}
-  session:
-    store-type: redis
 
 jwt:
   secretKey: ${SECRET_KEY}
