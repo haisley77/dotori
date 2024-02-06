@@ -17,7 +17,7 @@
           <RoomChat :playerList='playerList' :memberId='member_id'></RoomChat>
         </div>
         <div class='col-4 q-pa-sm'>
-          <StartReady :roomInfo='roomInfo' :memberId='member_id' :playerList='playerList'></StartReady>
+          <StartReady :roomInfo='roomInfo' :memberId='member_id'></StartReady>
         </div>
       </div>
     </div>
@@ -44,7 +44,7 @@
   onMounted(() => {
     // 대기방에 들어온 사용자의 아이디를 조회
     // member_id = await axios.get(path, accessToken);
-    member_id.value = 20;
+    member_id.value = 30;
 
     const player = {
       name: '방장하은',

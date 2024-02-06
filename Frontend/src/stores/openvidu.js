@@ -52,7 +52,10 @@ export const useOpenViduStore
   const is_private = ref(false);
   const subscribers = ref([]);
   const mainStreamManager = ref();
-  const member_id = ref(40);
+  const member_id = ref(30);
+
+  // 방장인지 아닌지 판단하는 변수 (일단 true로 주겠음)
+  const isHost = ref(true);
 
   // 방 세션 설정 정보
   const session_properties = ref({});
