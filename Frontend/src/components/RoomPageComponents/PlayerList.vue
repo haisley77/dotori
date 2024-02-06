@@ -11,7 +11,7 @@
               <div class="row q-mt-none q-mb-sm">
                 <q-btn unelevated rounded color="my-brown q-mr-sm btn-font">
                   <q-menu fit anchor="bottom start" self="top left">
-                    <q-item v-for="(role, index) in roleList" :key="role" clickable @click="toggleRole(player,index)">
+                    <q-item v-for="(role, index) in roleList" :key="role" :disable="role.selected" clickable @click="toggleRole(player,index)">
                       <q-item-section>{{ role.name }}</q-item-section>
                     </q-item>
                   </q-menu>
