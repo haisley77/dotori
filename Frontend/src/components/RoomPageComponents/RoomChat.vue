@@ -1,71 +1,70 @@
 <template>
   <div style="height: 100%" class="background-green q-pa-sm">
     <div style="height: 100%" class="background-yellow q-pa-sm">
-      <!-- <div class="column"> -->
+      <div class="column">
         <div class="background-white">
-      <!-- 채팅 로그 -->
-        <div id="chatLog" style="height: 110px; overflow-y: auto; padding: 10px;"></div>
-        <!-- </div> -->
+          <!-- 채팅 로그 -->
+          <div ref="chatLog" style="height: 100px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;">
+            <div v-for="(message, index) in messageList" :key="index">{{ message }}</div>
+          </div>
+        </div>
+
         <div class="row ">
-          <q-input color="green" bg-color="green-1" v-model="chatMessage" @keyup.enter="sendMessage" placeholder="메시지를 입력하세요" :dense="dense" class="col-11"/>
-          <q-btn color="my-green" bg-color="white" class="col-1 q-pa-none npsfont chat">전송</q-btn>
+          <q-input color="green" bg-color="green-1" v-model="chatMessage" @keyup.enter="sendMessage" placeholder="메시지를 입력하세요" class="col-11"/>
+          <q-btn color="my-green" bg-color="white" @click="sendMessage" class="col-1 q-pa-none npsfont chat">전송</q-btn>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-
 <script setup>
-import {ref, onMounted } from 'vue'
+// memberid도 함께 받아서, 
+// playerlist 와 일치하는지 확인 (본인 확인)
+// 본인의 이름을 채팅에 띄우기
+import { ref, onMounted, defineProps} from 'vue';
 import {useOpenViduStore} from 'stores/openvidu';
+const openViduStore = useOpenViduStore();
+const {session } = openViduStore;
 const chatMessage = ref('');
-const chatLog = document.getElementById('chatLog');
-const {session} = useOpenViduStore;
+const messageList = ref([]);
+const props = defineProps({
+    playerList: Object,
+    memberId: Object,
+  });
 
-// 변경하지 않는 부분
 onMounted(() => {
-  //채팅 기능을 초기화.
   if (session) {
     session.on('signal:chat', (event) => {
-      const data = JSON.parse(event.data);
-      appendMessage(data.nickname, data.message);
+    const data = JSON.parse(event.data);
+    appendMessage(data.nickname, data.message);
     });
   }
 });
 
 const sendMessage = () => {
   if (chatMessage.value && session) {
+    const matchingPlayer = props.playerList.find(player => player.memberId === props.memberId);
     const data = {
       message: chatMessage.value,
-      nickname: '사용자 닉네임',
+      nickname: matchingPlayer.name,
     };
     session.signal({
       data: JSON.stringify(data),
       type: 'chat',
     });
-
-    appendMessage(data.nickname, data.message);
     chatMessage.value = '';
   }
 };
 
 const appendMessage = (nickname, message) => {
-  const chatLog = document.getElementById('chatLog');
-  if (chatLog) {
-    const messageElement = document.createElement('div');
-    messageElement.textContent = `${nickname}: ${message}`;
-    chatLog.appendChild(messageElement);
-    chatLog.scrollTop = chatLog.scrollHeight;
-  }
+  const formattedMessage = `${nickname}: ${message}`;
+  messageList.value.push(formattedMessage);
 };
+
 </script>
 
-
-
-
 <style scoped>
-
   .bg-my-green {
     background: #C7A96E !important;
   }

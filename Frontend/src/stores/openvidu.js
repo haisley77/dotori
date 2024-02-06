@@ -1,4 +1,4 @@
-import {reactive, ref} from 'vue';
+import {ref} from 'vue';
 import {defineStore} from 'pinia';
 import {OpenVidu} from 'openvidu-browser';
 
@@ -52,7 +52,7 @@ export const useOpenViduStore
   const is_private = ref(false);
   const subscribers = ref([]);
   const mainStreamManager = ref();
-  const member_id = ref(20);
+  const member_id = ref(40);
 
   // 방 세션 설정 정보
   const session_properties = ref({});
@@ -60,7 +60,7 @@ export const useOpenViduStore
   // 커넥션 설정 정보
   const connection_properties = ref({});
 
-  // 방 생성 정보
+  // 방 설정 정보
   const room_info = ref({
     hostId: member_id.value,
     title: null,
@@ -71,8 +71,6 @@ export const useOpenViduStore
     isPublic: true,
   });
 
-
-  // 방 생성에 필요한 초기 정보(dto)임. 방 정보 아님 !!!!!!!!!!!!!!!!! 책 정보 방 정보 따로 저장해야함
   const roomInitializationParam = ref({
     sessionProperties: null,
     connectionProperties: null,
@@ -220,6 +218,7 @@ export const useOpenViduStore
           subscribers.value.splice(index, 1);
         }
       });
+
       session.connect(ovToken.value)
         .then(() => {
           console.log(ovToken.value);
@@ -376,14 +375,14 @@ export const useOpenViduStore
   });
 
   const playerList = ref([
-    {
-      name: 'Winter',
-      memberId: 1,
-      profileImg: 'src/assets/MyPageImages/winter.png',
-      roleName: 'Winter',
-      roleIndex: 5,     // db에서 조회해 온 역할 정보들을 가진 roleList 상의 인덱스를 저장합니다. 초기엔 5 default.
-      readyState: false, // 유저의 준비 상태를 저장합니다. 녹화방 이동을 테스트하기 위해 true로 지정. 원래는 false default.
-    },
+    // {
+    //   name: 'Winter',
+    //   memberId: 1,
+    //   profileImg: 'src/assets/MyPageImages/winter.png',
+    //   roleName: 'Winter',
+    //   roleIndex: 5,     // db에서 조회해 온 역할 정보들을 가진 roleList 상의 인덱스를 저장합니다. 초기엔 5 default.
+    //   readyState: false, // 유저의 준비 상태를 저장합니다. 녹화방 이동을 테스트하기 위해 true로 지정. 원래는 false default.
+    // },
     // {
     //   name: '카리나',
     //   memberId: 2,
