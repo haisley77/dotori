@@ -341,10 +341,12 @@ export const useOpenViduStore
   session.on('signal:move-recording', (event) => {
     console.log('받음');
     const receivedData = JSON.parse(event.data);
-    if (receivedData.recording === true) {
-      // room_info.value.isRecording = true;
-      // room isRecording 갱신
-      router.push('/recording'); // 녹화방으로 이동
+    if (!isHost) {
+      if (receivedData.recording === true) {
+        // room_info.value.isRecording = true;
+        // room isRecording 갱신
+        router.push('/recording'); // 녹화방으로 이동 -> 수정필요
+      }
     }
   });
 
@@ -422,6 +424,7 @@ export const useOpenViduStore
   ]);
 
   return {
+    isHost,
     session,
     playerList,
     room_name,
