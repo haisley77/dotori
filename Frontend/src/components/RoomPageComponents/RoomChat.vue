@@ -6,6 +6,7 @@
           <!-- 채팅 로그 -->
           <div ref="chatLog" style="height: 100px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;">
             <div v-for="(message, index) in messageList" :key="index">{{ message }}</div>
+            <div ref="scrollMarker"></div>
           </div>
         </div>
 
@@ -19,9 +20,6 @@
 </template>
 
 <script setup>
-// memberid도 함께 받아서, 
-// playerlist 와 일치하는지 확인 (본인 확인)
-// 본인의 이름을 채팅에 띄우기
 import { ref, onMounted, defineProps} from 'vue';
 import {useOpenViduStore} from 'stores/openvidu';
 const openViduStore = useOpenViduStore();
@@ -38,6 +36,7 @@ onMounted(() => {
     session.on('signal:chat', (event) => {
     const data = JSON.parse(event.data);
     appendMessage(data.nickname, data.message);
+    scrollToBottom();
     });
   }
 });
@@ -62,6 +61,13 @@ const appendMessage = (nickname, message) => {
   messageList.value.push(formattedMessage);
 };
 
+const scrollToBottom = () => {
+  const chatLog = ref.chatLog;
+  const scrollMarker = ref.scrollMarker;
+  if (chatLog.value && scrollMarker.value) {
+    scrollMarker.value.scrollIntoView({ behavior: 'smooth', block: 'end' });
+  }
+};
 </script>
 
 <style scoped>

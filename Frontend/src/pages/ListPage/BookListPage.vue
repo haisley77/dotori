@@ -42,29 +42,29 @@
       const books = ref([]);
 
       onMounted(() => {
-      fetchBooks();
-    });
+        fetchBooks();
+      });
 
       const enterBook = async (book) => {
-      await fetchBookDetails(book.bookId);
-      dialog.value = true;
-    };
+        await fetchBookDetails(book.bookId);
+        dialog.value = true;
+      };
 
       const fetchBooks = async () => {
-      try {
-        const response = await axios.get('http://localhost:8080/api/books');
-        console.log('API Response:', response);
-        if (response.status === 200) {
-          books.value = response.data.books;
-        } else {
-          console.error('Failed');
+        try {
+          const response = await axios.get('http://localhost:8080/api/books');
+          console.log('API Response:', response);
+          if (response.status === 200) {
+            books.value = response.data.books;
+          } else {
+            console.error('Failed');
+          }
+        } catch (error) {
+          console.error('Error fetching books:', error);
         }
-      } catch (error) {
-        console.error('Error fetching books:', error);
-      }
-    };
+      };
 
-    return {
+      return {
         books,
         enterBook,
         dialog: ref(false),
