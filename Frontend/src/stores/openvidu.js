@@ -71,6 +71,16 @@ export const useOpenViduStore
     isPublic: true,
   });
 
+    // 책 설정 정보
+    const book_info = ref({
+      bookId: member_id.value,
+      title: null,
+      bookImg: null,
+      author: false,
+      summary: 0,
+      roleCnt: 0,
+    });
+
   const roomInitializationParam = ref({
     sessionProperties: null,
     connectionProperties: null,
