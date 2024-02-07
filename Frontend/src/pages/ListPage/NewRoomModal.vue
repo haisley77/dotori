@@ -24,7 +24,7 @@
               <div class='text-h5'>역할 소개</div>
               <hr />
               <div class='flex'>
-                <Character v-for='item in bookmodal.roleCnt' />
+                <Character :role='role' v-for='role in bookDetail.roles' />
               </div>
             </div>
           </div>
@@ -76,7 +76,8 @@
   import {storeToRefs} from 'pinia';
   import {useRouter} from 'vue-router';
   import {useOpenViduStore} from 'stores/openvidu';
-  import {ref} from 'vue';
+  import {onMounted, ref} from 'vue';
+  import axios from 'axios';
 
 
   const router = useRouter();
@@ -86,22 +87,29 @@
   };
 
   const openViduStore = useOpenViduStore();
-  const {roomInfo} = storeToRefs(openViduStore);
+  const {roomInfo,bookDetail} = storeToRefs(openViduStore);
   const {createRoom, connectToOpenVidu, addRoomMember} = openViduStore;
 
-  const fetchBooks = async () => {
+  onMounted(() => {
+    fetchBookRoles();
+  })
+
+  const fetchBookRoles = () => {
+    return new Promise(async (resolve, reject) => {
       try {
-        const response = await axios.get('http://localhost:8080/api/books');
+        const response = await axios.get(`http://localhost:8080/api/books/${props.bookmodal.bookId}`);
         console.log('API Response:', response);
         if (response.status === 200) {
-          books.value = response.data.books;
+          bookDetail.value.roles = response.data.roles;
+          resolve(response.data.roles);
         } else {
-          console.error('Failed');
+          reject(new Error('Failed'));
         }
       } catch (error) {
-        console.error('Error fetching books:', error);
+        reject(error);
       }
-    };
+    });
+  };
 
 
   const roomName = ref(null);
