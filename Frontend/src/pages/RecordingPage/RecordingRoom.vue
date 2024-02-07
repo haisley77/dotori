@@ -78,6 +78,19 @@
     currentRoles.value = getRoles(curPage.value);
     //페이지 정보를 변경해준다
     currentScript.value = ovstore.bookDetail.scenes[curPage.value];
+
+    //값을 다 바꿨으면 내 역할과 확인해서 비디오를 켤지 말지를 판단한다
+    //내가 연극할 차례일때
+    if (currentRoles.value.has(ovstore.myRole)) {
+      //퍼블리시중이 아니라면 시작
+      if (!ovstore.isPublished) publish();
+
+    }
+    //내 차례가 아닐때
+    else if (!currentRoles.value.has(ovstore.myRole)) {
+      //퍼블리시 중이라면 종료
+      if (ovstore.isPublished) unpublish();
+    }
   };
 
   //curPage값에 따라 역할 목록을 반환한다.
