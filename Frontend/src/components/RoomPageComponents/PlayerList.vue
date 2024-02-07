@@ -11,7 +11,7 @@
               <div class="row q-mt-none q-mb-sm">
                 <q-btn unelevated rounded color="my-brown q-mr-sm btn-font">
                   <q-menu fit anchor="bottom start" self="top left">
-                    <q-item v-for="(role, index) in roleList" :key="role" :disable="role.selected" clickable @click="toggleRole(player,index)">
+                    <q-item v-for="(role, index) in bookDetail.roles" :key="role" :disable="role.selected" clickable @click="toggleRole(player,index)">
                       <q-item-section>{{ role.name }}</q-item-section>
                     </q-item>
                   </q-menu>
@@ -82,11 +82,11 @@
   import {ref, watch} from 'vue';
 
   const openViduStore = useOpenViduStore();
-  const {playerList,roleList,memberId} = storeToRefs(openViduStore);
+  const {playerList,bookDetail,memberId} = storeToRefs(openViduStore);
   const {session} = openViduStore;
 
   const makeSendingRoleData = () => {
-    sendingRoleData.value.roleList = roleList.value;
+    sendingRoleData.value.roleList = bookDetail.value.roles;
     sendingRoleData.value.playerList = playerList.value;
   }
 
@@ -105,12 +105,12 @@
       return;
     }
     // 역할 중복 선택 불가
-    const selectedRole = roleList.value[selectedIndex];
+    const selectedRole = bookDetail.value.roles[selectedIndex];
     if (selectedRole && selectedRole.selected) {
       alert('해당 역할은 이미 선택되었습니다.');
       return;
     }
-    const prevSelectedRole = roleList.value[playerList.value[player-1].roleIndex];
+    const prevSelectedRole = bookDetail.value.roles[playerList.value[player-1].roleIndex];
     if (prevSelectedRole) {
       prevSelectedRole.selected = false;
     }
@@ -125,7 +125,7 @@
   };
 
   const cancelRole = (player) => {
-    roleList.value[playerList.value[player-1].roleIndex].selected = false;
+    bookDetail.value.roles[playerList.value[player-1].roleIndex].selected = false;
     playerList.value[player-1].roleName = playerList.value[player-1].name;
     playerList.value[player-1].roleIndex = 5;
     makeSendingRoleData();
@@ -159,9 +159,9 @@
   session.on('signal:update-role', (event) => {
     const receivedData = JSON.parse(event.data);
     playerList.value = receivedData.playerList;
-    roleList.value = receivedData.roleList
+    bookDetail.value.roles = receivedData.roleList
     console.log(playerList.value);
-    console.log(roleList.value);
+    console.log(bookDetail.value.roles);
   });
 
 

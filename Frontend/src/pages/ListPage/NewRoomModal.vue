@@ -7,17 +7,17 @@
           <!-- 왼쪽 칼럼   책 이미지 -->
           <div class='col-4 flex justify-center items-center q-pa-sm'
                style='border: 5px solid #C7A96E; border-radius: 20px;height: 100%'>
-            <img :src="bookmodal.bookImg" alt='책'
+            <img :src="bookDetail.book.bookImg" alt='책'
                  style='object-fit: fill;border-radius: 20px;'>
           </div>
           <!-- 오른쪽 칼럼-->
           <div class='book-info col-8 q-gutter-y-sm'>
             <!--            책 제목과 줄거리-->
             <div style='border: 5px solid #C7A96E; border-radius: 20px;height: 50%' class='q-pa-sm'>
-              <div class='text-h5'>제목 : {{ bookmodal.title }}</div>
-              <div>저자 : {{ bookmodal.author }}</div>
+              <div class='text-h5'>제목 : {{ bookDetail.book.title }}</div>
+              <div>저자 : {{ bookDetail.book.author }}</div>
               <hr />
-              {{ bookmodal.summary }}
+              {{ bookDetail.book.summary }}
             </div>
             <!--            등장 인물-->
             <div style='border: 5px solid #C7A96E; border-radius: 20px;height: 50%' class='q-pa-sm'>
@@ -100,6 +100,7 @@
         const response = await axios.get(`http://localhost:8080/api/books/${props.bookmodal.bookId}`);
         console.log('API Response:', response);
         if (response.status === 200) {
+          bookDetail.value.book = response.data.book;
           bookDetail.value.roles = response.data.roles;
           resolve(response.data.roles);
         } else {
@@ -127,7 +128,7 @@
     roomInfo.value.title = roomName.value;
     roomInfo.value.password = roomPassword.value;
     roomInfo.value.isPublic = isPrivate;
-    roomInfo.value.limitCnt = props.bookmodal.roleCnt;
+    roomInfo.value.limitCnt = bookDetail.value.book.roleCnt;
 
     createRoom(props.bookmodal)
       .then(() => {

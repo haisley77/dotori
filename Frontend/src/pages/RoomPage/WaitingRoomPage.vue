@@ -9,7 +9,7 @@
           <PlayerList></PlayerList>
         </div>
         <div class='col-4 q-pa-sm'>
-          <BookInfo :bookInfo='bookInfo'></BookInfo>
+          <BookInfo :bookInfo='bookDetail.book'></BookInfo>
         </div>
       </div>
       <div class='row'>
@@ -34,10 +34,10 @@
   import {storeToRefs} from 'pinia';
 
   const openViduStore = useOpenViduStore();
-  const {roomInitializationParam,playerList,isHost,memberId} = storeToRefs(openViduStore);
+  const {roomInfo,playerList,isHost,memberId,bookDetail} = storeToRefs(openViduStore);
   const {session} = openViduStore;
-  const bookInfo = roomInitializationParam.value.bookInfo;
-  const roomInfo = roomInitializationParam.value.roomInfo;
+
+  const props = defineProps({memberId:Object});
 
   const sendingIncomingData = ref({
     player: null,
@@ -100,6 +100,10 @@
   });
 
   onMounted(() => {
+
+    bookDetail.value.roles.forEach((role) => {
+      role['selected'] = false;
+    })
 
     const player = {
       name: '김싸피',
