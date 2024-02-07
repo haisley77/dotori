@@ -6,10 +6,12 @@
 
   const ovstore = useOpenViduStore();
   const props = defineProps({curPage: Number, currentScene: Object});
-  const imagesrc = ref(ovstore.bookInfoList[props.curPage - 1].img);
+  // const imagesrc = ref(ovstore.bookInfoList[props.curPage - 1].img);
+
 </script>
 
 <template>
+
   <div class='scene-info-container q-pa-sm'>
 
     <div class=' ' style='height: 100%;border-radius: 15px'>

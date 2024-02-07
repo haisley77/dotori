@@ -6,7 +6,7 @@
       style='height: 210px; max-width: 100%;'
     >
       <div class='flex no-wrap'>
-        <SideBarComponent v-for='scene in allScenes' :scene="scene" :cur-page='props.curPage' @moveToPage='moveToPage' />
+        <SideBarComponent v-for='scene in ovstore.bookDetail.scenes' :scene="scene" :cur-page='props.curPage' @moveToPage='moveToPage' />
       </div>
     </q-scroll-area>
   </div>
@@ -17,9 +17,7 @@
   import {useOpenViduStore} from 'stores/openvidu';
   const ovstore = useOpenViduStore();
   const allScenes = ref();
-  onMounted(()=>{
-    allScenes.value = ovstore.bookDetail.scenes;
-  });
+
   const props = defineProps({curPage: Number, currentScene: Object});
   const emit = defineEmits(['moveToPage']);
   const moveToPage = (nextPage) => {

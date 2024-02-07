@@ -11,37 +11,6 @@ export const useOpenViduStore
   = defineStore('openViduStore', () => {
 
 
-  const bookInfoList = ref([{
-    'img': 'src/assets/BookImages/img/scene_1.png',
-    'lines': ['사회자 : 곤히 코를 골던 사자가 어흥 소리를 지르며 벌떡 일어났어요. ',
-      '사회자 : 달리던 생쥐가 잠자는 사자의 코털을 건드렸지요.'],
-  }, {
-    'img': 'src/assets/BookImages/img/scene_2.png',
-    'lines': ['사회자 : 생쥐가 부들부들 떨며 손이 발이 되도록 빌었어요.',
-      '생쥐 : 사자님, 제발 살려 주세요! 하늘이 무너져 내려도, 절대 그 은혜를 잊지 않고 꼭 보답하겠어요!',
-      '사자 : 후.. 그래. 너같이 작은 것은 먹어도 간에 기별도 안가겠다.'],
-  }, {
-    'img': 'src/assets/BookImages/img/scene_3.png',
-    'lines': ['사회자 : 사자는 생쥐를 그냥 놓아주었어요. ',
-      '생쥐 : 감사합니다, 사자님! 이 은혜는 잊지 않을게요!',
-      '사회자 : 생쥐는 연방 허리 숙여 감사의 인사를 하고, 수풀 사이로 쪼르르 달아났어요.'],
-  }, {
-    'img': 'src/assets/BookImages/img/scene_4.png',
-    'lines': ['사회자 : 얼마 후, 사자는 숲속을 걷다 사냥꾼들이 설치한 그물에 걸리게 되었어요.',
-      '사회자 : 녹초가 되어 발만 꼼지락거리는데, 어디선가 사각사각 사과 씹는 듯한 소리가 들렸어요.'],
-  }, {
-    'img': 'src/assets/BookImages/img/scene_5.png',
-    'lines': ['사회자 : 위에 올라앉은 것은 지난번에 먹는 것도 귀찮아 놓아준 생쥐였어요.',
-      '생쥐 : 사자님! 조금만 기다리세요! 제가 구해드릴게요!',
-      '사회자 : 생쥐가 죽을힘을 다해 이빨로 그물을 갉았어요.  마침내 그물이 터지고, 사자가 풀려났어요.'],
-  }, {
-    'img': 'src/assets/BookImages/img/scene_6.png',
-    'lines': ['생쥐 : 사자님, 괜찮으세요?',
-      '사자 : 안녕, 생쥐야! 무슨 말을 해야 할지 모르겠구나!.',
-      '생쥐 : 에이, 그럴 때는 그냥 ‘고마워!’ 하면 되는 거예요!',
-      '사자 : 고맙다, 생쥐야. 앞으로는 작다고 무시하지 않을게.',
-      '사회자 : 사자는 생쥐에게 진심으로 사과를 했고, 둘은 좋은 친구가 되었답니다.'],
-  }]);
   const OV = new OpenVidu();
   const session = OV.initSession();
   const ovToken = ref(null);
@@ -53,14 +22,18 @@ export const useOpenViduStore
 
   const subscribers = ref([]);
   const mainStreamManager = ref();
-
+  var mainStreamManagerReal = null;
   const isPublished = ref(false);
   // 방장인지 아닌지 판단
   const isHost = ref(true);
 
   //나중에 역할 선택에 따라 변경할 부분
-  const myRole = ref(1);
-
+  const myRole = ref(5);
+  const minRole = ref(4);
+  const canvasStream = ref();
+  const changeCanvasStream = (stream) => {
+    canvasStream.value = stream;
+  };
   // 방 세션 설정 정보
   const session_properties = ref({});
   // 커넥션 설정 정보
@@ -220,21 +193,29 @@ export const useOpenViduStore
   const publish = (publisher) => {
     session.publish(publisher).then(() => {
       mainStreamManager.value = publisher;
+      mainStreamManagerReal = publisher;
       console.log('published my video!');
       isPublished.value = true;
     }).catch((error) => {
+      // isPublished.value = true;
       console.log(error);
     });
   };
 
   const unpublish = () => {
-    session.unpublish(mainStreamManager.value).then(() => {
+    console.log(mainStreamManager.value.streamId);
+    session.unpublish(mainStreamManagerReal).then(() => {
       console.log('unpublished my video!!');
       isPublished.value = false;
+      mainStreamManager.value = null;
+      mainStreamManagerReal = null;
     }).catch((error) => {
+      // isPublished.value = false;
+      console.log(session.connection);
+      console.log(mainStreamManager.value.stream.connection);
       console.log('unpblish failed!' + error);
     });
-    mainStreamManager.value = null;
+
   };
 
   const playerList = ref([]);
@@ -279,11 +260,11 @@ export const useOpenViduStore
     updateRoom,
     publish,
     roleList,
-    subscribers, mainStreamManager, OV, bookInfoList,
+    subscribers, mainStreamManager, OV,
     getConnectionToken,
     removeRoomMember,
     unpublish,
     isPublished,
-    myRole,
+    myRole, minRole, canvasStream, changeCanvasStream,
   };
 }, {persist: {storage: sessionStorage}});

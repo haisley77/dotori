@@ -14,12 +14,12 @@
 </script>
 
 <template>
-  <div class=' col-3 q-pr-sm q-pt-sm relative-position hoverpointer' @click='movePage(scene.sceneId)'>
-    <img :src='imagesrc' alt='dja' class=' side-img'
-         v-bind:class="{ 'side-bar-selected': curPage === scene.sceneId, 'side-bar-unselected': curPage !== scene.sceneId }" />
+  <div class=' col-3 q-pr-sm q-pt-sm relative-position hoverpointer' @click='movePage(scene.sceneOrder)'>
+    <img :src='scene.backgroundImage' alt='dja' class=' side-img'
+         v-bind:class="{ 'side-bar-selected': curPage === scene.sceneOrder, 'side-bar-unselected': curPage !== scene.sceneOrder }" />
     <div class='absolute-top-left q-pa-xs q-mt-sm text-center npsfont side-page-num '
-         v-bind:class="{ 'side-bar-selected': curPage === scene.sceneId, 'side-bar-unselected': curPage !== scene.sceneId }">
-      장면 : {{ scene.sceneId }}
+         v-bind:class="{ 'side-bar-selected': curPage === scene.sceneOrder, 'side-bar-unselected': curPage !== scene.sceneOrder }">
+      장면 : {{ scene.sceneOrder }}
     </div>
 
   </div>

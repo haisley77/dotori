@@ -34,7 +34,7 @@
     ovstore2.connectToAnotherSession(sessionId.value);
   };
   onMounted(() => {
-
+  console.log("publishMyVideoOnMount실행중~~====================================================")
     /**
      * Returns the world-space dimensions of the viewport at `depth` units away from
      * the camera.
@@ -239,7 +239,8 @@
 
     let faceLandmarker;
     const scene = new BasicScene();
-    const avatar = new Avatar(props.myAvatar, scene.scene);
+    console.log("찾아보려는 탈 주소 : " + ovstore.bookDetail.roles[ovstore.myRole-ovstore.minRole].maskPath);
+    const avatar = new Avatar(ovstore.bookDetail.roles[ovstore.myRole-ovstore.minRole].maskPath, scene.scene);
 
     function detectFaceLandmarks(time) {
       if (!faceLandmarker) {
@@ -341,6 +342,8 @@
       // myCanvas.style.border = '10px solid red';
       const canvasStream = myCanvas.captureStream();
       emit('changeCanvasStream', canvasStream);
+      ovstore.changeCanvasStream(canvasStream);
+      console.log("캔버스 스트림 보냈음!!!!!!!!!!!!!!!!!");
 
       //첫페이지에서만 실행될 코드....
       //첫페이지에 내 역할이 있다면 실행한다....

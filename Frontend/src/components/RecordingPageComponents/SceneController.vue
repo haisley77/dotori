@@ -5,7 +5,7 @@
   const props = defineProps({curPage: Number});
   const emit = defineEmits(['moveToPage']);
   const nextPage = () => {
-    if (ovstore.bookInfoList.length > props.curPage) {
+    if (ovstore.bookDetail.scenes.length > props.curPage) {
       emit('moveToPage', props.curPage + 1);
     } else {
       console.log('마지막 페이지 입니다!');
