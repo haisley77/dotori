@@ -7,7 +7,7 @@
   const router = useRouter();
   const btnValue = ref(false);
   const openViduStore = useOpenViduStore();
-  const {roleList,playerList,isHost,roomInfo,memberId,myRole} = storeToRefs(openViduStore);
+  const {bookDetail,playerList,isHost,roomInfo,memberId,myRole} = storeToRefs(openViduStore);
   const {session,updateRoom} = openViduStore;
   const canMoveWaitingRoom = ref(false);
 
@@ -48,7 +48,7 @@
   }
   const moveRecording = () => {
     playerList.value.forEach((user) => {
-      myRole.value.push(roleList.value[user.roleIndex].roleId);
+      myRole.value.push(bookDetail.value.roles[user.roleIndex].roleId);
     })
     router.push('/recording');
   };
@@ -66,6 +66,7 @@
       })
         .then(() => {
           resolve('준비 상태 전송 성공');
+
         })
         .catch(error => {
           reject(error);

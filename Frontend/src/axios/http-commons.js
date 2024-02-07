@@ -10,7 +10,7 @@ function localAxios() {
       "Content-Type": "application/json;charset=utf-8",
     },
   });
-  // instance.defaults.headers.common["Authorization"] = "";
+  instance.defaults.headers.common["withCredentials"] = true;
   instance.defaults.headers.post["Content-Type"] = "application/json";
   instance.defaults.headers.get["Content-Type"] = "application/json";
   instance.defaults.headers.delete["Content-Type"] = "application/json";
