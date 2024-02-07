@@ -1,6 +1,6 @@
 <template>
  <Headermain/>
-  <mainpagetest/>
+  <MainPageVideo/>
   <!-- <MainPageCarousel/> -->
   <div class="row">
     <div class="col-12">
@@ -36,7 +36,6 @@
   import ElementFour from 'components/MainPageComponents/ElementFour.vue';
   import MainPageVideo from 'src/components/MainPageComponents/MainPageVideo.vue';
   import Headermain from 'components/CommonComponents/Headermainpage.vue';
-  import mainpagetest from 'src/components/MainPageComponents/mainpagetest.vue';
 
   //화면안에 요소가 들어오면 아래에서 올라오기
   const animatedTextRef1 = ref(null);
