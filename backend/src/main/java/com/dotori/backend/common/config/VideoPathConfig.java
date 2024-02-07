@@ -10,10 +10,21 @@ import org.springframework.core.io.Resource;
 
 @Configuration
 public class VideoPathConfig {
+	@Value("file:${videos.path.video}")
+	private Resource videoDirectory;
 	@Value("file:${videos.path.scene}")
 	private Resource sceneDirectory;
 	@Value("file:${videos.path.chunk}")
 	private Resource chunkDirectory;
+
+	@Bean
+	public File videoDirectory() throws IOException {
+		File directory = videoDirectory.getFile();
+		if (!directory.isDirectory() || !directory.exists()) {
+			throw new IllegalArgumentException("video 경로가 잘못되었습니다.");
+		}
+		return directory;
+	}
 
 	@Bean
 	public File sceneDirectory() throws IOException {
