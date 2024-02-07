@@ -1,9 +1,8 @@
 <template>
-
-
-  <MainPageCarousel />
+ <Headermain/>
+  <MainPageVideo/>
+  <!-- <MainPageCarousel/> -->
   <div class="row">
-
     <div class="col-12">
 
       <div class="row" style="height: 250px"></div>
@@ -17,14 +16,15 @@
       <div class="row" style="height: 250px"></div>
       <div ref="animatedTextRef3" class="animated-text">
         <ElementThree />
-        <div class="row" style="height: 300px"></div>
       </div>
+      <div class="row" style="height: 250px"></div>
+      <div ref="animatedTextRef4" class="animated-text">
+        <ElementFour />
+        </div>
+        <div class="row" style="height: 300px"></div>
 
+      </div>
     </div>
-
-  </div>
-
-
 </template>
 
 <script setup>
@@ -33,13 +33,15 @@
   import ElementOne from 'components/MainPageComponents/ElementOne.vue';
   import ElementTwo from 'components/MainPageComponents/ElementTwo.vue';
   import ElementThree from 'components/MainPageComponents/ElementThree.vue';
-
+  import ElementFour from 'components/MainPageComponents/ElementFour.vue';
+  import MainPageVideo from 'src/components/MainPageComponents/MainPageVideo.vue';
+  import Headermain from 'components/CommonComponents/Headermainpage.vue';
 
   //화면안에 요소가 들어오면 아래에서 올라오기
   const animatedTextRef1 = ref(null);
   const animatedTextRef2 = ref(null);
   const animatedTextRef3 = ref(null);
-
+  const animatedTextRef4 = ref(null);
 
   const observeElement = element => {
     if (element instanceof Element) {
@@ -60,7 +62,7 @@
     observeElement(animatedTextRef1.value);
     observeElement(animatedTextRef2.value);
     observeElement(animatedTextRef3.value);
-
+    observeElement(animatedTextRef4.value);
   });
 </script>
 

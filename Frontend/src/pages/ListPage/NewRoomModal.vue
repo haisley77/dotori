@@ -79,7 +79,6 @@
   import {onMounted, ref} from 'vue';
   import axios from 'axios';
 
-
   const router = useRouter();
   const props = defineProps({bookmodal: Object});
   const moveWaitingRoom = () => {
@@ -111,7 +110,6 @@
       }
     });
   };
-
 
   const roomName = ref(null);
   const roomPassword = ref(null);

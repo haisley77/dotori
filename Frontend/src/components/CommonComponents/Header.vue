@@ -163,7 +163,16 @@
         font-style: normal;
     }
 
-    .npsfont {
-        font-family: 'NPSfontBold';
-    }
+  .npsfont {
+    font-family: 'NPSfontBold';
+  }
+
+   .row.header-bg {
+    top: 0; /* 화면의 맨 위에 위치하도록 설정 */
+    left: 0;
+    width: 100%; /* 화면 전체 너비를 차지하도록 설정 */
+    z-index: 999; /* 다른 요소 위에 나타나도록 설정 */
+    background: rgba(255, 255, 255, 0);  /* 투명도 조절 가능한 백그라운드 색상 */
+    /* 다른 스타일들 */
+  }
 </style>
