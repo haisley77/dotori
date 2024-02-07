@@ -92,7 +92,7 @@
 
   watch(playerList.value, (newItems, oldItems) => {
     newItems.forEach((newItem, index) => {
-      if (oldItems[index] !== newItem) {
+      if (oldItems[index] !== newItem && index !== 0) {
         playerList.value[index] = { ...newItem };
       }
     });
