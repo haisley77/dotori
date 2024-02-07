@@ -25,7 +25,7 @@
   const ovstore2 = useOpenViduStore2();
   const videoPlayer = ref(null);
   const sessionId = ref('');
-  const props = defineProps({currentRoles: Set});
+  const props = defineProps({currentRoles: Set, myAvatar: String});
   const emit = defineEmits(['changeCanvasStream']);
   const connectToNewSession = () => {
     ovstore2.connectToNewSession();
@@ -239,7 +239,7 @@
 
     let faceLandmarker;
     const scene = new BasicScene();
-    const avatar = new Avatar('src/assets/raccoon_head.glb', scene.scene);
+    const avatar = new Avatar(props.myAvatar, scene.scene);
 
     function detectFaceLandmarks(time) {
       if (!faceLandmarker) {

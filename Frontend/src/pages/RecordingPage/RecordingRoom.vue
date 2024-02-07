@@ -13,7 +13,7 @@
       </div>
     </div>
   </div>
-  <PublishMyVideo :currentRoles='currentRoles' @changeCanvasStream="changeCanvasStream" />
+  <PublishMyVideo :currentRoles='currentRoles' :myAvatar='myAvatar' @changeCanvasStream="changeCanvasStream" />
 </template>
 
 
@@ -37,6 +37,7 @@
   const currentScript = ref(new Set());
 
   const canvasStream = ref();
+  const myAvatar = ref('');
 
   const changeCanvasStream = (stream) => {
     canvasStream.value = stream;
@@ -98,6 +99,9 @@
     currentRoles.value = getRoles(1);
     //첫 페이지 정보 넣기
     currentScript.value = ovstore.bookDetail.scenes[0];
+
+    //내 아바타 주소 받아옴!
+    myAvatar.value = ovstore.bookDetail.roles[ovstore.myRole - 1].maskPath;
   });
 </script>
 <style scoped>
