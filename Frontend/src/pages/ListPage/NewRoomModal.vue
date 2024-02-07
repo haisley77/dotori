@@ -136,6 +136,7 @@
           .then(() => {
             addRoomMember(props.bookmodal)
               .then(() => {
+                roomInfo.value.joinCnt++;
                 moveWaitingRoom();
               })
               .catch()

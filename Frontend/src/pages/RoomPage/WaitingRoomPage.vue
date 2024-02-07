@@ -85,7 +85,7 @@
     if (!isHost.value) {
       playerList.value = receivedData.playerList;
       // 만약 들어오기 전에 role을 변경하고 있다면 roleList도 같이 보내야함
-      // room joinCnt 갱신
+      roomInfo.value.joinCnt = playerList.value.length;
     }
   });
 
@@ -96,6 +96,7 @@
       playerList.value.push(receivedData.player);
       sendingPlayerData.value.playerList = playerList.value;
       sendPlayerInfoToOpenVidu();
+      roomInfo.value.joinCnt++;
     }
   });
 
