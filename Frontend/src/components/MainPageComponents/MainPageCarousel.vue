@@ -1,28 +1,32 @@
 <script setup>
-  import {ref, onMounted, watchEffect} from 'vue';
+  import { ref } from 'vue';
 
   const slide = ref('first');
-  //메인페이지 캐러셀 자동반복
+  // 메인페이지 캐러셀 자동반복
   const autoplay = ref(true);
-  const slides = ref([{
-    img: 'src/assets/MyPageImages/karina.jpg',
-    name: 'first',
-    headText: '도토리에 오신것을 환영합니다',
-    bottomText: '카리나!!!!',
-
-  }, {
-    img: 'src/assets/MyPageImages/winter.png',
-    name: 'second',
-    headText: 'Welcome To Dotori Online',
-    bottomText: '윈터!!!',
-
-  }, {
-    img: 'src/assets/MyPageImages/iupic.jpg',
-    name: 'third',
-    headText: '나만의 이야기를 만들어보세요',
-    bottomText: '아이유!!',
-
-  }]);
+  const slides = ref([
+    {
+      type: 'image',
+      img: 'src/assets/MyPageImages/karina.jpg',
+      name: 'first',
+      headText: 'DO STORY I',
+      bottomText: '이야기와 하나되는 아이들',
+    },
+    {
+      type: 'video',
+      video: 'src/assets/MainPage/Main2.mp4',
+      name: 'second',
+      headText: 'DO STORY I',
+      bottomText: '이야기와 하나되는 아이들',
+    },
+    {
+      type: 'image',
+      img: 'src/assets/MyPageImages/iupic.jpg',
+      name: 'third',
+      headText: '나만의 이야기를 만들어보세요',
+      bottomText: '아이유!!',
+    }
+  ]);
 </script>
 
 <template>
@@ -33,16 +37,26 @@
     animated
     v-model='slide'
     height='91vh'
+    :interval="5000"
   >
     <q-carousel-slide
       v-for='(slide, index) in slides'
       :key='index'
       :name='slide.name'
-      :img-src='slide.img'
     >
-      <div class='absolute-bottom custom-caption'>
-        <div class='text-h2 npsfont q-pa-sm text-border'>{{ slide.headText }}</div>
-        <div class='text-h3 npsfont q-pa-sm text-border'>{{ slide.bottomText }}</div>
+      <template v-if="slide.type === 'image'">
+        <img :src="slide.img" width="100%" height="100%" />
+      </template>
+      <template v-else-if="slide.type === 'video'">
+        <div class="video-wrapper">
+          <video autoplay loop muted style="object-fit: cover;">
+            <source :src="slide.video" type="video/mp4">
+          </video>
+        </div>
+      </template>
+      <div class='npsfont absolute-bottom custom-caption'>
+        <div class='npsfont text-h2 npsfont q-pa-sm' style='color: white;'>{{ slide.headText }}</div>
+        <div class='npsfont text-h3 npsfont q-pa-sm ' style='color: white;'>{{ slide.bottomText }}</div>
       </div>
     </q-carousel-slide>
   </q-carousel>
@@ -51,5 +65,16 @@
 <style lang='scss' scoped>
   .text-border {
     text-shadow: -1px 0px #C7A96E, 0px 1px #C7A96E, 1px 0px #C7A96E, 0px -1px #C7A96E;
+  }
+
+  .video-wrapper {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .video-wrapper video {
+    width: 100%;
+    height: 100%;
   }
 </style>

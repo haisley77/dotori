@@ -9,7 +9,7 @@
       <!-- col-8 offset-4 : 화면의 4/8차지 -->
       <div class='row'>
         <div class='col-6 flex justify-center q-mt-lg'>
-          <img src='src/assets/MainPageImages/Mainpageimg.png'
+          <img src='src/assets/MainPage/Mainpageimg.png'
                width='600px'
                height='400px'
                style='object-fit: cover; border-radius: 25px'
