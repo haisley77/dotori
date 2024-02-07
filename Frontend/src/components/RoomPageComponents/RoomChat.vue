@@ -6,7 +6,7 @@
           <!-- 채팅 로그 -->
           <div ref="chatLog" style="height: 100px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;">
             <div v-for="(message, index) in messageList" :key="index">{{ message }}</div>
-            <div ref="scrollMarker"></div>
+<!--            <div ref="scrollMarker"></div>-->
           </div>
         </div>
 
@@ -36,7 +36,7 @@ onMounted(() => {
     session.on('signal:chat', (event) => {
     const data = JSON.parse(event.data);
     appendMessage(data.nickname, data.message);
-    scrollToBottom();
+    // scrollToBottom();
     });
   }
 });
@@ -61,13 +61,13 @@ const appendMessage = (nickname, message) => {
   messageList.value.push(formattedMessage);
 };
 
-const scrollToBottom = () => {
-  const chatLog = ref.chatLog;
-  const scrollMarker = ref.scrollMarker;
-  if (chatLog.value && scrollMarker.value) {
-    scrollMarker.value.scrollIntoView({ behavior: 'smooth', block: 'end' });
-  }
-};
+// const scrollToBottom = () => {
+//   const chatLog = ref.chatLog;
+//   const scrollMarker = ref.scrollMarker;
+//   if (chatLog.value && scrollMarker.value) {
+//     scrollMarker.value.scrollIntoView({ behavior: 'smooth', block: 'end' });
+//   }
+// };
 </script>
 
 <style scoped>
