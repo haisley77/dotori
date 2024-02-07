@@ -45,6 +45,9 @@ public class Member extends BaseTimeEntity {
 	@Column(length = 100, name = "profile_img")
 	private String profileImg;
 
+	@Column(length = 255, name = "refresh_token")
+	private String refreshToken;
+
 	@Enumerated(EnumType.STRING)
 	private Role role;
 
