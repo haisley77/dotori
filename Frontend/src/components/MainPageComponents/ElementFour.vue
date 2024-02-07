@@ -15,7 +15,7 @@
                style='object-fit: cover; border-radius: 25px' />
         </div>
         <div class='col-6 flex justify-center items-center'>
-          <h4 class='npsfont'>페이지 설명 1<br />페이지 설명 1</h4>
+          <h4 class='npsfont'>페이지 설명 2<br />페이지 설명 2</h4>
 
         </div>
 

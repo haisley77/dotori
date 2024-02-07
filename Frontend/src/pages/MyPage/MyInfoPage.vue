@@ -2,8 +2,8 @@
 
   <q-page style="
       position: absolute;
-      top:55%;
-      left:50%;
+      top:70%;
+      left:55%;
       transform :translate(-50%,-50%);
   ">
     <div class="row flex justify-center">

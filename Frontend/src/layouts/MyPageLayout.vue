@@ -1,6 +1,6 @@
 <template>
-<!--  <Header />-->
   <q-layout style="position: relative">
+    <Header/>
     <!--    <q-header>-->
     <!--      header-->
     <!--    </q-header>-->
@@ -78,7 +78,6 @@
   $profile-height: 250px;
 
   .mypagebg {
-    //background: red;
     width: 100%;
   }
 

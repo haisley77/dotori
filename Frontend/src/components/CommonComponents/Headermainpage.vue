@@ -13,13 +13,13 @@
 </script>
 
 <template>
-  <div class='row header-bg q-pt-sm q-pb-sm' style='background: #ffffff'>
+  <div class='row header-bg q-pt-sm q-pb-sm' style='background: rgba(255, 255, 255, 0)'>
     <!--    로고-->
     <div class='col-2 offset-0 flex justify-center items-center ' style='cursor: pointer'>
     </div>
     <!--페이지 위치-->
     <div class='col-4 offset-2 flex justify-center items-center'>
-      <div class='col-6 offset-0 flex justify-center items-center ' style='cursor: pointer'>
+      <div class='col-2 offset-0 flex justify-center items-center ' style='cursor: pointer'>
         <img src='../../assets/DotoriImages/dotorisq.png' alt='logo' width='30%' @click='moveMainPage'>
       </div>
     </div>
@@ -63,6 +63,7 @@
   }
 
    .row.header-bg {
+    position: fixed; /* 헤더를 화면 상단에 고정 */
     top: 0; /* 화면의 맨 위에 위치하도록 설정 */
     left: 0;
     width: 100%; /* 화면 전체 너비를 차지하도록 설정 */
