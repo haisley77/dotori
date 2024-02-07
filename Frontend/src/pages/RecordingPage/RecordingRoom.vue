@@ -4,7 +4,7 @@
       <div class='entire-container row'>
         <div class='right-container q-pr-sm q-pt-sm q-pl-sm col-9'>
           <MainScene :curPage='curPage' :currentScene='currentScene' />
-          <side-bar :curPage='curPage' @moveToPage='moveToPage'></side-bar>
+          <side-bar :curPage='curPage' @moveToPage='moveToPage' :currentScene='currentScene'></side-bar>
         </div>
         <div class='left-container col-3 q-pt-sm'>
           <Script :cur-page='curPage' />

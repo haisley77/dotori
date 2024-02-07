@@ -16,7 +16,7 @@
       <div class='scene-background-container relative-position'>
         <q-img
           class='q-pa-xs'
-          :src='props.currentScence.backgroundImage'
+          :src='props.currentScene.backgroundImage'
           :ratio='16/9'
           style='height: 100%; '
         />

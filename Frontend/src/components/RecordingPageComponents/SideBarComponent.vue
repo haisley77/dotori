@@ -4,22 +4,22 @@
 
   const ovstore = useOpenViduStore();
 
-  const props = defineProps({pageNo: Number, curPage: Number});
+  const props = defineProps({scene: Object, curPage: Number});
   const emit = defineEmits(['moveToPage']);
   const movePage = (page) => {
     // alert('clicked!')
     emit('moveToPage', page);
   };
-  const imagesrc = ref(ovstore.bookInfoList[props.pageNo-1].img);
+  const imagesrc = ref(props.scene.backgroundImage);
 </script>
 
 <template>
-  <div class=' col-3 q-pr-sm q-pt-sm relative-position hoverpointer' @click='movePage(pageNo)'>
+  <div class=' col-3 q-pr-sm q-pt-sm relative-position hoverpointer' @click='movePage(scene.sceneId)'>
     <img :src='imagesrc' alt='dja' class=' side-img'
-         v-bind:class="{ 'side-bar-selected': curPage === pageNo, 'side-bar-unselected': curPage !== pageNo }" />
+         v-bind:class="{ 'side-bar-selected': curPage === scene.sceneId, 'side-bar-unselected': curPage !== scene.sceneId }" />
     <div class='absolute-top-left q-pa-xs q-mt-sm text-center npsfont side-page-num '
-         v-bind:class="{ 'side-bar-selected': curPage === pageNo, 'side-bar-unselected': curPage !== pageNo }">
-      장면 : {{ pageNo }}
+         v-bind:class="{ 'side-bar-selected': curPage === scene.sceneId, 'side-bar-unselected': curPage !== scene.sceneId }">
+      장면 : {{ scene.sceneId }}
     </div>
 
   </div>
