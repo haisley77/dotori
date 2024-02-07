@@ -2,7 +2,7 @@
   <!--  <hr style='border: solid yellow 3px' />-->
   <div class='row'>
 
-    <h2 class='npsfont q-mx-lg q-mt-lg q-mb-none col-10 offset-2' style='color: #282828'>원하는 캐릭터로<br /> 마법처럼 변신!</h2>
+    <h4 class='npsfont q-mx-lg q-mt-lg q-mb-none col-10 offset-2' style='color: #282828'>원하는 역할을<br /> 자유롭게 선택할 수 있어요</h4>
     <!--    <h4 class='npsfont q-my-none'>역할에 맞는 수많은 3D 아바타를 통해 아이들의 창의력과 집중력을 향상시킵니다</h4>-->
     <div class='col-8 offset-2'>
       <div class='row'>
