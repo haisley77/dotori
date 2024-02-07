@@ -4,14 +4,10 @@
   import {useOpenViduStore} from 'stores/openvidu';
   import {storeToRefs} from 'pinia';
 
-  const props = defineProps({
-    roomInfo: Object,
-  });
-
   const router = useRouter();
   const btnValue = ref(false);
   const openViduStore = useOpenViduStore();
-  const {playerList,isHost,roomInfo,memberId} = storeToRefs(openViduStore);
+  const {playerList,isHost,roomInfo,memberId,myRoles} = storeToRefs(openViduStore);
   const {session,updateRoom} = openViduStore;
   const canMoveWaitingRoom = ref(false);
 
@@ -23,7 +19,7 @@
 
 
   const updateState = () => {
-    const currentUser = playerList.value.find(user => user.memberId === props.memberId);
+    const currentUser = playerList.value.find(user => user.memberId === memberId.value);
     if (currentUser) {
       currentUser.readyState = true;
       btnValue.value = true;
@@ -52,6 +48,9 @@
     }
   }
   const moveRecording = () => {
+    playerList.value.forEach((user) => {
+      myRoles.value.push(user.roleIndex);
+    })
     router.push('/recording');
   };
 

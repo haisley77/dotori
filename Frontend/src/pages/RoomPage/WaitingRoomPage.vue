@@ -17,7 +17,7 @@
           <RoomChat :playerList='playerList' :memberId='memberId'></RoomChat>
         </div>
         <div class='col-4 q-pa-sm'>
-          <StartReady :roomInfo='roomInfo'></StartReady>
+          <StartReady></StartReady>
         </div>
       </div>
     </div>

@@ -226,6 +226,7 @@ export const useOpenViduStore
 
 
   const playerList = ref([]);
+  const myRoles = ref([]);
 
 // 역할 리스트
   const roleList = ref([
@@ -270,5 +271,6 @@ export const useOpenViduStore
     subscribers, mainStreamManager, OV, bookInfoList,
     getConnectionToken,
     removeRoomMember,
+    myRoles,
   };
 }, {persist: {storage: sessionStorage}});
