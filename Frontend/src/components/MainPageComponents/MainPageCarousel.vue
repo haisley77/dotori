@@ -23,8 +23,8 @@
       type: 'image',
       img: 'src/assets/MyPageImages/iupic.jpg',
       name: 'third',
-      headText: '나만의 이야기를 만들어보세요',
-      bottomText: '아이유!!',
+      headText: 'DO STORY I',
+      bottomText: '이야기와 하나되는 아이들',
     }
   ]);
 </script>

@@ -13,25 +13,19 @@
 </script>
 
 <template>
-  <div class='row header-bg q-pt-sm q-pb-sm' style='background: #ffffff'>
+  <div class='row header-bg q-pt-sm q-pb-sm' style='background: rgba(255, 255, 255, 0)'>
     <!--    로고-->
     <div class='col-2 offset-0 flex justify-center items-center ' style='cursor: pointer'>
-<!--      <img src='../../assets/DotoriImages/logowithborder-removebg.png' alt='logo' width='70%' @click='moveMainPage'>-->
     </div>
     <!--페이지 위치-->
     <div class='col-4 offset-2 flex justify-center items-center'>
-<!--      <h5 class='q-my-none npsfont'>연극 대기실</h5>-->
       <div class='col-2 offset-0 flex justify-center items-center ' style='cursor: pointer'>
-        <img src='../../assets/DotoriImages/dotorisq.png' alt='logo' width='40%' @click='moveMainPage'>
+        <img src='../../assets/DotoriImages/dotorisq.png' alt='logo' width='30%' @click='moveMainPage'>
       </div>
     </div>
     <!-- 마이페이지와 로그인-->
-    <!-- 마이페이지-->
     <div class='col-2  flex items-center justify-end npsfont'>
-      <!--      <h6 class='q-ma-none'>-->
-      <!--        마이페이지-->
-      <!--      </h6>-->
-      <q-btn flat class='text-h6 q-ma-none' color='brand' @click='moveMyPage'><span style='color: black'>마이페이지</span>
+      <q-btn flat class='text-h7 q-ma-none' color='brand' @click='moveMyPage'><span style='color: black'>마이페이지</span>
         &nbsp&nbsp
         <svg xmlns='http://www.w3.org/2000/svg' height='28' width='35' viewBox='0 0 640 512'>
           <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
@@ -42,7 +36,7 @@
     </div>
     <!-- 로그인-->
     <div class='col-2 flex items-center justify-center npsfont'>
-      <q-btn flat class='text-h6 q-ma-none' color='brand' @click='moveMyPage'><span style='color: black'>로그인</span>
+      <q-btn flat class='text-h7 q-ma-none' color='brand' @click='moveMyPage'><span style='color: black'>로그인</span>
         &nbsp&nbsp
         <svg xmlns='http://www.w3.org/2000/svg' height='28' width='28' viewBox='0 0 512 512'>
           <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
@@ -68,4 +62,13 @@
     font-family: 'NPSfontBold';
   }
 
+   .row.header-bg {
+    position: fixed; /* 헤더를 화면 상단에 고정 */
+    top: 0; /* 화면의 맨 위에 위치하도록 설정 */
+    left: 0;
+    width: 100%; /* 화면 전체 너비를 차지하도록 설정 */
+    z-index: 999; /* 다른 요소 위에 나타나도록 설정 */
+    background: rgba(255, 255, 255, 0);  /* 투명도 조절 가능한 백그라운드 색상 */
+    /* 다른 스타일들 */
+  }
 </style>

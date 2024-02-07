@@ -45,7 +45,6 @@
   const animatedTextRef2 = ref(null);
   const animatedTextRef3 = ref(null);
 
-
   const observeElement = element => {
     if (element instanceof Element) {
       const observer = new IntersectionObserver(entries => {
