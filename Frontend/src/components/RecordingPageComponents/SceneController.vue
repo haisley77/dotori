@@ -12,7 +12,6 @@
     }
   };
 
-
   const beforePage = () => {
     if (1 < props.curPage) {
       emit('moveToPage', props.curPage - 1);

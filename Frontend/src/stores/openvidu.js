@@ -54,10 +54,12 @@ export const useOpenViduStore
   const subscribers = ref([]);
   const mainStreamManager = ref();
 
-
+  const isPublished = ref(false);
   // 방장인지 아닌지 판단
   const isHost = ref(true);
 
+  //나중에 역할 선택에 따라 변경할 부분
+  const myRole = ref(1);
 
   // 방 세션 설정 정보
   const session_properties = ref({});
@@ -79,7 +81,7 @@ export const useOpenViduStore
   const bookDetail = ref({
     book: {},
     roles: [],
-    scenes:[],
+    scenes: [],
   });
 
   const roomInitializationParam = ref({
@@ -219,11 +221,21 @@ export const useOpenViduStore
     session.publish(publisher).then(() => {
       mainStreamManager.value = publisher;
       console.log('published my video!');
+      isPublished.value = true;
     }).catch((error) => {
       console.log(error);
     });
   };
 
+  const unpublish = () => {
+    session.unpublish(mainStreamManager.value).then(() => {
+      console.log('unpublished my video!!');
+      isPublished.value = false;
+    }).catch((error) => {
+      console.log('unpblish failed!' + error);
+    });
+    mainStreamManager.value = null;
+  };
 
   const playerList = ref([]);
 
@@ -270,5 +282,8 @@ export const useOpenViduStore
     subscribers, mainStreamManager, OV, bookInfoList,
     getConnectionToken,
     removeRoomMember,
+    unpublish,
+    isPublished,
+    myRole,
   };
 }, {persist: {storage: sessionStorage}});

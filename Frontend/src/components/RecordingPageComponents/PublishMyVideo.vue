@@ -20,10 +20,13 @@
   import {FaceLandmarker, FilesetResolver} from '@mediapipe/tasks-vision';
   import {useOpenViduStore2} from 'stores/openvidu2';
   import {useOpenViduStore} from 'stores/openvidu';
+
   const ovstore = useOpenViduStore();
   const ovstore2 = useOpenViduStore2();
   const videoPlayer = ref(null);
   const sessionId = ref('');
+  const props = defineProps({currentRoles: Set});
+  const emit = defineEmits(['changeCanvasStream']);
   const connectToNewSession = () => {
     ovstore2.connectToNewSession();
   };
@@ -71,7 +74,7 @@
         this.renderer.setSize(this.width, this.height);
         THREE.ColorManagement.legacy = false;
         this.renderer.outputEncoding = THREE.sRGBEncoding;
-        document.getElementById("canvasDiv").appendChild(this.renderer.domElement);
+        document.getElementById('canvasDiv').appendChild(this.renderer.domElement);
         // document.body.appendChild(this.renderer.domElement);//???????????????????이거 없어도 될까???
         //이게 있어야 스트림을 뽑아낸다
         // Set up the basic lighting for the scene
@@ -337,21 +340,26 @@
       console.log('Finished Loading MediaPipe Model.');
       // myCanvas.style.border = '10px solid red';
       const canvasStream = myCanvas.captureStream();
+      emit('changeCanvasStream', canvasStream);
 
-      const publisher = ovstore.OV.initPublisher(undefined, {
-        audioSource: canvasStream.getAudioTracks()[0], // The source of audio. If undefined default microphone
-        videoSource: canvasStream.getVideoTracks()[0], // The source of video. If undefined default webcam
-        // videoSource: canvasStream, // The source of video. If undefined default webcam
-        // videoSource: undefined, // The source of video. If undefined default webcam
-        publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
-        publishVideo: true, // Whether you want to start publishing with your video enabled or not
-        resolution: '640x480', // The resolution of your video
-        frameRate: 30, // The frame rate of your video
-        insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
-        // mirror: false, // Whether to mirror your local video or not
-      });
-      ovstore.publish(publisher);
-      // console.log(scene.type);
+      //첫페이지에서만 실행될 코드....
+      //첫페이지에 내 역할이 있다면 실행한다....
+      if (props.currentRoles.has(ovstore.myRole)) {
+        const publisher = ovstore.OV.initPublisher(undefined, {
+          audioSource: canvasStream.getAudioTracks()[0], // The source of audio. If undefined default microphone
+          videoSource: canvasStream.getVideoTracks()[0], // The source of video. If undefined default webcam
+          // videoSource: canvasStream, // The source of video. If undefined default webcam
+          // videoSource: undefined, // The source of video. If undefined default webcam
+          publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
+          publishVideo: true, // Whether you want to start publishing with your video enabled or not
+          resolution: '640x480', // The resolution of your video
+          frameRate: 30, // The frame rate of your video
+          insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
+          // mirror: false, // Whether to mirror your local video or not
+        });
+
+        ovstore.publish(publisher);
+      }
 
     }
 
