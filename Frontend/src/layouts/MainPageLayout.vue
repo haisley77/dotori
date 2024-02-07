@@ -17,8 +17,13 @@
       <div class="row" style="height: 250px"></div>
       <div ref="animatedTextRef3" class="animated-text">
         <ElementThree />
+      <!-- </div> -->
+      <!-- <div class="row" style="height: 250px"></div>
+      <div ref="animatedTextRef3" class="animated-text">
+        <ElementThree /> -->
         <div class="row" style="height: 300px"></div>
       </div>
+
 
     </div>
 
