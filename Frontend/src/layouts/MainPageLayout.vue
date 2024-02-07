@@ -3,7 +3,6 @@
   <MainPageVideo/>
   <!-- <MainPageCarousel/> -->
   <div class="row">
-
     <div class="col-12">
 
       <div class="row" style="height: 250px"></div>

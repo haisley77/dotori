@@ -78,7 +78,6 @@
   import {useOpenViduStore} from 'stores/openvidu';
   import {ref} from 'vue';
 
-
   const router = useRouter();
   const props = defineProps({bookmodal: Object});
   const moveWaitingRoom = () => {
@@ -102,7 +101,6 @@
         console.error('Error fetching books:', error);
       }
     };
-
 
   const roomName = ref(null);
   const roomPassword = ref(null);
