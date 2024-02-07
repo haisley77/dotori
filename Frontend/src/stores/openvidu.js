@@ -9,6 +9,8 @@ const router = useRouter();
 const axios = localAxios();
 export const useOpenViduStore
   = defineStore('openViduStore', () => {
+
+
   const bookInfoList = ref([{
     'img': 'src/assets/BookImages/img/scene_1.png',
     'lines': ['사회자 : 곤히 코를 골던 사자가 어흥 소리를 지르며 벌떡 일어났어요. ',
@@ -46,22 +48,25 @@ export const useOpenViduStore
 
   const apiRootPath = '/api/rooms';
 
-  const room_id = ref(0);
-  const room_name = ref(null);
-  const room_password = ref(null);
-  const is_private = ref(false);
-  const member_id = ref(50);
+  const roomId = ref(0);
+  const memberId = ref(30);
+
   const subscribers = ref([]);
   const mainStreamManager = ref();
+
+
+  // 방장인지 아닌지 판단
+  const isHost = ref(true);
+
+
   // 방 세션 설정 정보
   const session_properties = ref({});
-
   // 커넥션 설정 정보
   const connection_properties = ref({});
 
-  // 방 생성 정보
-  const room_info = ref({
-    hostId: member_id.value,
+  // 방 설정 정보
+  const roomInfo = ref({
+    hostId: memberId.value,
     title: null,
     password: null,
     isRecording: false,
@@ -70,117 +75,120 @@ export const useOpenViduStore
     isPublic: true,
   });
 
+  // 책, 역할 설정 정보
+  const bookDetail = ref({
+    book: {},
+    roles: [],
+    scenes:[],
+  });
 
-  // 방 생성 요청 시 전달할 파라미터
-  const roomInitializationParam = {
+  const roomInitializationParam = ref({
     sessionProperties: null,
     connectionProperties: null,
     roomInfo: null,
     bookInfo: null,
-  };
-
+  });
 
   const createRoom = (bookmodal) => {
     return new Promise((resolve, reject) => {
       const apiPath = apiRootPath + '/session';
+      roomInitializationParam.value.bookInfo = bookmodal;
+      roomInitializationParam.value.roomInfo = roomInfo.value;
 
-      room_info.value.title = room_name.value;
-      room_info.value.password = room_password.value;
-      room_info.value.isPublic = !is_private;
-      room_info.value.limitCnt = bookmodal.roleCnt;
-
-      roomInitializationParam.bookInfo = bookmodal;
-      roomInitializationParam.roomInfo = room_info.value;
-
-      // 방 정보 setting
-      if (room_password.value === null && is_private === true) {
-        console.log('비밀번호 입력 필수');
-        reject('비밀번호 입력 필수'); // Reject the promise with an error message
-        return;
-      }
-
-      axios.post(apiPath, roomInitializationParam)
+      axios.post(apiPath, roomInitializationParam.value)
         .then((response) => {
-          console.log(response.status);
-          if (response.status === 201) {
-            room_id.value = response.data.roomId;
-            ovToken.value = response.data.token;
-
-            resolve(response.data); // Resolve the promise with the response data
-          }
+          roomId.value = response.data.roomId;
+          ovToken.value = response.data.token;
+          resolve(response.data);
         })
         .catch((error) => {
-          console.error('방 생성 실패 !!');
-          console.error(error.response);
-          reject(error); // Reject the promise with the error
+          console.error('방 생성 실패 : ' + error.response);
+          reject(error);
         });
     });
   };
 
-  const getConnectionToken = () => {
+  const getConnectionToken = (room) => {
+    console.log('getConnectionToken 호출됨', room);
     return new Promise((resolve, reject) => {
-      const apiPath = apiRootPath + `/connection/${room_id.value}`;
+      const apiPath = apiRootPath + `/connection/${room.roomId}`;
 
       axios.post(apiPath, connection_properties.value)
         .then((response) => {
           if (response.status === 200) {
-            room_id.value = response.data.roomId;
+            roomId.value = response.data.roomId;
             ovToken.value = response.data.token;
-            resolve(response.data); // Resolve with the response data
+            resolve(response.data);
           }
           if (response.status === 202) {
             console.log(response.data.message);
-            reject(new Error(response.data.message)); // Reject with an error containing the message
+            reject(new Error(response.data.message));
           }
         })
         .catch((error) => {
           console.error(error.response);
-          console.error('커넥션 생성 실패');
-          reject(error); // Reject with the axios error
+          reject(error);
         });
     });
   };
 
-  const addRoomMember = () => {
+  const addRoomMember = (book) => {
     return new Promise((resolve, reject) => {
-      const apiPath = apiRootPath + `/add/${room_id.value}/${member_id.value}`;
+      const apiPath = apiRootPath + `/add/${roomId.value}/${memberId.value}/${book.bookId}`;
 
       axios.post(apiPath)
         .then((response) => {
           if (response.status === 200) {
-
-            resolve(response.data); // Resolve the promise with the response data
+            resolve(response.data);
           } else if (response.status === 201) {
             console.log('인원 초과로 방 참여 처리 불가');
-            reject('인원 초과로 방 참여 처리 불가'); // Reject the promise with an error message
+            reject('인원 초과로 방 참여 처리 불가');
           }
         })
         .catch((error) => {
-          console.log(error.response);
-          console.error('방 참여 정보 갱신 처리 중 오류 발생');
-          reject(error); // Reject the promise with the error
+          console.error('방 참여 정보 갱신 처리 중 오류 발생 : ', error.response);
+          reject(error);
         });
     });
   };
 
   const removeRoomMember = () => {
-    const apiPath = apiRootPath + `/remove/${room_id.value}/${member_id.value}`;
+    return new Promise((resolve, reject) => {
+      const apiPath = apiRootPath + `/remove/${roomId.value}/${memberId.value}`;
 
-    axios.delete(apiPath)
-      .then((response) => {
-        if (response.status === 200) {
-          console.log('방 나가기 정보 갱신 성공 !!');
-          // 페이지 이동
-        }
-      }).catch((error) => {
-      console.error(error.response);
-      console.error('방 나가기 정보 갱신 처리 중 오류 발생');
+      axios.delete(apiPath)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          console.error('방 나가기 정보 갱신 처리 중 오류 발생 : ', error.response);
+          reject(error);
+        });
     });
-
   };
+
+  const updateRoom = (isRecording) => {
+    return new Promise((resolve, reject) => {
+      const apiPath = apiRootPath + `/update/${roomId.value}`;
+
+      roomInfo.value.isRecording = isRecording;
+
+      axios.post(apiPath, roomInfo.value)
+        .then((response) => {
+          roomId.value = response.data.roomId;
+          resolve(response.data);
+        })
+        .catch((error) => {
+          console.error('방 정보 업데이트 처리 중 문제 발생 : ', error.response);
+          reject(error);
+        });
+    });
+  };
+
 
   const connectToOpenVidu = () => {
     return new Promise((resolve, reject) => {
+      //새로운 스트림이 생기면 그 스트림에 구독한다
       session.on('streamCreated', ({stream}) => {
         const subscriber = session.subscribe(stream, stream.streamId);
         subscribers.value.push(subscriber);
@@ -192,15 +200,15 @@ export const useOpenViduStore
           subscribers.value.splice(index, 1);
         }
       });
+
       session.connect(ovToken.value)
         .then(() => {
-          console.log('ov와 연결 성공!');
           console.log(ovToken.value);
-          resolve(); // Resolve the promise on successful connection
+          resolve();
         })
         .catch((error) => {
-          console.error('ov와 연결 실패:', error);
-          reject(error); // Reject the promise with the error on connection failure
+          console.error('ov와 연결 실패 : ', error);
+          reject(error);
         });
     });
   };
@@ -213,15 +221,51 @@ export const useOpenViduStore
     });
   };
 
+
+  const playerList = ref([]);
+
+// 역할 리스트
+  const roleList = ref([
+    {
+      // roleId:
+      name: '토끼',
+      maskPath: '',
+      // maskThumbnailPath:
+      selected: false,
+    },
+    {
+      // roleId:
+      name: '거북이',
+      maskPath: '',
+      // maskThumbnailPath:
+      selected: false,
+    },
+    {
+      // roleId:
+      name: '호랑이',
+      maskPath: '',
+      // maskThumbnailPath:
+      selected: false,
+    },
+  ]);
+
   return {
-    room_name,
-    room_password,
-    is_private,
+    roomInfo,
+    memberId,
+    isHost,
+    session,
+    playerList,
     ovToken,
+    bookDetail,
+    roomInitializationParam,
     createRoom,
     connectToOpenVidu,
     addRoomMember,
+    updateRoom,
     publish,
-    subscribers, mainStreamManager, OV,bookInfoList,
+    roleList,
+    subscribers, mainStreamManager, OV, bookInfoList,
+    getConnectionToken,
+    removeRoomMember,
   };
 }, {persist: {storage: sessionStorage}});

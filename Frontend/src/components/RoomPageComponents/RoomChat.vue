@@ -1,37 +1,76 @@
 <template>
-  <div style='height: 100%' class='background-green q-pa-sm'>
-
-    <div style='height: 100%' class='background-yellow q-pa-sm'>
-      <div class='column'>
-        <div class='background-white'>
-          [19:45] 🔔도토리씨앗유저님이 로비에 참가하셨습니다.<br />
-          [19:55] 도토리씨앗유저 : 안녕하세요~<br />
-          [19:55] 도토리씨앗유저 : 안녕하세요~<br />
-          [19:55] 도토리씨앗유저 : 안녕하세요~<br />
+  <div style="height: 100%" class="background-green q-pa-sm">
+    <div style="height: 100%" class="background-yellow q-pa-sm">
+      <div class="column">
+        <div class="background-white">
+          <!-- 채팅 로그 -->
+          <div ref="chatLog" style="height: 100px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;">
+            <div v-for="(message, index) in messageList" :key="index">{{ message }}</div>
+            <div ref="scrollMarker"></div>
+          </div>
         </div>
-        <div class='row '>
 
-          <q-input color='brown' bg-color='brown-1' v-model='text' :dense='dense' class='col-11' />
-          <q-btn color='my-green' bg-color='white' class='col-1 q-pa-none npsfont chat' @click='sendMessage'>전송</q-btn>
+        <div class="row ">
+          <q-input color="green" bg-color="green-1" v-model="chatMessage" @keyup.enter="sendMessage" placeholder="메시지를 입력하세요" class="col-11"/>
+          <q-btn color="my-green" bg-color="white" @click="sendMessage" class="col-1 q-pa-none npsfont chat">전송</q-btn>
         </div>
       </div>
     </div>
-
   </div>
 </template>
-<script setup>
-  import {ref} from 'vue';
-  import {useOpenViduStore} from 'stores/openvidu';
 
-  const openViduStore = useOpenViduStore();
-  const text = ref('');
-  const sendMessage = () => {
-    openViduStore.sendText('hello!!!');
-  };
+<script setup>
+import { ref, onMounted, defineProps} from 'vue';
+import {useOpenViduStore} from 'stores/openvidu';
+const openViduStore = useOpenViduStore();
+const {session } = openViduStore;
+const chatMessage = ref('');
+const messageList = ref([]);
+const props = defineProps({
+    playerList: Object,
+    memberId: Object,
+  });
+
+onMounted(() => {
+  if (session) {
+    session.on('signal:chat', (event) => {
+    const data = JSON.parse(event.data);
+    appendMessage(data.nickname, data.message);
+    scrollToBottom();
+    });
+  }
+});
+
+const sendMessage = () => {
+  if (chatMessage.value && session) {
+    const matchingPlayer = props.playerList.find(player => player.memberId === props.memberId);
+    const data = {
+      message: chatMessage.value,
+      nickname: matchingPlayer.name,
+    };
+    session.signal({
+      data: JSON.stringify(data),
+      type: 'chat',
+    });
+    chatMessage.value = '';
+  }
+};
+
+const appendMessage = (nickname, message) => {
+  const formattedMessage = `${nickname}: ${message}`;
+  messageList.value.push(formattedMessage);
+};
+
+const scrollToBottom = () => {
+  const chatLog = ref.chatLog;
+  const scrollMarker = ref.scrollMarker;
+  if (chatLog.value && scrollMarker.value) {
+    scrollMarker.value.scrollIntoView({ behavior: 'smooth', block: 'end' });
+  }
+};
 </script>
 
 <style scoped>
-
   .bg-my-green {
     background: #C7A96E !important;
   }
@@ -55,22 +94,23 @@
   .background-yellow {
     background: white;
     border-radius: 20px 20px 20px 20px;
-  //border: dashed #cc765a 5px;
+    //border: dashed #cc765a 5px;
   }
 
   .background-white {
     background: white;
     height: 7.5em;
-  //color : #a84d2f; border-radius: 10px 10px 10px 10px; font-family: NPSfontBold; //border: solid #cc765a 2px;
+    //color : #a84d2f; border-radius: 10px 10px 10px 10px; font-family: NPSfontBold; //border: solid #cc765a 2px;
 
   }
 
   .chat {
     border-radius: 20px 20px 20px 20px;
-  //border: solid #cc765a 2px;
+    //border: solid #cc765a 2px;
   }
 
   .npsfont {
     font-family: 'NPSfontBold';
   }
 </style>
+

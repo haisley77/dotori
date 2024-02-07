@@ -6,7 +6,7 @@
       </div>
       <div class='row'>
         <div class='col-8 q-pa-sm'>
-          <PlayerList :playerList='playerList'></PlayerList>
+          <PlayerList></PlayerList>
         </div>
         <div class='col-4 q-pa-sm'>
           <BookInfo :bookInfo='bookInfo'></BookInfo>
@@ -14,17 +14,14 @@
       </div>
       <div class='row'>
         <div class='col-8 q-pa-sm' style='height: 210px'>
-          <RoomChat></RoomChat>
+          <RoomChat :playerList='playerList' :memberId='memberId'></RoomChat>
         </div>
         <div class='col-4 q-pa-sm'>
-          <StartReady></StartReady>
+          <StartReady :roomInfo='roomInfo'></StartReady>
         </div>
       </div>
     </div>
-
   </div>
-
-
 </template>
 <script setup>
   import PlayerList from 'components/RoomPageComponents/PlayerList.vue';
@@ -32,47 +29,94 @@
   import StartReady from 'components/RoomPageComponents/StartReady.vue';
   import RoomChat from 'components/RoomPageComponents/RoomChat.vue';
   import RoomTitle from 'components/RoomPageComponents/RoomTitle.vue';
-  import Header from 'components/CommonComponents/Header.vue';
-  import {ref} from 'vue';
+  import {onMounted, ref} from 'vue';
+  import {useOpenViduStore} from 'stores/openvidu';
+  import {storeToRefs} from 'pinia';
 
-  const roomInfo = ref({
-    title: '토끼와 거북이 오실분~',
-    roomNumber: '14',
-    public: true,
+  const openViduStore = useOpenViduStore();
+  const {roomInitializationParam,playerList,isHost,memberId} = storeToRefs(openViduStore);
+  const {session} = openViduStore;
+  const bookInfo = roomInitializationParam.value.bookInfo;
+  const roomInfo = roomInitializationParam.value.roomInfo;
+
+  const sendingIncomingData = ref({
+    player: null,
   });
 
-  const bookInfo = ref({
-    title: '토끼와 거북이',
-    author: '도토리',
-    limitCnt: '4',
-    joinCnt: '3',
-    summary: '토끼와 거북이 이야기는 토끼와 거북이가 경주를 벌이는 이야기입니다.'
+  const sendingPlayerData = ref({
+    playerList: null,
   });
 
-  const playerList = ref([
-    {
-      name: '조석현',
-      profileImg: 'src/assets/MyPageImages/cho.jpg',
+  const sendIncomingInfoToOpenVidu = () => {
+    return new Promise((resolve, reject) => {
+      session.signal({
+        data: JSON.stringify(sendingIncomingData.value),
+        to: [],
+        type: 'signal:give-playerList',
+      })
+        .then(() => {
+          resolve('플레이어가 들어왔음');
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  };
 
-    },
-    {
-      name: 'Winter',
-      profileImg: 'src/assets/MyPageImages/winter.png',
+  const sendPlayerInfoToOpenVidu = () => {
+    return new Promise((resolve, reject) => {
+      session.signal({
+        data: JSON.stringify(sendingPlayerData.value),
+        to: [],
+        type: 'signal:player-incoming',
+      })
+        .then(() => {
+          resolve('새로운 참여자 정보 전송 성공');
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  };
 
-    },
-    {
-      name: '카리나',
-      profileImg: 'src/assets/MyPageImages/karina.jpg',
+  // 방 참여자가 발생하면 방에 있던 모든 참여자들은 playerList를 갱신하여 반영한다.
+  session.on('signal:player-incoming', (event) => {
+    const receivedData = JSON.parse(event.data);
+    if (!isHost.value) {
+      playerList.value = receivedData.playerList;
+      // 만약 들어오기 전에 role을 변경하고 있다면 roleList도 같이 보내야함
+      // room joinCnt 갱신
+    }
+  });
 
-    },
-    {
-      name: '아이유',
+  // 방 참여자가 참여자 정보를 요청하면 방장은 참여자 정보를 전송한다.
+  session.on('signal:give-playerList', (event) => {
+    const receivedData = JSON.parse(event.data);
+    if (isHost.value) {
+      playerList.value.push(receivedData.player);
+      sendingPlayerData.value.playerList = playerList.value;
+      sendPlayerInfoToOpenVidu();
+    }
+  });
+
+  onMounted(() => {
+
+    const player = {
+      name: '김싸피',
+      memberId: memberId.value,
       profileImg: 'src/assets/MyPageImages/iupic.jpg',
+      roleName: '김싸피',
+      roleIndex: 5,
+      readyState: false,
+    };
 
-    },
-
-
-  ]);
+    if (isHost.value) {
+      playerList.value.push(player);
+    } else {
+      sendingIncomingData.value.player = player;
+      sendIncomingInfoToOpenVidu();
+    }
+  })
 
 
 </script>

@@ -1,19 +1,18 @@
 <script setup>
   const props = defineProps({roomInfo: Object});
-
 </script>
 
 <template>
   <div class='row col  background-green q-pa-sm q-mb-none q-ml-sm q-mr-sm q-mt-sm'>
     <div class='row col npsfont background-yellow q-pa-sm q-ma-none justify-between'>
       <h5 class='q-ma-none q-pl-md'>
-        {{ props.roomInfo.roomNumber }}번 방
+        <!-- {{ props.roomInfo.roomNumber }} -->
       </h5>
       <h5 class='q-ma-none'>
-        {{ props.roomInfo.title }}
+        {{ roomInfo.title }}
       </h5>
       <h5 class='q-ma-none q-pr-md'>
-        <span v-if='props.roomInfo.public'>공개방🔓</span>
+        <span v-if='props.roomInfo.isPublic'>공개방🔓</span>
         <span v-else>비공개방🔒</span>
       </h5></div>
   </div>
