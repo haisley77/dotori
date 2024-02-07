@@ -458,7 +458,7 @@
       console.log('Finished Loading MediaPipe Model.');
       // myCanvas.style.border = '10px solid red';
       myCanvasStream.value = myCanvas.captureStream();
-      myRealCanvasStream = myCanvas.captureStream();
+      // myRealCanvasStream = myCanvas.captureStream();
       // emit('changeCanvasStream', canvasStream);
       // ovstore.changeCanvasStream(canvasStream);
       // console.log("캔버스 스트림 보냈음!!!!!!!!!!!!!!!!!");
