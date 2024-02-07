@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dotori.backend.common.filter.JwtAuthenticationProcessingFilter;
 import com.dotori.backend.domain.member.model.entity.Member;
 import com.dotori.backend.domain.member.repository.MemberRepository;
 import com.dotori.backend.domain.member.service.JwtService;
@@ -39,7 +38,6 @@ public class memberController {
 
 	private final JwtService jwtService;
 	private final MemberRepository memberRepository;
-	private final JwtAuthenticationProcessingFilter jwtAuthenticationProcessingFilter;
 
 	private final RedisService redisService;
 
@@ -65,6 +63,8 @@ public class memberController {
 				Map<String, Object> memberInfo = new HashMap<>();
 				memberInfo.put("nickName", member.getNickname());
 				memberInfo.put("email", member.getEmail());
+				memberInfo.put("memberId", member.getMemberId());
+				memberInfo.put("profileImg", member.getProfileImg());
 
 				return ResponseEntity.ok(memberInfo);
 			} else {

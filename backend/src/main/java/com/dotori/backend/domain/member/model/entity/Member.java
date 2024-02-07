@@ -75,10 +75,16 @@ public class Member extends BaseTimeEntity {
 		this.profileImg = updateProfileImg;
 	}
 
+	public void updateRefreshToken(String refreshToken) {
+		this.refreshToken = refreshToken;
+	}
+
 	@Builder
-	public Member(String nickname, String profileImg) {
+	public Member(Long memberId, String nickname, String profileImg, String refreshToken) {
+		this.refreshToken = refreshToken;
 		this.nickname = nickname;
 		this.profileImg = profileImg;
+		this.memberId = memberId;
 	}
 }
 
