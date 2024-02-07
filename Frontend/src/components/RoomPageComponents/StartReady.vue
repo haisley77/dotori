@@ -34,8 +34,13 @@
   }
 
   const checkReadyState = () => {
-    const allReady = playerList.value.every(user => user.memberId === props.memberId || user.readyState)
-    if (allReady) {
+    let readyCnt = 0;
+    playerList.value.forEach((user) => {
+      if (user.memberId === memberId.value) user.readyState = true;
+      if (user.readyState) readyCnt++;
+    })
+
+    if (readyCnt === playerList.value.length) {
       updateRoom(true)
         .then(() => {
           sendMoveInfoToOpenVidu();
