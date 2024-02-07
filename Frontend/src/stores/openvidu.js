@@ -226,31 +226,31 @@ export const useOpenViduStore
 
 
   const playerList = ref([]);
-  const myRoles = ref([]);
+  const myRole = ref([]);
 
 // 역할 리스트
   const roleList = ref([
     {
-      // roleId:
+      roleId: 1,
       name: '토끼',
       maskPath: '',
       // maskThumbnailPath:
       selected: false,
     },
-    {
-      // roleId:
-      name: '거북이',
-      maskPath: '',
-      // maskThumbnailPath:
-      selected: false,
-    },
-    {
-      // roleId:
-      name: '호랑이',
-      maskPath: '',
-      // maskThumbnailPath:
-      selected: false,
-    },
+    // {
+    //   roleId:
+    //   name: '거북이',
+    //   maskPath: '',
+    //   maskThumbnailPath:
+    //   selected: false,
+    // },
+    // {
+    //   roleId:
+    //   name: '호랑이',
+    //   maskPath: '',
+    //   maskThumbnailPath:
+    //   selected: false,
+    // },
   ]);
 
   return {
@@ -271,6 +271,6 @@ export const useOpenViduStore
     subscribers, mainStreamManager, OV, bookInfoList,
     getConnectionToken,
     removeRoomMember,
-    myRoles,
+    myRole,
   };
 }, {persist: {storage: sessionStorage}});

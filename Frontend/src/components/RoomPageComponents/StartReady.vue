@@ -7,7 +7,7 @@
   const router = useRouter();
   const btnValue = ref(false);
   const openViduStore = useOpenViduStore();
-  const {playerList,isHost,roomInfo,memberId,myRoles} = storeToRefs(openViduStore);
+  const {roleList,playerList,isHost,roomInfo,memberId,myRole} = storeToRefs(openViduStore);
   const {session,updateRoom} = openViduStore;
   const canMoveWaitingRoom = ref(false);
 
@@ -16,7 +16,6 @@
       moveRecording();
     }
   })
-
 
   const updateState = () => {
     const currentUser = playerList.value.find(user => user.memberId === memberId.value);
@@ -49,7 +48,7 @@
   }
   const moveRecording = () => {
     playerList.value.forEach((user) => {
-      myRoles.value.push(user.roleIndex);
+      myRole.value.push(roleList.value[user.roleIndex].roleId);
     })
     router.push('/recording');
   };

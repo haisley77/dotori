@@ -45,11 +45,6 @@
         fetchBooks();
       });
 
-      const enterBook = async (book) => {
-        await fetchBookDetails(book.bookId);
-        dialog.value = true;
-      };
-
       const fetchBooks = async () => {
         try {
           const response = await axios.get('http://localhost:8080/api/books');
@@ -66,7 +61,6 @@
 
       return {
         books,
-        enterBook,
         dialog: ref(false),
         maximizedToggle: ref(true),
       };
