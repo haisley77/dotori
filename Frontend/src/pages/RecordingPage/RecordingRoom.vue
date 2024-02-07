@@ -3,7 +3,7 @@
     <div class='col-11'>
       <div class='entire-container row'>
         <div class='right-container q-pr-sm q-pt-sm q-pl-sm col-9'>
-          <MainScene :curPage='curPage' />
+          <MainScene :curPage='curPage' :currentScene='currentScene' />
           <side-bar :curPage='curPage' @moveToPage='moveToPage'></side-bar>
         </div>
         <div class='left-container col-3 q-pt-sm'>
@@ -33,8 +33,8 @@
 
   //현재 페이지의 역할을 넣는다
   //ovstore에 있는 bookDetail에 있는 roles를 onMount 시점에 가져와서 초기화를 시켜준다
-  const currentRoles = ref();
-  const currentScript = ref(new Set());
+  const currentRoles = ref(new Set());
+  const currentScene = ref();
 
   const canvasStream = ref();
   const myAvatar = ref('');
@@ -77,7 +77,7 @@
     //역할 목록을 변경해준다
     currentRoles.value = getRoles(curPage.value);
     //페이지 정보를 변경해준다
-    currentScript.value = ovstore.bookDetail.scenes[curPage.value];
+    currentScene.value = ovstore.bookDetail.scenes[curPage.value - 1];
 
     //값을 다 바꿨으면 내 역할과 확인해서 비디오를 켤지 말지를 판단한다
     //내가 연극할 차례일때
@@ -111,7 +111,7 @@
     //척페이지 역할 초기화
     currentRoles.value = getRoles(1);
     //첫 페이지 정보 넣기
-    currentScript.value = ovstore.bookDetail.scenes[0];
+    currentScene.value = ovstore.bookDetail.scenes[0];
 
     //내 아바타 주소 받아옴!
     myAvatar.value = ovstore.bookDetail.roles[ovstore.myRole - 1].maskPath;
