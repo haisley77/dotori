@@ -54,10 +54,8 @@ export const useOpenViduStore
   const subscribers = ref([]);
   const mainStreamManager = ref();
 
-
   // 방장인지 아닌지 판단
   const isHost = ref(true);
-
 
   // 방 세션 설정 정보
   const session_properties = ref({});
@@ -222,7 +220,156 @@ export const useOpenViduStore
   };
 
 
-  const playerList = ref([]);
+  const sendingMoveData = ref({
+    recording: null,
+  });
+
+  const sendingPlayerData = ref({
+    playerList: null,
+  });
+
+  const sendingIncomingData = ref({
+    incoming: true,
+    player: null,
+  });
+
+  const sendRoleInfoToOpenVidu = () => {
+    return new Promise((resolve, reject) => {
+      session.signal({
+        data: JSON.stringify(sendingRoleData.value),
+        to: [],
+        type: 'signal:update-role',
+      })
+        .then(() => {
+          console.log('전송함');
+          resolve('역할 선택 정보 전송 성공');
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  };
+
+  const sendMoveInfoToOpenVidu = () => {
+    return new Promise((resolve, reject) => {
+      session.signal({
+        data: JSON.stringify(sendingMoveData.value),
+        to: [],
+        type: 'signal:move-recording',
+      })
+        .then(() => {
+          console.log('전송함');
+          resolve('녹화방 이동 정보 전송 성공');
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  };
+
+  const sendPlayerInfoToOpenVidu = () => {
+    return new Promise((resolve, reject) => {
+      session.signal({
+        data: JSON.stringify(sendingPlayerData.value),
+        to: [],
+        type: 'signal:player-incoming',
+      })
+        .then(() => {
+          console.log('전송함');
+          resolve('새로운 참여자 정보 전송 성공');
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  };
+
+  const sendIncomingInfoToOpenVidu = () => {
+    return new Promise((resolve, reject) => {
+      session.signal({
+        data: JSON.stringify(sendingIncomingData.value),
+        to: [],
+        type: 'signal:give-playerList',
+      })
+        .then(() => {
+          console.log('전송함');
+          resolve('누군가들어옴');
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  };
+
+  // 방 참여자의 역할 정보가 변경되었다는 이벤트를 수신하면 방 참여자들은 변경 내용을 반영한다.
+  session.on('signal:update-role', (event) => {
+    const receivedData = JSON.parse(event.data);
+    playerList.value = receivedData.playerList;
+    roleList.value = receivedData.roleList
+    console.log(playerList.value);
+    console.log(roleList.value);
+  });
+
+  // 녹화방으로 이동하라는 이벤트를 수신하면 방 참여자들은 모두 녹화방으로 이동한다.
+  session.on('signal:move-recording', (event) => {
+    console.log('받음');
+    const receivedData = JSON.parse(event.data);
+    if (!isHost.value) {
+      if (receivedData.recording === true) {
+        // room_info.value.isRecording = true;
+        // room isRecording 갱신
+        router.push('/recording'); // 녹화방으로 이동 -> 수정필요
+      }
+    }
+  });
+
+  // 방 참여자가 발생하면 방에 있던 모든 참여자들은 playerList를 갱신하여 반영한다.
+  session.on('signal:player-incoming', (event) => {
+    console.log('받음');
+    const receivedData = JSON.parse(event.data);
+    // 방장이 아니면
+    if (!isHost.value) {
+      playerList.value = receivedData.playerList;
+      // 만약 들어오기 전에 role을 변경하고 있다면 roleList도 같이 보내야함
+      // room joinCnt 갱신
+      console.log('방장이 준 정보로 업데이트한다.');
+    } else {
+      console.log('방장이라서 업데이트 안한다');
+    }
+  });
+
+  // 방 참여자가 playerList를 요청하면 방장이 대표로 기존 playerList에 해당 player를 추가해 방 참여자들에게 보낸다.
+  session.on('signal:give-playerList', (event) => {
+    console.log('받음');
+    const receivedData = JSON.parse(event.data);
+    if (isHost.value) {
+      console.log('방장이니까 playerList 정보를 주겠다..');
+      playerList.value.push(receivedData.player);
+      sendingPlayerData.value.playerList = playerList.value;
+      sendPlayerInfoToOpenVidu();
+    } else {
+      console.log('방장이 아니라서 playerList 정보를 줄 수 없다...');
+    }
+  });
+
+  const playerList = ref([
+    // {
+    //   name: 'Winter',
+    //   memberId: 1,
+    //   profileImg: 'src/assets/MyPageImages/winter.png',
+    //   roleName: 'Winter',
+    //   roleIndex: 5,     // db에서 조회해 온 역할 정보들을 가진 roleList 상의 인덱스를 저장합니다. 초기엔 5 default.
+    //   readyState: false, // 유저의 준비 상태를 저장합니다. 녹화방 이동을 테스트하기 위해 true로 지정. 원래는 false default.
+    // },
+    // {
+    //   name: '카리나',
+    //   memberId: 2,
+    //   profileImg: 'src/assets/MyPageImages/karina.jpg',
+    //   roleName: '카리나',
+    //   roleIndex: 5,
+    //   readyState: true,
+    // },
+  ]);
 
 // 역할 리스트
   const roleList = ref([
