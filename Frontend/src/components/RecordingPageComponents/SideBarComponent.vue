@@ -8,6 +8,12 @@
   const emit = defineEmits(['moveToPage']);
   const movePage = (page) => {
     // alert('clicked!')
+      //방장일 경우만 실행하도록 로직을 추가해야함
+      ovstore.session.signal({
+              data: page,
+              type: 'page',
+          }
+      );
     emit('moveToPage', page);
   };
   const imagesrc = ref(props.scene.backgroundImage);

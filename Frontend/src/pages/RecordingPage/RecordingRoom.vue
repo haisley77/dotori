@@ -137,6 +137,14 @@
     console.log('recordingRoomOnMount실행중~~==========================================================================');
     console.log('bookDetail');
     console.log(ovstore.bookDetail);
+
+    //session 설정 추가
+    //페이지이동 버튼이 눌리면 다같이 페이지를 이동한다
+    ovstore.session.on('signal:page',(event)=>{
+      const nextPage= event.data;
+      moveToPage(nextPage);
+    });
+
     //척페이지 역할 초기화
     currentRoles.value = getRoles(1);
     //첫 페이지 정보 넣기
