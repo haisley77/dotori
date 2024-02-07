@@ -150,15 +150,6 @@ public class JwtService {
 			.flatMap(this::extractRole);
 	}
 
-	public String createAndStoreRefreshToken(String email) {
-		String refreshToken = createRefreshToken(); // 리프레시 토큰 생성
-
-		// Redis에 리프레시 토큰 저장
-		redisService.saveRefreshToken(email, refreshToken, refreshTokenExpirationPeriod, TimeUnit.MILLISECONDS);
-
-		return refreshToken;
-	}
-
 	/**
 	 * RefreshToken을 Redis에 저장(업데이트)
 	 */
