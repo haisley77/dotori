@@ -1,5 +1,5 @@
 <template>
-<!--  <h1>{{ myAvatar }}</h1>-->
+  <!--  <h1>{{ myAvatar }}</h1>-->
   <div class='row flex justify-center q-px-none'>
     <div class='col-11'>
       <div class='entire-container row'>
@@ -14,7 +14,7 @@
       </div>
     </div>
   </div>
-<!--  <PublishMyVideo :currentRoles='currentRoles' :myAvatar='myAvatar' @changeCanvasStream="changeCanvasStream" />-->
+  <!--  <PublishMyVideo :currentRoles='currentRoles' :myAvatar='myAvatar' @changeCanvasStream="changeCanvasStream" />-->
   <video ref="videoPlayer" id="videoPlayer" autoplay style="display: none"></video>
 </template>
 
@@ -25,24 +25,17 @@
   import Script from 'components/RecordingPageComponents/Script.vue';
   import SceneController from 'components/RecordingPageComponents/SceneController.vue';
   import {onMounted, ref} from 'vue';
-  import PublishMyVideo from 'components/RecordingPageComponents/PublishMyVideo.vue';
-
-
 
 
   import * as THREE from 'three';
   import {OrbitControls} from 'three/addons/controls/OrbitControls';
   import {GLTFLoader} from 'three/addons/loaders/GLTFLoader';
   import {FaceLandmarker, FilesetResolver} from '@mediapipe/tasks-vision';
-  import {useOpenViduStore2} from 'stores/openvidu2';
-
+  import {useOpenViduStore} from 'stores/openvidu';
 
 
   const videoPlayer = ref(null);
 
-
-
-  import {useOpenViduStore} from 'stores/openvidu';
 
   const ovstore = useOpenViduStore();
 
@@ -54,14 +47,15 @@
   const currentScene = ref({});
 
   const myCanvasStream = ref();
+  const myRealCanvas = ref();
   const myAvatar = ref('');
 
   //영상 퍼블리시
   const publish = () => {
     if (!ovstore.isPublished) {
       const publisher = ovstore.OV.initPublisher(undefined, {
-        audioSource: myCanvasStream.value.getAudioTracks()[0], // The source of audio. If undefined default microphone
-        videoSource: myCanvasStream.value.getVideoTracks()[0], // The source of video. If undefined default webcam
+        audioSource: myRealCanvas.value.captureStream().getAudioTracks()[0], // The source of audio. If undefined default microphone
+        videoSource: myRealCanvas.value.captureStream().getVideoTracks()[0], // The source of video. If undefined default webcam
         // videoSource: canvasStream, // The source of video. If undefined default webcam
         // videoSource: undefined, // The source of video. If undefined default webcam
         publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
@@ -105,14 +99,14 @@
     //값을 다 바꿨으면 내 역할과 확인해서 비디오를 켤지 말지를 판단한다
     //내가 연극할 차례일때
     if (currentRoles.value.has(ovstore.myRole)) {
-      console.log("MYTURN");
+      console.log('MYTURN');
       //퍼블리시중이 아니라면 시작
       if (!ovstore.isPublished) publish();
 
     }
     //내 차례가 아닐때
     else if (!currentRoles.value.has(ovstore.myRole)) {
-      console.log("NOT MY TURN");
+      console.log('NOT MY TURN');
       //퍼블리시 중이라면 종료
       if (ovstore.isPublished) unpublish();
     }
@@ -138,16 +132,10 @@
   };
 
 
-
-
-
-
-
-
   //mounted 후 실행되는 코드..초기화 작업
   onMounted(() => {
-    console.log("recordingRoomOnMount실행중~~==========================================================================")
-    console.log("bookDetail");
+    console.log('recordingRoomOnMount실행중~~==========================================================================');
+    console.log('bookDetail');
     console.log(ovstore.bookDetail);
     //척페이지 역할 초기화
     currentRoles.value = getRoles(1);
@@ -158,11 +146,11 @@
     myAvatar.value = ovstore.bookDetail.roles[ovstore.myRole - ovstore.minRole].maskPath;
 
 
-
     // 여기서부터 모델링 코드
     // =======================================================================================================================
 
-    console.log("publishMyVideoOnMount실행중~~====================================================")
+    console.log('publishMyVideoOnMount실행중~~====================================================');
+
     /**
      * Returns the world-space dimensions of the viewport at `depth` units away from
      * the camera.
@@ -367,7 +355,7 @@
 
     let faceLandmarker;
     const scene = new BasicScene();
-    console.log("찾아보려는 탈 주소 : " + myAvatar.value);
+    console.log('찾아보려는 탈 주소 : ' + myAvatar.value);
     const avatar = new Avatar(myAvatar.value, scene.scene);
 
     function detectFaceLandmarks(time) {
@@ -453,6 +441,7 @@
     async function runDemo() {
       const myCanvas = document.querySelector('canvas');
       myCanvas.setAttribute('id', 'myCanvas');
+      myRealCanvas.value = myCanvas;
       myCanvas.style.display = 'none';
       await streamWebcamThroughFaceLandmarker();
       const vision = await FilesetResolver.forVisionTasks('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.1.0-alpha-16/wasm');
@@ -468,9 +457,8 @@
       });
       console.log('Finished Loading MediaPipe Model.');
       // myCanvas.style.border = '10px solid red';
-      const canvasStream = myCanvas.captureStream();
-
-      myCanvasStream.value = canvasStream;
+      myCanvasStream.value = myCanvas.captureStream();
+      myRealCanvasStream = myCanvas.captureStream();
       // emit('changeCanvasStream', canvasStream);
       // ovstore.changeCanvasStream(canvasStream);
       // console.log("캔버스 스트림 보냈음!!!!!!!!!!!!!!!!!");
@@ -494,7 +482,7 @@
       //   ovstore.publish(publisher);
       // }
 
-      if(currentRoles.value.has(ovstore.myRole)){
+      if (currentRoles.value.has(ovstore.myRole)) {
         publish();
       }
     }
