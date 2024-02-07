@@ -25,7 +25,7 @@
     </div>
     <!-- 마이페이지와 로그인-->
     <div class='col-2  flex items-center justify-end npsfont'>
-      <q-btn flat class='text-h7 q-ma-none' color='brand' @click='moveMyPage'><span style='color: black'>마이페이지</span>
+      <q-btn flat class='text-h6 q-ma-none' color='brand' @click='moveMyPage'><span style='color: black'>마이페이지</span>
         &nbsp&nbsp
         <svg xmlns='http://www.w3.org/2000/svg' height='28' width='35' viewBox='0 0 640 512'>
           <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->

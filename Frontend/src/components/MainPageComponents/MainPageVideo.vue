@@ -24,8 +24,8 @@
   </video>
 </div>
   <div class='absolute-center custom-caption'>
-  <div class='npsfont text-h4 q-pa-sm' style='color: white;'>{{ headText }}</div>
-  <div class='npsfont text-h5 q-pa-sm' style='color: white;'>{{ bottomText }}</div>
+  <div class='text-h4 q-pa-sm' style='color: white;'>{{ headText }}</div>
+  <div class='text-h5 q-pa-sm' style='color: white;'>{{ bottomText }}</div>
 </div>
   <q-btn class="glossy" rounded color="secondary" label="시작하기" style='z-index: 9999; color: black; width: 150px; height: 50px; background: rgba(255, 255, 255, 0)' @click="start"></q-btn>
 
