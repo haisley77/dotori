@@ -85,31 +85,18 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 		}
 
 		// accesstoken 만료여부체크
-		String accessToken = jwtService.extractAccessToken(request).get();
-		if (!jwtService.isTokenValid(accessToken)) {
-			//만료되었으면
-			response.sendError(HttpStatus.UNAUTHORIZED.value(), "AccessTokenExpired");
-
-			String refreshToken = email.flatMap(redisService::getRefreshToken)
-				.orElse(null);
-
-			// if (refreshToken != null) {
-			// 	// 블랙리스트에 있는지 확인
-			// 	if (redisService.isBlacklisted(refreshToken)) {
-			// 		response.sendError(HttpStatus.UNAUTHORIZED.value(), "유효하지않은 refresh 토큰입니다. 다시시도해주세요");
-			// 		return;
-			// 	}
-			// 	checkRefreshTokenAndMakeAccessToken(response, request);
-			// 	filterChain.doFilter(request, response);
-			// 	return; // RefreshToken을 보낸 경우에는 AccessToken을 재발급 하고 인증 처리는 하지 않게 하기위해 바로 return으로 필터 진행 막기
-			// }
-			// if (refreshToken == null) {
-			// 	checkAccessTokenAndAuthentication(request);
-			// 	filterChain.doFilter(request, response);
-			// 	return;
-			// }
+		Optional<String> accessTokenOptional = jwtService.extractAccessToken(request);
+		if (accessTokenOptional.isPresent()) {
+			String accessToken = accessTokenOptional.get();
+			if (!jwtService.isTokenValid(accessToken)) {
+				//만료되었으면
+				response.sendError(HttpStatus.UNAUTHORIZED.value(), "AccessTokenExpired");
+			} else {
+				filterChain.doFilter(request, response);
+			}
+		} else {
+			response.sendError(HttpStatus.UNAUTHORIZED.value(), "액세스토큰이 없습니다");
 		}
-		filterChain.doFilter(request, response);
 
 	}
 
