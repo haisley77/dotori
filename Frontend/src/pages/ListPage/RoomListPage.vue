@@ -42,7 +42,6 @@
       const router = useRouter();
       const rooms = ref([]);
       const openViduStore = useOpenViduStore();
-      const {bookDetail} = storeToRefs(openViduStore);
       const {getConnectionToken, connectToOpenVidu, addRoomMember} = openViduStore;
 
       const moveWaitingRoom = (room) => {
@@ -68,30 +67,14 @@
         }
       };
 
-      // 해당 방에 대한 책의 모든 정보(역할,책,장면)를 불러온다.
-      const fetchBookDetail = async (bookId) => {
-        try {
-          const response = await axios.get(`http://localhost:8080/api/books/${bookId}/detail`);
-          console.log('API Response:', response);
-          if (response.status === 200) {
-            bookDetail.value = response.data;
-          } else {
-            console.error('Failed to fetch books. Status:', response.status);
-          }
-        } catch (error) {
-          console.error('Error fetching books:', error);
-        }
-      };
-
       const enterRoom = (room) => {
         // 유저 방정보, 책정보 가지고 입장.
         getConnectionToken(room)
           .then(() => {
             connectToOpenVidu()
               .then(() => {
-                addRoomMember()
+                addRoomMember(room.book)
                   .then(() => {
-                    fetchBookDetail(room.book.bookId);
                     moveWaitingRoom(room);
                   })
                   .catch((error) => {
@@ -108,7 +91,6 @@
         rooms,
         moveWaitingRoom,
         enterRoom,
-        bookDetail,
       };
     },
   };

@@ -109,8 +109,10 @@ export const useOpenViduStore
   };
 
   const getConnectionToken = (room) => {
-    console.log('getConnectionToken 호출됨', room);
     return new Promise((resolve, reject) => {
+      roomInitializationParam.value.bookInfo = room.book;
+      roomInitializationParam.value.roomInfo = room;
+
       const apiPath = apiRootPath + `/connection/${room.roomId}`;
 
       axios.post(apiPath, connection_properties.value)
@@ -139,6 +141,7 @@ export const useOpenViduStore
       axios.post(apiPath)
         .then((response) => {
           if (response.status === 200) {
+            bookDetail.value = response.data.bookInfo;
             resolve(response.data);
           } else if (response.status === 201) {
             console.log('인원 초과로 방 참여 처리 불가');
