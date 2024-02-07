@@ -45,6 +45,7 @@
 
   const sendingPlayerData = ref({
     playerList: null,
+    roleList: null,
   });
 
   const sendIncomingInfoToOpenVidu = () => {
@@ -79,12 +80,12 @@
     });
   };
 
-  // 방 참여자가 발생하면 방에 있던 모든 참여자들은 playerList를 갱신하여 반영한다.
+  // 방 참여자가 발생하면 방에 있던 모든 참여자들은 정보를 반영한다.
   session.on('signal:player-incoming', (event) => {
     const receivedData = JSON.parse(event.data);
     if (!isHost.value) {
       playerList.value = receivedData.playerList;
-      // 만약 들어오기 전에 role을 변경하고 있다면 roleList도 같이 보내야함
+      bookDetail.value.roles = receivedData.roleList;   // 방에 들어오기 전 선택된 역할 정보 반영
       roomInfo.value.joinCnt = playerList.value.length;
     }
   });
@@ -95,6 +96,7 @@
     if (isHost.value) {
       playerList.value.push(receivedData.player);
       sendingPlayerData.value.playerList = playerList.value;
+      sendingPlayerData.value.roleList = bookDetail.value.roles;
       sendPlayerInfoToOpenVidu();
       roomInfo.value.joinCnt++;
     }

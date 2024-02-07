@@ -160,8 +160,6 @@
     const receivedData = JSON.parse(event.data);
     playerList.value = receivedData.playerList;
     bookDetail.value.roles = receivedData.roleList
-    console.log(playerList.value);
-    console.log(bookDetail.value.roles);
   });
 
 

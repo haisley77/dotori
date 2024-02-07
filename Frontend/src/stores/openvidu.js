@@ -228,31 +228,6 @@ export const useOpenViduStore
   const playerList = ref([]);
   const myRole = ref([]);
 
-// 역할 리스트
-  const roleList = ref([
-    {
-      roleId: 1,
-      name: '토끼',
-      maskPath: '',
-      // maskThumbnailPath:
-      selected: false,
-    },
-    // {
-    //   roleId:
-    //   name: '거북이',
-    //   maskPath: '',
-    //   maskThumbnailPath:
-    //   selected: false,
-    // },
-    // {
-    //   roleId:
-    //   name: '호랑이',
-    //   maskPath: '',
-    //   maskThumbnailPath:
-    //   selected: false,
-    // },
-  ]);
-
   return {
     roomInfo,
     memberId,
@@ -267,7 +242,6 @@ export const useOpenViduStore
     addRoomMember,
     updateRoom,
     publish,
-    roleList,
     subscribers, mainStreamManager, OV,
     getConnectionToken,
     removeRoomMember,
