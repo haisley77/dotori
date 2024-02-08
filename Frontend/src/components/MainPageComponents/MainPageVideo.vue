@@ -1,15 +1,18 @@
 <script setup>
   import { ref } from 'vue';
   import { useRouter } from 'vue-router';
+  import {useOpenViduStore} from 'stores/openvidu';
+
+  const ovstore = useOpenViduStore();
   const router = useRouter();
+
   const autoplay = ref(true);
-  const isLoggedIn = ref(false); // 예시로 로그인 여부를 false로 설정.
   const videoSrc = 'src/assets/MainPage/MAIN2.mp4';
   const headText = 'DO STORY I';
   const bottomText = '이야기와 하나되는 아이들';
 
   const start = () => {
-    if (isLoggedIn.value) {
+    if (ovstore.isLoggedIn) {
       router.push('/list/books');
     } else {
       router.push('/login');

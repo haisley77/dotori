@@ -1,6 +1,6 @@
 <template>
   <Headermain />
-  <MainPageVideo />
+  <MainPageVideo/>
   <!-- <MainPageCarousel/> -->
 <!--  <div v-if="ovstore.isLoggedIn">로그인되어있음!</div>-->
   <div class="row">
