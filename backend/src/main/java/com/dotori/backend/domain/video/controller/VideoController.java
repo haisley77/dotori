@@ -1,8 +1,10 @@
 package com.dotori.backend.domain.video.controller;
 
+import static org.springframework.http.HttpStatus.*;
+
+import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,10 +16,12 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dotori.backend.domain.video.model.dto.VideoSceneUploadRequest;
+import com.dotori.backend.domain.video.model.dto.request.SceneVideoSaveRequest;
 import com.dotori.backend.domain.video.service.VideoService;
 
 import lombok.RequiredArgsConstructor;
@@ -58,5 +62,14 @@ public class VideoController {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@PostMapping("/scenes")
+	private ResponseEntity<Void> saveSceneVideo(
+		@Validated @RequestBody SceneVideoSaveRequest sceneVideoSaveRequest
+	) {
+		log.info("[saveSceneVideo] called");
+		videoService.saveSceneVideo(sceneVideoSaveRequest);
+		return ResponseEntity.status(CREATED).build();
 	}
 }
