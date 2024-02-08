@@ -57,7 +57,7 @@ class BookControllerTest {
 	@Autowired
 	private WebApplicationContext context;
 
-	private String accessToken = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImV4cCI6MTcwNzM2NjU0NywiZW1haWwiOiJtb29uYWJjZDhAZ21haWwuY29tIiwicm9sZSI6IlVTRVIifQ._5vMCPuIV_eGHIioAQ8XyAMUV1LbdJ833qIVPSDj2CRJBEPKRcxNWQYsI2ElMMF_a0GsLWXZpOeBzHCKSzNKbA";
+	private String accessToken = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImV4cCI6MTcwOTQ5NjA0NSwiZW1haWwiOiJtb29uYWJjZDhAZ21haWwuY29tIiwicm9sZSI6IlVTRVIifQ.LtD4Thnmvcfdag6P6YIbfD01-QXaqJSNhV2yMou8Bc7sCqRpAvKkpHDCb5RF9ioI-NltOv86WAGGltEvrqj30g";
 
 	@BeforeEach
 	public void setup() {
