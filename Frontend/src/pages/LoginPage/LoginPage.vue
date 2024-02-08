@@ -1,4 +1,5 @@
 <template>
+  <Header/>
     <div class="bg-brown-3">
         <div
             class="q-pa-md row items-start q-gutter-md flex items-center justify-center"
@@ -46,6 +47,8 @@
 </template>
 
 <script setup>
+    import Header from 'components/CommonComponents/Header.vue';
+
     const redirectToAuthUrl = url => {
         window.location.href = url;
     };
