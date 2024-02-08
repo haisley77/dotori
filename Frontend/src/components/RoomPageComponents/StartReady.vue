@@ -42,6 +42,7 @@
       alert('역할을 선택해주세요!');
       return;
     }
+
     let readyCnt = 0;
     playerList.value.forEach((user) => {
       if (user.memberId === memberId.value) user.readyState = true;
@@ -57,6 +58,8 @@
         .catch((error) => {
           console.error(error);
         });
+    } else {
+      alert('모든 친구들이 준비할 때까지 기다려주세요!');
     }
   };
   const moveRecording = () => {
