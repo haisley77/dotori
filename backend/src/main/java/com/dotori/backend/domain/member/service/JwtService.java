@@ -60,7 +60,7 @@ public class JwtService {
 			.withSubject(ACCESS_TOKEN_SUBJECT)
 			.withExpiresAt(new Date(now.getTime() + accessTokenExpirationPeriod)) // 토큰 만료 시간 설정
 			.withClaim(EMAIL_CLAIM, email)
-			.withClaim(ROLE_CLAIM, role)
+			.withClaim(ROLE_CLAIM, "ROLE_" + role)
 			.sign(Algorithm.HMAC512(secretKey));
 	}
 
