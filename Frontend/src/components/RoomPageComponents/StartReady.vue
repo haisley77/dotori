@@ -17,10 +17,19 @@
     }
   });
 
+  const checkRole = () => {
+    const player = playerList.value.find(user => user.memberId === memberId.value);
+    return player.roleIndex !== 5;
+  }
+
   const updateState = () => {
-    const currentUser = playerList.value.find(user => user.memberId === memberId.value);
-    if (currentUser) {
-      currentUser.readyState = true;
+    if (!checkRole()) {
+      alert('역할을 선택해주세요!');
+      return;
+    }
+    const player = playerList.value.find(user => user.memberId === memberId.value);
+    if (player) {
+      player.readyState = true;
       btnValue.value = true;
       sendingReadyData.value.playerList = playerList.value;
       sendReadyInfoToOpenVidu();
@@ -29,6 +38,10 @@
   };
 
   const checkReadyState = () => {
+    if (!checkRole()) {
+      alert('역할을 선택해주세요!');
+      return;
+    }
     let readyCnt = 0;
     playerList.value.forEach((user) => {
       if (user.memberId === memberId.value) user.readyState = true;
