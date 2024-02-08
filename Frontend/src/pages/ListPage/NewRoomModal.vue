@@ -124,7 +124,7 @@
 
     roomInfo.value.title = roomName.value;
     roomInfo.value.password = roomPassword.value;
-    roomInfo.value.isPublic = isPrivate;
+    roomInfo.value.isPublic = !isPrivate.value;
     roomInfo.value.limitCnt = bookDetail.value.book.roleCnt;
 
     createRoom(props.bookmodal)
