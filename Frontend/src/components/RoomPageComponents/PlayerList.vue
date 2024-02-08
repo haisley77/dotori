@@ -17,8 +17,8 @@
                   </q-menu>
                   <div>{{ playerList[player-1].roleName }}</div>
                 </q-btn>
-                <q-btn unelevated rounded color="my-green q-ml-sm btn-font" @click="cancelRole(player)" :disable="playerList[player-1].readyState">
-                  <div>선택 취소</div>
+                <q-btn unelevated rounded color="my-green q-ml-sm btn-font" v-if="playerList[player-1].roleIndex !== 5" @click="cancelRole(player)" :disable="playerList[player-1].readyState">
+                  <div>취소</div>
                 </q-btn>
               </div>
             </div>
@@ -40,8 +40,8 @@
                   </q-menu>
                   <div>역할 선택하기</div>
                 </q-btn>
-                <q-btn unelevated rounded color="my-green q-ml-sm btn-font">
-                  <div>커스텀 아바타</div>
+                <q-btn unelevated rounded color="my-green q-ml-sm btn-font" style="display: none">
+                  <div>취소</div>
                 </q-btn>
               </div>
             </div>
