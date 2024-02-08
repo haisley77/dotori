@@ -5,9 +5,7 @@ import {OpenVidu} from 'openvidu-browser';
 import {localAxios} from '../axios/http-commons';
 import {useRouter} from 'vue-router';
 
-const isLogin = ref();
-const memberInformation = ref({
-});
+const memberInfo = ref({});
 
 
 const router = useRouter();
@@ -24,7 +22,7 @@ export const useOpenViduStore
 
   const roomId = ref(0);
   const memberId = ref(30);
-
+  const isLoggedIn = ref(false);
   const subscribers = ref([]);
   const mainStreamManager = ref();
   var mainStreamManagerReal = null;
@@ -248,6 +246,6 @@ export const useOpenViduStore
 
     unpublish,
     isPublished,
-    myRole, minRole, canvasStream, changeCanvasStream,
+    myRole, minRole, canvasStream, changeCanvasStream,isLoggedIn,memberInformation: memberInfo
   };
 }, {persist: {storage: sessionStorage}});

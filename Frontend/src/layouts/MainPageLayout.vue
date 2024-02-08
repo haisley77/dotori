@@ -1,7 +1,8 @@
 <template>
- <Headermain/>
-  <MainPageVideo/>
+  <Headermain />
+  <MainPageVideo />
   <!-- <MainPageCarousel/> -->
+<!--  <div v-if="ovstore.isLoggedIn">로그인되어있음!</div>-->
   <div class="row">
     <div class="col-12">
 
@@ -20,11 +21,11 @@
       <div class="row" style="height: 250px"></div>
       <div ref="animatedTextRef4" class="animated-text">
         <ElementFour />
-        </div>
-        <div class="row" style="height: 300px"></div>
-
       </div>
+      <div class="row" style="height: 300px"></div>
+
     </div>
+  </div>
 </template>
 
 <script setup>
@@ -36,7 +37,12 @@
   import ElementFour from 'components/MainPageComponents/ElementFour.vue';
   import MainPageVideo from 'src/components/MainPageComponents/MainPageVideo.vue';
   import Headermain from 'components/CommonComponents/Headermainpage.vue';
+  import {localAxios} from 'src/axios/http-commons';
+  import {useOpenViduStore} from 'stores/openvidu';
 
+  const ovstore = useOpenViduStore();
+
+  const axios = localAxios();
   //화면안에 요소가 들어오면 아래에서 올라오기
   const animatedTextRef1 = ref(null);
   const animatedTextRef2 = ref(null);
@@ -63,6 +69,47 @@
     observeElement(animatedTextRef2.value);
     observeElement(animatedTextRef3.value);
     observeElement(animatedTextRef4.value);
+  });
+
+  // const fetchMemberInfo = async () => {
+  //   try {
+  //     const response = await axiosInstance.get(
+  //       'http://localhost:8080/api/members/detail',
+  //     );
+  //     const memberInfo = response.data;
+  //
+  //     dummyUser.value.nickName = memberInfo.nickName || '';
+  //   } catch (error) {
+  //     console.error('Error fetching member info:', error);
+  //   }
+  // };
+  const checkAuthStatus = () => {
+    console.log('isLoggedIn? : ' + ovstore.isLoggedIn);
+    axios.get('http://localhost:8080/api/members/status', {withCredentials: true}).then(
+      (response) => {
+        //로그인 된 상태를 확인하고 저장한다
+        ovstore.isLoggedIn = response.data;
+        if (ovstore.isLoggedIn) {
+          console.log("로그인 되어있음!");
+          axios.get('http://localhost:8080/api/members/detail', {withCredentials: true})
+            .then((response) => {
+              //회원정보를 저장한다
+              console.log('회원 정보 조회 성공!');
+              console.log(response)
+              ovstore.memberInfo = response.data;
+            }).catch((error) => {
+            console.log('회원정보 조회 실패' + error);
+          });
+        }
+      },
+    ).catch((error) => {
+      ovstore.isLoggedIn = false;
+      console.log('로그인 확인 실패 : ' + error);
+    });
+  };
+
+  onMounted(() => {
+    checkAuthStatus();
   });
 </script>
 
