@@ -7,15 +7,15 @@
   const router = useRouter();
   const btnValue = ref(false);
   const openViduStore = useOpenViduStore();
-  const {bookDetail,playerList,isHost,roomInfo,memberId,myRole} = storeToRefs(openViduStore);
-  const {session,updateRoom} = openViduStore;
+  const {bookDetail, playerList, isHost, roomInfo, memberId, myRole} = storeToRefs(openViduStore);
+  const {session, updateRoom} = openViduStore;
   const canMoveWaitingRoom = ref(false);
 
-  watch(canMoveWaitingRoom, (newVal,oldVal) => {
-    if (newVal){
+  watch(canMoveWaitingRoom, (newVal, oldVal) => {
+    if (newVal) {
       moveRecording();
     }
-  })
+  });
 
   const updateState = () => {
     const currentUser = playerList.value.find(user => user.memberId === memberId.value);
@@ -26,14 +26,14 @@
       sendReadyInfoToOpenVidu();
       alert('곧 시작합니다. 잠시만 기다려주세요!');
     }
-  }
+  };
 
   const checkReadyState = () => {
     let readyCnt = 0;
     playerList.value.forEach((user) => {
       if (user.memberId === memberId.value) user.readyState = true;
       if (user.readyState) readyCnt++;
-    })
+    });
 
     if (readyCnt === playerList.value.length) {
       updateRoom(true)
@@ -43,13 +43,15 @@
         })
         .catch((error) => {
           console.error(error);
-        })
+        });
     }
-  }
+  };
   const moveRecording = () => {
     playerList.value.forEach((user) => {
-      myRole.value = bookDetail.value.roles[user.roleIndex].roleId;
-    })
+      if (user.memberId === memberId.value) {
+        myRole.value = bookDetail.value.roles[user.roleIndex].roleId;
+      }
+    });
     router.push('/recording');
   };
 
@@ -104,9 +106,6 @@
   });
 
 
-
-
-
 </script>
 
 <template>
@@ -154,7 +153,7 @@
 <style scoped>
 
   .start-btn {
-  //background: #35daa0; //color: white; font-family: NPSfontBold;
+    //background: #35daa0; //color: white; font-family: NPSfontBold;
     font-size: 3.5em;
     color: #6E4E1F;
     background: white;
@@ -173,7 +172,7 @@
   .background-yellow {
     background: white;
     border-radius: 20px 20px 20px 20px;
-  //border: dashed #cc765a 5px;
+    //border: dashed #cc765a 5px;
   }
 
   .background-white {

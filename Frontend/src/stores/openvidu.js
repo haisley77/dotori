@@ -5,6 +5,11 @@ import {OpenVidu} from 'openvidu-browser';
 import {localAxios} from '../axios/http-commons';
 import {useRouter} from 'vue-router';
 
+const isLogin = ref();
+const memberInformation = ref({
+});
+
+
 const router = useRouter();
 const axios = localAxios();
 export const useOpenViduStore

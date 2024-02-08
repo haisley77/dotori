@@ -109,10 +109,10 @@
     })
 
     const player = {
-      name: '김싸피',
+      name: '양진우',
       memberId: memberId.value,
-      profileImg: 'src/assets/MyPageImages/iupic.jpg',
-      roleName: '김싸피',
+      profileImg: 'src/assets/MyPageImages/winter.png',
+      roleName: '양진우',
       roleIndex: 5,
       readyState: false,
     };
