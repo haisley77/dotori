@@ -54,6 +54,10 @@ public class SecurityConfig {
 			.disable() // httpBasic 사용 X
 			.csrf()
 			.disable() // csrf 보안 사용 X
+			// .headers()
+			// .frameOptions()
+			// .disable()
+			// .and()
 
 			// 세션없는 stateless 환경
 			.sessionManagement()
