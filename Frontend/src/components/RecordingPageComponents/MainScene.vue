@@ -5,18 +5,20 @@
   import {ref} from 'vue';
 
   const ovstore = useOpenViduStore();
-  const props = defineProps({curPage: Number});
-  const imagesrc = ref(ovstore.bookInfoList[props.curPage - 1].img);
+  const props = defineProps({curPage: Number, currentScene: Object});
+  // const imagesrc = ref(ovstore.bookInfoList[props.curPage - 1].img);
+
 </script>
 
 <template>
+
   <div class='scene-info-container q-pa-sm'>
 
     <div class=' ' style='height: 100%;border-radius: 15px'>
       <div class='scene-background-container relative-position'>
         <q-img
           class='q-pa-xs'
-         :src='ovstore.bookInfoList[props.curPage - 1].img'
+          :src='props.currentScene.backgroundImage'
           :ratio='16/9'
           style='height: 100%; '
         />
@@ -49,7 +51,7 @@
 
   .scene-info-container {
     height: 570px;
-  //border-radius: 15px; border: #C7A96E solid 6px;
+    //border-radius: 15px; border: #C7A96E solid 6px;
   }
 
   .scene-background-container {

@@ -48,7 +48,7 @@
   }
   const moveRecording = () => {
     playerList.value.forEach((user) => {
-      myRole.value.push(bookDetail.value.roles[user.roleIndex].roleId);
+      myRole.value = bookDetail.value.roles[user.roleIndex].roleId;
     })
     router.push('/recording');
   };

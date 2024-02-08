@@ -86,7 +86,7 @@
   };
 
   const openViduStore = useOpenViduStore();
-  const {roomInfo,bookDetail} = storeToRefs(openViduStore);
+  const {roomInfo,bookDetail,minRole} = storeToRefs(openViduStore);
   const {createRoom, connectToOpenVidu, addRoomMember} = openViduStore;
 
   onMounted(() => {
@@ -99,8 +99,7 @@
         const response = await axios.get(`http://localhost:8080/api/books/${props.bookmodal.bookId}`);
         console.log('API Response:', response);
         if (response.status === 200) {
-          bookDetail.value.book = response.data.book;
-          bookDetail.value.roles = response.data.roles;
+          bookDetail.value = response.data;
           resolve(response.data.roles);
         } else {
           reject(new Error('Failed'));

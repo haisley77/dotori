@@ -1,25 +1,39 @@
 <script setup>
   import {useOpenViduStore} from 'stores/openvidu';
+  import {onMounted} from 'vue';
 
   const ovstore = useOpenViduStore();
   const props = defineProps({curPage: Number});
   const emit = defineEmits(['moveToPage']);
   const nextPage = () => {
-    if (ovstore.bookInfoList.length > props.curPage) {
+    if (ovstore.bookDetail.scenes.length > props.curPage) {
+      //방장일 경우만 실행하도록 로직을 추가해야함
+      ovstore.session.signal({
+          data: props.curPage + 1,
+          type: 'page',
+        }
+      );
       emit('moveToPage', props.curPage + 1);
     } else {
       console.log('마지막 페이지 입니다!');
     }
   };
 
-
   const beforePage = () => {
     if (1 < props.curPage) {
+        //방장일 경우만 실행하도록 로직을 추가해야함
+        ovstore.session.signal({
+                data: props.curPage - 1,
+                type: 'page',
+            }
+        );
       emit('moveToPage', props.curPage - 1);
     } else {
       console.log('첫번째 페이지 입니다!');
     }
   };
+
+
 </script>
 
 <template>
