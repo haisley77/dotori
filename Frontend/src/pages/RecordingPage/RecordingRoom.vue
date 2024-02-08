@@ -1,4 +1,5 @@
 <template>
+  <Header/>
   <!--  <h1>{{ myAvatar }}</h1>-->
   role : {{ovstore.myRole}}
   <div class='row flex justify-center q-px-none'>
@@ -26,13 +27,12 @@
   import Script from 'components/RecordingPageComponents/Script.vue';
   import SceneController from 'components/RecordingPageComponents/SceneController.vue';
   import {onMounted, ref} from 'vue';
-
-
   import * as THREE from 'three';
   import {OrbitControls} from 'three/addons/controls/OrbitControls';
   import {GLTFLoader} from 'three/addons/loaders/GLTFLoader';
   import {FaceLandmarker, FilesetResolver} from '@mediapipe/tasks-vision';
   import {useOpenViduStore} from 'stores/openvidu';
+  import Header from 'components/CommonComponents/Header.vue';
 
 
   const videoPlayer = ref(null);

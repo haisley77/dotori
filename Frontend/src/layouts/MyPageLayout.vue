@@ -1,6 +1,7 @@
 <template>
+  <Header/>
   <q-layout style="position: relative">
-    <Header/>
+
     <!--    <q-header>-->
     <!--      header-->
     <!--    </q-header>-->

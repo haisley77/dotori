@@ -1,7 +1,6 @@
 <template>
-  
+  <Header/>
   <q-layout style="position: relative">
-    <Header/>
     <q-drawer
       show-if-above
       :width='250'

@@ -1,4 +1,5 @@
 <template>
+  <Header/>
 <!--  <Header></Header>-->
   <!--  <div style="background: #d2fff7" class = "q-pa-lg row">-->
   <div class="q-pa-lg row">

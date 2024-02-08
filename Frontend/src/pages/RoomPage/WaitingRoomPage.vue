@@ -1,4 +1,5 @@
 <template>
+  <Header/>
   <div class='row'>
     <div class='col-10 offset-1'>
       <div class='row'>
@@ -24,6 +25,7 @@
   </div>
 </template>
 <script setup>
+  import Header from 'components/CommonComponents/Header.vue';
   import PlayerList from 'components/RoomPageComponents/PlayerList.vue';
   import BookInfo from 'components/RoomPageComponents/BookInfo.vue';
   import StartReady from 'components/RoomPageComponents/StartReady.vue';
