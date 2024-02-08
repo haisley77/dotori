@@ -246,6 +246,6 @@ export const useOpenViduStore
 
     unpublish,
     isPublished,
-    myRole, minRole, canvasStream, changeCanvasStream,isLoggedIn,memberInformation: memberInfo
+    myRole, minRole, canvasStream, changeCanvasStream, isLoggedIn, memberInfo,
   };
 }, {persist: {storage: sessionStorage}});
