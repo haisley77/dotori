@@ -19,7 +19,7 @@ export const useOpenViduStore
   const apiRootPath = '/api/rooms';
 
   const roomId = ref(0);
-  const memberId = ref(30);
+  const memberId = ref(10);
   const memberInfo = ref({
     memberId: memberId.value,
     nickName: '나야낭',
@@ -46,7 +46,7 @@ export const useOpenViduStore
 
   // 방 설정 정보
   const roomInfo = ref({
-    hostId: memberId.value,
+    hostId: 30,
     title: null,
     password: null,
     isRecording: false,

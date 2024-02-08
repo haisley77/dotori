@@ -60,7 +60,7 @@
 
         <!--페이지 위치-->
         <div class="col-4 offset-0 flex justify-center items-center">
-                <img src="../../assets/DotoriImages/dotorisq.png" alt="logo" width="30%" @click="moveMainPage"/>
+                <img src="../../assets/DotoriImages/dotorisq.png" style="cursor:pointer" alt="logo" width="30%" @click="moveMainPage"/>
         </div>
 
         <!-- 마이페이지와 로그인-->
@@ -69,8 +69,8 @@
           <span style="color: black">마이페이지</span>&nbsp&nbsp
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            height="28"
-            width="35"
+            height="18"
+            width="28"
             viewBox="0 0 640 512"
           >
             <path
@@ -91,8 +91,8 @@
           &nbsp&nbsp
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            height="28"
-            width="28"
+            height="22"
+            width="22"
             viewBox="0 0 512 512"
           >
             <path
@@ -118,8 +118,8 @@
           &nbsp&nbsp
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            height="28"
-            width="28"
+            height="22"
+            width="22"
             viewBox="0 0 512 512"
           >
             <path
