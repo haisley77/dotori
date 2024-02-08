@@ -4,7 +4,7 @@
       <div class="column">
         <div class="background-white">
           <!-- 채팅 로그 -->
-          <div ref="chatLog" style="height: 100px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;">
+          <div ref="chatLog" id='chatLog' style="height: 100px; overflow-y: auto; border: 1px solid #ccc; padding:  0px;">
             <div v-for="(message, index) in messageList" :key="index">{{ message }}</div>
 <!--            <div ref="scrollMarker"></div>-->
           </div>
@@ -59,15 +59,14 @@ const sendMessage = () => {
 const appendMessage = (nickname, message) => {
   const formattedMessage = `${nickname}: ${message}`;
   messageList.value.push(formattedMessage);
+  scrollToBottom(); // 메시지 추가 후 자동 스크롤
 };
 
-// const scrollToBottom = () => {
-//   const chatLog = ref.chatLog;
-//   const scrollMarker = ref.scrollMarker;
-//   if (chatLog.value && scrollMarker.value) {
-//     scrollMarker.value.scrollIntoView({ behavior: 'smooth', block: 'end' });
-//   }
-// };
+const scrollToBottom = () => {
+  let chatLog = document.getElementById('chatLog');
+  console.log("scroll to bottom실행");
+  chatLog.scrollTop = chatLog.scrollHeight;
+};
 </script>
 
 <style scoped>
@@ -113,4 +112,3 @@ const appendMessage = (nickname, message) => {
     font-family: 'NPSfontBold';
   }
 </style>
-
