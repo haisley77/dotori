@@ -9,7 +9,7 @@
               <img :src="playerList[player - 1].profileImg" class="profile-pic q-mr-md q-mt-sm" alt="user-profile-img" style="object-fit: cover">
               <h4 class="q-mr-md q-mt-md q-mb-sm player-name">{{ playerList[player - 1].roleName }}</h4>
               <div class="row q-mt-none q-mb-sm">
-                <q-btn unelevated rounded color="my-brown q-mr-sm btn-font">
+                <q-btn unelevated rounded color="my-brown q-mr-sm btn-font" :disable="playerList[player-1].readyState">
                   <q-menu fit anchor="bottom start" self="top left">
                     <q-item v-for="(role, index) in bookDetail.roles" :key="role" :disable="role.selected" clickable @click="toggleRole(player,index)">
                       <q-item-section>{{ role.name }}</q-item-section>
@@ -17,7 +17,7 @@
                   </q-menu>
                   <div>역할 선택하기</div>
                 </q-btn>
-                <q-btn unelevated rounded color="my-green q-ml-sm btn-font" @click="cancelRole(player)">
+                <q-btn unelevated rounded color="my-green q-ml-sm btn-font" @click="cancelRole(player)" :disable="playerList[player-1].readyState">
                   <div>선택 취소</div>
                 </q-btn>
               </div>
@@ -29,7 +29,7 @@
               <img :src="playerList[player - 1].profileImg" class="profile-pic q-mr-md q-mt-sm" alt="user-profile-img" style="object-fit: cover">
               <h4 class="q-mr-md q-mt-md q-mb-sm player-name">{{ playerList[player - 1].roleName }}</h4>
               <div class="row q-mt-none q-mb-sm" style="visibility: hidden">
-                <q-btn unelevated rounded color="my-brown q-mr-sm btn-font">
+                <q-btn unelevated rounded color="my-brown q-mr-sm btn-font" :disable="playerList[player-1].readyState">
                   <q-menu fit anchor="bottom start" self="top left">
                     <q-item clickable>
                       <q-item-section>토끼</q-item-section>
