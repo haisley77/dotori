@@ -11,6 +11,7 @@ import com.dotori.backend.domain.room.model.entity.Room;
 import com.dotori.backend.domain.room.repository.RoomRepository;
 import com.dotori.backend.domain.video.model.dto.VideoDto;
 import com.dotori.backend.domain.video.model.dto.VideoSceneUploadRequest;
+import com.dotori.backend.domain.video.model.dto.request.SceneVideoSaveRequest;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,5 +45,18 @@ public class VideoService {
 		log.info("[downloadVideo] called");
 		VideoDto videoDto = videoManageService.getVideo(videoId);
 		return videoDownloadService.downloadVideo(videoDto.getPath());
+	}
+
+	@Transactional
+	public void saveSceneVideo(SceneVideoSaveRequest sceneVideoSaveRequest) {
+		log.info("[saveSceneVideo] called");
+		Room room = roomRepository.findById(sceneVideoSaveRequest.getRoomId())
+			.orElseThrow(EntityNotFoundException::new);
+		
+		videoManageService.saveSceneVideo(
+			room,
+			sceneVideoSaveRequest.getSceneOrder(),
+			sceneVideoSaveRequest.getSavedPath()
+		);
 	}
 }
