@@ -109,10 +109,10 @@
     })
 
     const player = {
-      name: '양진우',
+      name: '하은',
       memberId: memberId.value,
       profileImg: 'src/assets/MyPageImages/winter.png',
-      roleName: '양진우',
+      roleName: '역할 선택하기',
       roleIndex: 5,
       readyState: false,
     };

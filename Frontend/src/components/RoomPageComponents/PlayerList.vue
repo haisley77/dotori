@@ -7,7 +7,7 @@
           <div class="profile-background q-pa-sm" v-if="memberId === playerList[player-1].memberId">
             <div class="dashed column items-center">
               <img :src="playerList[player - 1].profileImg" class="profile-pic q-mr-md q-mt-sm" alt="user-profile-img" style="object-fit: cover">
-              <h4 class="q-mr-md q-mt-md q-mb-sm player-name">{{ playerList[player - 1].roleName }}</h4>
+              <h4 class="q-mr-md q-mt-md q-mb-sm player-name">{{ playerList[player - 1].name }}</h4>
               <div class="row q-mt-none q-mb-sm">
                 <q-btn unelevated rounded color="my-brown q-mr-sm btn-font" :disable="playerList[player-1].readyState">
                   <q-menu fit anchor="bottom start" self="top left">
@@ -15,7 +15,7 @@
                       <q-item-section>{{ role.name }}</q-item-section>
                     </q-item>
                   </q-menu>
-                  <div>역할 선택하기</div>
+                  <div>{{ playerList[player-1].roleName }}</div>
                 </q-btn>
                 <q-btn unelevated rounded color="my-green q-ml-sm btn-font" @click="cancelRole(player)" :disable="playerList[player-1].readyState">
                   <div>선택 취소</div>
@@ -27,9 +27,9 @@
           <div class="profile-background q-pa-sm" v-else>
             <div class="dashed column items-center">
               <img :src="playerList[player - 1].profileImg" class="profile-pic q-mr-md q-mt-sm" alt="user-profile-img" style="object-fit: cover">
-              <h4 class="q-mr-md q-mt-md q-mb-sm player-name">{{ playerList[player - 1].roleName }}</h4>
-              <div class="row q-mt-none q-mb-sm" style="visibility: hidden">
-                <q-btn unelevated rounded color="my-brown q-mr-sm btn-font" :disable="playerList[player-1].readyState">
+              <h4 class="q-mr-md q-mt-md q-mb-sm player-name">{{ playerList[player - 1].name }}</h4>
+              <div class="row q-mt-none q-mb-sm">
+                <q-btn unelevated rounded color="my-brown q-mr-sm btn-font" :disable="playerList[player-1].memberId !== memberId">
                   <q-menu fit anchor="bottom start" self="top left">
                     <q-item clickable>
                       <q-item-section>토끼</q-item-section>
@@ -85,6 +85,7 @@
   const {playerList,bookDetail,memberId} = storeToRefs(openViduStore);
   const {session} = openViduStore;
 
+
   const makeSendingRoleData = () => {
     sendingRoleData.value.roleList = bookDetail.value.roles;
     sendingRoleData.value.playerList = playerList.value;
@@ -126,7 +127,7 @@
 
   const cancelRole = (player) => {
     bookDetail.value.roles[playerList.value[player-1].roleIndex].selected = false;
-    playerList.value[player-1].roleName = playerList.value[player-1].name;
+    playerList.value[player-1].roleName = '역할 선택하기';
     playerList.value[player-1].roleIndex = 5;
     makeSendingRoleData();
     sendRoleInfoToOpenVidu();

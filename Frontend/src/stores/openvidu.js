@@ -31,7 +31,7 @@ export const useOpenViduStore
   const isHost = ref(true);
 
   //나중에 역할 선택에 따라 변경할 부분
-  const minRole = ref(0);
+  const minRole = ref();
   const canvasStream = ref();
   const changeCanvasStream = (stream) => {
     canvasStream.value = stream;
