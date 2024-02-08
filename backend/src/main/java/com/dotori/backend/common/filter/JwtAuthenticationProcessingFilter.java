@@ -66,7 +66,18 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 		// redis에 RefreshToken이 있는 경우는, AccessToken이 만료되어 요청한 경우밖에 없다.
 		// 따라서, 위의 경우를 제외하면 추출한 refreshToken은 모두 null
 		// 액세스 토큰에서 이메일 추출
+		// accesstoken 만료여부체크
+		Optional<String> accessTokenOptional = jwtService.extractAccessToken(request);
+		if (accessTokenOptional.isPresent()) {
+			String accessToken = accessTokenOptional.get();
+			if (!jwtService.isTokenValid(accessToken)) {
+				//만료되었으면
+				log.info("진행체크용");
+				sendUnauthorizedResponse(response, "AccessTokenExpired");
+				return;
 
+			}
+		}
 		//세션을 사용하지않으므로 모든요청마다 security context에 authentication객체를 넣어줘야함
 		Optional<String> email = jwtService.extractEmailFromAccessToken(request);
 		Optional<String> role = jwtService.extractroleFromAccessToken(request);
@@ -84,19 +95,23 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 		}
 
 		// accesstoken 만료여부체크
-		Optional<String> accessTokenOptional = jwtService.extractAccessToken(request);
 		if (accessTokenOptional.isPresent()) {
 			String accessToken = accessTokenOptional.get();
-			if (!jwtService.isTokenValid(accessToken)) {
-				//만료되었으면
-				response.sendError(HttpStatus.UNAUTHORIZED.value(), "AccessTokenExpired");
-			} else {
+			if (jwtService.isTokenValid(accessToken)) {
 				filterChain.doFilter(request, response);
 			}
 		} else {
 			response.sendError(HttpStatus.UNAUTHORIZED.value(), "액세스토큰이 없습니다");
 		}
 
+	}
+
+	private void sendUnauthorizedResponse(HttpServletResponse response, String errorMessage) throws IOException {
+		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write("{\"error\": \"" + errorMessage + "\"}");
+		response.getWriter().flush();
 	}
 
 	/**
