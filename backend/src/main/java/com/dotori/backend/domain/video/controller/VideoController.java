@@ -54,11 +54,16 @@ public class VideoController {
 		response.addHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"dotori.mp4\"");
 
 		try {
-			InputStream inputStream = new FileInputStream(videoService.downloadVideo(videoId));
-			StreamUtils.copy(inputStream, response.getOutputStream());
+			// InputStream inputStream = new FileInputStream(videoService.downloadVideo(videoId));
+			// StreamUtils.copy(inputStream, response.getOutputStream());
+			// response.flushBuffer();
+			// inputStream.close();
 
+			BufferedInputStream bufferedInputStream = new BufferedInputStream(
+				new FileInputStream(videoService.downloadVideo(videoId)));
+			StreamUtils.copy(bufferedInputStream, response.getOutputStream());
 			response.flushBuffer();
-			inputStream.close();
+			bufferedInputStream.close();
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
