@@ -19,12 +19,12 @@ export const useOpenViduStore
   const apiRootPath = '/api/rooms';
 
   const roomId = ref(0);
-  const memberInfo = ref({
-    memberId: null,
-    nickName: null,
-    email: null,
-  });
   const memberId = ref(30);
+  const memberInfo = ref({
+    memberId: memberId.value,
+    nickName: '나야낭',
+    email: 'dotori@dotori.com',
+  });
   const isLoggedIn = ref(false);
   const subscribers = ref([]);
   const mainStreamManager = ref();

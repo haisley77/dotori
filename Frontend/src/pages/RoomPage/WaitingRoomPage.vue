@@ -36,7 +36,7 @@
   import {storeToRefs} from 'pinia';
 
   const openViduStore = useOpenViduStore();
-  const {roomInfo,playerList,isHost,memberId,bookDetail} = storeToRefs(openViduStore);
+  const {memberInfo,roomInfo,playerList,isHost,memberId,bookDetail} = storeToRefs(openViduStore);
   const {session} = openViduStore;
 
   const props = defineProps({memberId:Object});
@@ -111,7 +111,7 @@
     })
 
     const player = {
-      name: '하은',
+      name: memberInfo.value.nickName,
       memberId: memberId.value,
       profileImg: 'src/assets/MyPageImages/winter.png',
       roleName: '역할 선택하기',
