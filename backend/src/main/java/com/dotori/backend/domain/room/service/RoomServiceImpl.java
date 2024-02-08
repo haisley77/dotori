@@ -108,7 +108,9 @@ public class RoomServiceImpl implements RoomService {
 	}
 
 	public List<Room> getAllRooms() {
-		return roomRepository.findAll();
+		return roomRepository.findAllByOrderByCreatedAtDesc().orElseThrow(
+			() -> new EntityNotFoundException("방 없음")
+		);
 	}
 
 	@Override
