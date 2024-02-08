@@ -38,7 +38,7 @@
                       <q-item-section>거북이</q-item-section>
                     </q-item>
                   </q-menu>
-                  <div>역할 선택하기</div>
+                  <div>{{ playerList[player-1].roleName }}</div>
                 </q-btn>
                 <q-btn unelevated rounded color="my-green q-ml-sm btn-font" style="display: none">
                   <div>취소</div>
