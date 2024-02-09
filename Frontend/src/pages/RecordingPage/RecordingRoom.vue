@@ -147,6 +147,10 @@
       moveToPage(nextPage);
     });
 
+    ovstore.session.on('signal:onAir', (event) => {
+      const onAir = event.data
+    })
+
     //척페이지 역할 초기화
     currentRoles.value = getRoles(1);
     //첫 페이지 정보 넣기
