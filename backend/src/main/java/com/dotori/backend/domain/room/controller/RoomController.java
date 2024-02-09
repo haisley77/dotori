@@ -71,7 +71,6 @@ public class RoomController {
 		@RequestBody(required = false) RoomInitializationDto params) {
 		Map<String, String> resultData = new HashMap<>();
 		try {
-			openvidu.fetch();
 			resultData = roomService.createRoom(openvidu, params);
 			return new ResponseEntity<>(resultData, HttpStatus.CREATED);
 		} catch (Exception e) {
@@ -106,8 +105,7 @@ public class RoomController {
 			List<Session> activeSessions = openvidu.getActiveSessions();
 			roomService.removeExpiredRooms(activeSessions);
 			// roomService.removeMemberFromRoom(openvidu, roomId, memberId);
-			resultData.put("message", "삭제 완료");
-			return new ResponseEntity<>(resultData, HttpStatus.OK);
+			return ResponseEntity.ok(resultData);
 		} catch (Exception e) {
 			resultData.put("message", e.getMessage());
 			return new ResponseEntity<>(resultData, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -130,15 +128,11 @@ public class RoomController {
 			openvidu.fetch();
 			Session session = roomService.findSessionByRoomId(openvidu, roomId);
 			// 방 인원 검증 후, 제한 인원 미만 시에만 토큰을 발급하도록 합니다.
-			if (roomService.checkJoinPossible(openvidu, roomId)) {
-				String token = roomService.createConnection(openvidu, session, connectionProperties);
-				resultData.put("roomId", String.valueOf(roomId));
-				resultData.put("token", token);
-				return new ResponseEntity<>(resultData, HttpStatus.OK);
-			} else {
-				resultData.put("message", "인원 초과로 방에 참여할 수 없음");
-				return new ResponseEntity<>(resultData, HttpStatus.ACCEPTED);
-			}
+			roomService.checkJoinPossible(openvidu, roomId);
+			String token = roomService.createConnection(openvidu, session, connectionProperties);
+			resultData.put("roomId", String.valueOf(roomId));
+			resultData.put("token", token);
+			return ResponseEntity.ok(resultData);
 		} catch (Exception e) {
 			resultData.put("message", e.getMessage());
 			return new ResponseEntity<>(resultData, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -156,11 +150,7 @@ public class RoomController {
 		Map<String, Object> resultData = new HashMap<>();
 		try {
 			openvidu.fetch();
-			if (!roomService.checkJoinPossible(openvidu, roomId)) {
-				resultData.put("message", "인원 초과로 방에 참여할 수 없음");
-				return new ResponseEntity<>(resultData, HttpStatus.ACCEPTED);
-			}
-
+			roomService.checkJoinPossible(openvidu, roomId);
 			roomService.addMemberToRoom(roomId, memberId);
 			BookDetailDto bookInfo = BookDetailDto.builder()
 				.book(bookService.getBook(bookId))
@@ -170,8 +160,7 @@ public class RoomController {
 
 			resultData.put("memberId", String.valueOf(memberId));
 			resultData.put("bookInfo", bookInfo);
-
-			return new ResponseEntity<>(resultData, HttpStatus.OK);
+			return ResponseEntity.ok(resultData);
 		} catch (Exception e) {
 			resultData.put("message", e.getMessage());
 			return new ResponseEntity<>(resultData, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -187,7 +176,7 @@ public class RoomController {
 			openvidu.fetch();
 			roomService.updateRoom(roomId, roomInfo);
 			resultData.put("roomId", String.valueOf(roomId));
-			return new ResponseEntity<>(resultData, HttpStatus.OK);
+			return ResponseEntity.ok(resultData);
 		} catch (Exception e) {
 			resultData.put("message", e.getMessage());
 			return new ResponseEntity<>(resultData, HttpStatus.INTERNAL_SERVER_ERROR);

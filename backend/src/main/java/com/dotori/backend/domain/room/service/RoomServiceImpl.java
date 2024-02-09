@@ -126,7 +126,7 @@ public class RoomServiceImpl implements RoomService {
 	}
 
 	@Override
-	public boolean checkJoinPossible(OpenVidu openvidu, Long roomId) {
+	public void checkJoinPossible(OpenVidu openvidu, Long roomId) {
 		// 방 id 에 해당하는 방을 가져옵니다.
 		Room room = roomRepository.findById(roomId).orElseThrow(
 			() -> new EntityNotFoundException("해당하는 방을 찾을 수 없습니다.")
@@ -137,7 +137,9 @@ public class RoomServiceImpl implements RoomService {
 		// return activeConnections.size() < room.getLimitCnt();
 
 		// db와 openvidu 서버 둘 다 확인하는 게 맞지만, 일단 해피케이스
-		return room.getJoinCnt() < room.getLimitCnt();
+		if (room.getJoinCnt() >= room.getLimitCnt()){
+			throw new RuntimeException("인원 초과로 참여 불가");
+		};
 	}
 
 	@Override
