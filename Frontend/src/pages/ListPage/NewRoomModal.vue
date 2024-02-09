@@ -85,12 +85,13 @@
   const router = useRouter();
   const props = defineProps({bookmodal: Object});
   const moveWaitingRoom = () => {
+    isHost.value = true;
     router.push('/room');
   };
 
   const openViduStore = useOpenViduStore();
-  const {roomInfo, bookDetail, minRole} = storeToRefs(openViduStore);
-  const {createRoom, connectToOpenVidu, addRoomMember, memberInfo, isHost} = openViduStore;
+  const {roomInfo, bookDetail, minRole, isHost} = storeToRefs(openViduStore);
+  const {createRoom, connectToOpenVidu, addRoomMember, memberInfo} = openViduStore;
 
   onMounted(() => {
     fetchBookRoles();
@@ -131,7 +132,7 @@
     roomInfo.value.limitCnt = bookDetail.value.book.roleCnt;
     //방을 생성한 사람은 본인의 memberId를 hostId로 저장한다
     roomInfo.value.hostId = memberInfo.memberId;
-    openViduStore.isHost = true;
+    isHost.value = true;
 
     $q.loading.show({
       message: '방을 만들고 있어요! 잠시만 기다려주세요!',
