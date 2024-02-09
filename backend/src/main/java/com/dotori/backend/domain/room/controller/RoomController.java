@@ -198,22 +198,8 @@ public class RoomController {
 
 	@GetMapping("/{roomId}")
 	public ResponseEntity<RoomDto> getRoom(@PathVariable("roomId") Long roomId) {
-		Room room = roomService.getRoom(roomId);
-
-		RoomDto roomDto = RoomDto.builder()
-			.roomId(room.getRoomId())
-			.book(room.getBook())
-			.hostId(room.getHostId())
-			.title(room.getTitle())
-			.password(room.getPassword())
-			.isRecording(room.getIsRecording())
-			.joinCnt(room.getJoinCnt())
-			.limitCnt(room.getLimitCnt())
-			.isPublic(room.getIsPublic())
-			.sessionId(room.getSessionId())
-			.build();
-
-		return ResponseEntity.ok(roomDto);
+		RoomDto roomInfo = new RoomDto(roomService.getRoom(roomId));
+		return ResponseEntity.ok(roomInfo);
 	}
 
 }
