@@ -19,7 +19,7 @@ export const useOpenViduStore
   const apiRootPath = '/api/rooms';
 
   const roomId = ref(0);
-  const memberId = ref(20);
+  const memberId = ref(0);
   const memberInfo = ref({
     memberId: 0,
     nickName: '닉네임 조회 실패',
@@ -274,12 +274,9 @@ export const useOpenViduStore
     addRoomMember,
     updateRoom,
     publish,
-
-
     subscribers, mainStreamManager, OV,
     getConnectionToken,
     removeRoomMember,
-
     unpublish,
     isPublished,
     myRole, minRole, canvasStream, changeCanvasStream, isLoggedIn, memberInfo,
