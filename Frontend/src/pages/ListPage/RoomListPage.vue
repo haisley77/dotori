@@ -44,7 +44,7 @@
       const openViduStore = useOpenViduStore();
       const {getConnectionToken, connectToOpenVidu, addRoomMember} = openViduStore;
 
-      const moveWaitingRoom = (room) => {
+      const moveWaitingRoom = () => {
         router.push('/room');
       };
 
@@ -75,7 +75,7 @@
               .then(() => {
                 addRoomMember(room.book)
                   .then(() => {
-                    moveWaitingRoom(room);
+                    moveWaitingRoom();
                   })
                   .catch((error) => {
                     console.error('참여 인원 갱신 중 에러 발생 : ' + error);
