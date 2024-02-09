@@ -98,13 +98,12 @@ public class RoomController {
 	}
 
 	@DeleteMapping("/remove/expired-room")
-	public ResponseEntity<Map<String, String>> removeExpiredRoom() {
+	public ResponseEntity<Map<String, String>> removeExpiredRooms() {
 		Map<String, String> resultData = new HashMap<>();
 		try {
 			openvidu.fetch();
 			List<Session> activeSessions = openvidu.getActiveSessions();
 			roomService.removeExpiredRooms(activeSessions);
-			// roomService.removeMemberFromRoom(openvidu, roomId, memberId);
 			return ResponseEntity.ok(resultData);
 		} catch (Exception e) {
 			resultData.put("message", e.getMessage());

@@ -221,7 +221,10 @@ public class RoomServiceImpl implements RoomService {
 
 	@Override
 	public void removeExpiredRooms(List<Session> activeSessions) {
-		
+		List<String> activeSessionIdList = activeSessions.stream()
+			.map(Session::getSessionId)
+			.collect(Collectors.toList());
+		roomRepository.deleteAllBySessionIdNotIn(activeSessionIdList);
 	}
 
 }
