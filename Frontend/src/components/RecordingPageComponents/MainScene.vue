@@ -23,8 +23,8 @@
           style='height: 100%; '
         />
         <div class='flex justify-center absolute-bottom q-ma-none q-pa-none'>
-          <div v-if='ovstore.mainStreamManager' class='q-ma-none q-pa-none'>
-            <ov-video :stream-manager='ovstore.mainStreamManager' :id='ovstore.mainStreamManager.stream.streamId' />
+          <div v-if='ovstore.mainStreamManager'>
+            <ov-video style="transform: translate(0.1px,3px)" :stream-manager='ovstore.mainStreamManager' :id='ovstore.mainStreamManager.stream.streamId' />
           </div>
           <ov-video v-for='sub in ovstore.subscribers' :key='sub.stream.connection.connectionId' :stream-manager='sub'
                     :id='sub.stream.streamId' />
