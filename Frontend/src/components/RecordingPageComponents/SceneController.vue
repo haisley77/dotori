@@ -1,10 +1,28 @@
 <script setup>
   import {useOpenViduStore} from 'stores/openvidu';
   import {onMounted} from 'vue';
+  import axios from 'axios';
 
   const ovstore = useOpenViduStore();
-  const props = defineProps({curPage: Number});
+  const props = defineProps(
+    {
+      curPage: Number,
+      customLayoutFolder: String
+    },
+  );
   const emit = defineEmits(['moveToPage']);
+
+  let openViduRecordingId;
+  const sessionId = ovstore.session.sessionId;
+
+  const openviduAxios = axios.create({
+    baseURL: 'https://dotori.online',
+    headers: {
+      'Authorization': 'Basic T1BFTlZJRFVBUFA6MTBTU0FGWUE1MDI=',
+      'Content-Type': 'application/json',
+    },
+  });
+
   const nextPage = () => {
     if (ovstore.bookDetail.scenes.length > props.curPage) {
       //방장일 경우만 실행하도록 로직을 추가해야함
@@ -33,6 +51,52 @@
     }
   };
 
+  const startOpenViduRecording = () => {
+    openviduAxios.post('/openvidu/api/recordings/start',
+      {
+        "session": sessionId,
+        "name": "TestRecording",
+        "hasAudio": true,
+        "hasVideo": true,
+        "outputMode": "COMPOSED",
+        "recordingLayout": "CUSTOM",
+        "customLayout":  props.customLayoutFolder +  '/scene-' + props.curPage,
+        "resolution": "1280x640",
+        "frameRate": 30,
+        "shmSize": 536870912,
+        "ignoreFailedStreams": false,
+      })
+      .then((response) => {
+        console.log('id : ' + response.data.id);
+        console.log('name : ' + response.data.name);
+        console.log('hasAudio : ' + response.data.hasAudio);
+        console.log('hasAudio : ' + response.data.hasVideo);
+        console.log('outputMode : ' + response.data.outputMode);
+        console.log('recordingLayout : ' + response.data.recordingLayout);
+        console.log('customLayout : ' + response.data.customLayout);
+        console.log('frameRate : ' + response.data.frameRate);
+        openViduRecordingId = response.data.id;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const stopOpenViduRecording = () => {
+    openviduAxios.post(`/openvidu/api/recordings/stop/${openViduRecordingId}`)
+      .then((response) => {
+        console.log('id : ' + response.data.id);
+        console.log('hasAudio : ' + response.data.hasAudio);
+        console.log('hasAudio : ' + response.data.hasVideo);
+        console.log('outputMode : ' + response.data.outputMode);
+        console.log('recordingLayout : ' + response.data.recordingLayout);
+        console.log('frameRate : ' + response.data.frameRate);
+        console.log('url : ' + response.data.url);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
 </script>
 
@@ -46,10 +110,10 @@
           </div>
           <div class='center-button-container col-6'>
             <div class='play-button-container'>
-              <q-btn round color='blue-12' icon='mdi-play' size='lg' />
+              <q-btn round color='blue-12' icon='mdi-play' size='lg' @click="startOpenViduRecording" />
             </div>
             <div class='stop-button-container'>
-              <q-btn outline round color='white' text-color='red-5' icon='mdi-stop' size='lg' />
+              <q-btn outline round color='white' text-color='red-5' icon='mdi-stop' size='lg' @click="stopOpenViduRecording" />
             </div>
           </div>
           <div class='right-button-container col-3'>

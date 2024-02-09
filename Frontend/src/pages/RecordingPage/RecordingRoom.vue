@@ -11,7 +11,7 @@
         </div>
         <div class='left-container col-3 q-pt-sm'>
           <Script :currentScene='currentScene' />
-          <SceneController :curPage='curPage' @moveToPage='moveToPage' />
+          <SceneController :curPage='curPage' :customLayoutFolder="customLayoutFolder" @moveToPage='moveToPage' />
         </div>
       </div>
     </div>
@@ -50,6 +50,8 @@
   const myCanvasStream = ref();
   const myRealCanvas = ref();
   const myAvatar = ref('');
+
+  const customLayoutFolder = ref(null);
 
   //영상 퍼블리시
   const publish = () => {
@@ -132,7 +134,6 @@
     return set;
   };
 
-
   //mounted 후 실행되는 코드..초기화 작업
   onMounted(() => {
     console.log('recordingRoomOnMount실행중~~==========================================================================');
@@ -153,6 +154,12 @@
 
     //내 아바타 주소 받아옴!
     myAvatar.value = ovstore.bookDetail.roles[ovstore.myRole - ovstore.minRole].maskPath;
+
+    //녹화용 Custom Layout 경로 지정
+    let splited = ovstore.bookDetail.book.bookImg.split("/");
+    let folderName = splited[splited.length - 1]; // 파일 이름과 확장자 가져오기 ex('rabbit-and-turtle.png')
+    customLayoutFolder.value = folderName.split(".")[0]; // 확장자 제거 ex('rabbit-and-turtle')
+    console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$:LAYOUT"+customLayoutFolder.value)
 
 
     // 여기서부터 모델링 코드
@@ -499,6 +506,7 @@
     runDemo();
 
   });
+
 </script>
 <style scoped>
   @font-face {
