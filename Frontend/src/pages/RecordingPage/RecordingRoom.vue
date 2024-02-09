@@ -143,7 +143,7 @@
     //session 설정 추가
     //페이지이동 버튼이 눌리면 다같이 페이지를 이동한다
     ovstore.session.on('signal:page',(event)=>{
-      const nextPage= event.data;
+      const nextPage= Number(event.data);
       moveToPage(nextPage);
     });
 
