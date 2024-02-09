@@ -5,19 +5,25 @@
         <div v-if="player <= playerList.length">
           <!-- 플레이어가 있으면서 사용자의 프로필이 맞는 경우-->
           <div class="profile-background q-pa-sm" v-if="memberId === playerList[player-1].memberId">
-            <div class="dashed column items-center">
-              <img :src="playerList[player - 1].profileImg" class="profile-pic q-mr-md q-mt-sm" alt="user-profile-img" style="object-fit: cover">
+            <div class="dashed column items-center relative-position">
+              <div v-if="playerList[player-1].readyState" class="absolute-top-right q-py-xs q-px-sm q-my-none npsfont q-ma-xs"
+                   style="background: green;color: white;border-radius: 20px;font-size: small;line-height: 20px"><p class="q-ma-none">준비</p>
+              </div>
+              <img :src="playerList[player - 1].profileImg" class="profile-pic q-mr-md q-mt-sm" alt="user-profile-img"
+                   style="object-fit: cover">
               <h4 class="q-mr-md q-mt-md q-mb-sm player-name">{{ playerList[player - 1].name }}</h4>
               <div class="row q-mt-none q-mb-sm">
                 <q-btn unelevated rounded color="my-brown q-mr-sm btn-font" :disable="playerList[player-1].readyState">
                   <q-menu fit anchor="bottom start" self="top left">
-                    <q-item v-for="(role, index) in bookDetail.roles" :key="role" :disable="role.selected" clickable @click="toggleRole(player,index)">
+                    <q-item v-for="(role, index) in bookDetail.roles" :key="role" :disable="role.selected" clickable
+                            @click="toggleRole(player,index)">
                       <q-item-section>{{ role.name }}</q-item-section>
                     </q-item>
                   </q-menu>
-                  <div>{{ playerList[player-1].roleName }}</div>
+                  <div>{{ playerList[player - 1].roleName }}</div>
                 </q-btn>
-                <q-btn unelevated rounded color="my-green q-ml-sm btn-font" v-if="playerList[player-1].roleIndex !== 5" @click="cancelRole(player)" :disable="playerList[player-1].readyState">
+                <q-btn unelevated rounded color="my-green q-ml-sm btn-font" v-if="playerList[player-1].roleIndex !== 5"
+                       @click="cancelRole(player)" :disable="playerList[player-1].readyState">
                   <div>취소</div>
                 </q-btn>
               </div>
@@ -25,11 +31,16 @@
           </div>
           <!-- 플레이어가 있으면서 사용자의 프로필이 아닌 경우-->
           <div class="profile-background q-pa-sm" v-else>
-            <div class="dashed column items-center">
-              <img :src="playerList[player - 1].profileImg" class="profile-pic q-mr-md q-mt-sm" alt="user-profile-img" style="object-fit: cover">
+            <div class="dashed column items-center relative-position">
+              <div v-if="playerList[player-1].readyState" class="absolute-top-right q-py-xs q-px-sm q-my-none npsfont q-ma-xs"
+                   style="background: green;color: white;border-radius: 20px;font-size: small;line-height: 20px"><p class="q-ma-none">준비</p>
+              </div>
+              <img :src="playerList[player - 1].profileImg" class="profile-pic q-mr-md q-mt-sm" alt="user-profile-img"
+                   style="object-fit: cover">
               <h4 class="q-mr-md q-mt-md q-mb-sm player-name">{{ playerList[player - 1].name }}</h4>
               <div class="row q-mt-none q-mb-sm">
-                <q-btn unelevated rounded color="my-brown q-mr-sm btn-font" :disable="playerList[player-1].memberId !== memberId">
+                <q-btn unelevated rounded color="my-brown q-mr-sm btn-font"
+                       :disable="playerList[player-1].memberId !== memberId">
                   <q-menu fit anchor="bottom start" self="top left">
                     <q-item clickable>
                       <q-item-section>토끼</q-item-section>
@@ -38,7 +49,7 @@
                       <q-item-section>거북이</q-item-section>
                     </q-item>
                   </q-menu>
-                  <div>{{ playerList[player-1].roleName }}</div>
+                  <div>{{ playerList[player - 1].roleName }}</div>
                 </q-btn>
                 <q-btn unelevated rounded color="my-green q-ml-sm btn-font" style="display: none">
                   <div>취소</div>
@@ -51,7 +62,8 @@
         <div v-else>
           <div class="profile-background q-pa-sm">
             <div class="dashed column items-center">
-              <img src="../../assets/DotoriImages/acorn_character_img.png" class="profile-pic q-mr-md q-mt-sm" alt="user-profile-img">
+              <img src="../../assets/DotoriImages/acorn_character_img.png" class="profile-pic q-mr-md q-mt-sm"
+                   alt="user-profile-img">
               <h4 class="q-mr-md q-mt-md q-mb-sm player-name">사용자 없음</h4>
               <div class="row q-mt-none q-mb-sm" style="visibility: hidden">
                 <q-btn unelevated rounded color="my-brown q-mr-sm btn-font">
@@ -82,26 +94,26 @@
   import {ref, watch} from 'vue';
 
   const openViduStore = useOpenViduStore();
-  const {playerList,bookDetail,memberId} = storeToRefs(openViduStore);
+  const {playerList, bookDetail, memberId} = storeToRefs(openViduStore);
   const {session} = openViduStore;
 
 
   const makeSendingRoleData = () => {
     sendingRoleData.value.roleList = bookDetail.value.roles;
     sendingRoleData.value.playerList = playerList.value;
-  }
+  };
 
   watch(playerList.value, (newItems, oldItems) => {
     newItems.forEach((newItem, index) => {
       if (oldItems[index] !== newItem && index !== 0) {
-        playerList.value[index] = { ...newItem };
+        playerList.value[index] = {...newItem};
       }
     });
-  }, { deep: true });
+  }, {deep: true});
 
   const toggleRole = (player, selectedIndex) => {
     // 역할 선택
-    if (playerList.value[player-1].roleIndex === selectedIndex) {
+    if (playerList.value[player - 1].roleIndex === selectedIndex) {
       alert('정상적으로 선택되었습니다.');
       return;
     }
@@ -111,14 +123,14 @@
       alert('해당 역할은 이미 선택되었습니다.');
       return;
     }
-    const prevSelectedRole = bookDetail.value.roles[playerList.value[player-1].roleIndex];
+    const prevSelectedRole = bookDetail.value.roles[playerList.value[player - 1].roleIndex];
     if (prevSelectedRole) {
       prevSelectedRole.selected = false;
     }
     if (selectedRole) {
       selectedRole.selected = true;
-      playerList.value[player-1].roleName = selectedRole.name;
-      playerList.value[player-1].roleIndex = selectedIndex;
+      playerList.value[player - 1].roleName = selectedRole.name;
+      playerList.value[player - 1].roleIndex = selectedIndex;
 
     }
     makeSendingRoleData();
@@ -126,12 +138,12 @@
   };
 
   const cancelRole = (player) => {
-    bookDetail.value.roles[playerList.value[player-1].roleIndex].selected = false;
-    playerList.value[player-1].roleName = '역할 선택하기';
-    playerList.value[player-1].roleIndex = 5;
+    bookDetail.value.roles[playerList.value[player - 1].roleIndex].selected = false;
+    playerList.value[player - 1].roleName = '역할 선택하기';
+    playerList.value[player - 1].roleIndex = 5;
     makeSendingRoleData();
     sendRoleInfoToOpenVidu();
-  }
+  };
 
 
   const sendingRoleData = ref({
@@ -160,7 +172,7 @@
   session.on('signal:update-role', (event) => {
     const receivedData = JSON.parse(event.data);
     playerList.value = receivedData.playerList;
-    bookDetail.value.roles = receivedData.roleList
+    bookDetail.value.roles = receivedData.roleList;
   });
 
 
