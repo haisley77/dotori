@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.dotori.backend.domain.room.model.entity.Room;
 
 public interface RoomRepository extends JpaRepository<Room, Long> {
-	Optional<List<Room>> findAllByOrderByCreatedAtDesc();
+	Optional<List<Room>> findAllByOrderByIsRecordingAscCreatedAtDesc();
 }
