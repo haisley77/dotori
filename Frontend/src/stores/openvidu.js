@@ -1,4 +1,4 @@
-import {ref} from 'vue';
+import {onMounted, ref} from 'vue';
 import {defineStore} from 'pinia';
 import {OpenVidu} from 'openvidu-browser';
 
@@ -19,11 +19,12 @@ export const useOpenViduStore
   const apiRootPath = '/api/rooms';
 
   const roomId = ref(0);
-  const memberId = ref(10);
+  const memberId = ref(20);
   const memberInfo = ref({
-    memberId: memberId.value,
-    nickName: '나야낭',
-    email: 'dotori@dotori.com',
+    memberId: 0,
+    nickName: '닉네임 조회 실패',
+    email: '이메일 조회 실패',
+    profileImg: null,
   });
   const isLoggedIn = ref(false);
   const subscribers = ref([]);
@@ -31,7 +32,7 @@ export const useOpenViduStore
   var mainStreamManagerReal = null;
   const isPublished = ref(false);
   // 방장인지 아닌지 판단
-  const isHost = ref(true);
+  const isHost = ref(false);
 
   //나중에 역할 선택에 따라 변경할 부분
   const minRole = ref();
@@ -75,7 +76,7 @@ export const useOpenViduStore
       roomInitializationParam.value.bookInfo = bookmodal;
       roomInitializationParam.value.roomInfo = roomInfo.value;
 
-      axios.post(apiPath, roomInitializationParam.value)
+      axios.post(apiPath, roomInitializationParam.value,{withCredentials: true})
         .then((response) => {
           roomId.value = response.data.roomId;
           ovToken.value = response.data.token;
@@ -88,14 +89,15 @@ export const useOpenViduStore
     });
   };
 
-  const getConnectionToken = (room) => {
+  const getConnectionToken = (room) => {  //방에 입장할 때 사용되는 코드
     return new Promise((resolve, reject) => {
       roomInitializationParam.value.bookInfo = room.book;
       roomInitializationParam.value.roomInfo = room;
-
+      roomInfo.hostId = room.hostId;//방 정보에 호스트 아이디가 존재한다. 저장한다
+      isHost.value = false;//입장한 사람은 호스트가 아니니까 false
       const apiPath = apiRootPath + `/connection/${room.roomId}`;
 
-      axios.post(apiPath, connection_properties.value)
+      axios.post(apiPath, connection_properties.value,{withCredentials: true})
         .then((response) => {
           if (response.status === 200) {
             roomId.value = response.data.roomId;
@@ -118,7 +120,7 @@ export const useOpenViduStore
     return new Promise((resolve, reject) => {
       const apiPath = apiRootPath + `/add/${roomId.value}/${memberId.value}/${book.bookId}`;
 
-      axios.post(apiPath)
+      axios.post(apiPath,{withCredentials: true})
         .then((response) => {
           if (response.status === 200) {
             bookDetail.value = response.data.bookInfo;
@@ -140,7 +142,7 @@ export const useOpenViduStore
     return new Promise((resolve, reject) => {
       const apiPath = apiRootPath + `/remove/${roomId.value}/${memberId.value}`;
 
-      axios.delete(apiPath)
+      axios.delete(apiPath,{withCredentials: true})
         .then((response) => {
           resolve(response.data);
         })
@@ -157,7 +159,7 @@ export const useOpenViduStore
 
       roomInfo.value.isRecording = isRecording;
 
-      axios.post(apiPath, roomInfo.value)
+      axios.post(apiPath, roomInfo.value, {withCredentials: true})
         .then((response) => {
           roomId.value = response.data.roomId;
           resolve(response.data);
@@ -226,7 +228,38 @@ export const useOpenViduStore
 
   const playerList = ref([]);
   const myRole = ref();
+  // import {localAxios} from 'src/axios/http-commons';
+  // const axios = localAxios();
+  const checkAuthStatus = () => {
+    console.log('isLoggedIn? : ' + isLoggedIn);
+    axios.get('http://localhost:8080/api/members/status', {withCredentials: true}).then(
+      (response) => {
+        //로그인 된 상태를 확인하고 저장한다
+        isLoggedIn.value = response.data;
+        if (isLoggedIn.value) {
+          console.log("로그인 되어있음!");
+          axios.get('http://localhost:8080/api/members/detail', {withCredentials: true})
+            .then((response) => {
+              //회원정보를 저장한다
+              console.log('회원 정보 조회 성공!');
+              console.log(response)
+              memberInfo.value = response.data;
+              console.log(memberInfo.value);
+              memberId.value = response.data.memberId;
+            }).catch((error) => {
+            console.log('회원정보 조회 실패' + error);
+          });
+        }
+      },
+    ).catch((error) => {
+      isLoggedIn.value = false;
+      console.log('로그인 확인 실패 : ' + error);
+    });
+  };
 
+  onMounted(() => {
+    checkAuthStatus();
+  });
   return {
     roomInfo,
     memberId,

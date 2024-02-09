@@ -86,17 +86,17 @@
   };
 
   const openViduStore = useOpenViduStore();
-  const {roomInfo,bookDetail,minRole} = storeToRefs(openViduStore);
-  const {createRoom, connectToOpenVidu, addRoomMember} = openViduStore;
+  const {roomInfo, bookDetail, minRole} = storeToRefs(openViduStore);
+  const {createRoom, connectToOpenVidu, addRoomMember, memberInfo, isHost} = openViduStore;
 
   onMounted(() => {
     fetchBookRoles();
-  })
+  });
 
   const fetchBookRoles = () => {
     return new Promise(async (resolve, reject) => {
       try {
-        const response = await axios.get(`http://localhost:8080/api/books/${props.bookmodal.bookId}`);
+        const response = await axios.get(`http://localhost:8080/api/books/${props.bookmodal.bookId}`, {withCredentials: true});
         console.log('API Response:', response);
         if (response.status === 200) {
           bookDetail.value = response.data;
@@ -126,6 +126,9 @@
     roomInfo.value.password = roomPassword.value;
     roomInfo.value.isPublic = !isPrivate.value;
     roomInfo.value.limitCnt = bookDetail.value.book.roleCnt;
+    //방을 생성한 사람은 본인의 memberId를 hostId로 저장한다
+    roomInfo.value.hostId = memberInfo.memberId;
+    openViduStore.isHost = true;
 
     createRoom(props.bookmodal)
       .then(() => {
@@ -136,10 +139,10 @@
                 roomInfo.value.joinCnt++;
                 moveWaitingRoom();
               })
-              .catch()
+              .catch();
           })
-          .catch()
-      })
+          .catch();
+      });
   };
 </script>
 

@@ -55,7 +55,7 @@
       // 방 목록 정보를 불러온다.
       const fetchRooms = async () => {
         try {
-          const response = await axios.get('http://localhost:8080/api/rooms');
+          const response = await axios.get('http://localhost:8080/api/rooms',{withCredentials: true});
           console.log('API Response:', response);
           if (response.status === 200) {
             rooms.value = response.data;

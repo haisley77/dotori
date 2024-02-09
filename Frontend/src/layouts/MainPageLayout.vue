@@ -83,34 +83,7 @@
   //     console.error('Error fetching member info:', error);
   //   }
   // };
-  const checkAuthStatus = () => {
-    console.log('isLoggedIn? : ' + ovstore.isLoggedIn);
-    axios.get('http://localhost:8080/api/members/status', {withCredentials: true}).then(
-      (response) => {
-        //로그인 된 상태를 확인하고 저장한다
-        ovstore.isLoggedIn = response.data;
-        if (ovstore.isLoggedIn) {
-          console.log("로그인 되어있음!");
-          axios.get('http://localhost:8080/api/members/detail', {withCredentials: true})
-            .then((response) => {
-              //회원정보를 저장한다
-              console.log('회원 정보 조회 성공!');
-              console.log(response)
-              ovstore.memberInfo = response.data;
-            }).catch((error) => {
-            console.log('회원정보 조회 실패' + error);
-          });
-        }
-      },
-    ).catch((error) => {
-      ovstore.isLoggedIn = false;
-      console.log('로그인 확인 실패 : ' + error);
-    });
-  };
 
-  onMounted(() => {
-    checkAuthStatus();
-  });
 </script>
 
 <style lang="scss" scoped>

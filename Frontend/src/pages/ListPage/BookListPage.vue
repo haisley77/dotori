@@ -47,7 +47,7 @@
 
       const fetchBooks = async () => {
         try {
-          const response = await axios.get('http://localhost:8080/api/books');
+          const response = await axios.get('http://localhost:8080/api/books',{withCredentials: true});
           console.log('API Response:', response);
           if (response.status === 200) {
             books.value = response.data.books;
