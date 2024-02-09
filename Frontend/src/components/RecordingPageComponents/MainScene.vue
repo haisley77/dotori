@@ -12,7 +12,7 @@
 
 <template>
 
-  <div class='scene-info-container q-pa-sm'>
+  <div class='scene-info-container q-pa-sm' :class="{borderbrown:ovstore.onAir===0, borderred:ovstore.onAir===1}">
 
     <div class=' ' style='height: 100%;border-radius: 15px'>
       <div class='scene-background-container relative-position'>
@@ -51,7 +51,17 @@
 
   .scene-info-container {
     height: 570px;
-    //border-radius: 15px; border: #C7A96E solid 6px;
+    //border-radius: 15px;
+
+  }
+
+  .borderbrown{
+    border: #C7A96E solid 6px;
+  }
+
+  .borderred{
+    border: red solid 6px;
+
   }
 
   .scene-background-container {

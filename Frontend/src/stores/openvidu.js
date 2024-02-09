@@ -19,7 +19,7 @@ export const useOpenViduStore
   const apiRootPath = '/api/rooms';
 
   const roomId = ref(0);
-  const memberId = ref(0);
+  const memberId = ref(20);
   const memberInfo = ref({
     memberId: 0,
     nickName: '닉네임 조회 실패',
@@ -33,7 +33,7 @@ export const useOpenViduStore
   const isPublished = ref(false);
   // 방장인지 아닌지 판단
   const isHost = ref(false);
-
+  const onAir = ref(0);
   //나중에 역할 선택에 따라 변경할 부분
   const minRole = ref();
   const canvasStream = ref();
@@ -277,6 +277,7 @@ export const useOpenViduStore
     subscribers, mainStreamManager, OV,
     getConnectionToken,
     removeRoomMember,
+    onAir,
     unpublish,
     isPublished,
     myRole, minRole, canvasStream, changeCanvasStream, isLoggedIn, memberInfo,

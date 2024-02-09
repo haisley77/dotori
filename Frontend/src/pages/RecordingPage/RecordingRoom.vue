@@ -1,7 +1,7 @@
 <template>
-  <Header/>
+  <Header />
   <!--  <h1>{{ myAvatar }}</h1>-->
-  role : {{ovstore.myRole}}
+  role : {{ ovstore.myRole }}
   <div class='row flex justify-center q-px-none'>
     <div class='col-11'>
       <div class='entire-container row'>
@@ -142,14 +142,14 @@
 
     //session 설정 추가
     //페이지이동 버튼이 눌리면 다같이 페이지를 이동한다
-    ovstore.session.on('signal:page',(event)=>{
-      const nextPage= Number(event.data);
+    ovstore.session.on('signal:page', (event) => {
+      const nextPage = Number(event.data);
       moveToPage(nextPage);
     });
 
     ovstore.session.on('signal:onAir', (event) => {
-      const onAir = event.data
-    })
+      ovstore.onAir = Number(event.data);
+    });
 
     //척페이지 역할 초기화
     currentRoles.value = getRoles(1);
@@ -160,10 +160,10 @@
     myAvatar.value = ovstore.bookDetail.roles[ovstore.myRole - ovstore.minRole].maskPath;
 
     //녹화용 Custom Layout 경로 지정
-    let splited = ovstore.bookDetail.book.bookImg.split("/");
+    let splited = ovstore.bookDetail.book.bookImg.split('/');
     let folderName = splited[splited.length - 1]; // 파일 이름과 확장자 가져오기 ex('rabbit-and-turtle.png')
-    customLayoutFolder.value = folderName.split(".")[0]; // 확장자 제거 ex('rabbit-and-turtle')
-    console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$:LAYOUT"+customLayoutFolder.value)
+    customLayoutFolder.value = folderName.split('.')[0]; // 확장자 제거 ex('rabbit-and-turtle')
+    console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$:LAYOUT' + customLayoutFolder.value);
 
 
     // 여기서부터 모델링 코드
