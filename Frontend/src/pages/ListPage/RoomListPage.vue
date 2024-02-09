@@ -42,10 +42,11 @@
       const router = useRouter();
       const rooms = ref([]);
       const openViduStore = useOpenViduStore();
-      const {roomInfo} = storeToRefs(openViduStore);
+      const {roomInfo,roomId} = storeToRefs(openViduStore);
       const {getConnectionToken, connectToOpenVidu, addRoomMember} = openViduStore;
 
       const moveWaitingRoom = (room) => {
+        roomId.value = room.roomId;
         roomInfo.value = room;
         router.push('/room');
       };
