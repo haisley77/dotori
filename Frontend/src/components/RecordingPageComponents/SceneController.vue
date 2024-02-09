@@ -1,15 +1,15 @@
 <script setup>
   import {useOpenViduStore} from 'stores/openvidu';
   import axios from 'axios';
-  import { ref } from 'vue'
+  import {ref} from 'vue';
   import {QSpinnerHourglass, useQuasar} from 'quasar';
 
-  const $q = useQuasar()
+  const $q = useQuasar();
   const ovstore = useOpenViduStore();
   const props = defineProps(
     {
       curPage: Number,
-      customLayoutFolder: String
+      customLayoutFolder: String,
     },
   );
   const emit = defineEmits(['moveToPage']);
@@ -30,7 +30,7 @@
       ovstore.session.signal({
           data: props.curPage + 1,
           type: 'page',
-        }
+        },
       );
       emit('moveToPage', props.curPage + 1);
     } else {
@@ -40,12 +40,12 @@
 
   const beforePage = () => {
     if (1 < props.curPage) {
-        //방장일 경우만 실행하도록 로직을 추가해야함
-        ovstore.session.signal({
-                data: props.curPage - 1,
-                type: 'page',
-            }
-        );
+      //방장일 경우만 실행하도록 로직을 추가해야함
+      ovstore.session.signal({
+          data: props.curPage - 1,
+          type: 'page',
+        },
+      );
       emit('moveToPage', props.curPage - 1);
     } else {
       console.log('첫번째 페이지 입니다!');
@@ -57,27 +57,27 @@
       message: '녹화 준비 중입니다. 잠시만 기다려주세요!',
       spinner: QSpinnerHourglass,
       boxClass: 'bg-grey-2 text-grey-9',
-      spinnerColor: 'brown'
-    })
+      spinnerColor: 'brown',
+    });
 
     ovstore.session.signal({
       data: 1,
-      type: 'onAir'
-    })
+      type: 'onAir',
+    });
 
     openviduAxios.post('/openvidu/api/recordings/start',
       {
-        "session": sessionId,
-        "name": "TestRecording",
-        "hasAudio": true,
-        "hasVideo": true,
-        "outputMode": "COMPOSED",
-        "recordingLayout": "CUSTOM",
-        "customLayout":  props.customLayoutFolder +  '/scene-' + props.curPage,
-        "resolution": "1280x640",
-        "frameRate": 30,
-        "shmSize": 536870912,
-        "ignoreFailedStreams": false,
+        'session': sessionId,
+        'name': 'TestRecording',
+        'hasAudio': true,
+        'hasVideo': true,
+        'outputMode': 'COMPOSED',
+        'recordingLayout': 'CUSTOM',
+        'customLayout': props.customLayoutFolder + '/scene-' + props.curPage,
+        'resolution': '1280x640',
+        'frameRate': 30,
+        'shmSize': 536870912,
+        'ignoreFailedStreams': false,
       })
       .then((response) => {
 
@@ -90,23 +90,28 @@
         console.log('customLayout : ' + response.data.customLayout);
         console.log('frameRate : ' + response.data.frameRate);
         openViduRecordingId = response.data.id;
-        $q.loading.hide()
+        $q.loading.hide();
 
       })
       .catch((error) => {
         console.log(error);
-        $q.loading.hide()
+        $q.loading.hide();
         $q.notify({
           color: 'white',
           textColor: 'red-9',
           message: '문제가 생겼어요! 다시 녹화 시작을 해볼까요?',
           position: 'center',
-          timeout: 500
-        })
+          timeout: 500,
+        });
       });
   };
 
   const stopOpenViduRecording = () => {
+    ovstore.session.signal({
+      data: 0,
+      type: 'onAir',
+    });
+
     openviduAxios.post(`/openvidu/api/recordings/stop/${openViduRecordingId}`)
       .then((response) => {
         $q.notify({
@@ -114,8 +119,8 @@
           textColor: 'green-9',
           message: '녹화가 성공적으로 되었어요! 다음 장면도 녹화하러 가볼까요?',
           position: 'center',
-          timeout: 500
-        })
+          timeout: 500,
+        });
         console.log('id : ' + response.data.id);
         console.log('hasAudio : ' + response.data.hasAudio);
         console.log('hasAudio : ' + response.data.hasVideo);
@@ -128,14 +133,14 @@
       })
       .catch((error) => {
         console.log(error);
-        $q.loading.hide()
+        $q.loading.hide();
         $q.notify({
           color: 'white',
           textColor: 'red-9',
           message: '녹화가 되지 않았아요! 아쉽지만 다시 녹화를 해볼까요?',
           position: 'center',
-          timeout: 500
-        })
+          timeout: 500,
+        });
       });
   };
 </script>
@@ -153,7 +158,8 @@
               <q-btn round color='blue-12' icon='mdi-play' size='lg' @click="startOpenViduRecording" />
             </div>
             <div class='stop-button-container'>
-              <q-btn outline round color='white' text-color='red-5' icon='mdi-stop' size='lg' @click="stopOpenViduRecording" />
+              <q-btn outline round color='white' text-color='red-5' icon='mdi-stop' size='lg'
+                     @click="stopOpenViduRecording" />
             </div>
           </div>
           <div class='right-button-container col-3'>
@@ -180,7 +186,7 @@
 
   .controller-container {
     height: 180px;
-  //border: black solid 1px;
+    //border: black solid 1px;
   }
 
   .left-button-container {
@@ -216,14 +222,14 @@
   }
 
   .in-back {
-  //background: #ffee9a; background: #ffffff; border-radius: 15px;
+    //background: #ffee9a; background: #ffffff; border-radius: 15px;
   }
 
   .button-container {
     background: white;
     border-radius: 15px;
     height: 100%;
-  //border: #cc765a dashed 4px;
+    //border: #cc765a dashed 4px;
   }
 
 </style>

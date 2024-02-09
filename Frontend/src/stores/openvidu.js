@@ -33,7 +33,7 @@ export const useOpenViduStore
   const isPublished = ref(false);
   // 방장인지 아닌지 판단
   const isHost = ref(false);
-
+  const onAir = ref(0);
   //나중에 역할 선택에 따라 변경할 부분
   const minRole = ref();
   const canvasStream = ref();
@@ -279,7 +279,7 @@ export const useOpenViduStore
     subscribers, mainStreamManager, OV,
     getConnectionToken,
     removeRoomMember,
-
+    onAir,
     unpublish,
     isPublished,
     myRole, minRole, canvasStream, changeCanvasStream, isLoggedIn, memberInfo,
