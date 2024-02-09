@@ -19,11 +19,11 @@
                    width='210px'
                    height='210px'
                    style='
-                    object-fit: cover;
-                    border-radius: 50%;
+                    object-fit: contain;
+                    /*border-radius: 50%;*/
                     /*border: 4px solid #00fff7;*/
                     /*padding : 4px;*/
-                    background-color: #ffeac2;
+                    /*background-color: #ffeac2;*/
                     '
                    class='q-ma-none q-pa-none ani-l' />
             </div>
@@ -32,23 +32,24 @@
               <img src='src/assets/DotoriImages/lion2d.png'
                    width='210px'
                    height='210px'
-                   style='object-fit: cover; border-radius: 50%;
+                   style='object-fit: contain;
+                   /*border-radius: 50%;*/
                     /*border: 4px solid #fff100;*/
                     /*padding : 4px;*/
-                    background-color: #ffeac2;
+                    /*background-color: #ffeac2;*/
                     ' class='q-ma-none q-pa-none ani-tr' />
             </div>
             <div class='absolute-bottom-right flex justify-center items-center'
-                 style='transform:translate(-15px,10px)'>
+                 style='transform:translate(-45px,-20px)'>
               <img src='src/assets/DotoriImages/racoon2d.png'
                    width='230px'
                    height='230px'
                    style='
-                    object-fit: cover;
-                    border-radius: 50%;
+                    object-fit: contain;
+                    /*border-radius: 50%;*/
                     /*border: 4px solid #eeadff;*/
                     /*padding : 4px;*/
-                    background-color: #ffeac2;
+                    /*background-color: #ffeac2;*/
                     '
                    class='q-ma-none q-pa-none ani-bl' />
             </div>
@@ -116,8 +117,8 @@
     }
 
     50% {
-      left: 20px;
-      top: -20px;
+      left: 15px;
+      top: -15px;
     }
 
     100% {
