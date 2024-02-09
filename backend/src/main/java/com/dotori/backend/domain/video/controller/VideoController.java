@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dotori.backend.domain.video.model.dto.VideoSceneUploadRequest;
@@ -70,6 +71,15 @@ public class VideoController {
 	) {
 		log.info("[saveSceneVideo] called");
 		videoService.saveSceneVideo(sceneVideoSaveRequest);
+		return ResponseEntity.status(CREATED).build();
+	}
+
+	@PostMapping("/scenes/merge")
+	private ResponseEntity<Void> mergeSceneVideos(
+		@RequestParam Long roomId
+	) {
+		log.info("[saveSceneVideo] called");
+		videoService.mergeSceneVideo(roomId);
 		return ResponseEntity.status(CREATED).build();
 	}
 }
