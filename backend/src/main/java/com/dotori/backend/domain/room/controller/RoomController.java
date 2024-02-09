@@ -89,7 +89,7 @@ public class RoomController {
 			openvidu.fetch();
 			roomService.removeMemberFromRoom(openvidu, roomId, memberId);
 			resultData.put("memberId", String.valueOf(memberId));
-			return new ResponseEntity<>(resultData, HttpStatus.OK);
+			return ResponseEntity.ok(resultData);
 		} catch (Exception e) {
 			resultData.put("message", e.getMessage());
 			return new ResponseEntity<>(resultData, HttpStatus.INTERNAL_SERVER_ERROR);
