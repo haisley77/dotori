@@ -7,8 +7,8 @@
   <div style='height: 100%' class='background-green q-pa-sm'>
 
     <div style='height: 100%' class='background-yellow q-pa-sm '>
-      <div class='column  flex justify-center items-center' style="height: 66%;width: 100%">
-        <img :src='props.bookInfo.bookImg' class='bookimg q-pb-sm' style="width: 100%; object-fit: contain">
+      <div class='column  flex justify-center items-center' style="width: 100%">
+        <img :src='props.bookInfo.bookImg' class='bookimg q-pb-sm' style="width: 100%;object-fit: fill;">
       </div>
       <hr class='q-ma-none' />
       <div class=' column q-pa-sm background-white' style="overflow: auto">
