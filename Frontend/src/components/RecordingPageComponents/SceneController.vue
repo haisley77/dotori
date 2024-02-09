@@ -1,8 +1,10 @@
 <script setup>
   import {useOpenViduStore} from 'stores/openvidu';
-  import {onMounted} from 'vue';
   import axios from 'axios';
+  import { ref } from 'vue'
+  import {QSpinnerHourglass, useQuasar} from 'quasar';
 
+  const $q = useQuasar()
   const ovstore = useOpenViduStore();
   const props = defineProps(
     {
@@ -11,7 +13,6 @@
     },
   );
   const emit = defineEmits(['moveToPage']);
-
   let openViduRecordingId;
   const sessionId = ovstore.session.sessionId;
 
@@ -52,6 +53,18 @@
   };
 
   const startOpenViduRecording = () => {
+    $q.loading.show({
+      message: '녹화 준비 중입니다. 잠시만 기다려주세요!',
+      spinner: QSpinnerHourglass,
+      boxClass: 'bg-grey-2 text-grey-9',
+      spinnerColor: 'brown'
+    })
+
+    ovstore.session.signal({
+      data: 1,
+      type: 'onAir'
+    })
+
     openviduAxios.post('/openvidu/api/recordings/start',
       {
         "session": sessionId,
@@ -67,6 +80,7 @@
         "ignoreFailedStreams": false,
       })
       .then((response) => {
+
         console.log('id : ' + response.data.id);
         console.log('name : ' + response.data.name);
         console.log('hasAudio : ' + response.data.hasAudio);
@@ -76,15 +90,32 @@
         console.log('customLayout : ' + response.data.customLayout);
         console.log('frameRate : ' + response.data.frameRate);
         openViduRecordingId = response.data.id;
+        $q.loading.hide()
+
       })
       .catch((error) => {
         console.log(error);
+        $q.loading.hide()
+        $q.notify({
+          color: 'white',
+          textColor: 'red-9',
+          message: '문제가 생겼어요! 다시 녹화 시작을 해볼까요?',
+          position: 'center',
+          timeout: 500
+        })
       });
   };
 
   const stopOpenViduRecording = () => {
     openviduAxios.post(`/openvidu/api/recordings/stop/${openViduRecordingId}`)
       .then((response) => {
+        $q.notify({
+          color: 'white',
+          textColor: 'green-9',
+          message: '녹화가 성공적으로 되었어요! 다음 장면도 녹화하러 가볼까요?',
+          position: 'center',
+          timeout: 500
+        })
         console.log('id : ' + response.data.id);
         console.log('hasAudio : ' + response.data.hasAudio);
         console.log('hasAudio : ' + response.data.hasVideo);
@@ -92,19 +123,28 @@
         console.log('recordingLayout : ' + response.data.recordingLayout);
         console.log('frameRate : ' + response.data.frameRate);
         console.log('url : ' + response.data.url);
+
+
       })
       .catch((error) => {
         console.log(error);
+        $q.loading.hide()
+        $q.notify({
+          color: 'white',
+          textColor: 'red-9',
+          message: '녹화가 되지 않았아요! 아쉽지만 다시 녹화를 해볼까요?',
+          position: 'center',
+          timeout: 500
+        })
       });
   };
-
 </script>
 
 <template>
   <div class='controller-container col-4 q-pt-sm'>
     <div class='out-back ' style='height: 100%'>
       <div class='in-back q-pa-sm' style='width: 100%; height: 100%'>
-        <div class='button-container row'>
+        <div class='button-container row '>
           <div class='left-button-container col-3'>
             <q-btn round color='grey-9' icon='mdi-arrow-left-bold' size='lg' @click='beforePage' />
           </div>
