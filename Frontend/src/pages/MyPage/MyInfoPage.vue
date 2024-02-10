@@ -74,12 +74,9 @@
 <script setup>
     import {ref, onMounted} from 'vue';
     import {useRouter} from 'vue-router';
-    import axios from 'axios';
+    import {localAxios} from 'src/axios/http-commons';
 
-    const axiosInstance = axios.create({
-        withCredentials: true,
-    });
-
+    const axios = localAxios();
     const router = useRouter();
 
     const dummyUser = ref({
@@ -91,8 +88,8 @@
     // API 호출하여 정보 가져오기
     const fetchMemberInfo = async () => {
         try {
-            const response = await axiosInstance.get(
-                'http://localhost:8080/api/members/detail',
+            const response = await axios.get(
+                '/api/members/detail',
             );
             const memberInfo = response.data;
 
@@ -122,8 +119,8 @@
     const changeNickname = async newNickname => {
         try {
             console.log('함수 내 newNickname:', newNickname);
-            const response = await axiosInstance.put(
-                'http://localhost:8080/api/members/update_nickname',
+            const response = await axios.put(
+                '/api/members/update_nickname',
                 {},
                 {
                     params: {newNickname},

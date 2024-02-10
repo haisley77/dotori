@@ -78,9 +78,10 @@
   import {useRouter} from 'vue-router';
   import {useOpenViduStore} from 'stores/openvidu';
   import {onMounted, ref} from 'vue';
-  import axios from 'axios';
   import {QSpinnerHourglass, useQuasar} from 'quasar';
+  import {localAxios} from 'src/axios/http-commons';
 
+  const axios = localAxios();
   const $q = useQuasar();
   const router = useRouter();
   const props = defineProps({bookmodal: Object});
@@ -100,7 +101,7 @@
   const fetchBookRoles = () => {
     return new Promise(async (resolve, reject) => {
       try {
-        const response = await axios.get(`http://localhost:8080/api/books/${props.bookmodal.bookId}`, {withCredentials: true});
+        const response = await axios.get(`/api/books/${props.bookmodal.bookId}`, {withCredentials: true});
         console.log('API Response:', response);
         bookDetail.value = response.data;
         resolve();

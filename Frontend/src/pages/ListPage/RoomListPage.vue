@@ -34,11 +34,12 @@
   import {onMounted, ref} from 'vue';
   import {useRouter} from 'vue-router';
   import {useOpenViduStore} from 'stores/openvidu';
-  import axios from 'axios';
+  import {localAxios} from 'src/axios/http-commons';
 
   export default {
     components: {EnterRoomComponent},
     setup() {
+      const axios = localAxios();
       const router = useRouter();
       const rooms = ref([]);
       const openViduStore = useOpenViduStore();
@@ -58,7 +59,7 @@
       // 방 목록 정보를 불러온다.
       const fetchRooms = async () => {
         try {
-          const response = await axios.get('http://localhost:8080/api/rooms',{withCredentials: true});
+          const response = await axios.get('/api/rooms',{withCredentials: true});
           console.log('API Response:', response);
           rooms.value = response.data;
         } catch (error) {

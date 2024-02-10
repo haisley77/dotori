@@ -34,8 +34,9 @@
 <script>
   import {onMounted, ref} from 'vue';
   import Book from 'components/ListPageComponents/Book.vue';
-  import axios from 'axios';
+  import {localAxios} from 'src/axios/http-commons';
 
+  const axios = localAxios();
   export default {
     components: {Book},
     setup() {
@@ -47,7 +48,7 @@
 
       const fetchBooks = async () => {
         try {
-          const response = await axios.get('http://localhost:8080/api/books',{withCredentials: true});
+          const response = await axios.get('/api/books',{withCredentials: true});
           console.log('API Response:', response);
           books.value = response.data.books;
         } catch (error) {
