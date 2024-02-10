@@ -1,9 +1,10 @@
 <script setup>
   import {useOpenViduStore} from 'stores/openvidu';
-  import axios from 'axios';
-  import {ref} from 'vue';
   import {QSpinnerHourglass, useQuasar} from 'quasar';
+  import {localAxios} from 'src/axios/http-commons';
+  import axios from 'axios';
 
+  const local = localAxios();
   const $q = useQuasar();
   const ovstore = useOpenViduStore();
   const props = defineProps(
@@ -129,7 +130,24 @@
         console.log('frameRate : ' + response.data.frameRate);
         console.log('url : ' + response.data.url);
 
+        let clipUrl = response.data.url;
+        let toRemove = "https://dotori.online:8443/openvidu/recordings/";
 
+        let resultUrl = clipUrl.replace(toRemove, "");
+
+        local.post('/api/videos/scenes', {
+          roomId: ovstore.roomId,
+          sceneOrder: props.curPage,
+          savedPath: resultUrl,
+        }).then().catch((error) => {
+          $q.notify({
+            color: 'white',
+            textColor: 'red-9',
+            message: '녹화가 되지 않았아요! 아쉽지만 다시 녹화를 해볼까요?',
+            position: 'center',
+            timeout: 500
+          })
+        })
       })
       .catch((error) => {
         console.log(error);
@@ -143,6 +161,10 @@
         });
       });
   };
+
+  const mergeVideo = () => {
+    local.post(`/api/videos/scenes/merge?roomId=${ovstore.roomId}`).then().catch();
+  }
 </script>
 
 <template>
@@ -165,6 +187,7 @@
           <div class='right-button-container col-3'>
             <q-btn round color='grey-9' icon='mdi-arrow-right-bold' size='lg' @click='nextPage' />
           </div>
+          <q-btn round color='grey-9' icon='mdi-stop' size='lg' @click='mergeVideo' />
         </div>
       </div>
     </div>
