@@ -33,7 +33,7 @@
           type: 'page',
         },
       );
-      emit('moveToPage', props.curPage + 1);
+      // emit('moveToPage', props.curPage + 1);
     } else {
       console.log('마지막 페이지 입니다!');
     }
@@ -47,7 +47,7 @@
           type: 'page',
         },
       );
-      emit('moveToPage', props.curPage - 1);
+      // emit('moveToPage', props.curPage - 1);
     } else {
       console.log('첫번째 페이지 입니다!');
     }
