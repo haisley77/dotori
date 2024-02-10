@@ -201,19 +201,19 @@
             <div class='in-back q-pa-sm' style='width: 100%; height: 100%'>
                 <div class='button-container row '>
                     <div class='left-button-container col-3'>
-                        <q-btn round color='grey-9' icon='mdi-arrow-left-bold' size='lg' @click='beforePage' />
+                        <q-btn round color='grey-9' icon='mdi-arrow-left-bold' size='lg' @click='beforePage' :disabled='!ovstore.isHost'/>
                     </div>
                     <div class='col-6 flex justify-center items-center'>
                         <q-btn round color='blue-12' icon='mdi-play' size='lg' v-if='!ovstore.onAir'
-                               @click='startOpenViduRecording' />
+                               @click='startOpenViduRecording'  :disabled='!ovstore.isPublished' />
                         <q-btn outline round color='white' text-color='red-5' icon='mdi-stop' size='lg'
                                v-if='ovstore.onAir'
-                               @click='stopOpenViduRecording' />
+                               @click='stopOpenViduRecording' :disabled='!ovstore.isPublished'/>
                     </div>
                     <div class='right-button-container col-3'>
-                        <q-btn round color='grey-9' icon='mdi-arrow-right-bold' size='lg' @click='nextPage' />
+                        <q-btn round color='grey-9' icon='mdi-arrow-right-bold' size='lg' @click='nextPage' :disabled='!ovstore.isHost'/>
                     </div>
-                    <q-btn round color='grey-9' icon='mdi-stop' size='lg' @click='mergeVideo' />
+                    <q-btn round color='grey-9' icon='mdi-stop' size='lg' @click='mergeVideo' :disabled='!ovstore.isHost'/>
                 </div>
             </div>
         </div>
