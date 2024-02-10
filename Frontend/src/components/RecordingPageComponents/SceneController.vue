@@ -147,7 +147,9 @@
                     roomId: ovstore.roomId,
                     sceneOrder: props.curPage,
                     savedPath: resultUrl,
-                }).then().catch((error) => {
+                }).then(() => {
+                    recStore.recComplete(props.curPage);//현재 페이지 녹화 완료된 정보를 저장
+                }).catch((error) => {
                     $q.notify({
                         color: 'white',
                         textColor: 'red-9',
@@ -172,8 +174,8 @@
 
     const mergeVideo = () => {
 
-        if (recStore.checkAllRecComplete()) {
-            //모든 페이지가 녹화 되었을 경우
+        if (recStore.checkAllRecComplete() && ovstore.isHost) {
+            //모든 페이지가 녹화 되었을 경우 && 방장일 경우
             //녹화영상 머지 생성 요청을 보낸다
             local.post('/api/videos/scenes/merge', {
                 roomId: ovstore.roomId,
@@ -183,9 +185,8 @@
                     type: 'end',
                 },
             );
-        }
-        else {
-            alert("녹화 되지 않은 페이지가 있습니다. 녹화를 모두 완료 한 후 눌러주세요");
+        } else {
+            alert('녹화 되지 않은 페이지가 있습니다. 녹화를 모두 완료 한 후 눌러주세요');
         }
     };
 </script>
@@ -198,14 +199,12 @@
                     <div class='left-button-container col-3'>
                         <q-btn round color='grey-9' icon='mdi-arrow-left-bold' size='lg' @click='beforePage' />
                     </div>
-                    <div class='center-button-container col-6'>
-                        <div class='play-button-container'>
-                            <q-btn round color='blue-12' icon='mdi-play' size='lg' @click='startOpenViduRecording' />
-                        </div>
-                        <div class='stop-button-container'>
-                            <q-btn outline round color='white' text-color='red-5' icon='mdi-stop' size='lg'
-                                   @click='stopOpenViduRecording' />
-                        </div>
+                    <div class='col-6 flex justify-center items-center'>
+                        <q-btn round color='blue-12' icon='mdi-play' size='lg' v-if='!ovstore.onAir'
+                               @click='startOpenViduRecording' />
+                        <q-btn outline round color='white' text-color='red-5' icon='mdi-stop' size='lg'
+                               v-if='ovstore.onAir'
+                               @click='stopOpenViduRecording' />
                     </div>
                     <div class='right-button-container col-3'>
                         <q-btn round color='grey-9' icon='mdi-arrow-right-bold' size='lg' @click='nextPage' />
@@ -241,11 +240,6 @@
         justify-content: center;
     }
 
-    .center-button-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
 
     .right-button-container {
         display: flex;

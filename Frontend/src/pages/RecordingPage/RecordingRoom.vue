@@ -35,7 +35,9 @@
   import Header from 'components/CommonComponents/Header.vue';
   import {useRouter} from 'vue-router';
   const router = useRouter();
+  import {useRecordingStore} from 'stores/recording';
 
+  const recStore = useRecordingStore();
   const videoPlayer = ref(null);
 
 
@@ -140,7 +142,8 @@
     console.log('recordingRoomOnMount실행중~~==========================================================================');
     console.log('bookDetail');
     console.log(ovstore.bookDetail);
-
+    //총 페이지 수를 저장한다
+    recStore.totalPages = ovstore.bookDetail.scenes.length;
     //session 설정 추가
     //페이지이동 버튼이 눌리면 다같이 페이지를 이동한다
     ovstore.session.on('signal:page', (event) => {
