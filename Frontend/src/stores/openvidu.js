@@ -235,8 +235,8 @@ export const useOpenViduStore
     axios.get('http://localhost:8080/api/members/status', {withCredentials: true}).then(
       (response) => {
         //로그인 된 상태를 확인하고 저장한다
-        isLoggedIn.value = response.data;
-        if (isLoggedIn.value) {
+        isLoggedIn.value = response.data.isAuthenticated;
+        if (isLoggedIn.value !== false) {
           console.log("로그인 되어있음!");
           axios.get('http://localhost:8080/api/members/detail', {withCredentials: true})
             .then((response) => {
