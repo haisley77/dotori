@@ -163,7 +163,9 @@
   };
 
   const mergeVideo = () => {
-    local.post(`/api/videos/scenes/merge?roomId=${ovstore.roomId}`).then().catch();
+    local.post('/api/videos/scenes/merge', {
+      roomId : ovstore.roomId
+    }).then().catch();
   }
 </script>
 
