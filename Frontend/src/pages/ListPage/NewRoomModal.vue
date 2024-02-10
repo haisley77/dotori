@@ -6,24 +6,25 @@
         <div class='book row q-gutter-x-sm'>
           <!-- 왼쪽 칼럼   책 이미지 -->
           <div class='col-4 flex justify-center items-center q-pa-sm'
-               style='border: 5px solid #C7A96E; border-radius: 20px;height: 100%'>
-            <img :src="bookDetail.book.bookImg" alt='책'
-                 style='object-fit: fill;border-radius: 20px;'>
+               style='border: 5px solid #C7A96E; border-radius: 20px;height: 500px;'>
+            <img :src='bookDetail.book.bookImg' alt='책'
+                 style='height:100%;width:100%;object-fit: contain;border-radius: 20px;'
+            >
           </div>
           <!-- 오른쪽 칼럼-->
           <div class='book-info col-8 q-gutter-y-sm'>
             <!--            책 제목과 줄거리-->
-            <div style='border: 5px solid #C7A96E; border-radius: 20px;height: 50%' class='q-pa-sm'>
+            <div style='border: 5px solid #C7A96E; border-radius: 20px;height: 246px;overflow: auto' class='q-pa-sm'>
               <div class='text-h5'>제목 : {{ bookDetail.book.title }}</div>
               <div>저자 : {{ bookDetail.book.author }}</div>
               <hr />
               {{ bookDetail.book.summary }}
             </div>
             <!--            등장 인물-->
-            <div style='border: 5px solid #C7A96E; border-radius: 20px;height: 50%' class='q-pa-sm'>
+            <div style='border: 5px solid #C7A96E; border-radius: 20px;height: 246px' class='q-pa-sm'>
               <div class='text-h5'>역할 소개</div>
               <hr />
-              <div class='flex'>
+              <div class='flex no-wrap' style='overflow:auto;'>
                 <Character :role='role' v-for='role in bookDetail.roles' />
               </div>
             </div>
@@ -160,7 +161,7 @@
   }
 
   .book-info-inner, .room-info-inner {
-    //border: dashed #cc765a 5px; border-radius: 20px;
+  //border: dashed #cc765a 5px; border-radius: 20px;
   }
 
   .book-info {
