@@ -113,7 +113,7 @@
     const player = {
       name: memberInfo.value.nickName,
       memberId: memberId.value,
-      profileImg: 'src/assets/MyPageImages/winter.png',
+      profileImg: memberInfo.value.profileImg,
       roleName: '역할 선택하기',
       roleIndex: 5,
       readyState: false,
