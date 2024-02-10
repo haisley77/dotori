@@ -1,17 +1,15 @@
 <script setup>
     import {ref, onMounted} from 'vue';
     import {useRouter} from 'vue-router';
-    import axios from 'axios';
+
     import {useOpenViduStore} from 'stores/openvidu';
 
     const ovstore = useOpenViduStore();
     const isAuthenticated = ref(false);
 
     // Axios 인스턴스 생성
-    const axiosInstance = axios.create({
-        withCredentials: true,
-    });
-
+    import {localAxios} from 'src/axios/http-commons';
+    const axiosInstance = localAxios();
     const router = useRouter();
 
     const checkAuthStatus = async () => {
