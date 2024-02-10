@@ -12,21 +12,10 @@
     const axiosInstance = localAxios();
     const router = useRouter();
 
-    const checkAuthStatus = async () => {
-        try {
-            const response = await axiosInstance.get(
-                'http://localhost:8080/api/members/status',
-            );
-            isAuthenticated.value = response.data.isAuthenticated;
-        } catch (error) {
-            console.error('인증 상태 확인 실패:', error);
-        }
-    };
-
     const logout = async () => {
         try {
             const response = await axiosInstance.post(
-                'http://localhost:8080/api/members/logout',
+                '/api/members/logout',
             );
             console.log('로그아웃 성공:', response.data);
 

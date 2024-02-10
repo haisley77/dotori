@@ -19,7 +19,7 @@
   const logout = async () => {
     try {
       const response = await axiosInstance.post(
-        'http://localhost:8080/api/members/logout',
+        '/api/members/logout',
       );
       console.log('로그아웃 성공:', response.data);
 
