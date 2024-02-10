@@ -79,7 +79,9 @@
   import {useOpenViduStore} from 'stores/openvidu';
   import {onMounted, ref} from 'vue';
   import axios from 'axios';
+  import {QSpinnerHourglass, useQuasar} from 'quasar';
 
+  const $q = useQuasar();
   const router = useRouter();
   const props = defineProps({bookmodal: Object});
   const moveWaitingRoom = () => {
@@ -131,6 +133,13 @@
     roomInfo.value.hostId = memberInfo.memberId;
     openViduStore.isHost = true;
 
+    $q.loading.show({
+      message: '방을 만들고 있어요! 잠시만 기다려주세요!',
+      spinner: QSpinnerHourglass,
+      boxClass: 'bg-grey-2 text-grey-9',
+      spinnerColor: 'brown',
+    });
+
     createRoom(props.bookmodal)
       .then(() => {
         connectToOpenVidu()
@@ -139,10 +148,29 @@
               .then(() => {
                 roomInfo.value.joinCnt++;
                 moveWaitingRoom();
+                $q.loading.hide();
               })
-              .catch();
+              .catch(()=> {
+                $q.loading.hide();
+                $q.notify({
+                  color: 'white',
+                  textColor: 'red-9',
+                  message: '문제가 생겼어요! 다시 방을 만들어 볼까요?',
+                  position: 'center',
+                  timeout: 500,
+                });
+              });
           })
-          .catch();
+          .catch(() => {
+            $q.loading.hide();
+            $q.notify({
+              color: 'white',
+              textColor: 'red-9',
+              message: '문제가 생겼어요! 다시 방을 만들어 볼까요?',
+              position: 'center',
+              timeout: 500,
+            });
+          });
       });
   };
 </script>

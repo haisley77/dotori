@@ -262,6 +262,7 @@ export const useOpenViduStore
   });
   return {
     roomInfo,
+    roomId,
     memberId,
     isHost,
     session,

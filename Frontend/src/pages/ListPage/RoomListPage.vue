@@ -78,6 +78,7 @@
               .then(() => {
                 addRoomMember(room.book)
                   .then(() => {
+                    openViduStore.roomId = room.roomId;
                     moveWaitingRoom(room);
                   })
                   .catch((error) => {
