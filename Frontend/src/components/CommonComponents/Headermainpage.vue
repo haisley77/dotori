@@ -31,9 +31,27 @@
     }
   };
 </script>
+<script>
+  window.onscroll = function() {
+    scrollFunction();
+  };
 
+  function scrollFunction() {
+    if (document.body.scrollTop > 1000 || document.documentElement.scrollTop > 1000) {
+      console.log("DOWN");
+      document.getElementById('mainPageHeader').classList.remove('onUp');
+      document.getElementById('mainPageHeader').classList.add('onDown');
+    } else {
+      console.log("UP");
+      document.getElementById('mainPageHeader').classList.remove('onDown');
+      document.getElementById('mainPageHeader').classList.add('onUp');
+    }
+
+  }
+
+</script>
 <template>
-  <div class='row header-bg q-pt-sm q-pb-sm' style='background: rgba(255, 255, 255, 0)'>
+  <div class='row header-bg q-pt-sm q-pb-sm'  id='mainPageHeader'>
     <!--    <div class="col-4 offset-0 flex justify-center items-center" style="cursor: pointer">-->
     <!--    </div>-->
 
@@ -113,6 +131,14 @@
 </template>
 
 <style scoped>
+
+  .onDown{
+    background: white;
+  }
+  .onUp{
+    background: transparent;
+  }
+
   .text-border {
     text-shadow: -1px 0px white, 0px 1px white, 1px 0px white, 0px -1px white;
   }
@@ -134,7 +160,7 @@
     left: 0;
     width: 100%; /* 화면 전체 너비를 차지하도록 설정 */
     z-index: 999; /* 다른 요소 위에 나타나도록 설정 */
-    background: rgba(255, 255, 255, 0); /* 투명도 조절 가능한 백그라운드 색상 */
+    //background: rgba(255, 255, 255, 0); /* 투명도 조절 가능한 백그라운드 색상 */
     /* 다른 스타일들 */
   }
 </style>
