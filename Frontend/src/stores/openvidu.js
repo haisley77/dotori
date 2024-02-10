@@ -159,7 +159,7 @@ export const useOpenViduStore
 
       roomInfo.value.isRecording = isRecording;
 
-      axios.post(apiPath, roomInfo.value, {withCredentials: true})
+      axios.patch(apiPath, roomInfo.value, {withCredentials: true})
         .then((response) => {
           roomId.value = response.data.roomId;
           resolve(response.data);
