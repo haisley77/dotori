@@ -33,7 +33,8 @@
   import {FaceLandmarker, FilesetResolver} from '@mediapipe/tasks-vision';
   import {useOpenViduStore} from 'stores/openvidu';
   import Header from 'components/CommonComponents/Header.vue';
-
+  import {useRouter} from 'vue-router';
+  const router = useRouter();
 
   const videoPlayer = ref(null);
 
@@ -145,6 +146,11 @@
     ovstore.session.on('signal:page', (event) => {
       const nextPage = Number(event.data);
       moveToPage(nextPage);
+    });
+
+    ovstore.session.on('signal:end',(event)=>{
+        if(ovstore.isPublished)unpublish();
+        router.push('/end');
     });
 
     ovstore.session.on('signal:onAir', (event) => {

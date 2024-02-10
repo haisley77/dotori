@@ -1,266 +1,267 @@
 <script setup>
-  import {useOpenViduStore} from 'stores/openvidu';
-  import {QSpinnerHourglass, useQuasar} from 'quasar';
-  import {localAxios} from 'src/axios/http-commons';
-  import axios from 'axios';
+    import {useOpenViduStore} from 'stores/openvidu';
+    import {QSpinnerHourglass, useQuasar} from 'quasar';
+    import {localAxios} from 'src/axios/http-commons';
+    import axios from 'axios';
+    import router from 'src/router';
 
-  const local = localAxios();
-  const $q = useQuasar();
-  const ovstore = useOpenViduStore();
-  const props = defineProps(
-    {
-      curPage: Number,
-      customLayoutFolder: String,
-    },
-  );
-  const emit = defineEmits(['moveToPage']);
-  let openViduRecordingId;
-  const sessionId = ovstore.session.sessionId;
-
-  const openviduAxios = axios.create({
-    baseURL: 'https://dotori.online',
-    headers: {
-      'Authorization': 'Basic T1BFTlZJRFVBUFA6MTBTU0FGWUE1MDI=',
-      'Content-Type': 'application/json',
-    },
-  });
-
-  const nextPage = () => {
-    if (ovstore.bookDetail.scenes.length > props.curPage) {
-      //방장일 경우만 실행하도록 로직을 추가해야함
-        if (ovstore.isHost)
-      ovstore.session.signal({
-          data: props.curPage + 1,
-          type: 'page',
+    const local = localAxios();
+    const $q = useQuasar();
+    const ovstore = useOpenViduStore();
+    const props = defineProps(
+        {
+            curPage: Number,
+            customLayoutFolder: String,
         },
-      );
-        else alert("방장만 페이지를 이동할 수 있습니다");
-      // emit('moveToPage', props.curPage + 1);
-    } else {
-      console.log('마지막 페이지 입니다!');
-    }
-  };
+    );
+    const emit = defineEmits(['moveToPage']);
+    let openViduRecordingId;
+    const sessionId = ovstore.session.sessionId;
 
-  const beforePage = () => {
-    if (1 < props.curPage) {
-      //방장일 경우만 실행하도록 로직을 추가해야함
-        if (ovstore.isHost)
-      ovstore.session.signal({
-          data: props.curPage - 1,
-          type: 'page',
+    const openviduAxios = axios.create({
+        baseURL: 'https://dotori.online',
+        headers: {
+            'Authorization': 'Basic T1BFTlZJRFVBUFA6MTBTU0FGWUE1MDI=',
+            'Content-Type': 'application/json',
         },
-      );
-        else alert("방장만 페이지를 이동할 수 있습니다");
-      // emit('moveToPage', props.curPage - 1);
-    } else {
-      console.log('첫번째 페이지 입니다!');
-    }
-  };
-
-  const startOpenViduRecording = () => {
-    $q.loading.show({
-      message: '녹화 준비 중입니다. 잠시만 기다려주세요!',
-      spinner: QSpinnerHourglass,
-      boxClass: 'bg-grey-2 text-grey-9',
-      spinnerColor: 'brown',
     });
 
-    ovstore.session.signal({
-      data: 1,
-      type: 'onAir',
-    });
+    const nextPage = () => {
+        if (ovstore.bookDetail.scenes.length > props.curPage) {
+            //방장일 경우만 실행하도록 로직을 추가해야함
+            if (ovstore.isHost)
+                ovstore.session.signal({
+                        data: props.curPage + 1,
+                        type: 'page',
+                    },
+                );
+            else alert('방장만 페이지를 이동할 수 있습니다');
+            // emit('moveToPage', props.curPage + 1);
+        } else {
+            console.log('마지막 페이지 입니다!');
+        }
+    };
 
-    openviduAxios.post('/openvidu/api/recordings/start',
-      {
-        'session': sessionId,
-        'name': 'TestRecording',
-        'hasAudio': true,
-        'hasVideo': true,
-        'outputMode': 'COMPOSED',
-        'recordingLayout': 'CUSTOM',
-        'customLayout': props.customLayoutFolder + '/scene-' + props.curPage,
-        'resolution': '1280x640',
-        'frameRate': 30,
-        'shmSize': 536870912,
-        'ignoreFailedStreams': false,
-      })
-      .then((response) => {
+    const beforePage = () => {
+        if (1 < props.curPage) {
+            //방장일 경우만 실행하도록 로직을 추가해야함
+            if (ovstore.isHost)
+                ovstore.session.signal({
+                        data: props.curPage - 1,
+                        type: 'page',
+                    },
+                );
+            else alert('방장만 페이지를 이동할 수 있습니다');
+            // emit('moveToPage', props.curPage - 1);
+        } else {
+            console.log('첫번째 페이지 입니다!');
+        }
+    };
 
-        console.log('id : ' + response.data.id);
-        console.log('name : ' + response.data.name);
-        console.log('hasAudio : ' + response.data.hasAudio);
-        console.log('hasAudio : ' + response.data.hasVideo);
-        console.log('outputMode : ' + response.data.outputMode);
-        console.log('recordingLayout : ' + response.data.recordingLayout);
-        console.log('customLayout : ' + response.data.customLayout);
-        console.log('frameRate : ' + response.data.frameRate);
-        openViduRecordingId = response.data.id;
-        $q.loading.hide();
-
-      })
-      .catch((error) => {
-        console.log(error);
-        $q.loading.hide();
-        $q.notify({
-          color: 'white',
-          textColor: 'red-9',
-          message: '문제가 생겼어요! 다시 녹화 시작을 해볼까요?',
-          position: 'center',
-          timeout: 500,
+    const startOpenViduRecording = () => {
+        $q.loading.show({
+            message: '녹화 준비 중입니다. 잠시만 기다려주세요!',
+            spinner: QSpinnerHourglass,
+            boxClass: 'bg-grey-2 text-grey-9',
+            spinnerColor: 'brown',
         });
-      });
-  };
 
-  const stopOpenViduRecording = () => {
-    ovstore.session.signal({
-      data: 0,
-      type: 'onAir',
-    });
-
-    openviduAxios.post(`/openvidu/api/recordings/stop/${openViduRecordingId}`)
-      .then((response) => {
-        $q.notify({
-          color: 'white',
-          textColor: 'green-9',
-          message: '녹화가 성공적으로 되었어요! 다음 장면도 녹화하러 가볼까요?',
-          position: 'center',
-          timeout: 500,
+        ovstore.session.signal({
+            data: 1,
+            type: 'onAir',
         });
-        console.log('id : ' + response.data.id);
-        console.log('hasAudio : ' + response.data.hasAudio);
-        console.log('hasAudio : ' + response.data.hasVideo);
-        console.log('outputMode : ' + response.data.outputMode);
-        console.log('recordingLayout : ' + response.data.recordingLayout);
-        console.log('frameRate : ' + response.data.frameRate);
-        console.log('url : ' + response.data.url);
 
-        let clipUrl = response.data.url;
-        let toRemove = "https://dotori.online:8443/openvidu/recordings/";
+        openviduAxios.post('/openvidu/api/recordings/start',
+            {
+                'session': sessionId,
+                'name': 'TestRecording',
+                'hasAudio': true,
+                'hasVideo': true,
+                'outputMode': 'COMPOSED',
+                'recordingLayout': 'CUSTOM',
+                'customLayout': props.customLayoutFolder + '/scene-' + props.curPage,
+                'resolution': '1280x640',
+                'frameRate': 30,
+                'shmSize': 536870912,
+                'ignoreFailedStreams': false,
+            })
+            .then((response) => {
 
-        let resultUrl = clipUrl.replace(toRemove, "");
+                console.log('id : ' + response.data.id);
+                console.log('name : ' + response.data.name);
+                console.log('hasAudio : ' + response.data.hasAudio);
+                console.log('hasAudio : ' + response.data.hasVideo);
+                console.log('outputMode : ' + response.data.outputMode);
+                console.log('recordingLayout : ' + response.data.recordingLayout);
+                console.log('customLayout : ' + response.data.customLayout);
+                console.log('frameRate : ' + response.data.frameRate);
+                openViduRecordingId = response.data.id;
+                $q.loading.hide();
 
-        local.post('/api/videos/scenes', {
-          roomId: ovstore.roomId,
-          sceneOrder: props.curPage,
-          savedPath: resultUrl,
-        }).then().catch((error) => {
-          $q.notify({
-            color: 'white',
-            textColor: 'red-9',
-            message: '녹화가 되지 않았아요! 아쉽지만 다시 녹화를 해볼까요?',
-            position: 'center',
-            timeout: 500
-          })
-        })
-      })
-      .catch((error) => {
-        console.log(error);
-        $q.loading.hide();
-        $q.notify({
-          color: 'white',
-          textColor: 'red-9',
-          message: '녹화가 되지 않았아요! 아쉽지만 다시 녹화를 해볼까요?',
-          position: 'center',
-          timeout: 500,
+            })
+            .catch((error) => {
+                console.log(error);
+                $q.loading.hide();
+                $q.notify({
+                    color: 'white',
+                    textColor: 'red-9',
+                    message: '문제가 생겼어요! 다시 녹화 시작을 해볼까요?',
+                    position: 'center',
+                    timeout: 500,
+                });
+            });
+    };
+
+    const stopOpenViduRecording = () => {
+        ovstore.session.signal({
+            data: 0,
+            type: 'onAir',
         });
-      });
-  };
 
-  const mergeVideo = () => {
-    local.post('/api/videos/scenes/merge', {
-      roomId : ovstore.roomId
-    }).then().catch();
-  }
+        openviduAxios.post(`/openvidu/api/recordings/stop/${openViduRecordingId}`)
+            .then((response) => {
+                $q.notify({
+                    color: 'white',
+                    textColor: 'green-9',
+                    message: '녹화가 성공적으로 되었어요! 다음 장면도 녹화하러 가볼까요?',
+                    position: 'center',
+                    timeout: 500,
+                });
+                console.log('id : ' + response.data.id);
+                console.log('hasAudio : ' + response.data.hasAudio);
+                console.log('hasAudio : ' + response.data.hasVideo);
+                console.log('outputMode : ' + response.data.outputMode);
+                console.log('recordingLayout : ' + response.data.recordingLayout);
+                console.log('frameRate : ' + response.data.frameRate);
+                console.log('url : ' + response.data.url);
+
+                let clipUrl = response.data.url;
+                let toRemove = 'https://dotori.online:8443/openvidu/recordings/';
+
+                let resultUrl = clipUrl.replace(toRemove, '');
+
+                local.post('/api/videos/scenes', {
+                    roomId: ovstore.roomId,
+                    sceneOrder: props.curPage,
+                    savedPath: resultUrl,
+                }).then().catch((error) => {
+                    $q.notify({
+                        color: 'white',
+                        textColor: 'red-9',
+                        message: '녹화가 되지 않았아요! 아쉽지만 다시 녹화를 해볼까요?',
+                        position: 'center',
+                        timeout: 500,
+                    });
+                });
+            })
+            .catch((error) => {
+                console.log(error);
+                $q.loading.hide();
+                $q.notify({
+                    color: 'white',
+                    textColor: 'red-9',
+                    message: '녹화가 되지 않았아요! 아쉽지만 다시 녹화를 해볼까요?',
+                    position: 'center',
+                    timeout: 500,
+                });
+            });
+    };
+
+    const mergeVideo = () => {
+        local.post('/api/videos/scenes/merge', {
+            roomId: ovstore.roomId,
+        }).then().catch();
+        ovstore.session.signal({
+                type: 'end',
+            },
+        );
+    };
 </script>
 
 <template>
-  <div class='controller-container col-4 q-pt-sm'>
-    <div class='out-back ' style='height: 100%'>
-      <div class='in-back q-pa-sm' style='width: 100%; height: 100%'>
-        <div class='button-container row '>
-          <div class='left-button-container col-3'>
-            <q-btn round color='grey-9' icon='mdi-arrow-left-bold' size='lg' @click='beforePage' />
-          </div>
-          <div class='center-button-container col-6'>
-            <div class='play-button-container'>
-              <q-btn round color='blue-12' icon='mdi-play' size='lg' @click="startOpenViduRecording" />
+    <div class='controller-container col-4 q-pt-sm'>
+        <div class='out-back ' style='height: 100%'>
+            <div class='in-back q-pa-sm' style='width: 100%; height: 100%'>
+                <div class='button-container row '>
+                    <div class='left-button-container col-3'>
+                        <q-btn round color='grey-9' icon='mdi-arrow-left-bold' size='lg' @click='beforePage' />
+                    </div>
+                    <div class='center-button-container col-6'>
+                        <div class='play-button-container'>
+                            <q-btn round color='blue-12' icon='mdi-play' size='lg' @click='startOpenViduRecording' />
+                        </div>
+                        <div class='stop-button-container'>
+                            <q-btn outline round color='white' text-color='red-5' icon='mdi-stop' size='lg'
+                                   @click='stopOpenViduRecording' />
+                        </div>
+                    </div>
+                    <div class='right-button-container col-3'>
+                        <q-btn round color='grey-9' icon='mdi-arrow-right-bold' size='lg' @click='nextPage' />
+                    </div>
+                    <q-btn round color='grey-9' icon='mdi-stop' size='lg' @click='mergeVideo' />
+                </div>
             </div>
-            <div class='stop-button-container'>
-              <q-btn outline round color='white' text-color='red-5' icon='mdi-stop' size='lg'
-                     @click="stopOpenViduRecording" />
-            </div>
-          </div>
-          <div class='right-button-container col-3'>
-            <q-btn round color='grey-9' icon='mdi-arrow-right-bold' size='lg' @click='nextPage' />
-          </div>
-          <q-btn round color='grey-9' icon='mdi-stop' size='lg' @click='mergeVideo' />
         </div>
-      </div>
     </div>
-  </div>
 </template>
 
 <style scoped>
-  @font-face {
-    font-family: 'NPSfontBold';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2') format('woff2');
-    font-weight: 700;
-    font-style: normal;
-  }
+    @font-face {
+        font-family: 'NPSfontBold';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2') format('woff2');
+        font-weight: 700;
+        font-style: normal;
+    }
 
-  .npsfont {
-    font-family: 'NPSfontBold';
-  }
+    .npsfont {
+        font-family: 'NPSfontBold';
+    }
 
 
-  .controller-container {
-    height: 180px;
+    .controller-container {
+        height: 180px;
 
-  }
+    }
 
-  .left-button-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+    .left-button-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
-  .center-button-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+    .center-button-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
-  .right-button-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+    .right-button-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
-  .play-button-container {
-    margin-right: 10px;
-  }
+    .play-button-container {
+        margin-right: 10px;
+    }
 
-  .stop-button-container {
-    margin-left: 10px;
-  }
+    .stop-button-container {
+        margin-left: 10px;
+    }
 
-  .out-back {
-    background: #C7A96E;
-    padding: 6px;
+    .out-back {
+        background: #C7A96E;
+        padding: 6px;
 
-  }
+    }
 
-  .in-back {
-    //background: #ffee9a;
-    background: #ffffff;
-    //border-radius: 15px;
-  }
+    .in-back {
+    //background: #ffee9a; background: #ffffff; //border-radius: 15px;
+    }
 
-  .button-container {
-    background: white;
-    //border-radius: 15px;
-    height: 100%;
-    //border: #cc765a dashed 4px;
-  }
+    .button-container {
+        background: white;
+    //border-radius: 15px; height: 100%; //border: #cc765a dashed 4px;
+    }
 
 </style>
