@@ -149,6 +149,10 @@
                     savedPath: resultUrl,
                 }).then(() => {
                     recStore.recComplete(props.curPage);//현재 페이지 녹화 완료된 정보를 저장
+                    ovstore.session.signal({
+                        data: recStore.recHistory,
+                        type: 'recfin',
+                    });
                 }).catch((error) => {
                     $q.notify({
                         color: 'white',

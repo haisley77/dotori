@@ -5,7 +5,9 @@ export const useRecordingStore
     = defineStore('recordingStore', () => {
     const recHistory = ref(0);//어느어느 페이지가 녹화되었는지 판별하는 비트마스킹용 숫자
     const totalPages = ref(0);
-
+    const updateRecHistory = (newHistory)=>{
+        recHistory.value=newHistory;
+    }
     const recComplete = (page) => { //특정 페이지 녹화가 성공했을 때
         let x = recHistory.value;
         x = x | (1 << (page - 1));//현재 페이지의 비트를 추가한다
@@ -35,6 +37,7 @@ export const useRecordingStore
         isCurPageRecorded,
         totalPages,
         numberOfRecordedPages,
+        updateRecHistory,
 
     };
 }, {persist: {storage: sessionStorage}});

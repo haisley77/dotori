@@ -65,7 +65,7 @@
     }
 
     .rec-fin {
-        background: green;
+        background: black;
     //height: 3em; color: white;
         height: 172px;
 

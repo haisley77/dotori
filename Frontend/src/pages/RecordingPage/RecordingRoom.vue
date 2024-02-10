@@ -150,7 +150,10 @@
       const nextPage = Number(event.data);
       moveToPage(nextPage);
     });
-
+    ovstore.session.on('signal:recfin',(event)=>{
+       const recHistory = Number(event.data);
+        recStore.updateRecHistory(recHistory);
+    });
     ovstore.session.on('signal:end',(event)=>{
         if(ovstore.isPublished)unpublish();
         router.push('/end');
