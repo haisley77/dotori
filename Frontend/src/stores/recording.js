@@ -16,7 +16,7 @@ export const useRecordingStore
         let res = recHistory.value & (1 << (curPage - 1));
         return res !== 0;
     };
-    const checkAllRecComplete = (totalPages) => {
+    const checkAllRecComplete = () => {
         //모든 페이지가 녹화 성공했으면 true, 아니면 false를 반환한다
         let count = 0;
         let number = recHistory.value;
@@ -24,7 +24,7 @@ export const useRecordingStore
             count += number & 1;
             number >>= 1;
         }
-        return count === totalPages;
+        return count === totalPages.value;
 
     };
     return {

@@ -4,6 +4,9 @@
     import {localAxios} from 'src/axios/http-commons';
     import axios from 'axios';
     import router from 'src/router';
+    import {useRecordingStore} from 'stores/recording';
+
+    const recStore = useRecordingStore();
 
     const local = localAxios();
     const $q = useQuasar();
@@ -169,15 +172,21 @@
 
     const mergeVideo = () => {
 
-
-
-        local.post('/api/videos/scenes/merge', {
-            roomId: ovstore.roomId,
-        }).then().catch();
-        ovstore.session.signal({
-                type: 'end',
-            },
-        );
+        if (recStore.checkAllRecComplete()) {
+            //모든 페이지가 녹화 되었을 경우
+            //녹화영상 머지 생성 요청을 보낸다
+            local.post('/api/videos/scenes/merge', {
+                roomId: ovstore.roomId,
+            }).then().catch();
+            //수고하셨습니다 페이지로 넘어간다
+            ovstore.session.signal({
+                    type: 'end',
+                },
+            );
+        }
+        else {
+            alert("녹화 되지 않은 페이지가 있습니다. 녹화를 모두 완료 한 후 눌러주세요");
+        }
     };
 </script>
 
