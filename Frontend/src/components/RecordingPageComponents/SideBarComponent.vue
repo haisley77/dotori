@@ -9,11 +9,13 @@
   const movePage = (page) => {
     // alert('clicked!')
       //방장일 경우만 실행하도록 로직을 추가해야함
+      if(ovstore.isHost){
       ovstore.session.signal({
               data: page,
               type: 'page',
           }
-      );
+      );}
+      else alert("방장만 페이지를 이동할 수 있습니다");
     // emit('moveToPage', page);
   };
   const imagesrc = ref(props.scene.backgroundImage);

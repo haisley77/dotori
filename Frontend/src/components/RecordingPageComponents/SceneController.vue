@@ -28,11 +28,13 @@
   const nextPage = () => {
     if (ovstore.bookDetail.scenes.length > props.curPage) {
       //방장일 경우만 실행하도록 로직을 추가해야함
+        if (ovstore.isHost)
       ovstore.session.signal({
           data: props.curPage + 1,
           type: 'page',
         },
       );
+        else alert("방장만 페이지를 이동할 수 있습니다");
       // emit('moveToPage', props.curPage + 1);
     } else {
       console.log('마지막 페이지 입니다!');
@@ -42,11 +44,13 @@
   const beforePage = () => {
     if (1 < props.curPage) {
       //방장일 경우만 실행하도록 로직을 추가해야함
+        if (ovstore.isHost)
       ovstore.session.signal({
           data: props.curPage - 1,
           type: 'page',
         },
       );
+        else alert("방장만 페이지를 이동할 수 있습니다");
       // emit('moveToPage', props.curPage - 1);
     } else {
       console.log('첫번째 페이지 입니다!');
