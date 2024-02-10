@@ -43,23 +43,28 @@
 
   .scene-script-container {
     height: 570px;
-  //border: dimgrey solid 1px; //display: flex; //justify-content: center; //align-items: center;
+  //border: dimgrey solid 1px;
+  //display: flex;
+  //justify-content: center;
+  //align-items: center;
   }
 
   .out-back {
     background: #C7A96E;
-    border-radius: 15px;
+    //border-radius: 15px;
     padding: 6px;
   }
 
   .in-back {
-  //background: #ffee9a; background: white; border-radius: 15px;
+  //background: #ffee9a;
+    background: white;
+    //border-radius: 15px;
   }
 
 
   .script-background {
     background: white;
-    border-radius: 15px;
+    //border-radius: 15px;
     height: 100%;
 
   }

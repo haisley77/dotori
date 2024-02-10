@@ -211,7 +211,7 @@
 
   .controller-container {
     height: 180px;
-    //border: black solid 1px;
+
   }
 
   .left-button-container {
@@ -243,16 +243,18 @@
   .out-back {
     background: #C7A96E;
     padding: 6px;
-    border-radius: 15px;
+
   }
 
   .in-back {
-    //background: #ffee9a; background: #ffffff; border-radius: 15px;
+    //background: #ffee9a;
+    background: #ffffff;
+    //border-radius: 15px;
   }
 
   .button-container {
     background: white;
-    border-radius: 15px;
+    //border-radius: 15px;
     height: 100%;
     //border: #cc765a dashed 4px;
   }

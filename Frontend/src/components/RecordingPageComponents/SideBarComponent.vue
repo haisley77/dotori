@@ -14,7 +14,7 @@
               type: 'page',
           }
       );
-    emit('moveToPage', page);
+    // emit('moveToPage', page);
   };
   const imagesrc = ref(props.scene.backgroundImage);
 </script>
