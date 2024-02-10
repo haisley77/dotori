@@ -55,7 +55,7 @@
                   <div class='col-9 flex'>
                   </div>
                   <div class='col-3 flex justify-center'>
-                    <q-btn unelevated color='my-green' rounded label='방 만들기' @click='joinRoom'></q-btn>
+                    <q-btn unelevated color='my-brown' rounded label='방 만들기' @click='joinRoom'></q-btn>
                   </div>
                 </div>
 
@@ -192,7 +192,7 @@
     margin: 100px;
   }
 
-  .bg-my-green {
+  .bg-my-brown {
     background: #C7A96E !important;
   }
 
