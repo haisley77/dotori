@@ -49,11 +49,7 @@
         try {
           const response = await axios.get('http://localhost:8080/api/books',{withCredentials: true});
           console.log('API Response:', response);
-          if (response.status === 200) {
-            books.value = response.data.books;
-          } else {
-            console.error('Failed');
-          }
+          books.value = response.data.books;
         } catch (error) {
           console.error('Error fetching books:', error);
         }

@@ -60,11 +60,7 @@
         try {
           const response = await axios.get('http://localhost:8080/api/rooms',{withCredentials: true});
           console.log('API Response:', response);
-          if (response.status === 200) {
-            rooms.value = response.data;
-          } else {
-            console.error('Failed to fetch rooms. Status:', response.status);
-          }
+          rooms.value = response.data;
         } catch (error) {
           console.error('Error fetching rooms:', error);
         }

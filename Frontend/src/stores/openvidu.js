@@ -99,15 +99,9 @@ export const useOpenViduStore
 
       axios.post(apiPath, connection_properties.value,{withCredentials: true})
         .then((response) => {
-          if (response.status === 200) {
-            roomId.value = response.data.roomId;
-            ovToken.value = response.data.token;
-            resolve(response.data);
-          }
-          if (response.status === 202) {
-            console.log(response.data.message);
-            reject(new Error(response.data.message));
-          }
+          roomId.value = response.data.roomId;
+          ovToken.value = response.data.token;
+          resolve(response.data);
         })
         .catch((error) => {
           console.error(error.response);
@@ -122,14 +116,9 @@ export const useOpenViduStore
 
       axios.post(apiPath,{withCredentials: true})
         .then((response) => {
-          if (response.status === 200) {
-            bookDetail.value = response.data.bookInfo;
-            minRole.value = bookDetail.value.roles[0].roleId;
-            resolve(response.data);
-          } else if (response.status === 201) {
-            console.log('인원 초과로 방 참여 처리 불가');
-            reject('인원 초과로 방 참여 처리 불가');
-          }
+          bookDetail.value = response.data.bookInfo;
+          minRole.value = bookDetail.value.roles[0].roleId;
+          resolve(response.data);
         })
         .catch((error) => {
           console.error('방 참여 정보 갱신 처리 중 오류 발생 : ', error.response);

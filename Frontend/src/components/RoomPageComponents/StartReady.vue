@@ -112,7 +112,6 @@
   session.on('signal:update-ready', (event) => {
     const receivedData = JSON.parse(event.data);
     playerList.value = receivedData.playerList;
-    // console.log(playerList.value);
   });
 
   // 녹화방으로 이동하라는 이벤트를 수신하면 방 참여자들은 모두 녹화방으로 이동한다.
