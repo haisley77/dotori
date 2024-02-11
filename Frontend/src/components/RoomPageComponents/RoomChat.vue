@@ -3,10 +3,8 @@
     <div style='height: 100%' class='background-yellow q-pa-sm'>
       <div class='column'>
         <div class='background-white'>
-          <!-- 채팅 로그 -->
-          <div ref='chatLog' id='chatLog' style='height: 100px; overflow-y: auto; border: 1px solid #ccc;'>
+          <div ref='chatLog' id='chatLog' style='height: 90px; overflow-y: auto;'>
             <div v-for='(message, index) in messageList' :key='index' class='q-mx-sm'>{{ message }}</div>
-            <!--            <div ref="scrollMarker"></div>-->
           </div>
         </div>
 
@@ -28,25 +26,26 @@
   const {session} = openViduStore;
   const chatMessage = ref('');
   const messageList = ref([]);
+  let matchingPlayer = null;
   const props = defineProps({
     playerList: Object,
     memberId: Object,
   });
 
   onMounted(() => {
-    if (session) {
-      session.on('signal:chat', (event) => {
-        const data = JSON.parse(event.data);
-        appendMessage(data.nickname, data.message);
-        scrollToBottom();
-        // console.log("!!!!!!!!!!!!!!!!!!!");
-      });
-    }
+    matchingPlayer = props.playerList.find(player => player.memberId === props.memberId);
+    entermessage(matchingPlayer.name);
+  });
+
+  session.on('signal:chat', (event) => {
+    const data = JSON.parse(event.data);
+    appendMessage(data.nickname, data.message);
+    scrollToBottom();
   });
 
   const sendMessage = () => {
     if (chatMessage.value && session) {
-      const matchingPlayer = props.playerList.find(player => player.memberId === props.memberId);
+
       const data = {
         message: chatMessage.value,
         nickname: matchingPlayer.name,
@@ -59,16 +58,25 @@
     }
   };
 
+  const entermessage = (player) =>{
+    const formattedmessage = `*** ${player}님이 입장하셨습니다 ***`;
+    messageList.value.push(formattedmessage);
+  }
+
+  const outmessage = (player) =>{
+    const formattedmessage = `${player}님이 떠나셨습니다.`;
+    messageList.value.push(formattedmessage);
+  }
+
   const appendMessage = (nickname, message) => {
     const formattedMessage = `${nickname}: ${message}`;
     messageList.value.push(formattedMessage);
-    scrollToBottom(); // 메시지 추가 후 자동 스크롤
+    // scrollToBottom(); // 메시지 추가 후 자동 스크롤
   };
 
   const scrollToBottom = () => {
     let chatLog = document.getElementById('chatLog');
-    console.log('scroll to bottom실행');
-    chatLog.scrollTop = chatLog.scrollHeight * 1.2;
+    chatLog.scrollTop = chatLog.scrollHeight;
   };
 </script>
 
