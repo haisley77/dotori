@@ -34,7 +34,7 @@
 
   onMounted(() => {
     matchingPlayer = props.playerList.find(player => player.memberId === props.memberId);
-    entermessage(matchingPlayer.name);
+    entermessage(matchingPlayer.nickname);
   });
 
   session.on('signal:chat', (event) => {
