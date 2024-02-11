@@ -102,7 +102,6 @@
     return new Promise(async (resolve, reject) => {
       try {
         const response = await axios.get(`/api/books/${props.bookmodal.bookId}`, {withCredentials: true});
-        console.log('API Response:', response);
         bookDetail.value = response.data;
         resolve();
       } catch (error) {
@@ -119,7 +118,14 @@
   const joinRoom = () => {
 
     if (roomPassword.value === null && isPrivate.value) {
-      alert('비밀번호 입력 필수');
+      $q.notify({
+        color: 'white',
+        textColor: 'red-9',
+        message: '비밀번호를 입력해주세요!',
+        position: 'center',
+        timeout: 500,
+        icon: 'mdi-lock-alert-outline',
+      });
       return;
     }
 
@@ -156,6 +162,7 @@
                   message: '문제가 생겼어요! 다시 방을 만들어 볼까요?',
                   position: 'center',
                   timeout: 500,
+                  icon: 'mdi-alert-outline',
                 });
               });
           })
@@ -167,6 +174,7 @@
               message: '문제가 생겼어요! 다시 방을 만들어 볼까요?',
               position: 'center',
               timeout: 500,
+              icon: 'mdi-alert-outline',
             });
           });
       });
