@@ -57,7 +57,7 @@ public class VideoMergeService {
 			sceneVideoDirectory = sceneVideo.getParentFile();
 		}
 
-		Path savedPath = videoDirectory.toPath().resolve("output.mp4");
+		Path savedPath = videoDirectory.toPath().resolve(sceneVideoDirectory.getName() + ".mp4");
 		FFmpegFrameRecorder recorder = new FFmpegFrameRecorder(
 			savedPath.toFile(),
 			grabbers.get(0).getImageWidth(),
