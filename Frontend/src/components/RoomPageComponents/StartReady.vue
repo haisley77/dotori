@@ -33,7 +33,7 @@
         message: '역할을 선택해주세요!',
         position: 'center',
         timeout: 500,
-        icon: 'mdi:alert-outline',
+        icon: 'mdi-alert-outline',
       });
       return;
     }
@@ -62,7 +62,7 @@
         message: '역할을 선택해주세요!',
         position: 'center',
         timeout: 500,
-        icon: 'mdi:alert-outline',
+        icon: 'mdi-alert-outline',
       });
       return;
     }
@@ -101,7 +101,7 @@
         message: '모든 친구들이 준비해야 시작할 수 있어요!',
         position: 'center',
         timeout: 500,
-        icon: 'mdi:alert-outline',
+        icon: 'mdi-alert-outline',
       });
     }
   };
