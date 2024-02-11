@@ -236,6 +236,7 @@ export const useOpenViduStore
               memberInfo.value = response.data;
               console.log(memberInfo.value);
               memberId.value = response.data.memberId;
+              sessionStorage.setItem('memberId', response.data.memberId);
             }).catch((error) => {
             console.log('회원정보 조회 실패' + error);
           });
