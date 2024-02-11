@@ -83,10 +83,10 @@
     const formData = new FormData();
     console.log(event.target.files[0]);
     const newProfileImg = event.target.files[0];
-    formData.append("profileImg", newProfileImg);
+    formData.append("profileImage", newProfileImg);
     try {
-      const response = await fileAxios.put('/api/members/update_profileimg', formData);
-      memberInfo.value.profileImg = response.data.profileImg;
+      const response = await fileAxios.put('/api/members/profile-image', formData);
+      memberInfo.value.profileImg = response.data.profileImage;
       $q.notify({
         color: 'white',
         textColor: 'green-9',
@@ -94,8 +94,7 @@
         position: 'center',
         timeout: 500,
         icon: 'mdi-account-box-multiple-outline',
-      });
-      router.push('/my-page/info');
+      });      router.push('/my-page/info');
     } catch (error) {
       $q.loading.hide();
       $q.notify({
@@ -148,6 +147,7 @@
       });
     }
   };
+
 
 </script>
 
