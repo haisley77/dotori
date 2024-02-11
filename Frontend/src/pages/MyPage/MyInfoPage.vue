@@ -67,13 +67,14 @@
 
 <script setup>
   import {useRouter} from 'vue-router';
-  import {localAxios} from 'src/axios/http-commons';
+  import {localAxios,imgAxios} from 'src/axios/http-commons';
   import {useOpenViduStore} from 'stores/openvidu';
   import {storeToRefs} from 'pinia';
 
   const openViduStore = useOpenViduStore();
   const {memberInfo} = storeToRefs(openViduStore);
   const axios = localAxios();
+  const fileAxios = imgAxios();
   const router = useRouter();
 
   const changeProfileImg = async (event) => {
@@ -82,13 +83,8 @@
     const newProfileImg = event.target.files[0];
     formData.append("profileImg", newProfileImg);
     try {
-      const response = await axios.put('/update_profileimg',
-        formData, {
-        headers:{
-         'Content-Type' : 'multipart/form-data'
-        }
-      });
-      memberInfo.value.profileImg = response.data;
+      const response = await fileAxios.put('/api/members/update_profileimg', formData);
+      memberInfo.value.profileImg = response.data.profileImg;
       alert('프로필 이미지 변경 성공');
       router.push('/my-page/info');
     } catch (error) {
