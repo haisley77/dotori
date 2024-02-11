@@ -25,7 +25,7 @@
                 {{ col.value }}
               </div>
               <div v-else>
-                <a href="http://localhost:8080/api/videos/5">
+                <a v-bind:href="`http://localhost:8080/api/videos/${col.value}`">
                   <q-btn outline @click="downloadVideo(col.value)" icon="mdi-download-box" color="brown"/>
                 </a>
               </div>
