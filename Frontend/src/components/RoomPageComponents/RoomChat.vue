@@ -10,7 +10,7 @@
 
         <div class='row '>
           <q-input color='brown-1' bg-color='brown-1' v-model='chatMessage' @keyup.enter='sendMessage'
-                   placeholder='메시지를 입력하세요' class='col-11' />
+                   placeholder='메시지를 입력하세요!' class='col-11' />
           <q-btn color='my-brown' bg-color='white' @click='sendMessage' class='col-1 q-pa-none npsfont chat'>전송</q-btn>
         </div>
       </div>
