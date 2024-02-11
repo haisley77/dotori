@@ -70,7 +70,9 @@
   import {localAxios,imgAxios} from 'src/axios/http-commons';
   import {useOpenViduStore} from 'stores/openvidu';
   import {storeToRefs} from 'pinia';
+  import {useQuasar} from 'quasar';
 
+  const $q = useQuasar();
   const openViduStore = useOpenViduStore();
   const {memberInfo} = storeToRefs(openViduStore);
   const axios = localAxios();
@@ -85,10 +87,25 @@
     try {
       const response = await fileAxios.put('/api/members/update_profileimg', formData);
       memberInfo.value.profileImg = response.data.profileImg;
-      alert('프로필 이미지 변경 성공');
+      $q.notify({
+        color: 'white',
+        textColor: 'green-9',
+        message: '프로필 이미지가 변경되었어요!',
+        position: 'center',
+        timeout: 500,
+        icon: 'mdi-account-box-multiple-outline',
+      });
       router.push('/my-page/info');
     } catch (error) {
-      console.error('API 호출 중 오류 발생:', error);
+      $q.loading.hide();
+      $q.notify({
+        color: 'white',
+        textColor: 'red-9',
+        message: '문제가 생겼어요! 다시 프로필 이미지를 변경해볼까요?',
+        position: 'center',
+        timeout: 500,
+        icon: 'mdi-alert-outline',
+      });
     }
   };
 
@@ -110,10 +127,25 @@
           params: {newNickname},
         },
       );
-      alert('닉네임 변경 성공');
+      $q.notify({
+        color: 'white',
+        textColor: 'green-9',
+        message: '닉네임이 변경되었어요!',
+        position: 'center',
+        timeout: 500,
+        icon: 'mdi-account-box-multiple-outline',
+      });
       router.push('/my-page/info');
     } catch (error) {
-      console.error('API 호출 중 오류 발생:', error);
+      $q.loading.hide();
+      $q.notify({
+        color: 'white',
+        textColor: 'red-9',
+        message: '문제가 생겼어요! 다시 닉네임을 바꿔볼까요?',
+        position: 'center',
+        timeout: 500,
+        icon: 'mdi-alert-outline',
+      });
     }
   };
 

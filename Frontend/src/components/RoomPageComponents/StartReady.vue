@@ -3,13 +3,16 @@
   import {ref, watch} from 'vue';
   import {useOpenViduStore} from 'stores/openvidu';
   import {storeToRefs} from 'pinia';
+  import {useQuasar} from 'quasar';
 
+  const $q = useQuasar();
   const router = useRouter();
   const btnValue = ref(false);
   const openViduStore = useOpenViduStore();
   const {bookDetail, playerList, isHost, roomInfo, memberId, myRole} = storeToRefs(openViduStore);
   const {session, updateRoom} = openViduStore;
   const canMoveWaitingRoom = ref(false);
+
 
   watch(canMoveWaitingRoom, (newVal, oldVal) => {
     if (newVal) {
@@ -24,7 +27,14 @@
 
   const updateState = () => {
     if (!checkRole()) {
-      alert('역할을 선택해주세요!');
+      $q.notify({
+        color: 'white',
+        textColor: 'green-9',
+        message: '역할을 선택해주세요!',
+        position: 'center',
+        timeout: 500,
+        icon: 'mdi:alert-outline',
+      });
       return;
     }
     const player = playerList.value.find(user => user.memberId === memberId.value);
@@ -33,13 +43,39 @@
       btnValue.value = true;
       sendingReadyData.value.playerList = playerList.value;
       sendReadyInfoToOpenVidu();
-      alert('곧 시작합니다. 잠시만 기다려주세요!');
+      $q.notify({
+        color: 'white',
+        textColor: 'green-9',
+        message: '곧 시작합니다! 잠시만 기다려주세요!',
+        position: 'center',
+        timeout: 500,
+        icon: 'mdi-alert-circle-outline',
+      });
     }
   };
 
   const checkReadyState = () => {
     if (!checkRole()) {
-      alert('역할을 선택해주세요!');
+      $q.notify({
+        color: 'white',
+        textColor: 'red-9',
+        message: '역할을 선택해주세요!',
+        position: 'center',
+        timeout: 500,
+        icon: 'mdi:alert-outline',
+      });
+      return;
+    }
+
+    if (playerList.value.length < bookDetail.value.book.roleCnt) {
+      $q.notify({
+        color: 'white',
+        textColor: 'red-9',
+        message: '더 많은 친구들이 필요해요!',
+        position: 'center',
+        timeout: 500,
+        icon: 'mdi-human-capacity-increase',
+      });
       return;
     }
 
@@ -59,7 +95,14 @@
           console.error(error);
         });
     } else {
-      alert('모든 친구들이 준비할 때까지 기다려주세요!');
+      $q.notify({
+        color: 'white',
+        textColor: 'red-9',
+        message: '모든 친구들이 준비해야 시작할 수 있어요!',
+        position: 'center',
+        timeout: 500,
+        icon: 'mdi:alert-outline',
+      });
     }
   };
   const moveRecording = () => {
@@ -84,7 +127,6 @@
       })
         .then(() => {
           resolve('준비 상태 전송 성공');
-
         })
         .catch(error => {
           reject(error);

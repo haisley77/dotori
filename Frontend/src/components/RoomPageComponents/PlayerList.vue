@@ -92,7 +92,9 @@
   import {storeToRefs} from 'pinia';
   import {useOpenViduStore} from 'stores/openvidu';
   import {ref, watch} from 'vue';
+  import {useQuasar} from 'quasar';
 
+  const $q = useQuasar();
   const openViduStore = useOpenViduStore();
   const {playerList, bookDetail, memberId} = storeToRefs(openViduStore);
   const {session} = openViduStore;
@@ -114,13 +116,27 @@
   const toggleRole = (player, selectedIndex) => {
     // 역할 선택
     if (playerList.value[player - 1].roleIndex === selectedIndex) {
-      alert('정상적으로 선택되었습니다.');
+      $q.notify({
+        color: 'white',
+        textColor: 'green-9',
+        message: '이미 선택했어요!',
+        position: 'center',
+        timeout: 500,
+        icon: 'mdi-alert-circle-outline',
+      });
       return;
     }
     // 역할 중복 선택 불가
     const selectedRole = bookDetail.value.roles[selectedIndex];
     if (selectedRole && selectedRole.selected) {
-      alert('해당 역할은 이미 선택되었습니다.');
+      $q.notify({
+        color: 'white',
+        textColor: 'red-9',
+        message: selectedRole.name + '역할은 다른 친구가 선택했어요!',
+        position: 'center',
+        timeout: 500,
+        icon: 'mdi-alert-outline',
+      });
       return;
     }
     const prevSelectedRole = bookDetail.value.roles[playerList.value[player - 1].roleIndex];
@@ -131,7 +147,6 @@
       selectedRole.selected = true;
       playerList.value[player - 1].roleName = selectedRole.name;
       playerList.value[player - 1].roleIndex = selectedIndex;
-
     }
     makeSendingRoleData();
     sendRoleInfoToOpenVidu();
@@ -159,7 +174,6 @@
         type: 'signal:update-role',
       })
         .then(() => {
-          console.log('전송함');
           resolve('역할 선택 정보 전송 성공');
         })
         .catch(error => {
