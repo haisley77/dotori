@@ -2,7 +2,7 @@
   import {ref} from 'vue';
   import NewRoomModal from 'pages/ListPage/NewRoomModal.vue';
 
-  const dialog = ref('true');
+  const dialog = ref(false);
   const props = defineProps({bookdetail : Object});
 </script>
 
