@@ -25,6 +25,27 @@
         <EnterRoomComponent :room='room' @click="() => enterRoom(room)"></EnterRoomComponent>
       </div>
     </div>
+
+    <q-dialog v-model="showPasswordModal" persistent>
+      <q-card>
+        <q-card-section>
+          <q-input
+            v-model="password"
+            type="password"
+            label="비밀번호"
+          />
+        </q-card-section>
+        <q-card-section v-if="!isPasswordCorrect">
+          <span style="color: red">비밀번호가 일치하지 않습니다.</span>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn label="취소" color="negative" @click="cancelPasswordCheck" />
+          <q-btn label="확인" color="primary" @click="checkPassword" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
   </q-page>
 </template>
 
@@ -43,8 +64,33 @@
       const router = useRouter();
       const rooms = ref([]);
       const openViduStore = useOpenViduStore();
-      const {roomInfo,roomId} = storeToRefs(openViduStore);
+      const {roomInfo, roomId} = storeToRefs(openViduStore);
       const {getConnectionToken, connectToOpenVidu, addRoomMember} = openViduStore;
+
+      const showPasswordModal = ref(false); // 모달 표시 여부
+      const password = ref(''); // 입력된 비밀번호
+      let isPasswordCorrect = ref(true);
+      let room = null;
+
+      // 비밀번호 확인 취소
+      const cancelPasswordCheck = () => {
+        showPasswordModal.value = false;
+        password.value = '';
+      };
+
+      // 비밀번호 확인
+      const checkPassword = () => {
+        const enteredPassword = password.value; // 사용자가 입력한 비밀번호
+
+        if (enteredPassword === room.password) {
+          proceedToRoom(room);
+        } else {
+          isPasswordCorrect.value = false;
+          password.value = '';
+          showPasswordModal.value = true;
+        }
+        cancelPasswordCheck(); // 모달 닫기
+      };
 
       const moveWaitingRoom = (room) => {
         roomId.value = room.roomId;
@@ -59,7 +105,7 @@
       // 방 목록 정보를 불러온다.
       const fetchRooms = async () => {
         try {
-          const response = await axios.get('/api/rooms',{withCredentials: true});
+          const response = await axios.get('/api/rooms', {withCredentials: true});
           console.log('API Response:', response);
           rooms.value = response.data;
         } catch (error) {
@@ -67,8 +113,18 @@
         }
       };
 
-      const enterRoom = (room) => {
-        // 유저 방정보, 책정보 가지고 입장.
+      const enterRoom = (selectedRoom) => {
+        room = selectedRoom;
+        if (!room.isPublic) {
+          isPasswordCorrect.value = true; // 모달 열 때마다 초기화
+          showPasswordModal.value = true; // 모달 열기
+        } else {
+          proceedToRoom(room);
+        }
+      };
+
+      // 비밀번호 확인 후 방으로 진입
+      const proceedToRoom = (room) => {
         getConnectionToken(room)
           .then(() => {
             connectToOpenVidu()
@@ -89,6 +145,10 @@
       };
 
       return {
+        showPasswordModal,
+        password,
+        cancelPasswordCheck,
+        checkPassword,
         rooms,
         moveWaitingRoom,
         enterRoom,
