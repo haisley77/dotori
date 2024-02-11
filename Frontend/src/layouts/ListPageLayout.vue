@@ -45,10 +45,10 @@
         <div class='absolute-center bg-transparent column items-center'>
           <div class="profile-bg-white q-my-md">
             <q-avatar size='120px' class=' content-center'>
-              <img src='../assets/MyPageImages/winter.png' style="object-fit: cover">
+              <img :src='memberInfo.profileImg' style="object-fit: cover">
             </q-avatar>
           </div>
-          <h6 class='npsfont q-ma-none'>{{ userInfo.username }}</h6>
+          <h6 class='npsfont q-ma-none'>{{ memberInfo.nickName }}</h6>
         </div>
       </div>
     </q-drawer>
@@ -60,12 +60,12 @@
 </template>
 
 <script setup>
-  const userInfo = {
-    username: '빠른 거북이',
-    description: '안녕하세요 ~',
-  };
 import Header from 'components/CommonComponents/Header.vue';
+import {useOpenViduStore} from 'stores/openvidu';
+import {storeToRefs} from 'pinia';
 
+const openViduStore = useOpenViduStore();
+const {memberInfo} = storeToRefs(openViduStore);
 
 
 </script>

@@ -19,4 +19,15 @@ function localAxios() {
   // instance.defaults.headers.put["Content-Type"] = "application/json";
   return instance;
 }
-export { localAxios };
+
+function imgAxios() {
+  const instance = axios.create({
+    baseURL: 'http://localhost:8080',
+    withCredentials: true,
+    headers: {
+      "Content-Type": "multipart/form-data;charset=utf-8",
+    },
+  });
+  return instance;
+}
+export { localAxios, imgAxios };
