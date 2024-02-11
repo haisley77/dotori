@@ -52,7 +52,7 @@
     .side-img {
         height: 172px;
         width: 280px;
-        border-radius: 15px 0px 15px 0px;
+        border-radius: 15px 0px 0px 0px;
     //background: #ffee9a; padding: 4px;
         object-fit: cover;
 
@@ -71,7 +71,7 @@
 
         width: 280px;
         opacity: 35%;
-        border-radius: 15px 0px 15px 0px;
+        border-radius: 15px 0px 0px 0px;
     //width: 3em;
 
     }
