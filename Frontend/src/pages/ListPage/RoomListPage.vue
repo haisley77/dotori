@@ -169,16 +169,18 @@
 
       const loadMoreRooms = async () => {
         loading.value = true;
-        try {
-          const startIndex = displayedRooms.value.length;
-          const endIndex = startIndex + 12;
-          const newRooms = rooms.value.slice(startIndex, endIndex);
-          displayedRooms.value = [...displayedRooms.value, ...newRooms];
-        } catch (error) {
-          console.error('Error loading more rooms:', error);
-        } finally {
-          loading.value = false;
-        }
+        setTimeout(() => {
+          try {
+            const startIndex = displayedRooms.value.length;
+            const endIndex = startIndex + 12;
+            const newRooms = rooms.value.slice(startIndex, endIndex);
+            displayedRooms.value = [...displayedRooms.value, ...newRooms];
+          } catch (error) {
+            console.error('Error loading more rooms:', error);
+          } finally {
+            loading.value = false;
+          }
+        }, 1000); // 2초의 지연 추가
       };
 
       return {
