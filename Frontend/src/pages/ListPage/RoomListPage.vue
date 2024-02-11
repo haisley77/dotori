@@ -35,6 +35,7 @@
   import {useRouter} from 'vue-router';
   import {useOpenViduStore} from 'stores/openvidu';
   import {localAxios} from 'src/axios/http-commons';
+  const axios = localAxios();
 
   export default {
     components: {EnterRoomComponent},
