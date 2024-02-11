@@ -26,25 +26,48 @@
       </div>
     </div>
 
+<!--    <q-dialog v-model="showPasswordModal" persistent>-->
+<!--      <q-card>-->
+<!--        <q-card-section>-->
+<!--          <q-input-->
+<!--            v-model="password"-->
+<!--            type="password"-->
+<!--            label="비밀번호"-->
+<!--          />-->
+<!--        </q-card-section>-->
+<!--        <q-card-section v-if="!isPasswordCorrect">-->
+<!--          <span style="color: red">비밀번호가 일치하지 않습니다.</span>-->
+<!--        </q-card-section>-->
+
+<!--        <q-card-actions align="right">-->
+<!--          <q-btn label="취소" color="negative" @click="cancelPasswordCheck" />-->
+<!--          <q-btn label="확인" color="primary" @click="checkPassword" />-->
+<!--        </q-card-actions>-->
+<!--      </q-card>-->
+<!--    </q-dialog>-->
+
+
     <q-dialog v-model="showPasswordModal" persistent>
-      <q-card>
+      <q-card style="min-width: 350px">
         <q-card-section>
-          <q-input
-            v-model="password"
-            type="password"
-            label="비밀번호"
-          />
+          <div class="text-h6">비밀번호 확인</div>
         </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <q-input placeholder='비밀번호를 입력하세요.' dense v-model="password" type="password" label="비밀번호" autofocus @keyup.enter="prompt = false" />
+        </q-card-section>
+
         <q-card-section v-if="!isPasswordCorrect">
           <span style="color: red">비밀번호가 일치하지 않습니다.</span>
         </q-card-section>
 
-        <q-card-actions align="right">
-          <q-btn label="취소" color="negative" @click="cancelPasswordCheck" />
-          <q-btn label="확인" color="primary" @click="checkPassword" />
+        <q-card-actions align="right" class="text-primary">
+          <q-btn flat label="Cancel"  @click="cancelPasswordCheck" />
+          <q-btn flat label="Ok" @click="checkPassword" />
         </q-card-actions>
       </q-card>
     </q-dialog>
+
 
   </q-page>
 </template>
@@ -69,7 +92,7 @@
 
       const showPasswordModal = ref(false); // 모달 표시 여부
       const password = ref(''); // 입력된 비밀번호
-      let isPasswordCorrect = ref(true);
+      const isPasswordCorrect = ref(true);
       let room = null;
 
       // 비밀번호 확인 취소
@@ -87,9 +110,7 @@
         } else {
           isPasswordCorrect.value = false;
           password.value = '';
-          showPasswordModal.value = true;
         }
-        cancelPasswordCheck(); // 모달 닫기
       };
 
       const moveWaitingRoom = (room) => {
@@ -145,6 +166,7 @@
       };
 
       return {
+        isPasswordCorrect,
         showPasswordModal,
         password,
         cancelPasswordCheck,
@@ -158,4 +180,10 @@
 </script>
 
 <style lang='scss' scoped>
+  .password-modal {
+    border: 2px solid red;
+  }
+  .error-section {
+    border-top: 1px solid red;
+  }
 </style>
