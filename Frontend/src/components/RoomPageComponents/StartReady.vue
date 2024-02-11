@@ -67,17 +67,19 @@
       return;
     }
 
-    if (playerList.value.length < bookDetail.value.book.roleCnt) {
-      $q.notify({
-        color: 'white',
-        textColor: 'red-9',
-        message: '더 많은 친구들이 필요해요!',
-        position: 'center',
-        timeout: 500,
-        icon: 'mdi-human-capacity-increase',
-      });
-      return;
-    }
+    // 테스트 후 주석 풀어주세요 !!!!
+
+    // if (playerList.value.length < bookDetail.value.book.roleCnt) {
+    //   $q.notify({
+    //     color: 'white',
+    //     textColor: 'red-9',
+    //     message: '더 많은 친구들이 필요해요!',
+    //     position: 'center',
+    //     timeout: 500,
+    //     icon: 'mdi-human-capacity-increase',
+    //   });
+    //   return;
+    // }
 
     let readyCnt = 0;
     playerList.value.forEach((user) => {
