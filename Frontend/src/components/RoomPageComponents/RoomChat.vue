@@ -29,21 +29,21 @@
   const messageList = ref([]);
 
   onMounted(() => {
-    session.on('signal:chat', (event) => {
-      const data = JSON.parse(event.data);
-      appendMessage(data.nickname, data.message);
-      scrollToBottom();
-    });
-
     playerNickname = memberInfo.nickName;
     entermessage(playerNickname);
   });
 
-  // session.on('signal:chat', (event) => {
-  //   const data = JSON.parse(event.data);
-  //   appendMessage(data.nickname, data.message);
-  //   scrollToBottom();
-  // });
+  session.on('signal:chat', (event) => {
+    const data = JSON.parse(event.data);
+    appendMessage(data.nickname, data.message);
+    scrollToBottom();
+  });
+
+  session.on('signal:alert', (event) => {
+    const message = event.data;
+    appendMessage(message);
+    scrollToBottom();
+  });
 
   const sendMessage = () => {
     if (chatMessage.value && session) {
@@ -62,7 +62,10 @@
 
   const entermessage = (player) => {
     const formattedmessage = `*** ${player}님이 입장하셨습니다 ***`;
-    messageList.value.push(formattedmessage);
+    session.signal({
+      data: formattedmessage,
+      type: 'alert',
+    });
   }
 
   const outmessage = (player) => {
