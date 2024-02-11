@@ -25,8 +25,8 @@
                 {{ col.value }}
               </div>
               <div v-else>
-                <a v-bind:href="`http://localhost:8080/api/videos/${col.value}`">
-                  <q-btn outline @click="downloadVideo(col.value)" icon="mdi-download-box" color="brown"/>
+                <a v-bind:href="`https://dotori.online/api/videos/${col.value}`">
+                  <q-btn outline icon="mdi-download-box" color="brown"/>
                 </a>
               </div>
             </q-th>
@@ -58,10 +58,6 @@
     {name: 'videoId', align: 'center', label: '다운로드', headerStyle: 'font-size: 30px', field: row => row.videoId},
   ];
   const rows = ref([]);
-
-  const downloadVideo = (videoId) => {
-    axios.get(`/api/videos/${videoId}`).then().catch();
-  }
 
   onMounted(async () => {
     axios.get(`/api/members/${sessionStorage.getItem('memberId')}/videos`)
