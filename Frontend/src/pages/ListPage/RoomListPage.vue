@@ -20,11 +20,19 @@
         />
       </div>
     </div>
-    <div class='row q-col-gutter-x-md q-col-gutter-y-md'>
-      <div v-for='room in rooms' :key='room.roomId' class='col-12 col-sm-6 col-md-4 col-lg-3 q-pa-md'>
-        <EnterRoomComponent :room='room' @click="() => enterRoom(room)"></EnterRoomComponent>
-      </div>
-    </div>
+
+      <q-infinite-scroll @load="onLoad" :offset="250">
+        <div class='row q-col-gutter-x-md q-col-gutter-y-md'>
+          <div v-for='room in displayedRooms' :key='room.roomId' class='col-12 col-sm-6 col-md-4 col-lg-3 q-pa-md'>
+            <EnterRoomComponent :room='room' @click="() => enterRoom(room)"></EnterRoomComponent>
+          </div>
+        </div>
+        <template v-slot:loading>
+          <div class="row justify-center q-my-md">
+            <q-spinner-dots color="primary" size="40px" />
+          </div>
+        </template>
+      </q-infinite-scroll>
 
     <q-dialog v-model="showPasswordModal" persistent>
       <q-card style="min-width: 350px">
@@ -47,7 +55,6 @@
       </q-card>
     </q-dialog>
 
-
   </q-page>
 </template>
 
@@ -64,15 +71,19 @@
     setup() {
       const axios = localAxios();
       const router = useRouter();
-      const rooms = ref([]);
       const openViduStore = useOpenViduStore();
       const {roomInfo, roomId} = storeToRefs(openViduStore);
       const {getConnectionToken, connectToOpenVidu, addRoomMember} = openViduStore;
+
+      const rooms = ref([]);
+      const displayedRooms = ref([]);
+      const loading = ref(false);
 
       const showPasswordModal = ref(false); // 모달 표시 여부
       const password = ref(''); // 입력된 비밀번호
       const isPasswordCorrect = ref(true);
       let room = null;
+
 
       // 비밀번호 확인 취소
       const cancelPasswordCheck = () => {
@@ -100,14 +111,16 @@
 
       onMounted(() => {
         fetchRooms();
+        window.addEventListener('scroll', handleScroll);
       });
 
       // 방 목록 정보를 불러온다.
       const fetchRooms = async () => {
         try {
-          const response = await axios.get('/api/rooms', {withCredentials: true});
+          const response = await axios.get('/api/rooms', { withCredentials: true });
           console.log('API Response:', response);
           rooms.value = response.data;
+          displayedRooms.value = rooms.value.slice(0, 12);
         } catch (error) {
           console.error('Error fetching rooms:', error);
         }
@@ -144,6 +157,30 @@
           });
       };
 
+      const handleScroll = () => {
+        const scrollY = window.scrollY;
+        const windowHeight = window.innerHeight;
+        const documentHeight = document.body.scrollHeight;
+
+        if (scrollY + windowHeight >= documentHeight && !loading.value) {
+          loadMoreRooms();
+        }
+      };
+
+      const loadMoreRooms = async () => {
+        loading.value = true;
+        try {
+          const startIndex = displayedRooms.value.length;
+          const endIndex = startIndex + 12;
+          const newRooms = rooms.value.slice(startIndex, endIndex);
+          displayedRooms.value = [...displayedRooms.value, ...newRooms];
+        } catch (error) {
+          console.error('Error loading more rooms:', error);
+        } finally {
+          loading.value = false;
+        }
+      };
+
       return {
         isPasswordCorrect,
         showPasswordModal,
@@ -153,6 +190,8 @@
         rooms,
         moveWaitingRoom,
         enterRoom,
+        displayedRooms,
+        loading,
       };
     },
   };
