@@ -37,7 +37,7 @@
   };
 
   function scrollFunction() {
-    if (document.body.scrollTop > 1000 || document.documentElement.scrollTop > 1000) {
+    if (document.body.scrollTop > 830 || document.documentElement.scrollTop > 830) {
       console.log("DOWN");
       document.getElementById('mainPageHeader').classList.remove('onUp');
       document.getElementById('mainPageHeader').classList.add('onDown');
