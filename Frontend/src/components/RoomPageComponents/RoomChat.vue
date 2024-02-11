@@ -41,7 +41,7 @@
 
   session.on('signal:alert', (event) => {
     const message = event.data;
-    appendMessage(message);
+    messageList.value.push(message);
     scrollToBottom();
   });
 
@@ -68,16 +68,21 @@
     });
   }
 
-  const outmessage = (player) => {
-    const formattedmessage = `${player}님이 떠나셨습니다.`;
-    messageList.value.push(formattedmessage);
-  }
+  // const outmessage = (player) => {
+  //   const formattedmessage = `*** ${player}님이 떠나셨습니다 ***`;
+  //   session.signal({
+  //     data: formattedmessage,
+  //     type: 'alert',
+  //   });
+  // }
 
   const appendMessage = (nickname, message) => {
     const formattedMessage = `${nickname}: ${message}`;
     messageList.value.push(formattedMessage);
     // scrollToBottom(); // 메시지 추가 후 자동 스크롤
   };
+
+
 
   const scrollToBottom = () => {
     let chatLog = document.getElementById('chatLog');
