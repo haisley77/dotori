@@ -1,7 +1,7 @@
 <template>
   <Header />
   <!--  <h1>{{ myAvatar }}</h1>-->
-  role : {{ ovstore.myRole }}
+<!--  role : {{ ovstore.myRole }}-->
   <div class='row flex justify-center q-px-none'>
     <div class='col-11'>
       <div class='entire-container row'>
