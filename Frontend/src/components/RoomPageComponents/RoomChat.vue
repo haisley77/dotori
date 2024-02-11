@@ -48,7 +48,7 @@
 
       const data = {
         message: chatMessage.value,
-        nickname: matchingPlayer.name,
+        nickname: matchingPlayer.nickname,
       };
       session.signal({
         data: JSON.stringify(data),
