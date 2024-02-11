@@ -29,15 +29,21 @@
   const messageList = ref([]);
 
   onMounted(() => {
+    session.on('signal:chat', (event) => {
+      const data = JSON.parse(event.data);
+      appendMessage(data.nickname, data.message);
+      scrollToBottom();
+    });
+
     playerNickname = memberInfo.nickName;
     entermessage(playerNickname);
   });
 
-  session.on('signal:chat', (event) => {
-    const data = JSON.parse(event.data);
-    appendMessage(data.nickname, data.message);
-    scrollToBottom();
-  });
+  // session.on('signal:chat', (event) => {
+  //   const data = JSON.parse(event.data);
+  //   appendMessage(data.nickname, data.message);
+  //   scrollToBottom();
+  // });
 
   const sendMessage = () => {
     if (chatMessage.value && session) {
