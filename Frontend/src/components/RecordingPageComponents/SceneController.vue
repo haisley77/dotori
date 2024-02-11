@@ -130,7 +130,7 @@
         let toRemove = 'https://dotori.online:8443/openvidu/recordings/';
 
         let resultUrl = clipUrl.replace(toRemove, '');
-
+        recStore.videoLink[props.curPage-1] = resultUrl;
         local.post('/api/videos/scenes', {
           roomId: ovstore.roomId,
           sceneOrder: props.curPage,
@@ -176,29 +176,42 @@
       alert('녹화 되지 않은 페이지가 있습니다. 녹화를 모두 완료 한 후 눌러주세요');
     }
   };
+
+
+  const viewMyVideo = () => {
+    window.open(recStore.videoLink[props.curPage - 1], '_blank');
+  };
 </script>
 
 <template>
   <div class='controller-container col-4 q-pt-sm'>
     <div class='out-back ' style='height: 100%'>
       <div class='in-back q-pa-sm' style='width: 100%; height: 100%'>
-        <div class='button-container row '>
-          <div class='left-button-container col-3'>
-            <q-btn round color='grey-9' icon='mdi-arrow-left-bold' size='lg' @click='beforePage'
-                   :disabled='!ovstore.isHost' />
+        <div class='button-container'>
+          <div class="row q-my-lg">
+            <div class='col-4 flex justify-center'>
+              <q-btn round color='grey-9' icon='mdi-arrow-left-bold' size='lg' @click='beforePage'
+                     :disabled='!ovstore.isHost' />
+            </div>
+            <div class='col-4 flex justify-center items-center'>
+              <q-btn round color='blue-12' icon='mdi-play' size='lg' v-if='!ovstore.onAir'
+                     @click='startOpenViduRecording' :disabled='!ovstore.isPublished' />
+              <q-btn outline round color='white' text-color='red-5' icon='mdi-stop' size='lg'
+                     v-if='ovstore.onAir'
+                     @click='stopOpenViduRecording' :disabled='!ovstore.isPublished' />
+            </div>
+            <div class='col-4  flex justify-center'>
+              <q-btn round color='grey-9' icon='mdi-arrow-right-bold' size='lg' @click='nextPage'
+                     :disabled='!ovstore.isHost' />
+            </div>
           </div>
-          <div class='col-6 flex justify-center items-center'>
-            <q-btn round color='blue-12' icon='mdi-play' size='lg' v-if='!ovstore.onAir'
-                   @click='startOpenViduRecording' :disabled='!ovstore.isPublished' />
-            <q-btn outline round color='white' text-color='red-5' icon='mdi-stop' size='lg'
-                   v-if='ovstore.onAir'
-                   @click='stopOpenViduRecording' :disabled='!ovstore.isPublished' />
+          <div class="row flex justify-evenly">
+            <q-btn class="col-5 npsfont" color='grey-9' label="다시보기" @click='viewMyVideo'
+                   :disable="recStore.isCurPageRecorded(curPage)===false"
+            />
+            <q-btn class="col-5 npsfont" color='grey-9' label="완료하기" @click='mergeVideo'
+                   :disable='!ovstore.isHost' />
           </div>
-          <div class='right-button-container col-3'>
-            <q-btn round color='grey-9' icon='mdi-arrow-right-bold' size='lg' @click='nextPage'
-                   :disabled='!ovstore.isHost' />
-          </div>
-          <q-btn round color='grey-9' icon='mdi-timer-stop' size='lg' @click='mergeVideo' :disabled='!ovstore.isHost' />
         </div>
       </div>
     </div>
@@ -236,7 +249,7 @@
   }
 
   .button-container {
-    background: white;
+
     height: 100%;
   }
 
