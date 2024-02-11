@@ -62,17 +62,15 @@
     };
 
     const startOpenViduRecording = () => {
-        $q.loading.show({
-            message: '녹화 준비 중입니다. 잠시만 기다려주세요!',
-            spinner: QSpinnerHourglass,
-            boxClass: 'bg-grey-2 text-grey-9',
-            spinnerColor: 'brown',
-        });
+        // $q.loading.show({
+        //     message: '녹화 준비 중입니다. 잠시만 기다려주세요!',
+        //     spinner: QSpinnerHourglass,
+        //     boxClass: 'bg-grey-2 text-grey-9',
+        //     spinnerColor: 'brown',
+        // });
+        //모래시계 작동
+        ovstore.session.signal({type:'recordingStartLoading'});
 
-        ovstore.session.signal({
-            data: 1,
-            type: 'onAir',
-        });
 
         openviduAxios.post('/openvidu/api/recordings/start',
             {
@@ -99,23 +97,33 @@
                 console.log('customLayout : ' + response.data.customLayout);
                 console.log('frameRate : ' + response.data.frameRate);
                 openViduRecordingId = response.data.id;
-                $q.loading.hide();
+               // $q.loading.hide();
+              //화면 빨간색으로 바꾸는 부분
+              //모래시계 작동도 멈춘다
+              ovstore.session.signal({
+                data: 1,
+                type: 'onAir',
+              });
 
             })
             .catch((error) => {
-                console.log(error);
-                $q.loading.hide();
-                $q.notify({
-                    color: 'white',
-                    textColor: 'red-9',
-                    message: '문제가 생겼어요! 다시 녹화 시작을 해볼까요?',
-                    position: 'center',
-                    timeout: 500,
-                });
+              console.log(error);
+              ovstore.session.signal({
+                type: 'recordingStartError',
+              });
+                // $q.loading.hide();
+                // $q.notify({
+                //     color: 'white',
+                //     textColor: 'red-9',
+                //     message: '문제가 생겼어요! 다시 녹화 시작을 해볼까요?',
+                //     position: 'center',
+                //     timeout: 500,
+                // });
             });
     };
 
     const stopOpenViduRecording = () => {
+      //빨간 테두리 종료
         ovstore.session.signal({
             data: 0,
             type: 'onAir',
@@ -123,13 +131,14 @@
 
         openviduAxios.post(`/openvidu/api/recordings/stop/${openViduRecordingId}`)
             .then((response) => {
-                $q.notify({
-                    color: 'white',
-                    textColor: 'green-9',
-                    message: '녹화가 성공적으로 되었어요! 다음 장면도 녹화하러 가볼까요?',
-                    position: 'center',
-                    timeout: 500,
-                });
+
+                // $q.notify({
+                //     color: 'white',
+                //     textColor: 'green-9',
+                //     message: '녹화가 성공적으로 되었어요! 다음 장면도 녹화하러 가볼까요?',
+                //     position: 'center',
+                //     timeout: 500,
+                // });
                 console.log('id : ' + response.data.id);
                 console.log('hasAudio : ' + response.data.hasAudio);
                 console.log('hasAudio : ' + response.data.hasVideo);
@@ -149,30 +158,39 @@
                     savedPath: resultUrl,
                 }).then(() => {
                     recStore.recComplete(props.curPage);//현재 페이지 녹화 완료된 정보를 저장
+                  ovstore.session.signal({
+                    type: 'recordingSavedSuccess',
+                  });
                     ovstore.session.signal({
                         data: recStore.recHistory,
                         type: 'recfin',
                     });
                 }).catch((error) => {
-                    $q.notify({
-                        color: 'white',
-                        textColor: 'red-9',
-                        message: '녹화가 되지 않았아요! 아쉽지만 다시 녹화를 해볼까요?',
-                        position: 'center',
-                        timeout: 500,
-                    });
+                  ovstore.session.signal({
+                    type: 'recordingSavedFailed',
+                  });
+                    // $q.notify({
+                    //     color: 'white',
+                    //     textColor: 'red-9',
+                    //     message: '녹화가 되지 않았아요! 아쉽지만 다시 녹화를 해볼까요?',
+                    //     position: 'center',
+                    //     timeout: 500,
+                    // });
                 });
             })
             .catch((error) => {
                 console.log(error);
-                $q.loading.hide();
-                $q.notify({
-                    color: 'white',
-                    textColor: 'red-9',
-                    message: '녹화가 되지 않았아요! 아쉽지만 다시 녹화를 해볼까요?',
-                    position: 'center',
-                    timeout: 500,
-                });
+                // $q.loading.hide();
+              ovstore.session.signal({
+                type: 'recordingSavedFailed',
+              });
+                // $q.notify({
+                //     color: 'white',
+                //     textColor: 'red-9',
+                //     message: '녹화가 되지 않았아요! 아쉽지만 다시 녹화를 해볼까요?',
+                //     position: 'center',
+                //     timeout: 500,
+                // });
             });
     };
 

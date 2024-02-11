@@ -34,9 +34,12 @@
   import {useOpenViduStore} from 'stores/openvidu';
   import Header from 'components/CommonComponents/Header.vue';
   import {useRouter} from 'vue-router';
+
   const router = useRouter();
   import {useRecordingStore} from 'stores/recording';
+  import {QSpinnerHourglass, useQuasar} from 'quasar';
 
+  const $q = useQuasar();
   const recStore = useRecordingStore();
   const videoPlayer = ref(null);
 
@@ -87,10 +90,10 @@
   //페이지를 이동할때마다 현재 페이지의 역할 목록을 초기화 시켜준다
   //스크립트 또한 초기화 시켜준다
   const moveToPage = (nextPage) => {
-      if(ovstore.onAir){
-          alert("녹화중에는 이동할 수 없습니다");
-          return;
-      }
+    if (ovstore.onAir) {
+      alert('녹화중에는 이동할 수 없습니다');
+      return;
+    }
 
     curPage.value = nextPage;
     //역할 목록을 변경해준다
@@ -155,19 +158,65 @@
       const nextPage = Number(event.data);
       moveToPage(nextPage);
     });
-    ovstore.session.on('signal:recfin',(event)=>{
-       const recHistory = Number(event.data);
-        recStore.updateRecHistory(recHistory);
+    ovstore.session.on('signal:recfin', (event) => {
+      const recHistory = Number(event.data);
+      recStore.updateRecHistory(recHistory);
     });
-    ovstore.session.on('signal:end',(event)=>{
-        if(ovstore.isPublished)unpublish();
-        router.push('/end');
+    ovstore.session.on('signal:end', (event) => {
+      if (ovstore.isPublished) unpublish();
+      router.push('/end');
     });
 
     ovstore.session.on('signal:onAir', (event) => {
+      //로딩중이면 멈춘다
+      if (Number(event.data) === 1) {
+        $q.loading.hide();
+      }
+      //빨간색으로 바꾼다
       ovstore.onAir = Number(event.data);
     });
 
+    //녹화 시작 준비중이면 로딩 시작
+    ovstore.session.on('signal:recordingStartLoading', (event) => {
+      $q.loading.show({
+        message: '녹화 준비 중입니다. 잠시만 기다려주세요!',
+        spinner: QSpinnerHourglass,
+        boxClass: 'bg-grey-2 text-grey-9',
+        spinnerColor: 'brown',
+      });
+    });
+
+    ovstore.session.on('signal:recordingStartError',(event)=>{
+      //녹화 시작에 문제가 생겼을 경우
+      $q.loading.hide();
+      $q.notify({
+        color: 'white',
+        textColor: 'red-9',
+        message: '문제가 생겼어요! 다시 녹화 시작을 해볼까요?',
+        position: 'center',
+        timeout: 500,
+      });
+    });
+
+    ovstore.session.on('signal:recordingSavedSuccess',(event)=>{
+      $q.notify({
+        color: 'white',
+        textColor: 'green-9',
+        message: '녹화가 성공적으로 되었어요!',
+        position: 'center',
+        timeout: 500,
+      });
+    });
+
+    ovstore.session.on('signal:recordingSavedFailed',(event)=>{
+      $q.notify({
+        color: 'white',
+        textColor: 'red-9',
+        message: '녹화가 되지 않았아요! 아쉽지만 다시 녹화를 해볼까요?',
+        position: 'center',
+        timeout: 500,
+      });
+    });
     //척페이지 역할 초기화
     currentRoles.value = getRoles(1);
     //첫 페이지 정보 넣기
