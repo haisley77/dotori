@@ -22,12 +22,15 @@
           :ratio='16/9'
           style='height: 100%; '
         />
-        <div class='flex justify-center absolute-bottom q-ma-none q-pa-none'>
+        <div class='flex justify-center items-center absolute-bottom q-ma-none q-pa-none'>
           <div v-if='ovstore.mainStreamManager'>
-            <ov-video style="transform: translate(0.1px,3px)" :stream-manager='ovstore.mainStreamManager' :id='ovstore.mainStreamManager.stream.streamId' />
+            <ov-video style="" :stream-manager='ovstore.mainStreamManager'
+                      :id='ovstore.mainStreamManager.stream.streamId' />
           </div>
-          <ov-video v-for='sub in ovstore.subscribers' :key='sub.stream.connection.connectionId' :stream-manager='sub'
-                    :id='sub.stream.streamId' />
+          <div v-for='sub in ovstore.subscribers' :key='sub.stream.connection.connectionId'>
+            <ov-video  :stream-manager='sub'
+                      :id='sub.stream.streamId' />
+          </div>
         </div>
         <div id='canvasDiv'></div>
       </div>
@@ -55,11 +58,11 @@
 
   }
 
-  .borderbrown{
+  .borderbrown {
     border: #C7A96E solid 6px;
   }
 
-  .borderred{
+  .borderred {
     border: red solid 6px;
 
   }
