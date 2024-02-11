@@ -52,14 +52,16 @@
 </script>
 <template>
   <div class='row header-bg q-pt-sm q-pb-sm'  id='mainPageHeader'>
-    <!--    <div class="col-4 offset-0 flex justify-center items-center" style="cursor: pointer">-->
-    <!--    </div>-->
+
 
     <!--페이지 위치-->
-    <div class='col-8 offset-0 flex justify-center items-start'>
-      <img src='../../assets/DotoriImages/dotorisq.png' style='cursor:pointer' alt='logo' width='30%'
+    <div class='col-4 offset-0 flex justify-start items-start'>
+      <img src='../../assets/DotoriImages/dotorisq.png' style='transform: translate(30px,0px); cursor:pointer' alt='logo' width='25%'
            @click='moveMainPage' />
     </div>
+
+        <div class="col-4 offset-0 flex justify-center items-center" style="cursor: pointer">
+        </div>
 
     <!-- 마이페이지와 로그인-->
     <div class='col-2 flex items-center justify-end npsfont' v-if='ovstore.isLoggedIn'>
