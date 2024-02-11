@@ -25,6 +25,24 @@
         <EnterRoomComponent :room='room' @click="() => enterRoom(room)"></EnterRoomComponent>
       </div>
     </div>
+
+    <q-dialog v-model="showPasswordModal" persistent>
+      <q-card>
+        <q-card-section>
+          <q-input
+            v-model="password"
+            type="password"
+            label="비밀번호"
+          />
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn label="취소" color="negative" @click="cancelPasswordCheck" />
+          <q-btn label="확인" color="primary" @click="checkPassword" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
   </q-page>
 </template>
 
@@ -45,6 +63,27 @@
       const openViduStore = useOpenViduStore();
       const {roomInfo,roomId} = storeToRefs(openViduStore);
       const {getConnectionToken, connectToOpenVidu, addRoomMember} = openViduStore;
+
+      const showPasswordModal = ref(false); // 모달 표시 여부
+      const password = ref(''); // 입력된 비밀번호
+
+      // 비밀번호 확인 취소
+      const cancelPasswordCheck = () => {
+        showPasswordModal.value = false;
+        password.value = '';
+      };
+
+      // 비밀번호 확인
+      const checkPassword = (room) => {
+        const enteredPassword = password.value; // 사용자가 입력한 비밀번호
+        const correctPassword = room.password; // 실제 비밀번호
+
+        if (enteredPassword !== correctPassword) {
+          console.log('비밀번호가 일치하지 않습니다.');
+          password.value = '';
+        }
+        cancelPasswordCheck();// 모달 닫기
+      };
 
       const moveWaitingRoom = (room) => {
         roomId.value = room.roomId;
@@ -68,7 +107,10 @@
       };
 
       const enterRoom = (room) => {
-        // 유저 방정보, 책정보 가지고 입장.
+        // 비밀번호 있는 방이면 확인
+        if(!room.isPublic){
+          checkPassword(room);
+        }
         getConnectionToken(room)
           .then(() => {
             connectToOpenVidu()
@@ -89,6 +131,10 @@
       };
 
       return {
+        showPasswordModal,
+        password,
+        cancelPasswordCheck,
+        checkPassword,
         rooms,
         moveWaitingRoom,
         enterRoom,
