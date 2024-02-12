@@ -2,7 +2,7 @@
   <headerbooklist/>
   <q-page class="page-container">
     <div class='row q-col-gutter-x-md q-col-gutter-y-md'>
-      <div v-for='book in books' :key='book.bookId' class='col-12 col-sm-6 col-md-4 col-lg-3 q-pa-md'>
+      <div v-for='(book,index) in books' :key='book.bookId' class='col-3 q-pa-md'>
         <div
           class="book-container"
           @mouseover="showModal(book)"
@@ -10,7 +10,8 @@
         >
           <Book class='book-component' :bookdetail="book"></Book>
             <!-- 모달 내용 -->
-            <q-card class="my-card modal" v-if="selectedBook === book">
+            {{index%4}}
+            <q-card class="my-card " :class="{'modal-left':index===3, 'modal-right':index!==3}" v-if="selectedBook === book">
               <img :src="book.bookImg">
               <q-card-section>
                 <div class="text-h6">연극을 하려면 {{ book.roleCnt }} 명의 친구들이 필요해요!</div>
@@ -75,7 +76,8 @@
 <style lang='scss' scoped>
   .page-container {
     margin-top: 80px;
-    margin-left : 210px;
+    margin-left : 50px;
+
     width : 1500px;
   }
   .book-container {
@@ -88,7 +90,7 @@
     transform: scale(1.1); /* 1.1 배 확대 */
     transition: transform 0.3s ease;
   }
-  .modal {
+  .modal-right {
     position: absolute;
     z-index: 9999;
     top: calc(10% + 10px);
@@ -100,5 +102,18 @@
     border: 1px solid #ccc;
     border-radius: 30px; /* 테두리를 둥글게 만듭니다. */
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  .modal-left {
+      position: absolute;
+      z-index: 9999;
+      top: calc(10% + 10px);
+      left: calc(-100% + 20px);
+      width: 300px; /* 모달의 너비 */
+      height: 350px; /* 모달의 높이 */
+      background-color: white;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 30px; /* 테두리를 둥글게 만듭니다. */
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   }
 </style>
