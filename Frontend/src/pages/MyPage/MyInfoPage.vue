@@ -42,7 +42,7 @@
       <q-space></q-space>
 
       <div class="input-box-container">
-        <div class="input-box q-py-sm q-px-sm" style="border: 5px solid #c7a96e">
+        <div class="input-box q-py-sm q-px-sm" style="border: 5px solid rgba(218, 201, 157, 0.87)">
           <div class="profile-info">
             <div class="q-my-sm row">
               <q-input
