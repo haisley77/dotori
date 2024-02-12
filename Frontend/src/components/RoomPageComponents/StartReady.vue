@@ -218,12 +218,12 @@
     background: white;
     height: 100%;
     border-radius: 20px 20px 20px 20px;
-    border: dashed #6E4E1F 5px;
+    border: dashed rgba(110, 78, 31, 0.62) 5px;
 
   }
 
   .background-green {
-    background: #C7A96E;
+    background: rgba(218, 201, 157, 0.45);
     border-radius: 20px 20px 20px 20px;
 
   }

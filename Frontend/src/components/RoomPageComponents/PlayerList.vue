@@ -9,9 +9,9 @@
               <div v-if="playerList[player-1].readyState" class="absolute-top-right q-py-xs q-px-sm q-my-none npsfont q-ma-xs"
                    style="background: green;color: white;border-radius: 20px;font-size: small;line-height: 20px"><p class="q-ma-none">준비</p>
               </div>
-              <img :src="playerList[player - 1].profileImg" class="profile-pic q-mr-md q-mt-sm" alt="user-profile-img"
+              <img :src="playerList[player - 1].profileImg" class="profile-pic q-mr-md q-mt-md" alt="user-profile-img"
                    style="object-fit: cover">
-              <h4 class="q-mr-md q-mt-md q-mb-sm player-name">{{ playerList[player - 1].name }}</h4>
+              <h4 class="q-mr-md q-mt-sm q-mb-sm player-name">{{ playerList[player - 1].name }}</h4>
               <div class="row q-mt-none q-mb-sm">
                 <q-btn unelevated rounded color="my-brown q-mr-sm btn-font" :disable="playerList[player-1].readyState">
                   <q-menu fit anchor="bottom start" self="top left">
@@ -61,10 +61,10 @@
         <!-- 플레이어가 없는 경우 -->
         <div v-else>
           <div class="profile-background q-pa-sm">
-            <div class="dashed column items-center">
-              <img src="../../assets/DotoriImages/acorn_character_img.png" class="profile-pic q-mr-md q-mt-sm"
+            <div class="dashed-white  column items-center">
+                <h4 class="q-mr-md q-mt-md q-mb-none player-name">&nbsp;</h4>
+              <img src="../../assets/DotoriImages/acorn_character_img.png" class="profile-pic q-mr-md q-mt-none q-mb-md"
                    alt="user-profile-img">
-              <h4 class="q-mr-md q-mt-md q-mb-sm player-name">사용자 없음</h4>
               <div class="row q-mt-none q-mb-sm" style="visibility: hidden">
                 <q-btn unelevated rounded color="my-brown q-mr-sm btn-font">
                   <q-menu fit anchor="bottom start" self="top left">
@@ -200,11 +200,11 @@
   }
 
   .bg-my-brown {
-    background: #a84d2f !important;
+    background: #be6a4a !important;
   }
 
   .player {
-    background: #C7A96E;
+    background: rgba(218, 201, 157, 0.45);
     border-radius: 20px 20px 20px 20px;
   }
 
@@ -222,9 +222,18 @@
   }
 
   .dashed {
-    border: dashed #6E4E1F 5px;
+    border: solid rgba(110, 78, 31, 0.62) 2px;
     border-radius: 20px 20px 20px 20px;
+    background: rgba(218, 201, 157, 0.45);
     width: 100%;
+    padding : 3px;
+
+  }
+
+  .dashed-white {
+      border: dashed rgba(110, 78, 31, 0) 5px;
+      border-radius: 20px 20px 20px 20px;
+      width: 100%;
   }
 
   .round {

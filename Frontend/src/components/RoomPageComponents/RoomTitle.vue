@@ -34,7 +34,7 @@
   }
 
   .background-green {
-    background: #C7A96E;
+    background: rgba(218, 201, 157, 0.45);
     border-radius: 20px 20px 20px 20px;
 
   }
