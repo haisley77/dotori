@@ -91,7 +91,14 @@
   //스크립트 또한 초기화 시켜준다
   const moveToPage = (nextPage) => {
     if (ovstore.onAir && ovstore.isHost) {
-      alert('녹화중에는 이동할 수 없습니다');
+      $q.notify({
+        color: 'white',
+        textColor: 'red-9',
+        message: '녹화중에는 이동할 수 없습니다',
+        position: 'center',
+        timeout: 500,
+        icon: 'mdi-alert-outline',
+      });
       return;
     }
 
