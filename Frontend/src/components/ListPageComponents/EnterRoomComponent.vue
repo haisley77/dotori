@@ -64,31 +64,31 @@
     padding: 2px 10px;
     margin-left: -7px;
     font-weight: 500;
-    background-color: rgba(24, 176, 45, 0.96);
+    background-color: rgba(47, 187, 66, 0.95);
     border-radius: 20px;
   }
   .on_limit_tag {
     position: absolute;
-    top: 155px;
+    top: 150px;
     right: 15px;
     font-size: 14px;
     color: white;
     padding: 2px 10px;
     margin-left: -7px;
     font-weight: 500;
-    background-color: #fd183a;
+    background-color: rgba(248, 52, 80, 0.97);
     border-radius: 20px;
   }
   .on_now_tag{
     position: absolute;
-    top: 155px;
+    top: 150px;
     right: 15px;
     font-size: 14px;
     color: white;
     padding: 2px 10px;
     margin-left: -7px;
     font-weight: 500;
-    background-color: #fd183a;
+    background-color: rgba(248, 52, 80, 0.97);
     border-radius: 20px;
   }
   .on_now_tag:after {
