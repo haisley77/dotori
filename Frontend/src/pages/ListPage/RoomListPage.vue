@@ -24,7 +24,7 @@
 
     <q-infinite-scroll @load="onLoad" :offset="250">
       <div class='row q-col-gutter-x-md q-col-gutter-y-md'>
-        <div v-for='room in displayedRooms' :key='room.roomId' class='col-12 col-sm-6 col-md-4 col-lg-3 q-pa-md'>
+        <div v-for='room in displayedRooms' :key='room.roomId' class='room-component col-12 col-sm-6 col-md-4 col-lg-3 q-pa-md'>
           <EnterRoomComponent :room='room' @click="() => enterRoom(room)"></EnterRoomComponent>
         </div>
       </div>
@@ -205,5 +205,9 @@
   .custom-padding {
     padding-left: 20px; /* 왼쪽 패딩 크기 조정 */
     padding-right: 20px; /* 오른쪽 패딩 크기 조정 */
+  }
+  .room-component:hover {
+    transform: scale(1.1); /* 1.1 배 확대 */
+    transition: transform 0.3s ease;
   }
 </style>
