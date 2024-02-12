@@ -6,8 +6,10 @@
         <q-input
           class=''
           standout rounded dense placeholder='검색'
-          color='black' bg-color='white'
-          style='width: 50%; border: rgba(218, 201, 157, 0.87) solid 3.5px; border-radius: 50px; '
+          bg-color='white'
+          style='width: 50%; border: rgba(218, 201, 157, 0.87) solid 3.5px; border-radius: 50px;'
+          v-model="searchQuery"
+          @keyup.enter="search"
         >
         </q-input>
         <q-btn
@@ -18,6 +20,7 @@
           flat
           unelevated
           style='color: #C7A96E; font-weight: bolder'
+          @click="search"
         />
       </div>
     </div>
@@ -86,6 +89,13 @@
       const isPasswordCorrect = ref(true);
       let room = null;
 
+      const searchQuery = ref('');
+
+      const search = () => {
+        displayedRooms.value = rooms.value.filter(room => {
+          return room.title.includes(searchQuery.value) || room.book.title.includes(searchQuery.value);
+        });
+      };
 
       // 비밀번호 확인 취소
       const cancelPasswordCheck = () => {
@@ -196,6 +206,8 @@
         enterRoom,
         displayedRooms,
         loading,
+        searchQuery,
+        search
       };
     },
   };
