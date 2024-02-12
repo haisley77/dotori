@@ -1,13 +1,13 @@
 <template>
-  <Header/>
-  <q-page padding>
+  <q-page class="custom-padding">
+    <Header/>
     <div class='row q-mb-md'>
       <div class='search row flex justify-center items-center' style='width: 100%;'>
         <q-input
           class=''
           standout rounded dense placeholder='검색'
           color='black' bg-color='white'
-          style='width: 50%; border: #C7A96E solid 5px; border-radius: 50px; '
+          style='width: 50%; border: rgba(218, 201, 157, 0.87) solid 5px; border-radius: 50px; '
         >
         </q-input>
         <q-btn
@@ -22,18 +22,18 @@
       </div>
     </div>
 
-      <q-infinite-scroll @load="onLoad" :offset="250">
-        <div class='row q-col-gutter-x-md q-col-gutter-y-md'>
-          <div v-for='room in displayedRooms' :key='room.roomId' class='col-12 col-sm-6 col-md-4 col-lg-3 q-pa-md'>
-            <EnterRoomComponent :room='room' @click="() => enterRoom(room)"></EnterRoomComponent>
-          </div>
+    <q-infinite-scroll @load="onLoad" :offset="250">
+      <div class='row q-col-gutter-x-md q-col-gutter-y-md'>
+        <div v-for='room in displayedRooms' :key='room.roomId' class='col-12 col-sm-6 col-md-4 col-lg-3 q-pa-md'>
+          <EnterRoomComponent :room='room' @click="() => enterRoom(room)"></EnterRoomComponent>
         </div>
-        <template v-slot:loading>
-          <div class="row justify-center q-my-md">
-            <q-spinner-dots color="primary" size="40px" />
-          </div>
-        </template>
-      </q-infinite-scroll>
+      </div>
+      <template v-slot:loading>
+        <div class="row justify-center q-my-md">
+          <q-spinner-dots color="primary" size="40px" />
+        </div>
+      </template>
+    </q-infinite-scroll>
 
     <q-dialog v-model="showPasswordModal" persistent>
       <q-card style="min-width: 350px">
@@ -202,4 +202,8 @@
 </script>
 
 <style lang='scss' scoped>
+  .custom-padding {
+    padding-left: 20px; /* 왼쪽 패딩 크기 조정 */
+    padding-right: 20px; /* 오른쪽 패딩 크기 조정 */
+  }
 </style>

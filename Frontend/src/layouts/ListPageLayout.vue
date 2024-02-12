@@ -1,5 +1,6 @@
 <template>
   <q-layout style="position: relative">
+
     <q-drawer
       show-if-above
       :width='250'
@@ -51,6 +52,7 @@
 <script setup>
 import {useOpenViduStore} from 'stores/openvidu';
 import {storeToRefs} from 'pinia';
+import Header from 'components/CommonComponents/Header.vue';
 
 const openViduStore = useOpenViduStore();
 const {memberInfo} = storeToRefs(openViduStore);
