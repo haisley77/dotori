@@ -7,7 +7,7 @@
           class=''
           standout rounded dense placeholder='검색'
           color='black' bg-color='white'
-          style='width: 50%; border: rgba(218, 201, 157, 0.87) solid 5px; border-radius: 50px; '
+          style='width: 50%; border: rgba(218, 201, 157, 0.87) solid 3.5px; border-radius: 50px; '
         >
         </q-input>
         <q-btn
@@ -30,7 +30,7 @@
       </div>
       <template v-slot:loading>
         <div class="row justify-center q-my-md">
-          <q-spinner-dots color="primary" size="40px" />
+          <q-spinner-dots color="positive" size="40px" />
         </div>
       </template>
     </q-infinite-scroll>
@@ -38,18 +38,18 @@
     <q-dialog v-model="showPasswordModal" persistent>
       <q-card style="min-width: 350px">
         <q-card-section>
-          <div class="text-h6">비밀번호 확인</div>
+          <div class="text-h6 npsfont">비밀번호 확인</div>
         </q-card-section>
 
-        <q-card-section class="q-pt-none">
-          <q-input placeholder='비밀번호를 입력하세요.' dense v-model="password" type="password" label="비밀번호" autofocus @keyup.enter="prompt = false" />
+        <q-card-section class="q-pt-none npsfont" >
+          <q-input dense color="positive" v-model="password" type="password" label="비밀번호" autofocus @keyup.enter="prompt = false" />
         </q-card-section>
 
-        <q-card-section v-if="!isPasswordCorrect">
+        <q-card-section class="npsfont" v-if="!isPasswordCorrect" style="padding-left: 16px; padding-top: 0; padding-bottom: 0">
           <span style="color: red">비밀번호가 일치하지 않습니다.</span>
         </q-card-section>
 
-        <q-card-actions align="right" class="text-primary">
+        <q-card-actions align="right" class="npsfont" >
           <q-btn flat label="Cancel"  @click="cancelPasswordCheck" />
           <q-btn flat label="Ok" @click="checkPassword" />
         </q-card-actions>
