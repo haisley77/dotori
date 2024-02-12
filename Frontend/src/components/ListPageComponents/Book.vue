@@ -8,16 +8,16 @@
 
 <template>
   <article>
-    <div style='background: #C7A96E; border-radius: 0px' class='q-pa-xs'>
-      <div style='background: white; border-radius: 0px' class='q-pa-xs'>
+    <div style='background: #C7A96E; border-radius: 23px' class='q-pa-xs'>
+      <div style='background: white; border-radius: 20px' class='q-pa-xs'>
         <q-img
           :ratio='9/9'
           :src="bookdetail.bookImg"
-          style='border-radius: 0px'
+          style='border-radius: 13px'
         />
         <hr style='border: #C7A96E 1px solid' />
         <div class='row q-mt-xs q-pa-xs flex justify-center items-center'
-             style='background: white; '>
+             style='background: white;border-radius: 20px '>
           <div class='col-9'>
             <div class=' npsfont text-h6 ellipsis'>
               {{ bookdetail.title }}
