@@ -186,10 +186,10 @@
 <template>
   <div class='controller-container col-4 q-pt-sm'>
     <div class='out-back ' style='height: 100%'>
-      <div class='in-back q-pa-sm' style='width: 100%; height: 100%'>
-        <div class='button-container'>
-          <div class="row q-my-lg">
-            <div class='col-4 flex justify-center'>
+      <div class='in-back q-pa-sm' style='width: 100%;height: 100%'>
+
+          <div class="row q-my-md flex justify-center items-center">
+            <div class='col-4 flex justify-center items-center'>
               <q-btn round color='grey-9' icon='mdi-arrow-left-bold' size='lg' @click='beforePage'
                      :disabled='!ovstore.isHost' />
             </div>
@@ -212,7 +212,7 @@
             <q-btn class="col-5 npsfont" color='grey-9' label="완료하기" @click='mergeVideo'
                    :disable='!ovstore.isHost' />
           </div>
-        </div>
+
       </div>
     </div>
   </div>
@@ -239,13 +239,18 @@
   }
 
   .out-back {
-    background: #C7A96E;
-    padding: 6px;
-
+      border: 6px solid rgba(218, 201, 157, 0.87);
+      border-radius: 20px;
+      padding : 6px;
   }
 
   .in-back {
-    background: #ffffff;
+    //background: #ffffff;
+      background: rgba(223, 208, 170, 0.3);
+      border-radius: 15px;
+
+      //border: 1px solid red;
+
   }
 
   .button-container {
