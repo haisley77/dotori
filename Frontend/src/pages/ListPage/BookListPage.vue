@@ -1,8 +1,8 @@
 <template>
   <headerbooklist/>
-  <q-page padding>
+  <q-page class="page-container">
     <div class='row q-col-gutter-x-md q-col-gutter-y-md'>
-      <div v-for='book in books' :key='book.bookId' class='col-12 col-sm-6 col-md-4 col-lg-3 q-pa-md'>
+      <div v-for='book in books' :key='book.bookId' class='col-12 col-sm-6 col-md-4 col-lg-3 q-pa-lg'>
         <Book :bookdetail="book"></Book>
       </div>
     </div>
@@ -45,5 +45,10 @@
 </script>
 
 <style lang='scss' scoped>
+  .page-container {
+    margin-top: 80px;
+    margin-left : 210px;
+    width : 1500px;
+  }
 
 </style>

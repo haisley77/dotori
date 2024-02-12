@@ -79,7 +79,7 @@
   }
 
   .profile-bg-white {
-    background-color: #C7A96E;
+    background-color: white;
     border-radius: 50%;
     height: 120px;
     width: 120px;

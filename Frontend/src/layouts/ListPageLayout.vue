@@ -59,15 +59,14 @@ const {memberInfo} = storeToRefs(openViduStore);
 </script>
 
 <style lang="scss" scoped>
-  $profile-height: 250px;
+  $profile-height: 300px;
 
   .mypagebg {
-    //background: red;
     width: 100%;
   }
 
   .side-bar-menu-bg-white {
-    background-color: white;
+    background-color: rgba(218, 201, 157, 0.45);
     border-radius: 40px;
   }
 
@@ -78,26 +77,22 @@ const {memberInfo} = storeToRefs(openViduStore);
     width: 120px;
   }
 
-  .page-background-skyblue {
-    background-color: red;
-  }
-
   .base-bg {
     background-color: $dotori-mint;
   }
 
-  .light-green-bg {
-    background-color: #C7A96E;
-  }
+  //.light-green-bg {
+  //  background-color: #C7A96E;
+  //}
 
   .profile-placement {
     height: $profile-height;
-    border-right: 1px solid #ddd;
+    border-right: 2px solid #ddd;
   }
 
   .scroll-placement {
     height: calc(100% - #{$profile-height});
     margin-top: $profile-height;
-    border-right: 1px solid #ddd;
+    border-right: 2px solid #ddd;
   }
 </style>
