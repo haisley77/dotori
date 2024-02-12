@@ -31,14 +31,16 @@
     <div class='npsfont text-h3 q-pa-sm text-center' style='color: white;'>{{ headText }}</div>
     <div class='npsfont text-h5 q-pa-sm text-center' style='color: white;'>{{ bottomText }}</div>
   </div>
-  <div class="npsfont btn-3d yellow" @click="start">연극하러 가기</div>
-<!--  <q-btn class="glossy" rounded color="secondary" label="시작하기"-->
-<!--         style='z-index: 9999; color: black; width: 200px; height: 60px; background: rgba(255, 255, 255, 0)'-->
-<!--         ></q-btn>-->
+  <div class="npsfont btn-3d yellow glossy" @click="start">연극하러 가기</div>
 
 </template>
 
 <style lang='scss' scoped>
+
+  .glossy {
+    bottom: 120px; /* 하단으로부터의 거리 */
+    left: 50%; /* 가운데 정렬을 위해 왼쪽 위치를 50%로 지정 */
+  }
 
   .video-container {
     width: 98.9vw; /* 뷰포트의 가로 크기 */
@@ -56,46 +58,38 @@
 </style>
 
 <style scoped>
-
-  a[class*="btn"] {text-decoration: none;}
-  input[class*="btn"],
-  button[class*="btn"] {border: 0;}
-
-  .btn.yellow {background-color: #f0d264;}
-
   /* 3D Button */
   .btn-3d {
     z-index: 9999;
     cursor: pointer;
     position: fixed;
-    width: 260px;
+    width: 250px;
     height: 70px;
     bottom: 120px; /* 하단으로부터의 거리 */
     left: 50%; /* 가운데 정렬을 위해 왼쪽 위치를 50%로 지정 */
     transform: translateX(-50%);
     display: inline-block;
-    font-size: 24px;
+    font-size: 22px;
     padding: 20px 60px;
-    color: white;
+    color: #191919;
     margin: 20px 10px 10px;
-    border-radius: 150px;
+    border-radius: 200px;
     text-align: center;
     transition: top .01s linear;
     text-shadow: 0 1px 0 rgba(0,0,0,0.15);
   }
   .btn-3d.yellow:hover {
-    background-color: #F0D264;}
+    background-color: #FFF064;}
 
   .btn-3d.yellow {
-    background-color: #F0D264;
+    background-color: #FFF56E;
     box-shadow: 0 0 0 1px #F0D264 inset,
     0 0 0 2px rgba(255,255,255,0.15) inset,
-    0 8px 0 0 rgba(196, 172, 83, .7),
-    0 8px 0 1px rgba(0,0,0,.4),
+    0 5px 0 0 rgba(180, 172, 83, .7),
     0 8px 8px 1px rgba(0,0,0,0.5);
   }
   .btn-3d.yellow:active {
-    box-shadow: 0 0 0 1px #F0D264 inset;
+    box-shadow: 0 0 0 1px #fee565 inset;
   }
 
 </style>
