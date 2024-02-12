@@ -10,7 +10,6 @@
         >
           <Book class='book-component' :bookdetail="book"></Book>
             <!-- 모달 내용 -->
-            {{index%4}}
             <q-card class="my-card " :class="{'modal-left':index===3, 'modal-right':index!==3}" v-if="selectedBook === book">
               <img :src="book.bookImg">
               <q-card-section>
