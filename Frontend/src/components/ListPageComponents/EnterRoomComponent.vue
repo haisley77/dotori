@@ -6,12 +6,12 @@
 
 <template>
   <article>
-    <div style='background: #C7A96E; border-radius: 0px' class='q-pa-xs'>
-      <div style='background: white; border-radius: 0px' class='q-pa-xs'>
+    <div style='background: rgba(218, 201, 157, 0.87); border-radius: 8px' class='q-pa-xs'>
+      <div style='background: white; border-radius: 8px' class='q-pa-xs'>
         <q-img
           :ratio='9/9'
           :src="room.book.bookImg"
-          style='border-radius: 0px'
+          style='border-radius: 8px'
         />
         <hr style='border: #C7A96E 1px solid' />
         <div class='row q-mt-xs q-pa-xs flex justify-center items-center'

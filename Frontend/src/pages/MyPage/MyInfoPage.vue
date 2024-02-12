@@ -1,14 +1,15 @@
 <template>
+  <Header/>
   <q-page
     style="
             position: absolute;
-            top: 55%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            top: 67%;
+            left: 53%;
+            transform: translate(-45%, -48%);
         "
   >
     <div class="row flex justify-center">
-      <div class="text-h3 npsfont">내 정보</div>
+<!--      <div class="text-h3 npsfont">내 정보</div>-->
     </div>
     <hr class="q-my-md" style="border: white 1px solid" />
     <div class="profile-container column items-center">
@@ -40,24 +41,26 @@
       </div>
       <q-space></q-space>
 
-      <div class="input-box q-py-sm" style="border: 5px solid #c7a96e">
-        <div class="profile-info">
-          <div class="q-my-sm row">
-            <q-input
-              dense
-              label="프로필 이름"
-              v-model="memberInfo.nickName"
-              class="col-7 offset-1"
-              color="brand"
-            />
-            <q-btn
-              @click="changeNickname(memberInfo.nickName)"
-              unelevated
-              rounded
-              class="my-info-btn col-2 offset-1"
-            >변경
-            </q-btn
-            >
+      <div class="input-box-container">
+        <div class="input-box q-py-sm q-px-sm" style="border: 5px solid #c7a96e">
+          <div class="profile-info">
+            <div class="q-my-sm row">
+              <q-input
+                dense
+                label="프로필 이름"
+                v-model="memberInfo.nickName"
+                class="col-7 offset-1"
+                color="brand"
+              />
+              <q-btn
+                @click="changeNickname(memberInfo.nickName)"
+                unelevated
+                rounded
+                class="my-info-btn col-2 offset-1"
+              >변경
+              </q-btn
+              >
+            </div>
           </div>
         </div>
       </div>
@@ -71,6 +74,7 @@
   import {useOpenViduStore} from 'stores/openvidu';
   import {storeToRefs} from 'pinia';
   import {useQuasar} from 'quasar';
+  import Header from 'components/CommonComponents/Header.vue';
 
   const $q = useQuasar();
   const openViduStore = useOpenViduStore();
@@ -173,6 +177,10 @@
   .input-box {
     background: white;
     border-radius: $dotori-border-radius;
-    width: 30%;
+    width: 100%;
+  }
+
+  .input-box-container{
+    width: 400px;
   }
 </style>
