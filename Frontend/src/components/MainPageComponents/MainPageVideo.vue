@@ -1,15 +1,32 @@
 <script setup>
-  import {ref} from 'vue';
-  import {useRouter} from 'vue-router';
-  import {useOpenViduStore} from 'stores/openvidu';
+  import { ref, onMounted } from 'vue';
+  import { useRouter } from 'vue-router';
+  import { useOpenViduStore } from 'stores/openvidu';
 
   const ovstore = useOpenViduStore();
   const router = useRouter();
 
   const autoplay = ref(true);
-  const videoSrc = 'src/assets/MainPage/mainpage1.mp4';
-  const headText = '도토리와 함께 책 하자!';
-  const bottomText = 'DO your sTORy, with DOTORI.';
+  const videos = ref([
+    {
+      src: 'src/assets/MainPage/mainpage1.mp4',
+      headText: '도토리와 함께 책 하자!',
+      bottomText: 'DO your sTORy, with DOTORI.'
+    },
+    {
+      src: 'src/assets/MainPage/mainpage2.mp4',
+      headText: '너도 나도 동화 속 주인공',
+      bottomText: '시작하자, 우리들의 이야기'
+    }
+  ]);
+
+  const currentIndex = ref(0);
+  const prevSlide = () => {
+    currentIndex.value = (currentIndex.value - 1 + videos.value.length) % videos.value.length;
+  };
+  const nextSlide = () => {
+    currentIndex.value = (currentIndex.value + 1) % videos.value.length;
+  };
 
   const start = () => {
     if (ovstore.isLoggedIn) {
@@ -19,28 +36,61 @@
     }
   };
 
+  onMounted(() => {
+    const video = document.querySelector('.video-slide video');
+    video.addEventListener('ended', nextSlide);
+  });
 </script>
 
 <template>
   <div class="video-container">
-    <video autoplay loop muted>
-      <source :src='videoSrc' type="video/mp4">
-    </video>
+    <div class="video-carousel" >
+      <div v-for="(video, index) in videos" :key="index" class="video-slide" :class="{ active: index === currentIndex }">
+        <video autoplay loop muted :src="video.src" type="video/mp4"></video>
+      </div>
+    <div class="controls">
+      <q-btn @click="prevSlide" round dense transition-prev="scale" class="prev-button" style="font-size: 6px;">
+      </q-btn>
+      &nbsp&nbsp
+      <q-btn @click="nextSlide" round dense transition-next="scale" class="next-button" style="font-size: 6px; ">
+      </q-btn>
+    </div>
   </div>
-  <div class='absolute-center custom-caption'>
-    <div class='npsfont text-h3 q-pa-sm text-center' style='color: white;'>{{ headText }}</div>
-    <div class='npsfont text-h5 q-pa-sm text-center' style='color: white;'>{{ bottomText }}</div>
+
+    <div class='absolute-center custom-caption' v-if="videos.length > 0">
+      <div class='npsfont text-h3 q-pa-sm text-center' style='color: white;'>{{ videos[currentIndex].headText }}</div>
+      <div class='npsfont text-h5 q-pa-sm text-center' style='color: white;'>{{ videos[currentIndex].bottomText }}</div>
+    </div>
   </div>
   <div class="npsfont btn-3d yellow" @click="start">시작하기</div>
-
 </template>
 
 <style lang='scss' scoped>
-
-  .glossy {
-    bottom: 120px; /* 하단으로부터의 거리 */
-    left: 50%; /* 가운데 정렬을 위해 왼쪽 위치를 50%로 지정 */
+  .video-carousel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
   }
+
+  .video-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+
+  .video-slide.active {
+    opacity: 1;
+  }
+
+  //.glossy {
+  //  bottom: 120px; /* 하단으로부터의 거리 */
+  //  left: 50%; /* 가운데 정렬을 위해 왼쪽 위치를 50%로 지정 */
+  //}
 
   .video-container {
     width: 98.9vw; /* 뷰포트의 가로 크기 */
@@ -54,7 +104,19 @@
     object-fit: cover; /* 비디오를 컨테이너에 맞게 자동 조절 */
   }
 
+  .controls {
+    position: absolute;
+    bottom: 230px;
+    left: 50.5%;
+    transform: translateX(-50%);
+  }
 
+  .prev-button,
+  .next-button {
+    margin: 0 5px;
+    background-color: rgba(255, 255, 255, 0.7);
+    color: black; /* 버튼 내부 텍스트의 색상을 지정합니다. */
+  }
 </style>
 
 <style scoped>

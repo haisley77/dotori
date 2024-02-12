@@ -9,7 +9,7 @@
     <div style='background: rgba(218, 201, 157, 0.87); border-radius: 23px' class='q-pa-xs'>
       <div style='background: white; border-radius: 20px; position: relative' class='q-pa-xs'>
         <q-img
-          :ratio='8/4'
+          :ratio='2/1'
           :src="room.book.bookImg"
           style='border-radius: 15px'
         />
@@ -19,15 +19,15 @@
         <span class="on_limit_tag npsfont" v-else>참여 불가</span>
 
         <hr style='border: #C7A96E 1px solid' />
-        <div class='row q-mt-xs q-pa-xs flex justify-center items-center'
+        <div class='row q-mt-sm q-pa-sm flex justify-center items-center'
              style='background: white; border-radius: 20px'>
           <div class='col-8'>
             <div class=' npsfont text-h6 ellipsis'>
               {{ room.title }}
             </div>
-            <div class='npsfont'>
-              {{ room.book.title }}
-            </div>
+<!--            <div class='npsfont'>-->
+<!--              {{ room.book.title }}-->
+<!--            </div>-->
             <div class='flex justify-start'>
               <div v-if="room.isPublic" class='npsfont'>
                 공개 &nbsp&nbsp
@@ -57,7 +57,7 @@
 
   .on_join_tag {
     position: absolute;
-    top: 155px;
+    top: 150px;
     right: 15px;
     font-size: 14px;
     color: white;
@@ -118,7 +118,7 @@
 
  .enter{
    position: absolute;
-   top: 170px;
+   top: 160px;
    right: 10px;
  }
 
