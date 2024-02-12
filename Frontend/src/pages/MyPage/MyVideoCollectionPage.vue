@@ -1,7 +1,8 @@
 <template>
-  <q-page>
-    <div class='text-h3 npsfont q-pl-lg'>보관함</div>
-    <hr class='q-my-md'>
+  <Header/>
+  <q-page class="page-with-margin">
+<!--    <div class='text-h5 npsfont q-pl-lg'>보관함</div>-->
+<!--    <hr class='q-my-md'>-->
     <div class="q-pa-md">
       <q-table
         style="height: 60vh"
@@ -39,9 +40,9 @@
 </template>
 
 <script setup>
-  import {useOpenViduStore} from 'stores/openvidu';
   import {localAxios} from 'src/axios/http-commons';
   import {onMounted, ref} from 'vue';
+  import Header from 'components/CommonComponents/Header.vue';
 
   const axios = localAxios()
 
@@ -51,11 +52,11 @@
       required: true,
       label: '책 제목',
       align: 'center',
-      headerStyle: 'font-size: 30px',
+      headerStyle: 'font-size: 25px',
       field: row => row.bookTitle,
     },
-    {name: 'date', align: 'center', label: '날짜', headerStyle: 'font-size: 30px', field: row => row.createdAt},
-    {name: 'videoId', align: 'center', label: '다운로드', headerStyle: 'font-size: 30px', field: row => row.videoId},
+    {name: 'date', align: 'center', label: '날짜', headerStyle: 'font-size: 25px', field: row => row.createdAt},
+    {name: 'videoId', align: 'center', label: '다운로드', headerStyle: 'font-size: 25px', field: row => row.videoId},
   ];
   const rows = ref([]);
 
@@ -90,5 +91,9 @@
     border-radius: $dotori-border-radius;
 
   }
-
+  .page-with-margin {
+    margin-top: 90px;
+    margin-left : 110px;
+    width : 1000px;
+  }
 </style>

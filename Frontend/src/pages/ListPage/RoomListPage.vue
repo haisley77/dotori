@@ -1,4 +1,5 @@
 <template>
+  <Header/>
   <q-page padding>
     <div class='row q-mb-md'>
       <div class='search row flex justify-center items-center' style='width: 100%;'>
@@ -65,9 +66,10 @@
   import {useRouter} from 'vue-router';
   import {useOpenViduStore} from 'stores/openvidu';
   import {localAxios} from 'src/axios/http-commons';
+  import Header from 'components/CommonComponents/Header.vue';
 
   export default {
-    components: {EnterRoomComponent},
+    components: {Header, EnterRoomComponent},
     setup() {
       const axios = localAxios();
       const router = useRouter();

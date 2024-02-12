@@ -1,5 +1,4 @@
 <template>
-  <Header/>
   <q-layout style="position: relative">
     <q-drawer
       show-if-above
@@ -7,10 +6,7 @@
       :breakpoint='400'
       class='my-drawer'
     >
-      <!--    <q-drawer-->
-      <!--      show-if-above-->
-      <!--      class = "col-3"-->
-      <!--    >-->
+
       <q-scroll-area class='scroll-placement light-green-bg'>
         <q-list padding>
           <q-item clickable v-ripple to='/list/books' class="side-bar-menu-bg-white q-mx-sm q-mb-sm" active-class="text-brand">
@@ -30,14 +26,7 @@
               <span class="npsfont">방 목록</span>
             </q-item-section>
           </q-item>
-<!--          <q-item clickable v-ripple to='/my-page/avatar' class="side-bar-menu-bg-white q-mx-sm q-mb-sm" active-class="text-brand">-->
-<!--            <q-item-section avatar>-->
-<!--              <q-icon name='cruelty_free' />-->
-<!--            </q-item-section>-->
-<!--            <q-item-section>-->
-<!--              <span class="npsfont">아바타</span>-->
-<!--            </q-item-section>-->
-<!--          </q-item>-->
+
         </q-list>
       </q-scroll-area>
 
@@ -60,7 +49,6 @@
 </template>
 
 <script setup>
-import Header from 'components/CommonComponents/Header.vue';
 import {useOpenViduStore} from 'stores/openvidu';
 import {storeToRefs} from 'pinia';
 
