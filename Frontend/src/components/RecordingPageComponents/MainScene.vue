@@ -35,7 +35,7 @@
           class='q-pa-xs'
           :src='props.currentScene.backgroundImage'
           :ratio='16/9'
-          style='height: 100%; '
+          style='height: 100%;border-radius: 21px; '
         />
         <div class='flex justify-center items-center absolute-bottom q-ma-none q-pa-none'>
           <div v-if='ovstore.mainStreamManager'>
@@ -74,13 +74,11 @@
   }
 
   .borderbrown {
-    border: #C7A96E solid 6px;
+    border:rgba(218, 201, 157, 0.87) solid 6px;
+      border-radius: 30px;
   }
 
-  .borderred {
-    border: red solid 6px;
 
-  }
 
   .scene-background-container {
     height: 100%;

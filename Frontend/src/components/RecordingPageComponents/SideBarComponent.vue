@@ -63,7 +63,7 @@
   .side-img {
     height: 172px;
     width: 280px;
-    border-radius: 15px 0px 0px 0px;
+    border-radius: 20px;
     //background: #ffee9a; padding: 4px;
     object-fit: cover;
 
@@ -82,7 +82,7 @@
 
     width: 280px;
     opacity: 35%;
-    border-radius: 15px 0px 0px 0px;
+    border-radius: 20px;
     //width: 3em;
 
   }
@@ -90,17 +90,17 @@
   .rec-fin-text {
     height: 172px;
     width: 280px;;
-    border-radius: 15px 0px 15px 0px;
+    border-radius: 20px;
     color: white;
     text-shadow: -1px 0px #000000, 0px 1px #000000, 1px 0px #000000, 0px -1px #000000;
   }
 
   .side-bar-unselected {
-    border: 6px solid #C7A96E;
+    border: 6px solid rgba(218, 201, 157, 0.87);
   }
 
   .side-bar-selected {
-    border: 6px solid #a84d2f;
+    border: 6px solid rgba(147, 105, 44, 0.68);
   }
 
   .hoverpointer {
