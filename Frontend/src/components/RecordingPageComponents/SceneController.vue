@@ -160,7 +160,7 @@
   };
 
   const mergeVideo = () => {
-
+      if (ovstore.isPublished) ovstore.unpublish();
     if (recStore.checkAllRecComplete() && ovstore.isHost) {
       //모든 페이지가 녹화 되었을 경우 && 방장일 경우
       //녹화영상 머지 생성 요청을 보낸다

@@ -90,7 +90,7 @@
   //페이지를 이동할때마다 현재 페이지의 역할 목록을 초기화 시켜준다
   //스크립트 또한 초기화 시켜준다
   const moveToPage = (nextPage) => {
-    if (ovstore.onAir) {
+    if (ovstore.onAir && ovstore.isHost) {
       alert('녹화중에는 이동할 수 없습니다');
       return;
     }
