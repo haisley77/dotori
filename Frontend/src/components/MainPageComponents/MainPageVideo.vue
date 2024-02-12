@@ -8,8 +8,8 @@
 
   const autoplay = ref(true);
   const videoSrc = 'src/assets/MainPage/MAIN2.mp4';
-  const headText = 'DO STORY I';
-  const bottomText = '이야기와 하나되는 아이들';
+  const headText = '도토리와 함께 책 하자!';
+  const bottomText = 'DO your sTORy, with DOTORI.';
 
   const start = () => {
     if (ovstore.isLoggedIn) {
@@ -18,6 +18,7 @@
       router.push('/login');
     }
   };
+
 </script>
 
 <template>
@@ -27,21 +28,18 @@
     </video>
   </div>
   <div class='absolute-center custom-caption'>
-    <div class='npsfont text-h4 q-pa-sm text-center' style='color: white;'>{{ headText }}</div>
+    <div class='npsfont text-h3 q-pa-sm text-center' style='color: white;'>{{ headText }}</div>
     <div class='npsfont text-h5 q-pa-sm text-center' style='color: white;'>{{ bottomText }}</div>
   </div>
-  <q-btn class="glossy" rounded color="secondary" label="시작하기"
-         style='z-index: 9999; color: black; width: 150px; height: 50px; background: rgba(255, 255, 255, 0)'
-         @click="start"></q-btn>
+  <div class="npsfont btn-3d yellow glossy" @click="start">연극하러 가기</div>
 
 </template>
 
 <style lang='scss' scoped>
+
   .glossy {
-    position: fixed;
     bottom: 120px; /* 하단으로부터의 거리 */
     left: 50%; /* 가운데 정렬을 위해 왼쪽 위치를 50%로 지정 */
-    transform: translateX(-50%);
   }
 
   .video-container {
@@ -55,4 +53,43 @@
     height: 100%;
     object-fit: cover; /* 비디오를 컨테이너에 맞게 자동 조절 */
   }
+
+
+</style>
+
+<style scoped>
+  /* 3D Button */
+  .btn-3d {
+    z-index: 9999;
+    cursor: pointer;
+    position: fixed;
+    width: 250px;
+    height: 70px;
+    bottom: 120px; /* 하단으로부터의 거리 */
+    left: 50%; /* 가운데 정렬을 위해 왼쪽 위치를 50%로 지정 */
+    transform: translateX(-50%);
+    display: inline-block;
+    font-size: 22px;
+    padding: 20px 60px;
+    color: #191919;
+    margin: 20px 10px 10px;
+    border-radius: 200px;
+    text-align: center;
+    transition: top .01s linear;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.15);
+  }
+  .btn-3d.yellow:hover {
+    background-color: #FFF064;}
+
+  .btn-3d.yellow {
+    background-color: #FFF56E;
+    box-shadow: 0 0 0 1px #F0D264 inset,
+    0 0 0 2px rgba(255,255,255,0.15) inset,
+    0 5px 0 0 rgba(180, 172, 83, .7),
+    0 8px 8px 1px rgba(0,0,0,0.5);
+  }
+  .btn-3d.yellow:active {
+    box-shadow: 0 0 0 1px #fee565 inset;
+  }
+
 </style>
