@@ -61,10 +61,13 @@
         <!-- 플레이어가 없는 경우 -->
         <div v-else>
           <div class="profile-background q-pa-sm">
-            <div class="dashed-white  column items-center">
-                <h4 class="q-mr-md q-mt-md q-mb-none player-name">&nbsp;</h4>
-              <img src="../../assets/DotoriImages/acorn_character_img.png" class="profile-pic q-mr-md q-mt-none q-mb-md"
-                   alt="user-profile-img">
+            <div class="dashed-white column items-center" style="justify-content: center;">
+                <h6 class="q-mr-md q-mt-md q-mb-none player-name"><br>도토리 유저 찾는 중</h6>
+              <div class="main">
+<!--                <img src="../../assets/DotoriImages/acorn_character_img.png" class="profile-pic q-mr-md q-mt-none q-mb-md"-->
+<!--                   alt="user-profile-img">-->
+                <div class="loading_circle"></div>
+              </div>
               <div class="row q-mt-none q-mb-sm" style="visibility: hidden">
                 <q-btn unelevated rounded color="my-brown q-mr-sm btn-font">
                   <q-menu fit anchor="bottom start" self="top left">
@@ -148,6 +151,7 @@
       playerList.value[player - 1].roleName = selectedRole.name;
       playerList.value[player - 1].roleIndex = selectedIndex;
     }
+
     makeSendingRoleData();
     sendRoleInfoToOpenVidu();
   };
@@ -190,11 +194,11 @@
   });
 
 
+
 </script>
 
 
 <style scoped>
-
   .bg-my-brown {
     background: #C7A96E !important;
   }
@@ -204,7 +208,7 @@
   }
 
   .player {
-    background: rgba(218, 201, 157, 0.45);
+    background: rgba(218, 201, 157, 0.87);
     border-radius: 20px 20px 20px 20px;
   }
 
@@ -218,15 +222,17 @@
 
   .profile-background {
     background: white;
-    border-radius: 20px 20px 20px 20px;
+    border-radius: 20px;
+    margin: 1px;
   }
 
   .dashed {
-    border: solid rgba(110, 78, 31, 0.62) 2px;
+    //border: solid rgba(110, 78, 31, 0.62) 2px;
     border-radius: 20px 20px 20px 20px;
+    box-shadow: 4px -4px 4px rgba(218, 201, 157, 0.45) inset;
     background: rgba(218, 201, 157, 0.45);
     width: 100%;
-    padding : 3px;
+    padding : 5px;
 
   }
 
@@ -250,4 +256,27 @@
     color: #6E4E1F;
     font-family: NPSfontBold;
   }
+
+
+  .loading_circle {
+    width: 45px;
+    height: 45px;
+    margin: 10px auto;
+
+    border: 10px solid #e3e3e3;
+    border-bottom: 10px solid #6E4E1F;
+    border-radius: 50%;
+
+    animation: load 1.5s linear infinite;
+  }
+
+  @keyframes load {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
 </style>

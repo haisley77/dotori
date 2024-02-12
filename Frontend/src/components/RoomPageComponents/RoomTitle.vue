@@ -29,13 +29,14 @@
 
   .background-yellow {
     background: white;
-    border-radius: 20px 20px 20px 20px;
+    border-radius: 19px;
+    box-shadow: 3px -3px 3px rgba(218, 201, 157, 0.63) inset;
   //border: dashed #cc765a 5px;
   }
 
   .background-green {
-    background: rgba(218, 201, 157, 0.45);
-    border-radius: 20px 20px 20px 20px;
+    background: rgba(218, 201, 157, 0.87);
+    border-radius: 23px;
 
   }
 
