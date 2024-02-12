@@ -11,8 +11,8 @@
       <div class='row'>
         <div class='col-6 flex justify-center q-mt-lg'>
           <img src='src/assets/MainPage/Mainpageimg.png'
-               width='1050px'
-               height='700px'
+               width='800px'
+               height='600px'
                style='object-fit: contain; border-radius: 25px'
                class='' />
         </div>

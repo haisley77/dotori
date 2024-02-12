@@ -9,41 +9,41 @@
     <div style='background: rgba(218, 201, 157, 0.87); border-radius: 23px' class='q-pa-xs'>
       <div style='background: white; border-radius: 20px; position: relative' class='q-pa-xs'>
         <q-img
-          :ratio='9/9'
+          :ratio='2/1'
           :src="room.book.bookImg"
           style='border-radius: 15px'
         />
 
         <span class="on_now_tag npsfont" v-if="room.isRecording">연극 중</span>
-        <span class="on_join_tag npsfont" v-else-if="room.joinCnt < room.limitCnt">참여 가능</span>
+        <span class="on_join_tag npsfont" v-else-if="room.joinCnt < room.limitCnt">대기 중</span>
         <span class="on_limit_tag npsfont" v-else>참여 불가</span>
 
         <hr style='border: #C7A96E 1px solid' />
-        <div class='row q-mt-xs q-pa-xs flex justify-center items-center'
+        <div class='row q-mt-sm q-pa-sm flex justify-center items-center'
              style='background: white; border-radius: 20px'>
-          <div class='col-9'>
+          <div class='col-8'>
             <div class=' npsfont text-h6 ellipsis'>
               {{ room.title }}
             </div>
-            <div class='npsfont'>
-              {{ room.book.title }}
-            </div>
-            <div class='flex justify-between'>
+<!--            <div class='npsfont'>-->
+<!--              {{ room.book.title }}-->
+<!--            </div>-->
+            <div class='flex justify-start'>
               <div v-if="room.isPublic" class='npsfont'>
-                공개
+                공개 &nbsp&nbsp
               </div>
-              <div v-else class='npsfont'>
-                비공개
+              <div v-else class='npsfont secret'>
+                비공개 &nbsp&nbsp
               </div>
               <div class='npsfont'>
                 인원 : {{ room.joinCnt }}/{{ room.limitCnt }}
               </div>
             </div>
           </div>
-          <div class='col-3'>
-            <div class='q-pa-sm flex justify-end items-center'>
+          <div class='col-4'>
+            <div class='enter q-pa-sm flex justify-end items-center align-items: flex-end'>
               <q-btn flat @click='dialog = true' style='color: #C7A96E'
-                     class='npsfont q-ma-none q-pa-none text-h6 '>입장
+                     class='npsfont q-ma-none q-pa-none text-h6 '>입장하기
               </q-btn>
             </div>
           </div>
@@ -57,19 +57,19 @@
 
   .on_join_tag {
     position: absolute;
-    top: 10px;
+    top: 150px;
     right: 15px;
     font-size: 14px;
     color: white;
     padding: 2px 10px;
     margin-left: -7px;
     font-weight: 500;
-    background-color: #182bfd;
+    background-color: rgba(24, 176, 45, 0.96);
     border-radius: 20px;
   }
   .on_limit_tag {
     position: absolute;
-    top: 10px;
+    top: 155px;
     right: 15px;
     font-size: 14px;
     color: white;
@@ -81,7 +81,7 @@
   }
   .on_now_tag{
     position: absolute;
-    top: 10px;
+    top: 155px;
     right: 15px;
     font-size: 14px;
     color: white;
@@ -114,5 +114,15 @@
   @keyframes blink{
     0% {opacity:0;}
     100% {opacity:1;}
+  }
+
+ .enter{
+   position: absolute;
+   top: 160px;
+   right: 10px;
+ }
+
+  .secret {
+    color: red;
   }
 </style>
