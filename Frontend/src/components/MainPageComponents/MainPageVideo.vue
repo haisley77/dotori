@@ -7,7 +7,7 @@
   const router = useRouter();
 
   const autoplay = ref(true);
-  const videoSrc = 'src/assets/MainPage/MAIN2.mp4';
+  const videoSrc = 'src/assets/MainPage/mainpage1.mp4';
   const headText = '도토리와 함께 책 하자!';
   const bottomText = 'DO your sTORy, with DOTORI.';
 

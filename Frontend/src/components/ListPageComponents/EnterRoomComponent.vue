@@ -9,13 +9,13 @@
     <div style='background: rgba(218, 201, 157, 0.87); border-radius: 23px' class='q-pa-xs'>
       <div style='background: white; border-radius: 20px; position: relative' class='q-pa-xs'>
         <q-img
-          :ratio='9/9'
+          :ratio='8/4'
           :src="room.book.bookImg"
           style='border-radius: 15px'
         />
 
         <span class="on_now_tag npsfont" v-if="room.isRecording">연극 중</span>
-        <span class="on_join_tag npsfont" v-else-if="room.joinCnt < room.limitCnt">참여 가능</span>
+        <span class="on_join_tag npsfont" v-else-if="room.joinCnt < room.limitCnt">대기 중</span>
         <span class="on_limit_tag npsfont" v-else>참여 불가</span>
 
         <hr style='border: #C7A96E 1px solid' />
@@ -64,7 +64,7 @@
     padding: 2px 10px;
     margin-left: -7px;
     font-weight: 500;
-    background-color: #182bfd;
+    background-color: rgba(147, 91, 199, 0.96);
     border-radius: 20px;
   }
   .on_limit_tag {

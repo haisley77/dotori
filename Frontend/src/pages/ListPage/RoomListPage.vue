@@ -119,7 +119,7 @@
       // 방 목록 정보를 불러온다.
       const fetchRooms = async () => {
         try {
-          const response = await axios.get('/api/rooms', { withCredentials: true });
+          const response = await axios.get('/api/rooms', {withCredentials: true});
           console.log('API Response:', response);
           rooms.value = response.data;
           displayedRooms.value = rooms.value.slice(0, 12);
@@ -203,9 +203,10 @@
 
 <style lang='scss' scoped>
   .custom-padding {
-    padding-left: 20px; /* 왼쪽 패딩 크기 조정 */
-    padding-right: 20px; /* 오른쪽 패딩 크기 조정 */
+    padding-left: 30px; /* 왼쪽 패딩 크기 조정 */
+    padding-right: 30px; /* 오른쪽 패딩 크기 조정 */
   }
+
   .room-component:hover {
     transform: scale(1.1); /* 1.1 배 확대 */
     transition: transform 0.3s ease;
