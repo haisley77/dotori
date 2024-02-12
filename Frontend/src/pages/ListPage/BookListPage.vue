@@ -13,10 +13,10 @@
             <q-card class="my-card " :class="{'modal-left':index===3, 'modal-right':index!==3}" v-if="selectedBook === book">
               <img :src="book.bookImg">
               <q-card-section>
-                <div class="text-h6">연극을 하려면 {{ book.roleCnt }} 명의 친구들이 필요해요!</div>
+                <div class="text-h6 npsfont">연극을 하려면 {{ book.roleCnt }} 명의 친구들이 필요해요!</div>
               </q-card-section>
-              <q-card-section class="q-pt-none">
-                시작 버튼을 누르고 방을 만들어볼까요?
+              <q-card-section class="q-pt-none npsfont">
+                '방만들기' 버튼을 눌러 친구들을 모아볼까요?
               </q-card-section>
             </q-card>
         </div>
@@ -92,10 +92,10 @@
   .modal-right {
     position: absolute;
     z-index: 9999;
-    top: calc(10% + 10px);
-    left: calc(100% + 20px);
+    top: calc(5% + 10px);
+    left: calc(80% + 20px);
     width: 300px; /* 모달의 너비 */
-    height: 350px; /* 모달의 높이 */
+    height: 360px; /* 모달의 높이 */
     background-color: white;
     padding: 10px;
     border: 1px solid #ccc;
