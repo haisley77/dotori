@@ -61,7 +61,7 @@
 <style scoped>
   .my-card {
     width: 100%;
-    max-width: 220px;
+    max-width: 230px;
     height: 100%;
     max-height: 220px;
     margin: 15px;
@@ -70,12 +70,14 @@
   }
   .my-card:nth-child(odd) {
     background-color: rgba(218, 201, 157, 0.8);
+    box-shadow: 5px -5px 5px rgba(218, 201, 157, 0.87);
   }
   .my-card:nth-child(even) {
     background-color: rgb(197, 188, 170, 0.8);
+    box-shadow: 5px -5px 5px rgba(189, 172, 157, 0.78);
   }
   .my-card:hover {
-    transform: scale(1.2); /* 1.1 배 확대 */
-    transition: transform 0.3s ease;
+    //transform: scale(1.2); /* 1.1 배 확대 */
+    //transition: transform 0.3s ease;
   }
 </style>

@@ -127,7 +127,7 @@
     position: fixed;
     width: 230px;
     height: 65px;
-    bottom: 120px; /* 하단으로부터의 거리 */
+    bottom: 100px; /* 하단으로부터의 거리 */
     left: 50%; /* 가운데 정렬을 위해 왼쪽 위치를 50%로 지정 */
     transform: translateX(-50%);
     display: inline-block;
