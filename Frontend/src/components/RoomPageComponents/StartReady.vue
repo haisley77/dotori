@@ -40,17 +40,31 @@
     const player = playerList.value.find(user => user.memberId === memberId.value);
     if (player) {
       player.readyState = true;
-      btnValue.value = true;
       sendingReadyData.value.playerList = playerList.value;
-      sendReadyInfoToOpenVidu();
-      $q.notify({
-        color: 'white',
-        textColor: 'green-9',
-        message: '곧 시작합니다! 잠시만 기다려주세요!',
-        position: 'center',
-        timeout: 500,
-        icon: 'mdi-alert-circle-outline',
-      });
+      sendReadyInfoToOpenVidu()
+        .then(() => {
+          btnValue.value = true;
+          $q.notify({
+            color: 'white',
+            textColor: 'green-9',
+            message: '곧 시작합니다! 잠시만 기다려주세요!',
+            position: 'center',
+            timeout: 500,
+            icon: 'mdi-alert-circle-outline',
+          });
+        })
+        .catch((error) => {
+          player.readyState = false;
+          $q.notify({
+            color: 'white',
+            textColor: 'red-9',
+            message: '준비 실패! 다시 시도해주세요!',
+            position: 'center',
+            timeout: 500,
+            icon: 'mdi-alert-circle-outline',
+          });
+        });
+
     }
   };
 
@@ -91,7 +105,6 @@
       updateRoom(true)
         .then(() => {
           sendMoveInfoToOpenVidu();
-          canMoveWaitingRoom.value = true;
         })
         .catch((error) => {
           console.error(error);
