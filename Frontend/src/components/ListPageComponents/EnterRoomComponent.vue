@@ -2,11 +2,21 @@
   import {ref} from 'vue';
   const { room } = defineProps(['room']);
   const dialog = ref('true');
+  const isHovered = ref(false);
 </script>
 
 <template>
-  <article>
-    <div style='background: rgba(218, 201, 157, 0.87); border-radius: 23px' class='q-pa-xs'>
+  <article class="room" @mouseover="isHovered = true" @mouseleave="isHovered = false">
+    <div
+      :style="{
+        background: isHovered ? 'rgba(218, 201, 157, 0.87)' : 'transparent',
+        borderRadius: '8px', // 책 모양을 위한 값
+        border: 'none', // 테두리 제거
+        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)' // 그림자 효과 추가
+      }"
+      class="q-pa-xs"
+    >
+    <div :style="{ background: isHovered ? 'white' : 'transparent', borderRadius: '8px' }" class='q-pa-xs'>
       <div style='background: white; border-radius: 20px; position: relative' class='q-pa-xs'>
         <q-img
           :ratio='2/1'
@@ -50,6 +60,7 @@
         </div>
       </div>
     </div>
+  </div>
   </article>
 </template>
 
@@ -122,7 +133,12 @@
    right: 10px;
  }
 
-  .secret {
-    color: red;
-  }
+.room:hover {
+  transform: scale(1.0);
+  transition: transform 0.5s ease;
+}
+
+.secret {
+  color: red;
+}
 </style>
