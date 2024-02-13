@@ -16,7 +16,7 @@
           <div style='width: 400px;height: 400px;' class='relative-position'>
             <div class='absolute-bottom-left flex justify-center items-center'
                  style='transform:translate(-10px,-80px)'>
-              <img src='src/assets/DotoriImages/jerry2d.png'
+              <img src='~assets/DotoriImages/jerry2d.png'
                    width='210px'
                    height='210px'
                    style='
@@ -30,7 +30,7 @@
             </div>
             <div class='absolute-bottom-right flex justify-center items-center'
                  style='transform:translate(-50px,-180px)'>
-              <img src='src/assets/DotoriImages/lion2d.png'
+              <img src='~assets/DotoriImages/lion2d.png'
                    width='210px'
                    height='210px'
                    style='object-fit: contain;
@@ -42,7 +42,7 @@
             </div>
             <div class='absolute-bottom-right flex justify-center items-center'
                  style='transform:translate(-45px,-20px)'>
-              <img src='src/assets/DotoriImages/racoon2d.png'
+              <img src='~assets/DotoriImages/racoon2d.png'
                    width='230px'
                    height='230px'
                    style='
