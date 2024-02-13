@@ -1,5 +1,5 @@
 <template>
-  <Header/>
+  <headermypage/>
   <q-page
     style="
             position: absolute;
@@ -74,7 +74,7 @@
   import {useOpenViduStore} from 'stores/openvidu';
   import {storeToRefs} from 'pinia';
   import {useQuasar} from 'quasar';
-  import Header from 'components/CommonComponents/Header.vue';
+  import Headermypage from 'components/CommonComponents/Headermypage.vue';
 
   const $q = useQuasar();
   const openViduStore = useOpenViduStore();

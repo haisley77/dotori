@@ -26,14 +26,14 @@
               <span class="npsfont">보관함</span>
             </q-item-section>
           </q-item>
-          <q-item clickable v-ripple to='/list/books' class="side-bar-menu-bg-white q-mx-sm q-mb-sm" active-class="text-brand">
-            <q-item-section avatar>
-              <q-icon name='cruelty_free' />
-            </q-item-section>
-            <q-item-section>
-              <span class="npsfont">돌아가기</span>
-            </q-item-section>
-          </q-item>
+<!--          <q-item clickable v-ripple to='/list/books' class="side-bar-menu-bg-white q-mx-sm q-mb-sm" active-class="text-brand">-->
+<!--            <q-item-section avatar>-->
+<!--              <q-icon name='cruelty_free' />-->
+<!--            </q-item-section>-->
+<!--            <q-item-section>-->
+<!--              <span class="npsfont">돌아가기</span>-->
+<!--            </q-item-section>-->
+<!--          </q-item>-->
         </q-list>
       </q-scroll-area>
 
