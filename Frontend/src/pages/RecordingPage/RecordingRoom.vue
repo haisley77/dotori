@@ -169,10 +169,17 @@
       const nextPage = Number(event.data);
       moveToPage(nextPage);
     });
-    ovstore.session.on('signal:recfin', (event) => {
+    ovstore.session.on('signal:recordingSuccess', (event) => {
       // const recHistory = Number(event.data);
+      $q.notify({
+        color: 'white',
+        textColor: 'green-9',
+        message: '녹화가 성공적으로 되었어요!',
+        position: 'center',
+        timeout: 500,
+      });
       recStore.videoLink[props.curPage-1] = event.data.url;
-      recStore.updateRecHistory(curPage);
+      recStore.recComplete(curPage);
     });
     ovstore.session.on('signal:end', (event) => {
       if (ovstore.isPublished) unpublish();
@@ -210,15 +217,7 @@
       });
     });
 
-    ovstore.session.on('signal:recordingSavedSuccess',(event)=>{
-      $q.notify({
-        color: 'white',
-        textColor: 'green-9',
-        message: '녹화가 성공적으로 되었어요!',
-        position: 'center',
-        timeout: 500,
-      });
-    });
+
 
     ovstore.session.on('signal:recordingSavedFailed',(event)=>{
       $q.notify({

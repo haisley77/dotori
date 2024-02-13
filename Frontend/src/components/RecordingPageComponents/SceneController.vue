@@ -137,13 +137,10 @@
           sceneOrder: props.curPage,
           savedPath: resultUrl,
         }).then(() => {
-          recStore.recComplete(props.curPage);//현재 페이지 녹화 완료된 정보를 저장
-          ovstore.session.signal({
-            type: 'recordingSavedSuccess',
-          });
+
           ovstore.session.signal({
             data: response.data.url,
-            type: 'recfin',
+            type: 'recordingSuccess',
           });
 
         }).catch((error) => {
