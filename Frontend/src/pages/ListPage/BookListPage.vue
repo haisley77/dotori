@@ -10,7 +10,7 @@
         >
           <Book class='book-component' :bookdetail="book"></Book>
             <!-- 모달 내용 -->
-            <q-card class="my-card " :class="{'modal-left':index===3, 'modal-right':index!==3}" v-if="selectedBook === book">
+            <q-card class="my-card " :class="{'modal-left':(index%4)===3, 'modal-right':(index%4)!==3}" v-if="selectedBook === book">
 <!--              <img :src="book.bookImg">-->
               <q-card-section>
                 <div class="text-h6 npsfont">연극을 하려면 {{ book.roleCnt }} 명의 친구들이 필요해요!</div>
