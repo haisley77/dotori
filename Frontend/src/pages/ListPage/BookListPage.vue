@@ -1,6 +1,6 @@
 <template>
+  <q-page class="custom-padding">
   <headerbooklist/>
-
   <div class='row q-mb-md'>
     <div class='search row flex justify-center items-center' style='width: 100%;'>
       <q-input
@@ -26,21 +26,22 @@
     </div>
   </div>
 
-  <q-page class="page-container">
-    <div class='row q-col-gutter-x-md q-col-gutter-y-md'>
-      <div v-for='(book,index) in books' :key='book.bookId' class='col-3 q-pa-md'>
-        <div class="book-container" @mouseover="showModal(book)" @mouseleave="hideModal">
-            <Book class='book-component' :bookdetail="book"></Book>
-            <!-- 모달 내용 -->
-<!--            <q-card class="my-card modal-left" v-if="selectedBook === book">-->
-<!--              <q-card-section>-->
-<!--                <div class="text-h7 npsfont">연극을 하려면</div>-->
-<!--                <div class="text-h7 npsfont">{{ book.roleCnt }} 명의 친구들이 필요해요!</div>-->
-<!--              </q-card-section>-->
-<!--            </q-card>-->
+    <q-page class="page-container">
+      <div class='row q-col-gutter-x-md q-col-gutter-y-md'>
+        <div v-for='(book,index) in books' :key='book.bookId' class='col-3 q-pa-md'>
+          <div class="book-container" @mouseover="showModal(book)" @mouseleave="hideModal">
+              <Book class='book-component' :bookdetail="book"></Book>
+              <!-- 모달 내용 -->
+  <!--            <q-card class="my-card modal-left" v-if="selectedBook === book">-->
+  <!--              <q-card-section>-->
+  <!--                <div class="text-h7 npsfont">연극을 하려면</div>-->
+  <!--                <div class="text-h7 npsfont">{{ book.roleCnt }} 명의 친구들이 필요해요!</div>-->
+  <!--              </q-card-section>-->
+  <!--            </q-card>-->
+          </div>
         </div>
       </div>
-    </div>
+    </q-page>
   </q-page>
 </template>
 
@@ -109,7 +110,7 @@
   }
   .page-container {
     margin-top: 30px;
-    margin-left : 50px;
+    margin-left : 30px;
 
   }
   .book-container {

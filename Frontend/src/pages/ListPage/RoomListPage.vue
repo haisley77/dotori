@@ -1,6 +1,6 @@
 <template>
   <q-page class="custom-padding">
-    <Header/>
+    <headerbooklist/>
     <div class='row q-mb-md'>
       <div class='search row flex justify-center items-center' style='width: 100%;'>
         <q-input
@@ -69,10 +69,10 @@
   import {useRouter} from 'vue-router';
   import {useOpenViduStore} from 'stores/openvidu';
   import {localAxios} from 'src/axios/http-commons';
-  import Header from 'components/CommonComponents/Header.vue';
+  import Headerbooklist from 'components/CommonComponents/Headerbooklist.vue';
 
   export default {
-    components: {Header, EnterRoomComponent},
+    components: {Headerbooklist, EnterRoomComponent},
     setup() {
       const axios = localAxios();
       const router = useRouter();

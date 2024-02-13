@@ -10,14 +10,6 @@
 
       <q-scroll-area class='scroll-placement light-green-bg'>
         <q-list padding>
-          <q-item clickable v-ripple to='/' class="side-bar-menu-bg-white q-mx-sm q-mb-sm" active-class="text-brand">
-            <q-item-section avatar>
-              <q-icon name='home' />
-            </q-item-section>
-            <q-item-section>
-              <span class="npsfont">홈으로</span>
-            </q-item-section>
-          </q-item>
           <q-item clickable v-ripple to='/list/books' class="side-bar-menu-bg-white q-mx-sm q-mb-sm" active-class="text-brand">
             <q-item-section avatar>
               <q-icon name='book' />
