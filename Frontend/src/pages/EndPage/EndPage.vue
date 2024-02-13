@@ -7,15 +7,15 @@
             class="q-ma-lg q-pa-lg col-8 offset-2">
             <div class="row flex justify-center ">
                 <!--        <div class="col-2"></div>-->
-                <div class='items-center q-ma-none q-pa-md'>
+                <div class='flex justify-center q-ma-none q-pa-md'>
                     <div v-if='ovstore.mainStreamManager'>
-                        <ov-video class='border-blue cam-video' :stream-manager='ovstore.mainStreamManager'
+                        <ov-video class='border-brown' :stream-manager='ovstore.mainStreamManager'
                                   :id='ovstore.mainStreamManager.stream.streamId' />
                     </div>
                     <div v-for='(sub,index) in ovstore.subscribers' :key='sub.stream.connection.connectionId'>
                         <ov-video :stream-manager='sub'
                                   :id='sub.stream.streamId'
-                                  :class='{"border-yellow":index===0,"border-green":index===1,"border-blue":index===2}'/>
+                                  class = 'border-brown'/>
                     </div>
                 </div>
                 <!--        <div class="col-2"></div>-->
@@ -110,20 +110,8 @@
         background: #C7A96E !important;
     }
 
-    .border-red{
-        border:5px solid #ff7676;
-        border-radius: 20px;
-    }
-    .border-yellow{
-        border:5px solid #ffff81;
-        border-radius: 20px;
-    }
-    .border-green{
-        border:5px solid #71ff71;
-        border-radius: 20px;
-    }
-    .border-blue{
-        border:5px solid #6f6fff;
+    .border-brown{
+        border:5px solid rgba(218, 201, 157, 0.87);
         border-radius: 20px;
 
     }
