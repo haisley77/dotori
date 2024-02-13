@@ -161,7 +161,7 @@
   const mergeVideo = () => {
 
     if (recStore.checkAllRecComplete() && ovstore.isHost) {
-      if (ovstore.isPublished) ovstore.unpublish();
+      // if (ovstore.isPublished) ovstore.unpublish();
       //모든 페이지가 녹화 되었을 경우 && 방장일 경우
       //녹화영상 머지 생성 요청을 보낸다
       local.post('/api/videos/scenes/merge', {

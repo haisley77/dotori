@@ -189,14 +189,18 @@ export const useOpenViduStore
     });
   };
   const publish = (publisher) => {
-    session.publish(publisher).then(() => {
-      mainStreamManager.value = publisher;
-      mainStreamManagerReal = publisher;
-      console.log('published my video!');
-      isPublished.value = true;
-    }).catch((error) => {
-      // isPublished.value = true;
-      console.log(error);
+    return new Promise((resolve, reject) => {
+      session.publish(publisher).then(() => {
+        mainStreamManager.value = publisher;
+        mainStreamManagerReal = publisher;
+        console.log('published my video!');
+        isPublished.value = true;
+        resolve();
+      }).catch((error) => {
+        // isPublished.value = true;
+        console.log(error);
+        reject(error);
+      });
     });
   };
 

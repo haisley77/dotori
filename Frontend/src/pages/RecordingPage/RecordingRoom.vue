@@ -1,7 +1,7 @@
 <template>
   <Header />
   <!--  <h1>{{ myAvatar }}</h1>-->
-<!--  role : {{ ovstore.myRole }}-->
+  <!--  role : {{ ovstore.myRole }}-->
   <div class='row flex justify-center q-px-none'>
     <div class='col-11'>
       <div class='entire-container row'>
@@ -160,7 +160,7 @@
     //총 페이지 수를 저장한다
     recStore.totalPages = ovstore.bookDetail.scenes.length;
     recStore.videoLink = [];
-    for(let i in recStore.totalPages){
+    for (let i in recStore.totalPages) {
       recStore.videoLink.push('');
     }
     //session 설정 추가
@@ -178,12 +178,19 @@
         position: 'center',
         timeout: 500,
       });
-      recStore.videoLink[curPage.value-1] = event.data;
-      console.log((curPage.value-1) + '페이지에 비디오 링크 저장 : ' + event.data.url);
+      recStore.videoLink[curPage.value - 1] = event.data;
+      console.log((curPage.value - 1) + '페이지에 비디오 링크 저장 : ' + event.data.url);
       recStore.recComplete(curPage.value);
     });
     ovstore.session.on('signal:end', (event) => {
-      if (ovstore.isPublished) unpublish();
+      if (ovstore.isPublished) {
+        ovstore.unpublish().then(() => {
+          router.push('/end');
+        }).catch((error) => {
+          console.log(error);
+        });
+        return;
+      }
       router.push('/end');
     });
 
@@ -206,7 +213,7 @@
       });
     });
 
-    ovstore.session.on('signal:recordingStartError',(event)=>{
+    ovstore.session.on('signal:recordingStartError', (event) => {
       //녹화 시작에 문제가 생겼을 경우
       $q.loading.hide();
       $q.notify({
@@ -219,8 +226,7 @@
     });
 
 
-
-    ovstore.session.on('signal:recordingSavedFailed',(event)=>{
+    ovstore.session.on('signal:recordingSavedFailed', (event) => {
       $q.notify({
         color: 'white',
         textColor: 'red-9',
