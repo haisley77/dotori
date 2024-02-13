@@ -2,6 +2,8 @@
   import { ref, onMounted } from 'vue';
   import { useRouter } from 'vue-router';
   import { useOpenViduStore } from 'stores/openvidu';
+  import videoSrc1 from 'assets/MainPage/mainpage1.mp4'
+  import videoSrc2 from 'assets/MainPage/mainpage2.mp4'
 
   const ovstore = useOpenViduStore();
   const router = useRouter();
@@ -9,12 +11,12 @@
   const autoplay = ref(true);
   const videos = ref([
     {
-      src: 'src/assets/MainPage/mainpage1.mp4',
+      src: videoSrc1,
       headText: '도토리와 함께 책 하자!',
       bottomText: 'DO your sTORy, with DOTORI.'
     },
     {
-      src: 'src/assets/MainPage/mainpage2.mp4',
+      src: videoSrc2,
       headText: '너도 나도 동화 속 주인공',
       bottomText: '시작하자, 우리들의 이야기'
     }
