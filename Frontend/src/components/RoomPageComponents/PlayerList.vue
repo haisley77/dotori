@@ -229,7 +229,7 @@
   .dashed {
     //border: solid rgba(110, 78, 31, 0.62) 2px;
     border-radius: 20px 20px 20px 20px;
-    box-shadow: 4px -4px 4px rgba(218, 201, 157, 0.45) inset;
+    box-shadow: -4px -4px 4px rgba(218, 201, 157, 0.45) inset;
     background: rgba(218, 201, 157, 0.45);
     width: 100%;
     padding : 5px;

@@ -11,7 +11,7 @@
           <Book class='book-component' :bookdetail="book"></Book>
             <!-- 모달 내용 -->
             <q-card class="my-card " :class="{'modal-left':index===3, 'modal-right':index!==3}" v-if="selectedBook === book">
-              <img :src="book.bookImg">
+<!--              <img :src="book.bookImg">-->
               <q-card-section>
                 <div class="text-h6 npsfont">연극을 하려면 {{ book.roleCnt }} 명의 친구들이 필요해요!</div>
               </q-card-section>
@@ -92,10 +92,10 @@
   .modal-right {
     position: absolute;
     z-index: 9999;
-    top: calc(5% + 10px);
-    left: calc(80% + 20px);
+    top: calc(30% + 10px);
+    left: calc(0% + 20px);
     width: 300px; /* 모달의 너비 */
-    height: 360px; /* 모달의 높이 */
+    height: 180px; /* 모달의 높이 */
     background-color: white;
     padding: 10px;
     border: 1px solid #ccc;
@@ -108,7 +108,7 @@
       top: calc(10% + 10px);
       left: calc(-100% + 20px);
       width: 300px; /* 모달의 너비 */
-      height: 350px; /* 모달의 높이 */
+      height: 180px; /* 모달의 높이 */
       background-color: white;
       padding: 10px;
       border: 1px solid #ccc;

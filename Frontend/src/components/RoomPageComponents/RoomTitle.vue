@@ -30,7 +30,7 @@
   .background-yellow {
     background: white;
     border-radius: 19px;
-    box-shadow: 3px -3px 3px rgba(218, 201, 157, 0.63) inset;
+    box-shadow: -3px -3px 3px rgba(218, 201, 157, 0.63) inset;
   //border: dashed #cc765a 5px;
   }
 
