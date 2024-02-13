@@ -21,6 +21,7 @@
             </q-card>
         </div>
       </div>
+
     </div>
   </q-page>
 </template>
@@ -77,7 +78,7 @@
     margin-top: 80px;
     margin-left : 50px;
 
-    width : 1500px;
+
   }
   .book-container {
     position: relative;
