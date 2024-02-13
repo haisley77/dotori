@@ -170,8 +170,9 @@
       moveToPage(nextPage);
     });
     ovstore.session.on('signal:recfin', (event) => {
-      const recHistory = Number(event.data);
-      recStore.updateRecHistory(recHistory);
+      // const recHistory = Number(event.data);
+      recStore.videoLink[props.curPage-1] = event.data.url;
+      recStore.updateRecHistory(curPage);
     });
     ovstore.session.on('signal:end', (event) => {
       if (ovstore.isPublished) unpublish();

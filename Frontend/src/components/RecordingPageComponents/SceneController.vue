@@ -5,6 +5,7 @@
   import axios from 'axios';
   import router from 'src/router';
   import {useRecordingStore} from 'stores/recording';
+  import {computed} from 'vue';
 
   const recStore = useRecordingStore();
 
@@ -141,9 +142,10 @@
             type: 'recordingSavedSuccess',
           });
           ovstore.session.signal({
-            data: recStore.recHistory,
+            data: response.data.url,
             type: 'recfin',
           });
+
         }).catch((error) => {
           ovstore.session.signal({
             type: 'recordingSavedFailed',
@@ -181,6 +183,11 @@
   const viewMyVideo = () => {
     window.open(recStore.videoLink[props.curPage - 1], '_blank');
   };
+
+
+  const isRecorded = computed(()=>{
+    return recStore.isCurPageRecorded(props.curPage)
+  })
 </script>
 
 <template>
@@ -207,7 +214,7 @@
           </div>
           <div class="row flex justify-evenly">
             <q-btn class="col-5 npsfont" color='grey-9' label="다시보기" @click='viewMyVideo'
-                   :disable="recStore.isCurPageRecorded(curPage)===false"
+                   :disable="isRecorded===false"
             />
             <q-btn class="col-5 npsfont" color='grey-9' label="완료하기" @click='mergeVideo'
                    :disable='!ovstore.isHost' />
