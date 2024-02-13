@@ -1,5 +1,5 @@
 <template>
-  <Header/>
+  <headermypage/>
   <q-page class="page-with-margin">
 <!--    <div class='text-h5 npsfont q-pl-lg'>보관함</div>-->
 <!--    <hr class='q-my-md'>-->
@@ -42,7 +42,7 @@
 <script setup>
   import {localAxios} from 'src/axios/http-commons';
   import {onMounted, ref} from 'vue';
-  import Header from 'components/CommonComponents/Header.vue';
+  import Headermypage from 'components/CommonComponents/Headermypage.vue';
 
   const axios = localAxios()
 
