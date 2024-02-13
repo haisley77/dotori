@@ -78,7 +78,6 @@
     margin-top: 80px;
     margin-left : 50px;
 
-
   }
   .book-container {
     position: relative;
