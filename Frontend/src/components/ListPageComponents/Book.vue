@@ -34,7 +34,7 @@
                 방만들기
               </q-btn>
               <q-dialog v-model="dialog">
-                <q-card style="width: 700vw; max-width: 80vw;">
+                <q-card style="width: 1200px; max-width: 80vw; height:800px;">
                   <q-card-actions align="right" class="bg-white text-teal">
                     <q-btn flat icon="close" color="black" v-close-popup />
                   </q-card-actions>
