@@ -178,7 +178,7 @@
         position: 'center',
         timeout: 500,
       });
-      recStore.videoLink[curPage.value-1] = event.data.url;
+      recStore.videoLink[curPage.value-1] = event.data;
       console.log((curPage.value-1) + '페이지에 비디오 링크 저장 : ' + event.data.url);
       recStore.recComplete(curPage.value);
     });

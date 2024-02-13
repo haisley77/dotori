@@ -126,7 +126,7 @@
         console.log('recordingLayout : ' + response.data.recordingLayout);
         console.log('frameRate : ' + response.data.frameRate);
         console.log('url : ' + response.data.url);
-        recStore.videoLink[props.curPage-1] = response.data.url;
+
         let clipUrl = response.data.url;
         let toRemove = 'https://dotori.online:8443/openvidu/recordings/';
 
@@ -139,7 +139,7 @@
         }).then(() => {
 
           ovstore.session.signal({
-            data: response.data.url,
+            data: clipUrl,
             type: 'recordingSuccess',
           });
 
