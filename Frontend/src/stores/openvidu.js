@@ -253,6 +253,7 @@ export const useOpenViduStore
   };
 
   onMounted(() => {
+    console.log( "!! : " + document.cookie);
     checkAuthStatus();
   });
   return {

@@ -231,20 +231,20 @@
     background: rgba(218, 201, 157, 0.45);
     box-shadow: -4px -4px 4px rgba(218, 201, 157, 0.45) inset;
     height: 100%;
-    border-radius: 20px 20px 20px 20px;
+    border-radius: 13px;
     border: rgba(110, 78, 31, 0.62) 5px;
 
   }
 
   .background-green {
     background: rgba(218, 201, 157, 0.87);
-    border-radius: 20px 20px 20px 20px;
+    border-radius: 20px;
 
   }
 
   .background-yellow {
     background: white;
-    border-radius: 20px 20px 20px 20px;
+    border-radius: 15px;
     //border: dashed #cc765a 5px;
   }
 

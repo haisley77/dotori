@@ -1,47 +1,52 @@
 <template>
-  <div class="player">
-    <div class="row">
-      <div v-for="player in 4" :key="player" class="col-6 q-pa-sm text-h3">
-        <div v-if="player <= playerList.length">
+  <div class='player'>
+    <div class='row q-pt-sm q-pl-sm' >
+      <div v-for='player in 4' :key='player' class='col-6 text-h3  q-pb-sm q-pr-sm'
+      >
+        <div v-if='player <= playerList.length' >
           <!-- 플레이어가 있으면서 사용자의 프로필이 맞는 경우-->
-          <div class="profile-background q-pa-sm" v-if="memberId === playerList[player-1].memberId">
-            <div class="dashed column items-center relative-position">
-              <div v-if="playerList[player-1].readyState" class="absolute-top-right q-py-xs q-px-sm q-my-none npsfont q-ma-xs"
-                   style="background: green;color: white;border-radius: 20px;font-size: small;line-height: 20px"><p class="q-ma-none">준비</p>
+          <div class='profile-background q-pa-sm' v-if='memberId === playerList[player-1].memberId'>
+            <div class='dashed column items-center relative-position'>
+              <div v-if='playerList[player-1].readyState'
+                   class='absolute-top-right q-py-xs q-px-sm q-my-none npsfont q-ma-xs'
+                   style='background: green;color: white;border-radius: 20px;font-size: small;line-height: 20px'><p
+                class='q-ma-none'>준비</p>
               </div>
-              <img :src="playerList[player - 1].profileImg" class="profile-pic q-mt-md" alt="user-profile-img"
-                   style="object-fit: cover">
-              <h4 class="q-mt-sm q-mb-sm player-name text-center">{{ playerList[player - 1].name }}</h4>
-              <div class="row q-mt-none q-mb-sm">
-                <q-btn unelevated rounded color="my-brown btn-font" :disable="playerList[player-1].readyState">
-                  <q-menu fit anchor="bottom start" self="top left">
-                    <q-item v-for="(role, index) in bookDetail.roles" :key="role" :disable="role.selected" clickable
-                            @click="toggleRole(player,index)">
+              <img :src='playerList[player - 1].profileImg' class='profile-pic q-mt-md' alt='user-profile-img'
+                   style='object-fit: cover'>
+              <h4 class='q-mt-sm q-mb-sm player-name text-center'>{{ playerList[player - 1].name }}</h4>
+              <div class='row q-mt-none q-mb-sm'>
+                <q-btn unelevated rounded color='my-brown btn-font' :disable='playerList[player-1].readyState'>
+                  <q-menu fit anchor='bottom start' self='top left'>
+                    <q-item v-for='(role, index) in bookDetail.roles' :key='role' :disable='role.selected' clickable
+                            @click='toggleRole(player,index)'>
                       <q-item-section>{{ role.name }}</q-item-section>
                     </q-item>
                   </q-menu>
                   <div>{{ playerList[player - 1].roleName }}</div>
                 </q-btn>
-                <q-btn unelevated rounded color="my-brown q-ml-sm btn-font" v-if="playerList[player-1].roleIndex !== 5"
-                       @click="cancelRole(player)" :disable="playerList[player-1].readyState">
+                <q-btn unelevated rounded color='my-brown q-ml-sm btn-font' v-if='playerList[player-1].roleIndex !== 5'
+                       @click='cancelRole(player)' :disable='playerList[player-1].readyState'>
                   <div>취소</div>
                 </q-btn>
               </div>
             </div>
           </div>
           <!-- 플레이어가 있으면서 사용자의 프로필이 아닌 경우-->
-          <div class="profile-background q-pa-sm" v-else>
-            <div class="dashed column items-center relative-position">
-              <div v-if="playerList[player-1].readyState" class="absolute-top-right q-py-xs q-px-sm q-my-none npsfont q-ma-xs"
-                   style="background: green;color: white;border-radius: 20px;font-size: small;line-height: 20px"><p class="q-ma-none">준비</p>
+          <div class='profile-background q-pa-sm' v-else>
+            <div class='dashed column items-center relative-position'>
+              <div v-if='playerList[player-1].readyState'
+                   class='absolute-top-right q-py-xs q-px-sm q-my-none npsfont q-ma-xs'
+                   style='background: green;color: white;border-radius: 20px;font-size: small;line-height: 20px'><p
+                class='q-ma-none'>준비</p>
               </div>
-              <img :src="playerList[player - 1].profileImg" class="profile-pic q-mr-md q-mt-sm" alt="user-profile-img"
-                   style="object-fit: cover">
-              <h4 class="q-mr-md q-mt-md q-mb-sm player-name">{{ playerList[player - 1].name }}</h4>
-              <div class="row q-mt-none q-mb-sm">
-                <q-btn unelevated rounded color="my-brown q-mr-sm btn-font"
-                       :disable="playerList[player-1].memberId !== memberId">
-                  <q-menu fit anchor="bottom start" self="top left">
+              <img :src='playerList[player - 1].profileImg' class='profile-pic q-mr-md q-mt-sm' alt='user-profile-img'
+                   style='object-fit: cover'>
+              <h4 class='q-mr-md q-mt-md q-mb-sm player-name'>{{ playerList[player - 1].name }}</h4>
+              <div class='row q-mt-none q-mb-sm'>
+                <q-btn unelevated rounded color='my-brown q-mr-sm btn-font'
+                       :disable='playerList[player-1].memberId !== memberId'>
+                  <q-menu fit anchor='bottom start' self='top left'>
                     <q-item clickable>
                       <q-item-section>토끼</q-item-section>
                     </q-item>
@@ -51,7 +56,7 @@
                   </q-menu>
                   <div>{{ playerList[player - 1].roleName }}</div>
                 </q-btn>
-                <q-btn unelevated rounded color="my-brown q-ml-sm btn-font" style="display: none">
+                <q-btn unelevated rounded color='my-brown q-ml-sm btn-font' style='display: none'>
                   <div>취소</div>
                 </q-btn>
               </div>
@@ -60,32 +65,55 @@
         </div>
         <!-- 플레이어가 없는 경우 -->
         <div v-else>
-          <div class="profile-background q-pa-sm">
-            <div class="dashed-white column items-center" style="justify-content: center;">
-                <h6 class="q-mr-md q-mt-md q-mb-none player-name"><br>도토리 유저 찾는 중</h6>
-              <div class="main">
-<!--                <img src="../../assets/DotoriImages/acorn_character_img.png" class="profile-pic q-mr-md q-mt-none q-mb-md"-->
-<!--                   alt="user-profile-img">-->
-                <div class="loading_circle"></div>
-              </div>
-              <div class="row q-mt-none q-mb-sm" style="visibility: hidden">
-                <q-btn unelevated rounded color="my-brown q-mr-sm btn-font">
-                  <q-menu fit anchor="bottom start" self="top left">
-                    <q-item clickable>
-                      <q-item-section>토끼</q-item-section>
-                    </q-item>
-                    <q-item clickable>
-                      <q-item-section>거북이</q-item-section>
-                    </q-item>
-                  </q-menu>
-                  <div>역할 선택하기</div>
-                </q-btn>
-                <q-btn unelevated rounded color="my-brown q-ml-sm btn-font">
-                  <div>커스텀 아바타</div>
-                </q-btn>
+          <!-- 역할이 남아있는 경우 (로딩바 돌아감)-->
+
+
+          <div v-if='player <= bookDetail.book.roleCnt'>
+            <div class='profile-background q-pa-sm'>
+              <div class='dashed column items-center' style='justify-content: center;'>
+                <h6 class='q-mr-md q-mt-md q-mb-none player-name'><br>도토리 유저 찾는 중</h6>
+                <div class='main'>
+                  <!--                <img src="../../assets/DotoriImages/acorn_character_img.png" class="profile-pic q-mr-md q-mt-none q-mb-md"-->
+                  <!--                   alt="user-profile-img">-->
+                  <div class='loading_circle'></div>
+                </div>
+                <div class='row q-mt-none q-mb-sm' style='visibility: hidden'>
+                  <q-btn unelevated rounded color='my-brown q-mr-sm btn-font'>
+                    <q-menu fit anchor='bottom start' self='top left'>
+                      <q-item clickable>
+                        <q-item-section>토끼</q-item-section>
+                      </q-item>
+                      <q-item clickable>
+                        <q-item-section>거북이</q-item-section>
+                      </q-item>
+                    </q-menu>
+                    <div>역할 선택하기</div>
+                  </q-btn>
+                  <q-btn unelevated rounded color='my-brown q-ml-sm btn-font'>
+                    <div>커스텀 아바타</div>
+                  </q-btn>
+                </div>
               </div>
             </div>
           </div>
+          <div v-else>
+            <!--사용자 없음-->
+            <div class='profile-background q-pa-sm'>
+              <div class='dashed column items-center relative-position '>
+                <div class='q-ma-md'></div>
+                <div style='margin: 1px'></div>
+                <img src='../../assets/DotoriImages/acorn_character_img.png'
+                     class='q-my-lg' style='height: 1.5em;width: 1.5em'
+                >
+                <div style='margin: 1px'></div>
+                <!--                <div class = "q-mt-xs"></div>-->
+                <div class='q-ma-md'></div>
+              </div>
+            </div>
+
+          </div>
+
+
         </div>
       </div>
     </div>
@@ -194,7 +222,6 @@
   });
 
 
-
 </script>
 
 
@@ -222,24 +249,30 @@
 
   .profile-background {
     background: white;
+    border-radius: 15px;
+    margin: 1px;
+  }
+
+  .no-user-background {
+    background: white;
     border-radius: 20px;
     margin: 1px;
   }
 
   .dashed {
-    //border: solid rgba(110, 78, 31, 0.62) 2px;
-    border-radius: 20px 20px 20px 20px;
+  //border: solid rgba(110, 78, 31, 0.62) 2px;
+    border-radius: 13px;
     box-shadow: -4px -4px 4px rgba(218, 201, 157, 0.45) inset;
     background: rgba(218, 201, 157, 0.45);
     width: 100%;
-    padding : 5px;
+    padding: 5px;
 
   }
 
   .dashed-white {
-      border: dashed rgba(110, 78, 31, 0) 5px;
-      border-radius: 20px 20px 20px 20px;
-      width: 100%;
+    border: dashed rgba(110, 78, 31, 0) 5px;
+    border-radius: 20px 20px 20px 20px;
+    width: 100%;
   }
 
   .round {
@@ -260,10 +293,10 @@
 
   .loading_circle {
     width: 45px;
-    height: 45px;
+    height: 44px;
     margin: 10px auto;
 
-    border: 10px solid #e3e3e3;
+    border: 10px solid white;
     border-bottom: 10px solid #6E4E1F;
     border-radius: 50%;
 

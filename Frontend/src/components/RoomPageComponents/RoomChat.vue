@@ -101,13 +101,13 @@
 
   .background-green {
     background: rgba(218, 201, 157, 0.87);
-    border-radius: 20px 20px 20px 20px;
+    border-radius: 20px;
 
   }
 
   .background-yellow {
     background: white;
-    border-radius: 20px 20px 20px 20px;
+    border-radius: 15px;
     //border: dashed #cc765a 5px;
   }
 
