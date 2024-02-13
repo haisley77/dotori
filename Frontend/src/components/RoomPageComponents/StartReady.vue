@@ -216,7 +216,7 @@
     font-size: 3.5em;
     color: #6E4E1F;
     background: rgba(218, 201, 157, 0.45);
-    box-shadow: 4px -4px 4px rgba(218, 201, 157, 0.45) inset;
+    box-shadow: -4px -4px 4px rgba(218, 201, 157, 0.45) inset;
     height: 100%;
     border-radius: 20px 20px 20px 20px;
     border: rgba(110, 78, 31, 0.62) 5px;
@@ -224,7 +224,7 @@
   }
 
   .background-green {
-    background: rgba(218, 201, 157, 0.45);
+    background: rgba(218, 201, 157, 0.87);
     border-radius: 20px 20px 20px 20px;
 
   }

@@ -100,7 +100,7 @@
   }
 
   .background-green {
-    background: rgba(218, 201, 157, 0.45);
+    background: rgba(218, 201, 157, 0.87);
     border-radius: 20px 20px 20px 20px;
 
   }
