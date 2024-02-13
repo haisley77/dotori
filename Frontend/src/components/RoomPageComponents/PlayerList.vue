@@ -9,11 +9,11 @@
               <div v-if="playerList[player-1].readyState" class="absolute-top-right q-py-xs q-px-sm q-my-none npsfont q-ma-xs"
                    style="background: green;color: white;border-radius: 20px;font-size: small;line-height: 20px"><p class="q-ma-none">준비</p>
               </div>
-              <img :src="playerList[player - 1].profileImg" class="profile-pic q-mr-md q-mt-md" alt="user-profile-img"
+              <img :src="playerList[player - 1].profileImg" class="profile-pic q-mt-md" alt="user-profile-img"
                    style="object-fit: cover">
-              <h4 class="q-mr-md q-mt-sm q-mb-sm player-name">{{ playerList[player - 1].name }}</h4>
+              <h4 class="q-mt-sm q-mb-sm player-name text-center">{{ playerList[player - 1].name }}</h4>
               <div class="row q-mt-none q-mb-sm">
-                <q-btn unelevated rounded color="my-brown q-mr-sm btn-font" :disable="playerList[player-1].readyState">
+                <q-btn unelevated rounded color="my-brown btn-font" :disable="playerList[player-1].readyState">
                   <q-menu fit anchor="bottom start" self="top left">
                     <q-item v-for="(role, index) in bookDetail.roles" :key="role" :disable="role.selected" clickable
                             @click="toggleRole(player,index)">
