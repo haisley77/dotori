@@ -178,7 +178,7 @@
         position: 'center',
         timeout: 500,
       });
-      recStore.videoLink[props.curPage-1] = event.data.url;
+      recStore.videoLink[curPage-1] = event.data.url;
       recStore.recComplete(curPage);
     });
     ovstore.session.on('signal:end', (event) => {
