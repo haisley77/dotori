@@ -119,12 +119,23 @@
       readyState: false,
     };
 
-    if (isHost.value) {
-      playerList.value.push(player);
-    } else {
-      sendingIncomingData.value.player = player;
-      sendIncomingInfoToOpenVidu();
+
+    let check = true;
+    playerList.value.forEach((user) => {
+      if (user.memberId === player.memberId) {
+        check = false;
+      }
+    })
+
+    if (check) {
+      if (isHost.value) {
+        playerList.value.push(player);
+      } else {
+        sendingIncomingData.value.player = player;
+        sendIncomingInfoToOpenVidu();
+      }
     }
+
   })
 
 
