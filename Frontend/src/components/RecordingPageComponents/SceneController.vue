@@ -159,8 +159,9 @@
   };
 
   const mergeVideo = () => {
-      if (ovstore.isPublished) ovstore.unpublish();
+
     if (recStore.checkAllRecComplete() && ovstore.isHost) {
+      if (ovstore.isPublished) ovstore.unpublish();
       //모든 페이지가 녹화 되었을 경우 && 방장일 경우
       //녹화영상 머지 생성 요청을 보낸다
       local.post('/api/videos/scenes/merge', {
@@ -172,7 +173,14 @@
         },
       );
     } else {
-      alert('녹화 되지 않은 페이지가 있습니다. 녹화를 모두 완료 한 후 눌러주세요');
+      $q.notify({
+        color: 'white',
+        textColor: 'red-9',
+        message: '녹화 되지 않은 페이지가 있습니다. 녹화를 모두 완료 한 후 눌러주세요',
+        position: 'center',
+        timeout: 500,
+      });
+      // alert('녹화 되지 않은 페이지가 있습니다. 녹화를 모두 완료 한 후 눌러주세요');
     }
   };
 
