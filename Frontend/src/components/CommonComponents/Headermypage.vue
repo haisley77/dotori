@@ -28,7 +28,7 @@
     };
 
     const moveMyPage = () => {
-        router.push('/my-page/info');
+        router.push('/');
     };
     const moveListPage = () => {
         router.push('/list/books');
