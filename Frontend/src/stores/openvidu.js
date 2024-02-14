@@ -22,8 +22,8 @@ export const useOpenViduStore
   const memberId = ref(20);
   const memberInfo = ref({
     memberId: 0,
-    nickName: '닉네임 조회 실패',
-    email: '이메일 조회 실패',
+    nickName: '',
+    email: '',
     profileImg: null,
   });
   const isLoggedIn = ref(false);
