@@ -14,10 +14,10 @@
       <div ref="animatedTextRef2" class="animated-text">
         <ElementTwo />
       </div>
-      <div class="row" style="height: 250px"></div>
-      <div ref="animatedTextRef3" class="animated-text">
-        <ElementThree />
-      </div>
+<!--      <div class="row" style="height: 250px"></div>-->
+<!--      <div ref="animatedTextRef3" class="animated-text">-->
+<!--        <ElementThree />-->
+<!--      </div>-->
       <div class="row" style="height: 250px"></div>
       <div ref="animatedTextRef4" class="animated-text">
         <ElementFour />
