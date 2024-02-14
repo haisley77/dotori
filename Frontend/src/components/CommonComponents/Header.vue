@@ -47,7 +47,7 @@
 
     <!--페이지 위치-->
     <div class="col-4 offset-0 flex justify-center items-center">
-      <img src="../../assets/DotoriImages/dotorisq.png" style="transform: translate(-45px,0px); cursor:pointer" alt="logo" width="30%" @click="moveMainPage"/>
+      <img src="../../assets/DotoriImages/dotorisq.png" style="transform: translate(-5px,0px); cursor:pointer" alt="logo" width="30%" @click="moveMainPage"/>
     </div>
 
     <!-- 마이페이지와 로그인-->
