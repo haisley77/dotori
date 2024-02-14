@@ -27,10 +27,10 @@
              style="
              background: white;
              border :5px solid white;
-              transform: rotate(-50deg) translate(-20px,25px);
+              transform: rotate(-48.8deg) translate(-20px,24px);
                border-radius: 100px;
                color : #DFD0AA;">
-          <h6 class = "q-ma-none">사진</h6>
+          <h5 class = "q-ma-none">사진</h5>
         </div>
       </div>
 <div class="q-mx-lg"></div>
@@ -45,10 +45,10 @@
              style="
              background: white;
              border :5px solid white;
-              transform: rotate(-48deg) translate(-20px,25px);
+              transform: rotate(-48.8deg) translate(-20px,24px);
                border-radius: 100px;
                color : #DFD0AA;">
-          <h6 class = "q-ma-none">이름</h6>
+          <h5 class = "q-ma-none">이름</h5>
         </div>
 
         <!--        닉네임 변경 인풋-->
