@@ -166,7 +166,7 @@
       //녹화영상 머지 생성 요청을 보낸다
       local.post('/api/videos/scenes/merge', {
         roomId: ovstore.roomId,
-      }).then().catch();
+      });
       //수고하셨습니다 페이지로 넘어간다
       ovstore.session.signal({
           type: 'end',
