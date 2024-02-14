@@ -63,10 +63,10 @@
         </q-btn>
         </div>
         <!--닉네임 보여주기 div-->
-        <div v-if="isChange"><h6 class="q-ma-none npsfont" style="color: #C7A96E">
-          {{ openViduStore.memberInfo.nickName }}</h6>
+        <div v-if="isChange"><h4 class="q-ma-none npsfont" style="color: #C7A96E">
+          {{ openViduStore.memberInfo.nickName }}</h4>
         </div>
-        <q-btn v-if="isChange" @click="isChange= !isChange" unelevated rounded
+        <q-btn v-if="isChange" @click="isChange= !isChange;nickName = openViduStore.memberInfo.nickName" unelevated rounded
                class="my-info-btn absolute-bottom-right" style = "transform: translate(-20px,-10px)"><h6 class = "q-ma-none">편집</h6>
         </q-btn>
       </div>
@@ -93,9 +93,9 @@
   const router = useRouter();
   const nickName = ref('');
   const isChange = ref(true);
-  watch(openViduStore.memberInfo, (newItems, oldItems) => {
-    nickName.value = newItems.nickName;
-  }, {deep: true});
+  // watch(openViduStore.memberInfo, (newItems, oldItems) => {
+  //   nickName.value = newItems.nickName;
+  // }, {deep: true});
   const changeProfileImg = async (event) => {
     const formData = new FormData();
     console.log(event.target.files[0]);
