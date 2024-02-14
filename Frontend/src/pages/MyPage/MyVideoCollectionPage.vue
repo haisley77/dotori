@@ -75,7 +75,7 @@
         console.log(response.data)
         rows.value = response.data.videos
         rows.value = rows.value.map(video => {
-          const removePath = '/home/ubuntu/dotori-data'
+          const removePath = '/home/ubuntu/dotori-data/'
           video.path = video.path.replace(removePath, '');
           return video;
         });
