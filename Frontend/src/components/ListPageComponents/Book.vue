@@ -35,12 +35,7 @@
               </q-btn>
               <q-dialog v-model="dialog">
                 <q-card style="width: 1200px; max-width: 80vw; height:800px;">
-                  <q-card-actions align="right" class="bg-white text-teal">
-                    <q-btn flat icon="close" color="black" v-close-popup />
-                  </q-card-actions>
-                  <q-card-section>
                     <NewRoomModal :bookmodal="bookdetail"></NewRoomModal>
-                  </q-card-section>
                 </q-card>
               </q-dialog>
             </div>
