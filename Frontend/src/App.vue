@@ -29,8 +29,6 @@
     font-family: 'NPSfontBold';
   }
 
-
-
   .text-brand {
     color: #C7A96E !important;
   }
