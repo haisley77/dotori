@@ -12,13 +12,13 @@
   const videos = ref([
     {
       src: videoSrc1,
-      headText: '도토리와 함께 책 하자!',
-      bottomText: 'DO your sTORy, with DOTORI.'
+      headText: '도토리랑 책 읽으러 갈래?',
+      bottomText: '너도 나도 동화 속 주인공'
     },
     {
       src: videoSrc2,
-      headText: '너도 나도 동화 속 주인공',
-      bottomText: '시작하자, 우리들의 이야기'
+      headText: '시작하자, 우리들의 이야기',
+      bottomText: 'DO our sTORI, with DOTORI'
     }
   ]);
 
