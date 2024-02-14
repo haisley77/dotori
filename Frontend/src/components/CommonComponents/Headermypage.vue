@@ -27,7 +27,7 @@
         }
     };
 
-    const moveMyPage = () => {
+    const moveMainPage = () => {
         router.push('/');
     };
     const moveListPage = () => {
