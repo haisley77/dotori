@@ -93,9 +93,9 @@
     white-space: pre-line; /* 줄 바꿈을 강제로 지정합니다. */
   }
   .top-margin {
-    margin-top: 50px; /* 위쪽 마진 크기 조절 */
+    margin-top: 40px; /* 위쪽 마진 크기 조절 */
   }
   .select_btn-group {
-    margin-bottom: 30px; /* 아래쪽 마진 크기 조절 */
+    margin-bottom: 50px; /* 아래쪽 마진 크기 조절 */
   }
 </style>
