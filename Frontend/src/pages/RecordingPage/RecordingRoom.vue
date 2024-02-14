@@ -184,14 +184,16 @@
     });
     ovstore.session.on('signal:end', (event) => {
       if (ovstore.isPublished) {
-        ovstore.unpublish().then(() => {
-          router.push('/end');
-        }).catch((error) => {
+        ovstore.unpublish()
+          .then(() => {
+            router.push('/end');
+          }).catch((error) => {
           console.log(error);
+          router.push('/end');
         });
-        return;
+      } else {
+        router.push('/end');
       }
-      router.push('/end');
     });
 
     ovstore.session.on('signal:onAir', (event) => {
