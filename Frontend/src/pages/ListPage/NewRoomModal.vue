@@ -164,7 +164,7 @@
                 $q.notify({
                   color: 'white',
                   textColor: 'red-9',
-                  message: '문제가 생겼어요! 다시 방을 만들어 볼까요?',
+                  message: '문제가 생겼어요! 새로 고침 후, 다시 방을 만들어 볼까요?',
                   position: 'center',
                   timeout: 500,
                   icon: 'mdi-alert-outline',
@@ -176,7 +176,7 @@
             $q.notify({
               color: 'white',
               textColor: 'red-9',
-              message: '문제가 생겼어요! 다시 방을 만들어 볼까요?',
+              message: '문제가 생겼어요! 새로 고침 후, 다시 방을 만들어 볼까요?',
               position: 'center',
               timeout: 500,
               icon: 'mdi-alert-outline',
