@@ -4,7 +4,7 @@ import axios from "axios";
 
 function localAxios() {
   const instance = axios.create({
-    baseURL: 'https://dotori.online',
+    baseURL: process.env.API_URL,
     withCredentials: true,
     headers: {
       "Content-Type": "application/json;charset=utf-8",
@@ -39,7 +39,7 @@ function localAxios() {
   async function refreshToken() {
     try {
       const response = await instance.get(
-        'https://dotori.online/api/members/reaccesstoken',
+        '/api/members/reaccesstoken',
       );
       console.log('response', response);
       const accessTokenPrefix = 'accessToken:';
@@ -60,7 +60,7 @@ function localAxios() {
 
 function imgAxios() {
   const instance = axios.create({
-    baseURL: 'https://dotori.online',
+    baseURL: process.env.API_URL,
     withCredentials: true,
     headers: {
       "Content-Type": "multipart/form-data;charset=utf-8",

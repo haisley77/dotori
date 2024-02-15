@@ -53,17 +53,17 @@
   };
 
   const kakaologin = () => {
-    const url = 'https://dotori.online/oauth2/authorization/kakao';
+    const url = process.env.API_URL+'/oauth2/authorization/kakao';
     redirectToAuthUrl(url);
   };
 
   const naverlogin = () => {
-        const url = 'https://dotori.online/oauth2/authorization/naver';
+        const url = process.env.API_URL+'/oauth2/authorization/naver';
     redirectToAuthUrl(url);
   };
 
   const googlelogin = () => {
-    const url = 'https://dotori.online/oauth2/authorization/google';
+    const url = process.env.API_URL+'/oauth2/authorization/google';
     redirectToAuthUrl(url);
   };
 </script>
