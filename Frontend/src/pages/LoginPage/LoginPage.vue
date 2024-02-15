@@ -53,17 +53,17 @@
   };
 
   const kakaologin = () => {
-    const url = 'http://localhost:8080/oauth2/authorization/kakao';
+    const url = 'https://dotori.online/oauth2/authorization/kakao';
     redirectToAuthUrl(url);
   };
 
   const naverlogin = () => {
-    const url = 'http://localhost:8080/oauth2/authorization/naver';
+    const url = 'https://dotori.online/oauth2/authorization/naver';
     redirectToAuthUrl(url);
   };
 
   const googlelogin = () => {
-    const url = 'http://localhost:8080/oauth2/authorization/google';
+    const url = 'https://dotori.online/oauth2/authorization/google';
     redirectToAuthUrl(url);
   };
 </script>
