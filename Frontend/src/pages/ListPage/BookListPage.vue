@@ -117,7 +117,6 @@
     position: relative;
   }
   .book-container:hover {
-    cursor: pointer;
   }
   .book-component:hover {
     transform: scale(1.1); /* 1.1 배 확대 */
