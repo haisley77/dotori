@@ -34,7 +34,7 @@
         router.push('/');
     };
     const moveLoginPage = () => {
-        router.push('/login');
+        router.push('/login-page');
     };
 
     // onMounted(checkAuthStatus);

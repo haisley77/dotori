@@ -11,7 +11,7 @@
     router.push('/my-page/info');
   };
   const moveLoginPage = () => {
-    router.push('/login');
+    router.push('/login-page');
   };
   const moveMainPage = () => {
     router.push('/');

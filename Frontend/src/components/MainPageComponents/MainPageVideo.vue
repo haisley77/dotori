@@ -34,7 +34,7 @@
     if (ovstore.isLoggedIn) {
       router.push('/list/books');
     } else {
-      router.push('/login');
+      router.push('/login-page');
     }
   };
 

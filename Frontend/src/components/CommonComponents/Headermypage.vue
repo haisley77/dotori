@@ -34,7 +34,7 @@
         router.push('/list/books');
     };
     const moveLoginPage = () => {
-        router.push('/login');
+        router.push('/login-page');
     };
 
     // onMounted(checkAuthStatus);
