@@ -58,7 +58,7 @@
   };
 
   const naverlogin = () => {
-    const url = 'https://dotori.online/oauth2/authorization/naver';
+        const url = 'https://dotori.online/oauth2/authorization/naver';
     redirectToAuthUrl(url);
   };
 
