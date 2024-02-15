@@ -1,7 +1,7 @@
 <script setup>
   import {useOpenViduStore} from 'stores/openvidu';
   import {QSpinnerHourglass, useQuasar} from 'quasar';
-  import {localAxios} from 'src/axios/http-commons';
+  import {localAxios, openviduAxios} from 'src/axios/http-commons';
   import axios from 'axios';
   import router from 'src/router';
   import {useRecordingStore} from 'stores/recording';
@@ -22,13 +22,7 @@
   let openViduRecordingId;
   const sessionId = ovstore.session.sessionId;
 
-  const openviduAxios = axios.create({
-    baseURL: 'https://dotori.online',
-    headers: {
-      'Authorization': 'Basic T1BFTlZJRFVBUFA6MTBTU0FGWUE1MDI=',
-      'Content-Type': 'application/json',
-    },
-  });
+  const openviduRequest = openviduAxios();
 
   const nextPage = () => {
     if (ovstore.bookDetail.scenes.length > props.curPage) {
@@ -67,7 +61,7 @@
     //모래시계 작동
     ovstore.session.signal({type: 'recordingStartLoading'});
 
-    openviduAxios.post('/openvidu/api/recordings/start',
+    openviduRequest.post('/openvidu/api/recordings/start',
       {
         'session': sessionId,
         'name': 'TestRecording',
@@ -116,7 +110,7 @@
       type: 'onAir',
     });
 
-    openviduAxios.post(`/openvidu/api/recordings/stop/${openViduRecordingId}`)
+    openviduRequest.post(`/openvidu/api/recordings/stop/${openViduRecordingId}`)
       .then((response) => {
 
         console.log('id : ' + response.data.id);
@@ -128,7 +122,7 @@
         console.log('url : ' + response.data.url);
 
         let clipUrl = response.data.url;
-        let toRemove = 'https://dotori.online:8443/openvidu/recordings/';
+        let toRemove = process.env.OPENVIDU_URL+':8443/openvidu/recordings/';
 
         let resultUrl = clipUrl.replace(toRemove, '');
 

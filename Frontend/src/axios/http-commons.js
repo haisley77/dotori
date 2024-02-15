@@ -1,6 +1,14 @@
-import axios from "axios";
-// import { httpStatusCode } from "./http-status";
+import axios from 'axios';
 
+function openviduAxios() {
+  return axios.create({
+    baseURL: process.env.OPENVIDU_URL,
+    headers: {
+      'Authorization': 'Basic T1BFTlZJRFVBUFA6MTBTU0FGWUE1MDI=',
+      'Content-Type': 'application/json',
+    },
+  });
+}
 
 function localAxios() {
   const instance = axios.create({
@@ -10,13 +18,10 @@ function localAxios() {
       "Content-Type": "application/json;charset=utf-8",
     },
   });
-  // instance.defaults.headers.post["withCredentials"] = true;
-  // instance.defaults.headers.get["withCredentials"] = true;
-  // instance.defaults.headers.delete["withCredentials"] = true;
+
   instance.defaults.headers.post["Content-Type"] = "application/json";
   instance.defaults.headers.get["Content-Type"] = "application/json";
   instance.defaults.headers.delete["Content-Type"] = "application/json";
-  // instance.defaults.headers.put["Content-Type"] = "application/json";
 
   instance.interceptors.response.use(
     response => response,
@@ -68,4 +73,4 @@ function imgAxios() {
   });
   return instance;
 }
-export { localAxios, imgAxios };
+export { localAxios, imgAxios, openviduAxios };
