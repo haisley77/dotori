@@ -1,4 +1,4 @@
-# 🎈 도토리 DO our sTORI
+# 🎈 도토리 DO our sTORI [SSAFY 공통 프로젝트 우수상]
 ![메인페이지GIF](https://github.com/Youth787/SSAFY_Algorithm_Study/assets/90955152/92483fab-b966-4e0e-a5bd-a65c198a3ca2)
 
 # 🎈 서비스 개요
