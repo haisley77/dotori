@@ -41,7 +41,6 @@ import io.openvidu.java.client.Session;
 @ConfigurationProperties(prefix = "openvidu")
 public class RoomController {
 	// push 테스트
-	// push 테스트
 	@Value("${url}")
 	private String OPENVIDU_URL;
 
