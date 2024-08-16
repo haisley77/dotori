@@ -1,31 +1,76 @@
 pipeline {
     agent any
 
+    environment {
+        imageName = "haisley77/dotori-develop-be"
+        registryCredential = 'dockerhub-accesstoken'
+        dockerImage = ''
+
+        releaseServerAccount = 'ubuntu'
+        releaseServerUri = 'dotori.online'
+        releasePort = '8081'
+    }
+
     stages {
-        stage('Setup build environment') {
+        stage('Git Clone') {
             steps {
-                echo 'Setting up build environment...'
-                sh '''
-                    # 여기에 빌드 환경 구축 작업을 작성합니다.
-                    # 예를 들어, 필요한 패키지를 설치하거나, 환경변수를 설정하는 등의 작업을 수행할 수 있습니다.
-                '''
+                git branch: 'develop-be',
+                    credentialsId: 'github-access',
+                    url: 'https://github.com/haisley77/dotori.git'
+            }
+        }
+        stage('Jar Build') {
+            steps {
+                dir ('backend') {
+                    sh 'chmod +x ./gradlew'
+                    sh './gradlew clean bootJar'
+                    // sh './gradlew build'
+                }
+            }
+        }
+        stage('Image Build & DockerHub Push') {
+            steps {
+                dir('backend') {
+                    script {
+                        docker.withRegistry('', registryCredential) {
+                            sh "docker buildx create --use --name mybuilder"
+                            sh "docker buildx build --platform linux/amd64,linux/arm64 -t $imageName:$BUILD_NUMBER --push ."
+                            sh "docker buildx build --platform linux/amd64,linux/arm64 -t $imageName:latest --push ."
+                        }
+                    }
+                }
             }
         }
 
-        stage('Checkout') {
+        stage('DockerHub Pull') {
             steps {
-                checkout scm
+                sshagent(credentials: ['dotori-ssh-key']) {
+                    sh "ssh -o StrictHostKeyChecking=no $releaseServerAccount@$releaseServerUri 'sudo docker pull $imageName:latest'"
+                }
+            }
+        }
+        stage('Before Service Stop') {
+            steps {
+                sshagent(credentials: ['dotori-ssh-key']) {
+                    sh '''
+                    if test "`ssh -o StrictHostKeyChecking=no $releaseServerAccount@$releaseServerUri "docker ps -aq --filter ancestor=$imageName:latest"`"; then
+                    ssh -o StrictHostKeyChecking=no $releaseServerAccount@$releaseServerUri "docker stop $(docker ps -aq --filter ancestor=$imageName:latest)"
+                    ssh -o StrictHostKeyChecking=no $releaseServerAccount@$releaseServerUri "docker rm -f $(docker ps -aq --filter ancestor=$imageName:latest)"
+                    ssh -o StrictHostKeyChecking=no $releaseServerAccount@$releaseServerUri "docker rmi $imageName:latest"
+                    fi
+                    '''
+                }
+            }
+        }
+        stage('Service Start') {
+            steps {
+                sshagent(credentials: ['dotori-ssh-key']) {
+                    sh '''
+                        ssh -o StrictHostKeyChecking=no $releaseServerAccount@$releaseServerUri "sudo docker run -i -e TZ=Asia/Seoul -e "SPRING_PROFILES_ACTIVE=prod" --name codespeed -p $releasePort:$releasePort -d $imageName:latest"
+                    '''
+                }
             }
         }
 
-        stage('Build') {
-            steps {
-                echo 'Building...'
-                sh '''
-                    # 여기에 빌드 명령을 작성합니다.
-                    # 예를 들어, Java 프로젝트의 경우 'mvn package' 명령을 실행할 수 있습니다.
-                '''
-            }
-        }
     }
 }
