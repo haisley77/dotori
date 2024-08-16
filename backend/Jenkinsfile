@@ -1,6 +1,7 @@
 pipeline {
     agent any
 
+
     environment {
         imageName = "haisley77/dotori-develop-be"
         registryCredential = 'dockerhub-accesstoken'
