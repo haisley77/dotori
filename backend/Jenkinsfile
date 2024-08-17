@@ -17,7 +17,7 @@ pipeline {
                 echo 'Git Clone...'
                 git branch: 'develop-be',
                     credentialsId: 'github_token',
-                    url: 'https://github.com/haisley77/dotori.git'
+                    url: 'https://github.com/haisley77/dotori'
             }
         }
         stage('Jar Build') {
