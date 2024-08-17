@@ -51,11 +51,7 @@ pipeline {
             steps {
                 sshagent(['aws_key']) {
                     sh '''
-                        if [ "$(ssh -o StrictHostKeyChecking=no $releaseServerAccount@$releaseServerUri 'docker ps -aq --filter ancestor=$imageName:latest')" ]; then
-                            ssh -o StrictHostKeyChecking=no $releaseServerAccount@$releaseServerUri "docker stop $(docker ps -aq --filter ancestor=$imageName:latest)"
-                            ssh -o StrictHostKeyChecking=no $releaseServerAccount@$releaseServerUri "docker rm -f $(docker ps -aq --filter ancestor=$imageName:latest)"
-                            ssh -o StrictHostKeyChecking=no $releaseServerAccount@$releaseServerUri "docker rmi $imageName:latest"
-                        fi
+                    ssh -o StrictHostKeyChecking=no ubuntu@dotori.online
                     '''
                 }
             }
