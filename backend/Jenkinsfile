@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        gradle 'gradle'
+    }
+
     environment {
         imageName = "haisley77/dotori-backend"
         registryCredential = 'dockerhub_token'
