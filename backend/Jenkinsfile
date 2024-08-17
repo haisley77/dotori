@@ -4,7 +4,6 @@ pipeline {
     environment {
         imageName = "haisley77/dotori-develop-be"
         registryCredential = 'dockerhub-accesstoken'
-        dockerImage = ''
 
         releaseServerAccount = 'ubuntu'
         releaseServerUri = 'dotori.online'
@@ -14,7 +13,7 @@ pipeline {
     stages {
         stage('Git Clone') {
             steps {
-                echo 'Clone...'
+                echo 'Cloning repository...'
                 git branch: 'develop-be',
                     credentialsId: 'github-access',
                     url: 'https://github.com/haisley77/dotori.git'
@@ -23,9 +22,9 @@ pipeline {
         stage('Jar Build') {
             steps {
                 dir ('backend') {
+                    echo 'Building Jar file...'
                     sh 'chmod +x ./gradlew'
                     sh './gradlew clean bootJar'
-                    // sh './gradlew build'
                 }
             }
         }
@@ -34,11 +33,9 @@ pipeline {
                 dir('backend') {
                     script {
                         docker.withRegistry('', registryCredential) {
-                           // 이미지 빌드
                            sh "docker build -t $imageName:$BUILD_NUMBER ."
                            sh "docker build -t $imageName:latest ."
 
-                           // Docker Hub에 푸시
                            sh "docker push $imageName:$BUILD_NUMBER"
                            sh "docker push $imageName:latest"
                         }
@@ -76,6 +73,13 @@ pipeline {
                 }
             }
         }
-
+    }
+    post {
+        success {
+            echo 'Deployment successful!'
+        }
+        failure {
+            echo 'Deployment failed.'
+        }
     }
 }
