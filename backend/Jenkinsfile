@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        imageName = "haisley77/dotori-develop-be"
-        registryCredential = 'dockerhub-accesstoken'
+        imageName = "haisley77/dotori-backend"
+        registryCredential = 'dockerhub_token'
 
         releaseServerAccount = 'ubuntu'
         releaseServerUri = 'dotori.online'
@@ -15,7 +15,7 @@ pipeline {
             steps {
                 echo 'Cloning repository...'
                 git branch: 'develop-be',
-                    credentialsId: 'github-access',
+                    credentialsId: 'github_token',
                     url: 'https://github.com/haisley77/dotori.git'
             }
         }
@@ -46,14 +46,14 @@ pipeline {
 
         stage('DockerHub Pull') {
             steps {
-                sshagent(credentials: ['dotori-ssh-key']) {
+                sshagent(credentials: ['aws_key']) {
                     sh "ssh -o StrictHostKeyChecking=no $releaseServerAccount@$releaseServerUri 'sudo docker pull $imageName:latest'"
                 }
             }
         }
         stage('Before Service Stop') {
             steps {
-                sshagent(credentials: ['dotori-ssh-key']) {
+                sshagent(credentials: ['aws_key']) {
                     sh '''
                     if test "`ssh -o StrictHostKeyChecking=no $releaseServerAccount@$releaseServerUri "docker ps -aq --filter ancestor=$imageName:latest"`"; then
                     ssh -o StrictHostKeyChecking=no $releaseServerAccount@$releaseServerUri "docker stop $(docker ps -aq --filter ancestor=$imageName:latest)"
@@ -66,7 +66,7 @@ pipeline {
         }
         stage('Service Start') {
             steps {
-                sshagent(credentials: ['dotori-ssh-key']) {
+                sshagent(credentials: ['aws_key']) {
                     sh '''
                         ssh -o StrictHostKeyChecking=no $releaseServerAccount@$releaseServerUri "sudo docker run -i -e TZ=Asia/Seoul -e "SPRING_PROFILES_ACTIVE=prod" --name codespeed -p $releasePort:$releasePort -d $imageName:latest"
                     '''

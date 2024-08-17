@@ -6,7 +6,7 @@ COPY . .
 #RUN mkdir -p /home/videos/scenes
 #RUN mkdir -p /home/videos/chunks
 
-#RUN mkdir -p /home/images
+#RUN mkdir -p /home/image
 
 RUN chmod +x ./gradlew
 RUN gradle bootJar
