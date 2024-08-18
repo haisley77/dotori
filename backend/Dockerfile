@@ -1,5 +1,6 @@
-FROM docker
-COPY --from=docker/buildx-bin:latest /buildx /usr/libexec/docker/cli-plugins/docker-buildx
+FROM gradle:8.5-jdk11-jammy
+WORKDIR /app
+COPY . .
 
 #RUN mkdir -p /home/videos/dramas
 #RUN mkdir -p /home/videos/scenes
@@ -7,6 +8,8 @@ COPY --from=docker/buildx-bin:latest /buildx /usr/libexec/docker/cli-plugins/doc
 
 #RUN mkdir -p /home/image
 
-FROM openjdk:11-jdk
-EXPOSE 8081
+RUN chmod +x ./gradlew
+RUN gradle bootJar
+
 ENTRYPOINT ["java", "-jar", "/app/build/libs/backend-0.0.1-SNAPSHOT.jar"]
+EXPOSE 8081

@@ -32,9 +32,11 @@ pipeline {
                 dir('backend') {
                     script {
                         docker.withRegistry('', registryCredential) {
+                            // 이미지 빌드
                             sh "docker build -t $imageName:$BUILD_NUMBER ."
                             sh "docker build -t $imageName:latest ."
 
+                            // Docker Hub에 푸시
                             sh "docker push $imageName:$BUILD_NUMBER"
                             sh "docker push $imageName:latest"
                         }
