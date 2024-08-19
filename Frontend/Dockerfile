@@ -2,7 +2,9 @@ FROM node:16-alpine3.11 as build-stage
 
 WORKDIR /front
 
-RUN npm run build # React 애플리케이션 빌드
+COPY package*.json ./
+
+RUN npm run build
 
 FROM nginx:latest as production-stage
 
