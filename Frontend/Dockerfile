@@ -1,20 +1,17 @@
 FROM node:16-alpine3.11
+FROM nginx:latest
 
+RUN mkdir /app
 WORKDIR /app
 
-# package*.json을 app으로 복사
-COPY package*.json ./
+RUN mkdir ./build
+ADD ./build ./build
 
-RUN npm install
-RUN npm i -g @quasar/cli
+RUN rm /etc/nginx/conf.d/default.conf
+COPY ./nginx.conf /etc/nginx/conf.d
 
-# 현재 디렉토리의 모든 파일을 app으로 복사
-COPY . .
+EXPOSE 80
 
-# 프로젝트 빌드 위해 package.json에 정의된 빌드 스크립트 실행
-RUN npm run build
-
-CMD [ "npm", "run", "dev"]
-EXPOSE 3000
+CMD ["nginx", "-g", "daemon off;"]
 
 
