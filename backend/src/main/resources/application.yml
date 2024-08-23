@@ -8,24 +8,8 @@ spring:
 
 management:
   endpoints:
-    base-path: /api/actuator
+    base-path: /api
     web:
       exposure:
         include: health
         exclude: '*'
-
----
-spring:
-  config:
-    activate:
-      on-profile: blue
-server:
-  port: 8081
-
----
-spring:
-  config:
-    activate:
-      on-profile: green
-server:
-  port: 8082
