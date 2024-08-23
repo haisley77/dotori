@@ -1,14 +1,17 @@
 pipeline {
     agent any
 
+    tools {
+        gradle 'gradle'
+    }
+
     environment {
-        imageName = "haisley77/dotori-backend"
+        imageName = "haisley77/dotori-be"
         registryCredential = 'dockerhub_token'
         dockerImage = ''
 
         releaseServerAccount = 'ubuntu'
         releaseServerUri = 'dotori.online'
-        releasePort = '8081'
     }
 
 
@@ -40,11 +43,15 @@ pipeline {
                             // Docker Hub에 푸시
                             sh "docker push $imageName:$BUILD_NUMBER"
                             sh "docker push $imageName:latest"
+
+                            // 이미지 삭제
+                            sh "docker rmi $imageName:$BUILD_NUMBER"
                         }
                     }
                 }
             }
         }
+
         stage('DockerHub Pull') {
             steps {
                 sshagent(['aws_key']) {
@@ -52,21 +59,15 @@ pipeline {
                 }
             }
         }
-        stage('Before Service Stop') {
+
+        stage('blue-green deploy') {
             steps {
-                sshagent(['aws_key']) {
-                    sh '''
-                    ssh -o StrictHostKeyChecking=no ubuntu@dotori.online
-                    '''
-                }
-            }
-        }
-        stage('Service Start') {
-            steps {
-                sshagent(['aws_key']) {
-                    sh '''
-                        ssh -o StrictHostKeyChecking=no $releaseServerAccount@$releaseServerUri "sudo docker run -i -e TZ=Asia/Seoul -e SPRING_PROFILES_ACTIVE=prod --name codespeed -p $releasePort:$releasePort -d $imageName:latest"
-                    '''
+                sshagent(credentials: ['aws_key']) {
+                    // 배포 스크립트 실행 권한
+                    sh 'chmod +x /home/ubuntu/deploy.sh'
+
+                    // 배포 스크립트 실행
+                    sh "ssh -o StrictHostKeyChecking=no $releaseServerAccount@$releaseServerUri '/home/ubuntu/deploy.sh'"
                 }
             }
         }
