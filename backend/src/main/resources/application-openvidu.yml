@@ -1,3 +1,3 @@
 openvidu:
-  url: http://dotori.online:4443
-  secret: SSAFYHAEUN
+  url: http://dotori.online:${OPENVIDU_PORT}
+  secret: ${OPENVIDU_SECRET}

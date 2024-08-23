@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: blue
   config:
     import:
       - application-db.yml
@@ -13,3 +15,19 @@ management:
       exposure:
         include: health
         exclude: '*'
+
+---
+spring:
+  config:
+    activate:
+      on-profile: blue
+server:
+  port: ${GREEN_SERVER_PORT}
+
+---
+spring:
+  config:
+    activate:
+      on-profile: green
+server:
+  port: ${BLUE_SERVER_PORT}
