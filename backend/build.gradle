@@ -7,13 +7,6 @@ plugins {
 group = 'com.dotori'
 version = '0.0.1-SNAPSHOT'
 
-jar {
-    archiveBaseName.set('app')
-    archiveVersion.set('')
-    archiveClassifier.set('')
-}
-
-
 java {
     sourceCompatibility = '11'
 }
