@@ -6,7 +6,7 @@ RUN mkdir -p /home/videos/dramas
 RUN mkdir -p /home/videos/scenes
 RUN mkdir -p /home/videos/chunks
 
-RUN mkdir -p /home/image
+RUN mkdir -p /home/images
 
 RUN chmod +x ./gradlew
 RUN gradle bootJar
