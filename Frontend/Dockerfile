@@ -1,4 +1,4 @@
-FROM node:16-alpine3.11 as build-stage
+FROM node:16-alpine3.11
 
 WORKDIR /front
 
@@ -11,10 +11,5 @@ RUN npm install
 # 애플리케이션 소스 코드 복사
 COPY . .
 
-RUN npm run build
-
-# 기본 포트로 80을 노출
-EXPOSE 80
-
-# Nginx 실행
-CMD ["npm", "run", "dev"]
+CMD ["npm","run","build"]
+EXPOSE 3000
